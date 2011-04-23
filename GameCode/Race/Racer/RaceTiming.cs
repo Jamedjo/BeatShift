@@ -39,6 +39,13 @@ namespace BeatShift
         public bool hasCompletedRace;
         public bool isLastToBeEliminated;
 
+        // HUD related
+        public float previousBoost = 0f;
+        public float previousLapProgress = 0f;
+        public bool displayWrongWay = false;
+        public int lastUpdatedTimer;
+        public String speedToDisplay = String.Format("{0:0000}", 0);
+
         public RaceTiming(Racer racer)
         {
             currentRacer = racer;

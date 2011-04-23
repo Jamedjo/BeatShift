@@ -13,16 +13,14 @@ namespace BeatShift
     {
         public static String[] Ranks = { "th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th", "th" }; //increase for more players
         public static int updatePeriod = 92;
-        public static int lastUpdatedTimer;
-        static String speedToDisplay = String.Format("{0:0000}", 0);
+        
 
-        static float previousBoost = 0f;
-        static float previousLapProgress = 0f;
+
 
         public static BeatVisualisation beatVisualisation = new BeatVisualisation(new Vector2(-60,450), new Vector2(400,450), 0.5f);
 
         //for displayingw rong way sign
-        public static bool displayWrongWay = false;
+        
         public static int counter = 0;
 
         public static void Update(GameTime gameTime)
@@ -47,27 +45,27 @@ namespace BeatShift
             int h = BeatShift.graphics.GraphicsDevice.Viewport.Width / (GameTextures.HudBar.Width / GameTextures.HudBar.Height);
            
             BeatShift.spriteBatch.Draw(GameTextures.HudBar, new Rectangle(0, BeatShift.graphics.GraphicsDevice.Viewport.Height - h, BeatShift.graphics.GraphicsDevice.Viewport.Width, h), Color.White);
-            
-            previousBoost = MathHelper.Lerp(previousBoost,(float)racer.racingControls.getBoostValue() / 100,0.05f);
-            previousLapProgress = MathHelper.Lerp(previousLapProgress, (float)racer.shipPhysics.getLapPercentage() / 100, 0.05f);
+
+            racer.raceTiming.previousBoost = MathHelper.Lerp(racer.raceTiming.previousBoost, (float)racer.racingControls.getBoostValue() / 100, 0.05f);
+            racer.raceTiming.previousLapProgress = MathHelper.Lerp(racer.raceTiming.previousLapProgress, (float)racer.shipPhysics.getLapPercentage() / 100, 0.05f);
             
 
-                        //source rectangle size should be whole height and perecent of width. Positioned at 0,0
+            //source rectangle size should be whole height and perecent of width. Positioned at 0,0
             //destination rectange size should be same as source size, but positioned image height above the bottom of the scren
-            int srcWidth = (int)(GameTextures.BoostBarLine.Width * previousLapProgress);
+            int srcWidth = (int)(GameTextures.BoostBarLine.Width * racer.raceTiming.previousLapProgress);
             double scaleFactor = (double) BeatShift.graphics.GraphicsDevice.Viewport.Width / (double) GameTextures.BoostBarLine.Width;
            
             int destY_Offset = (BeatShift.graphics.GraphicsDevice.Viewport.Height) - GameTextures.HudBar.Height + (int)(scaleFactor * (138));
 
             
             int destHeight = (int)(scaleFactor * GameTextures.BoostBarLine.Height);
-            int destWidth = (int)((GameTextures.BoostBarLine.Width * previousLapProgress)*scaleFactor);
+            int destWidth = (int)((GameTextures.BoostBarLine.Width * racer.raceTiming.previousLapProgress) * scaleFactor);
 
             Rectangle src = new Rectangle(GameTextures.BoostBarLine.Width - srcWidth, 0,srcWidth, GameTextures.BoostBarLine.Height);
             Rectangle dest = new Rectangle((int)(25*scaleFactor),destY_Offset, destWidth, GameTextures.BoostBarLine.Height);
             BeatShift.spriteBatch.Draw(GameTextures.BoostBarLine, dest, src, Color.White);
 
-            BeatShift.spriteBatch.Draw(GameTextures.BoostBar, new Rectangle(((int)(BeatShift.graphics.GraphicsDevice.Viewport.Width * previousLapProgress) - BeatShift.graphics.GraphicsDevice.Viewport.Width), (BeatShift.graphics.GraphicsDevice.Viewport.Height - h) - 12, BeatShift.graphics.GraphicsDevice.Viewport.Width, h), Color.Yellow);
+            BeatShift.spriteBatch.Draw(GameTextures.BoostBar, new Rectangle(((int)(BeatShift.graphics.GraphicsDevice.Viewport.Width * racer.raceTiming.previousLapProgress) - BeatShift.graphics.GraphicsDevice.Viewport.Width), (BeatShift.graphics.GraphicsDevice.Viewport.Height - h) - 12, BeatShift.graphics.GraphicsDevice.Viewport.Width, h), Color.Yellow);
             //BeatShift.spriteBatch.Draw(GameTextures.BoostBar, new Rectangle(((int)(BeatShift.graphics.GraphicsDevice.Viewport.Width * previousBoost) - BeatShift.graphics.GraphicsDevice.Viewport.Width), BeatShift.graphics.GraphicsDevice.Viewport.Height - h, BeatShift.graphics.GraphicsDevice.Viewport.Width, h), Color.White);
             
             
@@ -79,17 +77,17 @@ namespace BeatShift
             else
             {
                 // Speed info, updates every update period
-                lastUpdatedTimer += gameTime.ElapsedGameTime.Milliseconds;
-                if (lastUpdatedTimer >= updatePeriod)
+                racer.raceTiming.lastUpdatedTimer += gameTime.ElapsedGameTime.Milliseconds;
+                if (racer.raceTiming.lastUpdatedTimer >= updatePeriod)
                 {
-                    lastUpdatedTimer -= updatePeriod;
+                    racer.raceTiming.lastUpdatedTimer -= updatePeriod;
                     try
                     {
-                        speedToDisplay = String.Format("{0:0000}", (Math.Abs((int)racer.shipPhysics.getForwardSpeed())));
+                        racer.raceTiming.speedToDisplay = String.Format("{0:0000}", (Math.Abs((int)racer.shipPhysics.getForwardSpeed())));
                     }
                     catch (Exception e) {}
                 }
-                DrawMessage(BeatShift.blueNumbersFont, speedToDisplay, 575, vOffset - 48, 0.6f);
+                DrawMessage(BeatShift.blueNumbersFont, racer.raceTiming.speedToDisplay, 575, vOffset - 48, 0.6f);
                 DrawMessage(BeatShift.blueNumbersFont, ":", 710, vOffset - 48, 0.6f);
 
                 // Lap info
@@ -115,16 +113,16 @@ namespace BeatShift
                 //if wrong way
                 if (racer.shipPhysics.wrongWay == true)
                 {
-                    displayWrongWay = true;
+                    racer.raceTiming.displayWrongWay = true;
                     //DrawMessage("Wrong Way!", 300, vOffset / 2);
                 }
                 //uses counter to keep sign shown for a few seconds
-                if (displayWrongWay == true && counter < 500)
+                if (racer.raceTiming.displayWrongWay == true && counter < 500)
                 {
                     BeatShift.spriteBatch.Draw(GameTextures.WrongWaySign, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.WrongWaySign.Width / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - GameTextures.WrongWaySign.Height / 2), Color.White);
                     counter++;
                 }
-                else if (counter >= 500) { /*DrawMessage("Right Way", 250, vOffset / 2);*/ counter = 0; displayWrongWay = false; }
+                else if (counter >= 500) { /*DrawMessage("Right Way", 250, vOffset / 2);*/ counter = 0; racer.raceTiming.displayWrongWay = false; }
 
                 // Other info
                 //DrawMessage("Progress: " + racer.getLapPercentage() + "%", 10, vOffset + 26);
