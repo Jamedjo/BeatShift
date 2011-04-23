@@ -1,0 +1,268 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+
+namespace BeatShift.Input
+{
+    public class RacingControls
+    {
+        const int controlType=3;
+        const decimal decelfact = 0.001m;
+        decimal[] lastTaps;
+        decimal[] tapWeights;
+        int tapNo;
+        public IInputManager chosenInput;
+        Racer racer;
+        //Boolean useKeyBoard;//Disable keyboard on xbox so chatpad doesn't work?
+
+        //TODO: Eventually should give a value based on beat accuracy and trigger distance.
+
+        int boostBar = 0;
+
+        private Boolean previousCameraFlipped = false;
+
+        public RacingControls(Racer myRacer, IInputManager inputManager)//Should also take 'useKeyboard' Boolean
+        {
+            //playerIndex = index;//Player index should be able to be 'any' or 'keyboard' too
+            chosenInput = inputManager;
+            racer = myRacer;
+            tapNo = 0;
+            lastTaps = new decimal[4];
+            tapWeights = new decimal[4] {1,.3m,.1m,.05m};
+            
+        }
+        public RacingControls(Racer myRacer)
+            : this(myRacer, new PadInputManager(PlayerIndex.One))
+        {
+            //Use first Controler as default.
+        }
+        public Boolean actionPressed(InputAction action)
+        {
+            //Change this? If forward and beat is not being kept then no?
+            return chosenInput.actionPressed(action);
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            boostBar = 100;
+            //System.Diagnostics.Debug.WriteLine("Update controls");
+            chosenInput.Update(gameTime);
+
+            // These two events should only be possible from human players, so cast to RacerHuman
+            if(chosenInput.actionTapped(InputAction.CameraToggle)
+              || chosenInput.actionTapped(InputAction.PadUp))
+            {
+                System.Diagnostics.Debug.WriteLine("Camera toggle");
+                ((RacerHuman)racer).toggleCamera();
+            }
+            if((chosenInput.actionPressed(InputAction.CameraReverse) != previousCameraFlipped)
+              || (chosenInput.actionPressed(InputAction.PadDown) != previousCameraFlipped))
+            {
+                ((RacerHuman)racer).toggleReverseCamera();
+                previousCameraFlipped = !previousCameraFlipped;
+            }
+
+            if (chosenInput.actionPressed(InputAction.Boost) && (boostBar > 0))
+            {
+                racer.setBoost(true);
+            }
+            else
+            {
+                racer.setBoost(false);
+            }
+
+            if (racer.raceTiming.isRacing == true && racer.isRespawning == false)
+            {
+                //General Input
+                UpdateLocalFromInput();
+                
+                if (controlType == 0)
+                {
+                    applyForwardMotionFromAnalogue();
+                }
+                else if (controlType == 1)
+                {
+                    TapControl();
+                } else if (controlType == 2)
+                {
+                    AverageControl();
+                }
+                else if (controlType == 3)
+                {
+                    BoostControl();
+                }
+          }
+        }
+        
+        private void UpdateLocalFromInput()
+        {
+          //  if (racer.shipPhysics.shipNearGround())
+          //  {
+
+                if (actionPressed(InputAction.Backwards))
+                {
+                    racer.shipPhysics.physicsBody.ApplyImpulse(racer.shipPhysics.physicsBody.Position, racer.shipPhysics.physicsBody.OrientationMatrix.Backward * 100);
+                }
+
+                //axis*angle*factor*analogueInputFactor
+                //Apply left/right rotation multiplied by analogue steering values
+                //keyboard keys have analogue values of 0f when up and 1f when pressed.
+
+
+                //Only apply rotation if the ship doesn't already have a large rotational force
+                Vector3 a = Vector3.Up;
+                Vector3 b = racer.shipPhysics.physicsBody.BufferedStates.Entity.AngularVelocity;
+                float angularSize = Vector3.Dot(a, b);
+
+                // Change the impulse direction if we are in reverse
+                int reversingMultiplier = 1;
+                //if (new Random().Next(60) == 0) Console.WriteLine(angularSize);
+
+                // CAUTION: We change reverse direction once we're reversing more than 35f. Plays better when hitting walls head on but weird.
+                if (Vector3.Dot(racer.shipPhysics.physicsBody.LinearVelocity, racer.shipPhysics.physicsBody.WorldTransform.Backward) > 35f)
+                    reversingMultiplier = -1;
+
+                if (angularSize < 3.5f)
+                {
+                    Vector3 leftVector = racer.shipPhysics.physicsBody.OrientationMatrix.Up * reversingMultiplier * 45f * (1 + (Math.Abs(angularSize) * 0.12f)) * chosenInput.getActionValue(InputAction.Left);
+                    Physics.ApplyAngularImpulse(ref leftVector, ref racer.shipPhysics.physicsBody);
+                }
+
+                if (angularSize > -3.5f)
+                {
+                    Vector3 rightVector = racer.shipPhysics.physicsBody.OrientationMatrix.Up * reversingMultiplier * -45f * (1 + (Math.Abs(angularSize) * 0.12f)) * chosenInput.getActionValue(InputAction.Right);
+                    Physics.ApplyAngularImpulse(ref rightVector, ref racer.shipPhysics.physicsBody);
+                }
+            //}
+        }
+
+
+
+
+        public void applyForwardMotionFromAnalogue()
+        {
+            racer.shipPhysics.physicsBody.ApplyImpulse(racer.shipPhysics.physicsBody.Position, racer.shipPhysics.physicsBody.OrientationMatrix.Forward * 280 * chosenInput.getActionValue(InputAction.Forwards)); //TODO: should be 280?
+        }
+
+        public void Boost(double accuracy)
+        {
+            racer.shipPhysics.physicsBody.ApplyImpulse(racer.shipPhysics.physicsBody.Position, racer.shipPhysics.physicsBody.OrientationMatrix.Forward * 1000 * (float)accuracy);
+        }
+
+        public void AverageMove(double average)
+        {
+            racer.shipPhysics.physicsBody.ApplyImpulse(racer.shipPhysics.physicsBody.Position, racer.shipPhysics.physicsBody.OrientationMatrix.Forward * 70 * (float)average);
+        }
+
+        void AverageControl()
+        {
+            //if (currentPadState.IsConnected)
+            {
+                if (chosenInput.actionTapped(InputAction.Forwards))
+                {
+                    //lastTaps[tapNo++] = BeatShift.bgm.beatTime();
+                    tapNo = tapNo % 4;
+                }
+            }
+
+            decimal average = 0;
+            for(int i = 0; i<4; i++)
+            {
+                int t = i-tapNo;
+                if (t>=0) {
+                    t=t%4;
+                } else if (t< 0) {
+                    t=4+t;
+                }
+                average += lastTaps[i]*tapWeights[t];
+            }
+
+                if (lastTaps[(tapNo+3)%4] > 0)
+                {
+                    lastTaps[(tapNo + 3) % 4] = lastTaps[(tapNo + 3) % 4] - decelfact;
+                }
+                else if (lastTaps[(tapNo + 2) % 4] > 0)
+                {
+                    lastTaps[(tapNo + 2) % 4] = lastTaps[(tapNo + 2) % 4] - decelfact;
+                }
+                else if (lastTaps[(tapNo + 1) % 4] > 0)
+                {
+                    lastTaps[(tapNo + 1) % 4] = lastTaps[(tapNo + 1) % 4] - decelfact;
+                }
+                else if (lastTaps[tapNo] > 0)
+                {
+                    lastTaps[tapNo] = lastTaps[tapNo] - decelfact;
+                }
+                for (int i = 0; i < 4; i++)
+                {
+                    if (lastTaps[i] < 0)
+                    {
+                        lastTaps[i] = 0;
+                    }
+                }
+            AverageMove((double)average);
+        }
+        
+        void TapControl()
+        {
+            //if (currentPadState.IsConnected)
+
+                // Increase vibration if the player is tapping the A button.
+                // Subtract vibration otherwise, even if the player holds down A
+           // if (chosenInput.actionTapped(InputAction.Forwards)) Boost((double)BeatShift.bgm.beatTime());
+        }
+
+        public decimal getLastPress()
+        {
+            return (lastTaps[tapNo]);
+        }
+
+        public int getBoostValue()
+        {
+            return racer.beatQueue.GetBoost();
+        }
+
+        void BoostControl()
+        {
+            applyForwardMotionFromAnalogue();
+                
+            // Increase vibration if the player is tapping the A button.
+            // Subtract vibration otherwise, even if the player holds down A
+            if (chosenInput.actionTapped(InputAction.Green))
+            {
+                racer.beatQueue.BeatTap('A');
+            } else if (chosenInput.actionTapped(InputAction.Red))
+            {
+                racer.beatQueue.BeatTap('B');
+            } else if (chosenInput.actionTapped(InputAction.Blue))
+            {
+                racer.beatQueue.BeatTap('X');
+            } else if (chosenInput.actionTapped(InputAction.Yellow))
+            {
+                racer.beatQueue.BeatTap('Y');
+            }
+
+            //if (chosenInput.actionTapped(InputAction.Boost))//Should be actionPressed&notAlreadyBoosting
+            //{
+            //    //Create particle boost.
+            //    BeatShift.emitter = new ParticleEmitter((Func<Matrix>)delegate { return Race.humanRacers[0].shipPhysics.ShipOrientationMatrix /*+ Vector3.Transform(new Vector3(0f, -1f, -2f), Race.humanRacers[0].shipPhysics.ShipOrientationMatrix)*/; }, BeatShift.settingsb, BeatShift.pEffect);
+            //}
+            if (chosenInput.actionPressed(InputAction.Boost))
+            {
+                if (racer.beatQueue.GetBoost() > 0)
+                {
+                    racer.beatQueue.DrainBoost();
+                    Boost(0.1);
+                }
+            }
+            
+            if (boostBar > 100)
+                boostBar = 100;
+            else if (boostBar < 0)
+                boostBar = 0;
+        }
+    }
+}

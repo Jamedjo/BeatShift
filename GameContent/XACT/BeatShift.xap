@@ -1,0 +1,2608 @@
+Signature = XACT3;
+Version = 18;
+Content Version = 46;
+Release = February 2010;
+
+Options
+{
+    Verbose Report = 0;
+    Generate C/C++ Headers = 1;
+}
+
+Global Settings
+{
+    Xbox File = Xbox\BeatShift.xgs;
+    Windows File = Win\BeatShift.xgs;
+    Header File = BeatShift.h;
+    Exclude Category Names = 0;
+    Exclude Variable Names = 0;
+    Last Modified Low = 0;
+    Last Modified High = 0;
+
+    Category
+    {
+        Name = Global;
+        Public = 1;
+        Background Music = 0;
+        Volume = 0;
+
+        Category Entry
+        {
+        }
+
+        Instance Limit
+        {
+            Max Instances = 255;
+            Behavior = 0;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+    }
+
+    Category
+    {
+        Name = Default;
+        Public = 1;
+        Background Music = 0;
+        Volume = 0;
+
+        Category Entry
+        {
+            Name = Global;
+        }
+
+        Instance Limit
+        {
+            Max Instances = 255;
+            Behavior = 0;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+    }
+
+    Category
+    {
+        Name = Music;
+        Public = 1;
+        Background Music = 1;
+        Volume = 0;
+
+        Category Entry
+        {
+            Name = Global;
+        }
+
+        Instance Limit
+        {
+            Max Instances = 255;
+            Behavior = 0;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+    }
+
+    Category
+    {
+        Name = Voice;
+        Public = 1;
+        Background Music = 0;
+        Volume = 0;
+
+        Category Entry
+        {
+            Name = Global;
+        }
+
+        Instance Limit
+        {
+            Max Instances = 255;
+            Behavior = 0;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+    }
+
+    Category
+    {
+        Name = Effects;
+        Public = 1;
+        Background Music = 0;
+        Volume = 0;
+
+        Category Entry
+        {
+            Name = Global;
+        }
+
+        Instance Limit
+        {
+            Max Instances = 255;
+            Behavior = 0;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+    }
+
+    Variable
+    {
+        Name = OrientationAngle;
+        Public = 1;
+        Global = 0;
+        Internal = 0;
+        External = 0;
+        Monitored = 1;
+        Reserved = 1;
+        Read Only = 0;
+        Time = 0;
+        Value = 0.000000;
+        Initial Value = 0.000000;
+        Min = -180.000000;
+        Max = 180.000000;
+    }
+
+    Variable
+    {
+        Name = DopplerPitchScalar;
+        Public = 1;
+        Global = 0;
+        Internal = 0;
+        External = 0;
+        Monitored = 1;
+        Reserved = 1;
+        Read Only = 0;
+        Time = 0;
+        Value = 1.000000;
+        Initial Value = 1.000000;
+        Min = 0.000000;
+        Max = 4.000000;
+    }
+
+    Variable
+    {
+        Name = SpeedOfSound;
+        Public = 1;
+        Global = 1;
+        Internal = 0;
+        External = 0;
+        Monitored = 1;
+        Reserved = 1;
+        Read Only = 0;
+        Time = 0;
+        Value = 343.500000;
+        Initial Value = 343.500000;
+        Min = 0.000000;
+        Max = 1000000.000000;
+    }
+
+    Variable
+    {
+        Name = ReleaseTime;
+        Public = 1;
+        Global = 0;
+        Internal = 1;
+        External = 1;
+        Monitored = 1;
+        Reserved = 1;
+        Read Only = 1;
+        Time = 1;
+        Value = 0.000000;
+        Initial Value = 0.000000;
+        Min = 0.000000;
+        Max = 15000.000000;
+    }
+
+    Variable
+    {
+        Name = AttackTime;
+        Public = 1;
+        Global = 0;
+        Internal = 1;
+        External = 1;
+        Monitored = 1;
+        Reserved = 1;
+        Read Only = 1;
+        Time = 1;
+        Value = 0.000000;
+        Initial Value = 0.000000;
+        Min = 0.000000;
+        Max = 15000.000000;
+    }
+
+    Variable
+    {
+        Name = NumCueInstances;
+        Public = 1;
+        Global = 0;
+        Internal = 1;
+        External = 1;
+        Monitored = 1;
+        Reserved = 1;
+        Read Only = 1;
+        Time = 0;
+        Value = 0.000000;
+        Initial Value = 0.000000;
+        Min = 0.000000;
+        Max = 1024.000000;
+    }
+
+    Variable
+    {
+        Name = Distance;
+        Public = 1;
+        Global = 0;
+        Internal = 0;
+        External = 0;
+        Monitored = 1;
+        Reserved = 1;
+        Read Only = 0;
+        Time = 0;
+        Value = 0.000000;
+        Initial Value = 0.000000;
+        Min = 0.000000;
+        Max = 1000000.000000;
+    }
+
+    Variable
+    {
+        Name = Layer;
+        Public = 1;
+        Global = 1;
+        Internal = 0;
+        External = 0;
+        Monitored = 1;
+        Reserved = 0;
+        Read Only = 0;
+        Time = 0;
+        Value = 2.040000;
+        Initial Value = 0.000000;
+        Min = 0.000000;
+        Max = 10.000000;
+    }
+
+    Compression Preset
+    {
+        Name = Default;
+        Xbox Format Tag = 357;
+        Target Sample Rate = 48000;
+        XMA Quality = 89;
+        Find Best Quality = 0;
+        High Freq Cut = 0;
+        Loop = 0;
+        PC Format Tag = 2;
+        Samples Per Block = 128;
+    }
+}
+
+Wave Bank
+{
+    Name = BGM1Loops;
+    Xbox File = Xbox\BGM1Loops.xwb;
+    Windows File = Win\BGM1Loops.xwb;
+    Xbox Bank Path Edited = 0;
+    Windows Bank Path Edited = 0;
+    Seek Tables = 1;
+    Compression Preset Name = Default;
+    Xbox Bank Last Modified Low = 0;
+    Xbox Bank Last Modified High = 0;
+    PC Bank Last Modified Low = 0;
+    PC Bank Last Modified High = 0;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
+    Bank Last Revised Low = 1884390634;
+    Bank Last Revised High = 30141799;
+
+    Wave
+    {
+        Name = Bgm1layer2;
+        File = ..\Music\Bgm1layer2.wav;
+        Build Settings Last Modified Low = 1884390634;
+        Build Settings Last Modified High = 30141799;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 7257920;
+            Loop Region Offset = 0;
+            Loop Region Length = 7257920;
+            File Type = 1;
+            Last Modified Low = 2762094413;
+            Last Modified High = 30137739;
+        }
+    }
+}
+
+Wave Bank
+{
+    Name = SpeechEffects;
+    Xbox File = Xbox\SpeechEffects.xwb;
+    Windows File = Win\SpeechEffects.xwb;
+    Xbox Bank Path Edited = 0;
+    Windows Bank Path Edited = 0;
+    Seek Tables = 1;
+    Compression Preset Name = Default;
+    Bank Last Revised Low = 1884410635;
+    Bank Last Revised High = 30141799;
+
+    Wave
+    {
+        Name = 1;
+        File = ..\SoundEffects\1.wav;
+        Build Settings Last Modified Low = 1884390634;
+        Build Settings Last Modified High = 30141799;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 313344;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 403116462;
+            Last Modified High = 30137742;
+        }
+    }
+
+    Wave
+    {
+        Name = 2;
+        File = ..\SoundEffects\2.wav;
+        Build Settings Last Modified Low = 1884400634;
+        Build Settings Last Modified High = 30141799;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 313344;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 403276471;
+            Last Modified High = 30137742;
+        }
+    }
+
+    Wave
+    {
+        Name = 3;
+        File = ..\SoundEffects\3.wav;
+        Build Settings Last Modified Low = 1884400634;
+        Build Settings Last Modified High = 30141799;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 313344;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 403456481;
+            Last Modified High = 30137742;
+        }
+    }
+
+    Wave
+    {
+        Name = final_lap;
+        File = ..\SoundEffects\final_lap.wav;
+        Build Settings Last Modified Low = 1884400634;
+        Build Settings Last Modified High = 30141799;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 313344;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 402576431;
+            Last Modified High = 30137742;
+        }
+    }
+
+    Wave
+    {
+        Name = go;
+        File = ..\SoundEffects\go.wav;
+        Build Settings Last Modified Low = 1884400634;
+        Build Settings Last Modified High = 30141799;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 313344;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 403716496;
+            Last Modified High = 30137742;
+        }
+    }
+
+    Wave
+    {
+        Name = lap_complete;
+        File = ..\SoundEffects\lap_complete.wav;
+        Build Settings Last Modified Low = 1884400634;
+        Build Settings Last Modified High = 30141799;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 313344;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 403616490;
+            Last Modified High = 30137742;
+        }
+    }
+
+    Wave
+    {
+        Name = omicron;
+        File = ..\SoundEffects\omicron.wav;
+        Build Settings Last Modified Low = 1884410635;
+        Build Settings Last Modified High = 30141799;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 313344;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 403996512;
+            Last Modified High = 30137742;
+        }
+    }
+
+    Wave
+    {
+        Name = race_complete;
+        File = ..\SoundEffects\race_complete.wav;
+        Build Settings Last Modified Low = 1884410635;
+        Build Settings Last Modified High = 30141799;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 313344;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 403346475;
+            Last Modified High = 30137742;
+        }
+    }
+
+    Wave
+    {
+        Name = skylar;
+        File = ..\SoundEffects\skylar.wav;
+        Build Settings Last Modified Low = 1884410635;
+        Build Settings Last Modified High = 30141799;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 313344;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 403666493;
+            Last Modified High = 30137742;
+        }
+    }
+
+    Wave
+    {
+        Name = skylarJ;
+        File = ..\SoundEffects\skylarJ.wav;
+        Build Settings Last Modified Low = 1884410635;
+        Build Settings Last Modified High = 30141799;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 221184;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 404356533;
+            Last Modified High = 30137742;
+        }
+    }
+}
+
+Wave Bank
+{
+    Name = TestBGM;
+    Xbox File = Xbox\TestBGM.xwb;
+    Windows File = Win\TestBGM.xwb;
+    Xbox Bank Path Edited = 0;
+    Windows Bank Path Edited = 0;
+    Seek Tables = 1;
+    Compression Preset Name = Default;
+    Xbox Bank Last Modified Low = 0;
+    Xbox Bank Last Modified High = 0;
+    PC Bank Last Modified Low = 0;
+    PC Bank Last Modified High = 0;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
+    Bank Last Revised Low = 1884420636;
+    Bank Last Revised High = 30141799;
+
+    Wave
+    {
+        Name = bgm2;
+        File = ..\Music\bgm2.wav;
+        Build Settings Last Modified Low = 1884410635;
+        Build Settings Last Modified High = 30141799;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 13307388;
+            Loop Region Offset = 1210464;
+            Loop Region Length = 12096924;
+            File Type = 1;
+            Last Modified Low = 2762564440;
+            Last Modified High = 30137739;
+        }
+    }
+}
+
+Wave Bank
+{
+    Name = Map1;
+    Xbox File = Xbox\Map1.xwb;
+    Windows File = Win\Map1.xwb;
+    Xbox Bank Path Edited = 0;
+    Windows Bank Path Edited = 0;
+    Streaming = 1;
+    Seek Tables = 1;
+    Compression Preset Name = Default;
+    Xbox Bank Last Modified Low = 0;
+    Xbox Bank Last Modified High = 0;
+    PC Bank Last Modified Low = 0;
+    PC Bank Last Modified High = 0;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
+    Bank Last Revised Low = 1884430636;
+    Bank Last Revised High = 30141799;
+
+    Wave
+    {
+        Name = Map 1 Level 2;
+        File = ..\Music\Map 1 Level 2.wav;
+        Build Settings Last Modified Low = 1884420636;
+        Build Settings Last Modified High = 30141799;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 7257600;
+            Loop Region Offset = 0;
+            Loop Region Length = 7257600;
+            File Type = 1;
+            Last Modified Low = 1698089083;
+            Last Modified High = 30137743;
+        }
+    }
+
+    Wave
+    {
+        Name = Map 1 Level 3;
+        File = ..\Music\Map 1 Level 3.wav;
+        Build Settings Last Modified Low = 1884420636;
+        Build Settings Last Modified High = 30141799;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 7257600;
+            Loop Region Offset = 0;
+            Loop Region Length = 7257600;
+            File Type = 1;
+            Last Modified Low = 1593153326;
+            Last Modified High = 30137743;
+        }
+    }
+
+    Wave
+    {
+        Name = Map 1 Level 4;
+        File = ..\Music\Map 1 Level 4.wav;
+        Build Settings Last Modified Low = 1884420636;
+        Build Settings Last Modified High = 30141799;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 7257600;
+            Loop Region Offset = 0;
+            Loop Region Length = 7257600;
+            File Type = 1;
+            Last Modified Low = 1653116639;
+            Last Modified High = 30137743;
+        }
+    }
+
+    Wave
+    {
+        Name = Map 1 Level 1;
+        File = ..\Music\Map 1 Level 1.wav;
+        Build Settings Last Modified Low = 1884420636;
+        Build Settings Last Modified High = 30141799;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 7257600;
+            Loop Region Offset = 0;
+            Loop Region Length = 7257600;
+            File Type = 1;
+            Last Modified Low = 1757712404;
+            Last Modified High = 30137743;
+        }
+    }
+
+    Wave
+    {
+        Name = Map 1 Level 5;
+        File = ..\Music\Map 1 Level 5.wav;
+        Build Settings Last Modified Low = 1884420636;
+        Build Settings Last Modified High = 30141799;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 7257600;
+            Loop Region Offset = 0;
+            Loop Region Length = 7257600;
+            File Type = 1;
+            Last Modified Low = 3086197715;
+            Last Modified High = 30141194;
+        }
+    }
+}
+
+Wave Bank
+{
+    Name = SoundEffects;
+    Xbox File = Xbox\SoundEffects.xwb;
+    Windows File = Win\SoundEffects.xwb;
+    Xbox Bank Path Edited = 0;
+    Windows Bank Path Edited = 0;
+    Seek Tables = 1;
+    Compression Preset Name = <none>;
+    Xbox Bank Last Modified Low = 0;
+    Xbox Bank Last Modified High = 0;
+    PC Bank Last Modified Low = 0;
+    PC Bank Last Modified High = 0;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
+    Bank Last Revised Low = 4281919382;
+    Bank Last Revised High = 30141192;
+
+    Wave
+    {
+        Name = leveldown;
+        File = ..\SoundEffects\leveldown.wav;
+        Build Settings Last Modified Low = 3108465368;
+        Build Settings Last Modified High = 30141184;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 11025;
+            Bits Per Sample = 0;
+            Play Region Offset = 44;
+            Play Region Length = 8037;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2222654702;
+            Last Modified High = 30141184;
+        }
+    }
+
+    Wave
+    {
+        Name = levelup;
+        File = ..\SoundEffects\levelup.wav;
+        Build Settings Last Modified Low = 3108465368;
+        Build Settings Last Modified High = 30141184;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 11025;
+            Bits Per Sample = 0;
+            Play Region Offset = 44;
+            Play Region Length = 9680;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2588315617;
+            Last Modified High = 30141184;
+        }
+    }
+}
+
+Sound Bank
+{
+    Name = Voiceover;
+    Xbox File = Xbox\Voiceover.xsb;
+    Windows File = Win\Voiceover.xsb;
+    Xbox Bank Path Edited = 0;
+    Windows Bank Path Edited = 0;
+
+    Sound
+    {
+        Name = 1;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Voice;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = SpeechEffects;
+                    Bank Index = 1;
+                    Entry Name = 1;
+                    Entry Index = 0;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = 2;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Voice;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = SpeechEffects;
+                    Bank Index = 1;
+                    Entry Name = 2;
+                    Entry Index = 1;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = 3;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Voice;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = SpeechEffects;
+                    Bank Index = 1;
+                    Entry Name = 3;
+                    Entry Index = 2;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = final_lap;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Voice;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = SpeechEffects;
+                    Bank Index = 1;
+                    Entry Name = final_lap;
+                    Entry Index = 3;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = go;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Voice;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = SpeechEffects;
+                    Bank Index = 1;
+                    Entry Name = go;
+                    Entry Index = 4;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = lap_complete;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Voice;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = SpeechEffects;
+                    Bank Index = 1;
+                    Entry Name = lap_complete;
+                    Entry Index = 5;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = omicron;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Voice;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = SpeechEffects;
+                    Bank Index = 1;
+                    Entry Name = omicron;
+                    Entry Index = 6;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = race_complete;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Voice;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = SpeechEffects;
+                    Bank Index = 1;
+                    Entry Name = race_complete;
+                    Entry Index = 7;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = skylar;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Voice;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = SpeechEffects;
+                    Bank Index = 1;
+                    Entry Name = skylar;
+                    Entry Index = 8;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = skylarJ;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Voice;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = SpeechEffects;
+                    Bank Index = 1;
+                    Entry Name = skylarJ;
+                    Entry Index = 9;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Cue
+    {
+        Name = CountDown;
+
+        Variation
+        {
+            Variation Type = 0;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = 3;
+            Index = 2;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+
+        Sound Entry
+        {
+            Name = 2;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+
+        Sound Entry
+        {
+            Name = 1;
+            Index = 0;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+
+        Sound Entry
+        {
+            Name = go;
+            Index = 4;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+
+        Instance Limit
+        {
+            Max Instances = 1;
+            Behavior = 4;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+    }
+
+    Cue
+    {
+        Name = omicron;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = omicron;
+            Index = 6;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = skylar;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = skylar;
+            Index = 8;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = final_lap;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = final_lap;
+            Index = 3;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = lap_complete;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = lap_complete;
+            Index = 5;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = race_complete;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = race_complete;
+            Index = 7;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+}
+
+Sound Bank
+{
+    Name = BGM1;
+    Xbox File = Xbox\BGM1.xsb;
+    Windows File = Win\BGM1.xsb;
+    Xbox Bank Path Edited = 0;
+    Windows Bank Path Edited = 0;
+    Header Last Modified High = 0;
+    Header Last Modified Low = 0;
+
+    Sound
+    {
+        Name = Layer2;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Music;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = BGM1Loops;
+                    Bank Index = 0;
+                    Entry Name = Bgm1layer2;
+                    Entry Index = 0;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Cue
+    {
+        Name = Layer2;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Layer2;
+            Index = 0;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+}
+
+Sound Bank
+{
+    Name = Map1;
+    Xbox File = Xbox\Map1.xsb;
+    Windows File = Win\Map1.xsb;
+    Xbox Bank Path Edited = 0;
+    Windows Bank Path Edited = 0;
+    Header Last Modified High = 0;
+    Header Last Modified Low = 0;
+
+    Sound
+    {
+        Name = Map 1 Level 1;
+        Volume = 600;
+        Pitch = 0;
+        Priority = 255;
+
+        Category Entry
+        {
+            Name = Music;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Map1;
+                    Bank Index = 3;
+                    Entry Name = Map 1 Level 1;
+                    Entry Index = 3;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = Map 1 Level 4;
+        Volume = 600;
+        Pitch = 0;
+        Priority = 255;
+
+        Category Entry
+        {
+            Name = Music;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Map1;
+                    Bank Index = 3;
+                    Entry Name = Map 1 Level 4;
+                    Entry Index = 2;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = Map 1 Level 3;
+        Volume = 600;
+        Pitch = 0;
+        Priority = 255;
+
+        Category Entry
+        {
+            Name = Music;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Map1;
+                    Bank Index = 3;
+                    Entry Name = Map 1 Level 3;
+                    Entry Index = 1;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = Map 1 Level 2;
+        Volume = 600;
+        Pitch = 0;
+        Priority = 255;
+
+        Category Entry
+        {
+            Name = Music;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Map1;
+                    Bank Index = 3;
+                    Entry Name = Map 1 Level 2;
+                    Entry Index = 0;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = levelup;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Effects;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = SoundEffects;
+                    Bank Index = 4;
+                    Entry Name = levelup;
+                    Entry Index = 1;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = leveldown;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Effects;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = SoundEffects;
+                    Bank Index = 4;
+                    Entry Name = leveldown;
+                    Entry Index = 0;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = Map 1 Level 5;
+        Volume = 600;
+        Pitch = 0;
+        Priority = 255;
+
+        Category Entry
+        {
+            Name = Music;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Map1;
+                    Bank Index = 3;
+                    Entry Name = Map 1 Level 5;
+                    Entry Index = 4;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Cue
+    {
+        Name = Layer1;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Map 1 Level 1;
+            Index = 0;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = Layer4;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Map 1 Level 4;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = Layer3;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Map 1 Level 3;
+            Index = 2;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = Layer2;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Map 1 Level 2;
+            Index = 3;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = Interactive;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 3;
+            New Variation on Loop = 0;
+
+            Variable Entry
+            {
+                Name = Layer;
+            }
+        }
+
+        Sound Entry
+        {
+            Name = Map 1 Level 2;
+            Index = 3;
+            Variable Min = 1.000000;
+            Variable Max = 1.990000;
+            Linger = 1;
+        }
+
+        Sound Entry
+        {
+            Name = Map 1 Level 1;
+            Index = 0;
+            Variable Min = -0.000000;
+            Variable Max = 0.990000;
+            Linger = 1;
+        }
+
+        Sound Entry
+        {
+            Name = Map 1 Level 4;
+            Index = 1;
+            Variable Min = 3.000000;
+            Variable Max = 3.990000;
+            Linger = 1;
+        }
+
+        Sound Entry
+        {
+            Name = Map 1 Level 3;
+            Index = 2;
+            Variable Min = 2.000000;
+            Variable Max = 2.990000;
+            Linger = 1;
+        }
+
+        Sound Entry
+        {
+            Name = Map 1 Level 5;
+            Index = 6;
+            Variable Min = 4.000000;
+            Variable Max = 4.990000;
+            Linger = 1;
+        }
+
+        Transition Entry
+        {
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 0;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 0;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 0;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 0;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 0;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 0;
+            Transition Source = 0;
+            Transition Destination = 0;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 5;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 4;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 4;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 4;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 0;
+            Transition Source = 0;
+            Transition Destination = 0;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 4;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 4;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 4;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 4;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 0;
+            Transition Source = 0;
+            Transition Destination = 0;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 5;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 5;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 5;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 4;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 0;
+            Transition Source = 0;
+            Transition Destination = 0;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 5;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 5;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 4;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 4;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 0;
+            Transition Source = 0;
+            Transition Destination = 0;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 5;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 5;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 5;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 5;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+    }
+
+    Cue
+    {
+        Name = Layer5;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Map 1 Level 5;
+            Index = 6;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+}

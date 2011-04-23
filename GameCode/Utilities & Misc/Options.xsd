@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://sourceforge.net/projects/rafikiracing/Options.xsd"
+    xmlns="http://sourceforge.net/projects/rafikiracing/Options.xsd"
+    elementFormDefault="qualified"
+>
+  <xs:element name="options">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="DrawWayPoints" type="xs:boolean" default="false" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="DrawTrackNormals" type="xs:boolean" default="true" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="AddAI" type="xs:boolean" default="false" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="DrawShipBoundingBoxes" type="xs:boolean" default="true" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="UseKeyboardAsPad2" type="xs:boolean" default ="true" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="MasterVolume" default="100" minOccurs="1" maxOccurs="1">
+          <xs:simpleType>
+            <xs:restriction base="xs:byte">
+              <xs:minInclusive value="0"/>
+              <xs:maxInclusive value="100"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="MusicVolume" default="100" minOccurs="1" maxOccurs="1">
+          <xs:simpleType>
+            <xs:restriction base="xs:byte">
+              <xs:minInclusive value="0"/>
+              <xs:maxInclusive value="100"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="SfxVolume" default="100" minOccurs="1" maxOccurs="1">
+          <xs:simpleType>
+            <xs:restriction base="xs:byte">
+              <xs:minInclusive value="0"/>
+              <xs:maxInclusive value="100"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,91 @@
+//Modified script from: http://forums.cgsociety.org/archive/index.php/t-867929.html
+//Original by 'Nyro', modified for many shells by James
+
+//Original instructions:
+//Paste this code into your script editor, then MiddleMouse-Drag to your shelf. 
+//Open your UV Texture Editor, then activate the script from your shelf.
+//Now select a UV Shell (the UV Shell selection tool was activated by the script, don't worry)
+//that will act as the static shell (i.e. this shell's position will be used).
+//Click "Set Shell 1". Then select the second UV Shell, which is the one to be moved to Shell 1's position.
+//Then click "Set Shell2 and commit".
+
+
+global proc ShellStack(int $phase) {
+
+global float $shell1Pos[];
+
+if($phase == 1) {
+    setToolTo ShellStackCtx;
+    $shell1Pos = `texMoveUVShellContext -q -p ShellStackCtx`;
+}
+if($phase == 2) {
+    
+    setToolTo ShellStackCtx;
+    float $shell2Pos[] = `texMoveUVShellContext -q -p ShellStackCtx`;
+    
+    $moveU = $shell1Pos[0] - $shell2Pos[0];
+    $moveV = $shell1Pos[1] - $shell2Pos[1];
+    
+    polyMoveUV -t $moveU $moveV;
+
+    setToolTo moveSuperContext;
+    }
+
+if($phase == 3) {
+    
+    setToolTo ShellStackCtx;
+	
+	string $selectedShells[] = `ls -selection`;
+	select -clear;
+	
+	//for( $node in $selectedShells)
+	//{
+    setToolTo ShellStackCtx;
+		//select -r $node;
+		float $shell2Pos[] = `texMoveUVShellContext -q -p ShellStackCtx`;
+		
+		$moveU = $shell1Pos[0] - $shell2Pos[0];
+		$moveV = $shell1Pos[1] - $shell2Pos[1];
+		
+		polyMoveUV -t $moveU $moveV;
+    //setToolTo moveSuperContext;
+	//}
+
+    setToolTo ShellStackCtx;
+    }
+
+}
+
+
+
+global proc createShellStackerWindow() {
+
+window -title "Shell Stacker" -sizeable true -widthHeight 160 50 ShellStackerWindow;
+
+gridLayout -nc 1 -cellWidthHeight 150 24 myLayout;
+
+
+$shellBtn1 = `button -l "Set Shell 1" -c "ShellStack(1)"`;
+$shellBtn2 = `button -l "Set Shell 2 and commit" -c "ShellStack(2)"`;
+$shellBtn3 = `button -l "Commit Shell 2s[]" -c "ShellStack(3)"`;
+
+gridLayout -e -pos $shellBtn1 1 -pos $shellBtn2 2 -pos $shellBtn3 3 myLayout;
+
+
+showWindow ShellStackerWindow;
+setToolTo ShellStackCtx;
+}
+
+
+if(!`contextInfo -exists ShellStackCtx`) {
+texMoveUVShellContext ShellStackCtx;
+}
+
+if(`window -ex ShellStackerWindow`) {
+
+deleteUI -window ShellStackerWindow;
+}
+else {
+
+createShellStackerWindow;
+}

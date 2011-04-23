@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<options>
+  <DrawWayPoints>false</DrawWayPoints>
+  <DrawTrackNormals>true</DrawTrackNormals>
+  <AddAI>false</AddAI>
+  <DrawShipBoundingBoxes>true</DrawShipBoundingBoxes>
+  <UseKeyboardAsPad2>true</UseKeyboardAsPad2>
+  <MasterVolume>1000</MasterVolume>
+  <MusicVolume>100</MusicVolume>
+  <VoiceVolume>80</VoiceVolume>
+  <SfxVolume>100</SfxVolume>
+</options>

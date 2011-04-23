@@ -1,0 +1,451 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BeatShift.BeatShift">
+    <Position X="16" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAZAEEAAAgwgE0IIAAAGIAEAAACQIAgAIAACQAAAAgQ=</HashCode>
+      <FileName>BeatShift.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.ButtonDraw">
+    <Position X="19" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAIAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ButtonDraw.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.Camera">
+    <Position X="12.25" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAABAAQABABAAAACCAAQABBAQAgAAABAAQAAA=</HashCode>
+      <FileName>Camera.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.CameraPositionAttr">
+    <Position X="13.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>CameraPosition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.CameraPositions">
+    <Position X="15.75" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QCAAAAAIACAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CameraPosition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.ColorConvert">
+    <Position X="11.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAEAAAAAAAAAAAAAAAACAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>ColorConvert.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.GameLoop">
+    <Position X="24.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACQAAAAAAAAAAgAAIAAAAAAAAIAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>GameLoop.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.GameTextures">
+    <Position X="32.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAIAAEAIAAAAA4ACAAAAQAAAEAAAAAAEAAAA=</HashCode>
+      <FileName>GameTextures.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.HeadsUpDisplay">
+    <Position X="10.5" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACQAIIACAIAAAAAAAAAgEAAAAgAAAAAEBgAAAAABgAA=</HashCode>
+      <FileName>HeadsUpDisplay.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.BeatBar">
+    <Position X="30.75" Y="0.75" Width="1.5" />
+    <NestedTypes>
+      <Class Name="BeatShift.BeatBar.BeatInstance" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>HeadsUpDisplay.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAhABAAAEAAAAAAAAAAAAQAAAAAACAAA=</HashCode>
+      <FileName>HeadsUpDisplay.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.AiInputManager" BaseTypeListCollapsed="true">
+    <Position X="14" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACEAAA=</HashCode>
+      <FileName>Input\AiInputManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="BeatShift.AnyInputManager" BaseTypeListCollapsed="true">
+    <Position X="5.5" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQQACAAAAAAQAAAAAQAAAAAQBAAAAAAAAAAAACEAAA=</HashCode>
+      <FileName>Input\AnyInputManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="BeatShift.CoOpInputManager" BaseTypeListCollapsed="true">
+    <Position X="32" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAEAAAAQAAAAAAAAAIAAAAAAAAAAAAAABCEAAA=</HashCode>
+      <FileName>Input\CoOpInputManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="BeatShift.KeyInputManager" BaseTypeListCollapsed="true">
+    <Position X="13.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQgAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACECAA=</HashCode>
+      <FileName>Input\KeyInputManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="BeatShift.NullInputManager" BaseTypeListCollapsed="true">
+    <Position X="19" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACEAAA=</HashCode>
+      <FileName>Input\NullInputManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="BeatShift.PadInputManager" BaseTypeListCollapsed="true">
+    <Position X="28.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAEAAQAAAAAAAAAAAAAAAAgAAAAAIAACFAAA=</HashCode>
+      <FileName>Input\PadInputManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="BeatShift.InputCombo">
+    <Position X="11.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAABAAAAACAAAAAAAIgAAAAAAAAEA=</HashCode>
+      <FileName>InputCombo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.InputLayout">
+    <Position X="28.25" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAgAAAAAAIAAAAJAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Input\InputLayout.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.FbxModel">
+    <Position X="31.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAAIAAAIAAA=</HashCode>
+      <FileName>Map.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.Map">
+    <Position X="11.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAQAADgoAAAAAACAAAAABIAAAAAAAAAABBAQ=</HashCode>
+      <FileName>Map.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.MapData">
+    <Position X="1" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAIAQAAARAEAAIAAAAAAACAAAAAY=</HashCode>
+      <FileName>MapData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.MapPoint">
+    <Position X="22.5" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UAAAAAAAABAAAAAAAECQMAAAAQAAAAEQAAAAAgABAAA=</HashCode>
+      <FileName>MapData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.MapManager">
+    <Position X="20.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAYAAAAAAAABAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>MapManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.NetworkedGame">
+    <Position X="36" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ICQgABEADQAAAxEAAAAIAghAgAEAAAAADBACAAAAAAA=</HashCode>
+      <FileName>NetworkedGame.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.Options">
+    <Position X="3" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAEgSQAhAAkAIAAAAAAIAAAYCAAAGAEAAA=</HashCode>
+      <FileName>Options.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.ParticleEmitter">
+    <Position X="34.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQmFAAAAABCAgAAAMCIEAAAAACAACYAACBMAEAEAJA=</HashCode>
+      <FileName>ParticleEmitter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.ParticleSettings">
+    <Position X="20" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QgAAAABCgAAAAAQQEAAABAAAAAAGAACAAERAQABAAEQ=</HashCode>
+      <FileName>ParticleSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.Physics">
+    <Position X="28.25" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>JAQAAACEAAAgAYAAABAAAAAAAAAAAAAAIAAQAAAAAAA=</HashCode>
+      <FileName>Physics.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Players">
+    <Position X="8.25" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQRAAAAgAAAAIwIABABAAEAAAEAgChAAIAEASAAAgAA=</HashCode>
+      <FileName>Players.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.Program">
+    <Position X="18" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.Race">
+    <Position X="22.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gARAACAAAAAQQAAoAAAQEAAAEAAAAgAAAoEAAAAAAwE=</HashCode>
+      <FileName>Race.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.RacingControls">
+    <Position X="24.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAoBAQAAAgAIBAAoAQAAQAEAIgAAICAAAQAI=</HashCode>
+      <FileName>RacingControls.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.SelectedShip">
+    <Position X="24.5" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAQABAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>Ship.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.Ship">
+    <Position X="26.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAwwAAAA0AIQKgTgkBABlVCigkCyAQAQAhCAAEhUFCQ=</HashCode>
+      <FileName>Ship.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.ShipClass">
+    <Position X="30" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAIAAA=</HashCode>
+      <FileName>ShipClass.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.ShipSelect">
+    <Position X="2.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQBAAAAACABApAAAAAAAAAIAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>ShipSelect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.SplitScreenArea">
+    <Position X="19.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAQAAAgAAAAAAAAAAAAAABAAAAABABAAAAAAAAAAAAA=</HashCode>
+      <FileName>ShipSelect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.SoundManager">
+    <Position X="9.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABACCAAQAgAgAAAAoBAAAGAAQAAEACAIEAAAAAEAQ=</HashCode>
+      <FileName>SoundManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.SoundTrack">
+    <Position X="28.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AARAAQAAAAABAIAgAAAACAAAIACgAAAAAAACIAAACAQ=</HashCode>
+      <FileName>SoundTrack.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.Timing">
+    <Position X="0.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAABAAAAoAAAAAAAQAgIABIAIEAAIAgQAAAAACACgAA=</HashCode>
+      <FileName>Timing.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.Utils">
+    <Position X="30.75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utils.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.DebugGraphics.DrawVector">
+    <Position X="32.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAgAAAQAAAAAAAAAgAAAAAAgAE=</HashCode>
+      <FileName>DebugGraphics\DrawVector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.Menus.IMenuPage">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQAQAAI4ARAEhACACQSAMAAAACEgAAAgAAEAAYBoAA=</HashCode>
+      <FileName>Menus\IMenuPage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.Menus.MainMenu">
+    <Position X="7.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Menus\MainMenu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.Menus.MapSelectMenu">
+    <Position X="9.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Menus\MapSelectMenu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.Menus.MenuItem">
+    <Position X="33.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAQAAIAAAAAAAAEAACCAAAAAAAAAEAAA=</HashCode>
+      <FileName>Menus\MenuItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.Menus.MenuManager">
+    <Position X="7" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAQAEAAAAA4AIAAAAAAAgAAAAAAAIgAAABgBACAA=</HashCode>
+      <FileName>Menus\MenuManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.Menus.MultiplayerMenu">
+    <Position X="0.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Menus\MultiplayerMenu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.Menus.OptionsMenu">
+    <Position X="2.75" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Menus\OptionsMenu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatShift.Menus.SinglePlayerShipSelect">
+    <Position X="5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAgAAIAABABASACQAAAAAAACEgAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Menus\SinglePlayerShipSelect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="BeatShift.D_Arrow">
+    <Position X="12" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAYAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Physics.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Interface Name="BeatShift.IInputManager">
+    <Position X="18" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACEAAA=</HashCode>
+      <FileName>Input\IInputManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="BeatShift.ButtonImage">
+    <Position X="24.5" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AUBAAAAABDAABAoAAEAAAAAAAAAAAAAAAAAAIAEAYAA=</HashCode>
+      <FileName>ButtonDraw.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="BeatShift.CameraPosition">
+    <Position X="13.75" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAgAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>CameraPosition.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="BeatShift.GameState">
+    <Position X="15.5" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAAACAAAAAAJAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameLoop.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="BeatShift.InputAction">
+    <Position X="17.75" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCAACAECIUAgAAQEABAAAAQAEAAAgQCACAADAAIAA=</HashCode>
+      <FileName>Input\InputLayout.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="BeatShift.MapName">
+    <Position X="19" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQACIAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAEAAAA=</HashCode>
+      <FileName>Map.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="BeatShift.ModelCategory">
+    <Position X="22.75" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAUAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Map.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="BeatShift.SessionType">
+    <Position X="14" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAAAAEAAAAAAAAEAAAA=</HashCode>
+      <FileName>NetworkedGame.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="BeatShift.PlayerType">
+    <Position X="17.25" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAQAAAAAAAAAAAAAABAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Players.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="BeatShift.ShipType">
+    <Position X="15.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAABAAAAAIAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Ship.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="BeatShift.Menus.MenuPage">
+    <Position X="20.75" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAEIAAAAAAAAAAAAAAAAAAAAAAAgAAABABAAAA=</HashCode>
+      <FileName>Menus\MenuManager.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
