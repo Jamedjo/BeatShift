@@ -45,13 +45,30 @@ namespace BeatShift
             //MainGame.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;//Set display states
             BeatShift.spriteBatch.Begin();//(SpriteSortMode.Immediate, BlendState.AlphaBlend);
             int h = BeatShift.graphics.GraphicsDevice.Viewport.Width / (GameTextures.HudBar.Width / GameTextures.HudBar.Height);
-           // BeatShift.spriteBatch.Draw(GameTextures.HudBar, new Rectangle(0, BeatShift.graphics.GraphicsDevice.Viewport.Height - h, BeatShift.graphics.GraphicsDevice.Viewport.Width, h), Color.White);
+           
+            BeatShift.spriteBatch.Draw(GameTextures.HudBar, new Rectangle(0, BeatShift.graphics.GraphicsDevice.Viewport.Height - h, BeatShift.graphics.GraphicsDevice.Viewport.Width, h), Color.White);
             
             previousBoost = MathHelper.Lerp(previousBoost,(float)racer.racingControls.getBoostValue() / 100,0.05f);
             previousLapProgress = MathHelper.Lerp(previousLapProgress, (float)racer.shipPhysics.getLapPercentage() / 100, 0.05f);
             
+
+                        //source rectangle size should be whole height and perecent of width. Positioned at 0,0
+            //destination rectange size should be same as source size, but positioned image height above the bottom of the scren
+            int srcWidth = (int)(GameTextures.BoostBarLine.Width * previousLapProgress);
+            double scaleFactor = (double) BeatShift.graphics.GraphicsDevice.Viewport.Width / (double) GameTextures.BoostBarLine.Width;
+           
+            int destY_Offset = (BeatShift.graphics.GraphicsDevice.Viewport.Height) - GameTextures.HudBar.Height + (int)(scaleFactor * (138));
+
+            
+            int destHeight = (int)(scaleFactor * GameTextures.BoostBarLine.Height);
+            int destWidth = (int)((GameTextures.BoostBarLine.Width * previousLapProgress)*scaleFactor);
+
+            Rectangle src = new Rectangle(GameTextures.BoostBarLine.Width - srcWidth, 0,srcWidth, GameTextures.BoostBarLine.Height);
+            Rectangle dest = new Rectangle((int)(25*scaleFactor),destY_Offset, destWidth, GameTextures.BoostBarLine.Height);
+            BeatShift.spriteBatch.Draw(GameTextures.BoostBarLine, dest, src, Color.White);
+
             BeatShift.spriteBatch.Draw(GameTextures.BoostBar, new Rectangle(((int)(BeatShift.graphics.GraphicsDevice.Viewport.Width * previousLapProgress) - BeatShift.graphics.GraphicsDevice.Viewport.Width), (BeatShift.graphics.GraphicsDevice.Viewport.Height - h) - 12, BeatShift.graphics.GraphicsDevice.Viewport.Width, h), Color.Yellow);
-            BeatShift.spriteBatch.Draw(GameTextures.BoostBar, new Rectangle(((int)(BeatShift.graphics.GraphicsDevice.Viewport.Width * previousBoost) - BeatShift.graphics.GraphicsDevice.Viewport.Width), BeatShift.graphics.GraphicsDevice.Viewport.Height - h, BeatShift.graphics.GraphicsDevice.Viewport.Width, h), Color.White);
+            //BeatShift.spriteBatch.Draw(GameTextures.BoostBar, new Rectangle(((int)(BeatShift.graphics.GraphicsDevice.Viewport.Width * previousBoost) - BeatShift.graphics.GraphicsDevice.Viewport.Width), BeatShift.graphics.GraphicsDevice.Viewport.Height - h, BeatShift.graphics.GraphicsDevice.Viewport.Width, h), Color.White);
             
             
             if (racer.raceTiming.hasCompletedRace)

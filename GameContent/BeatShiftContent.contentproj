@@ -358,6 +358,21 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="HUD\boostbar_v3.png">
+      <Name>boostbar_v3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="HUD\boostbarline_v3.png">
+      <Name>boostbarline_v3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="HUD\topright_v3.jpg">
+      <Name>topright_v3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <None Include="MapPointData\DesertMap.bsmp">
       <Name>DesertMap</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -18,6 +18,8 @@ namespace BeatShift
         public static Texture2D CountdownGo;
         public static Texture2D HudBar;
         public static Texture2D BoostBar;
+        public static Texture2D BoostBarLine;
+        public static Texture2D TopRightBoard;
         public static Texture2D HorizontalSplit;
         public static Texture2D VerticalSplit;
         public static Texture2D WrongWaySign;
@@ -33,8 +35,12 @@ namespace BeatShift
             Countdown2 = c.Load<Texture2D>("Images/2");
             Countdown1 = c.Load<Texture2D>("Images/1");
             CountdownGo = c.Load<Texture2D>("Images/go");
-            HudBar = c.Load<Texture2D>("Images/HudBar");
+
+            TopRightBoard = c.Load<Texture2D>("HUD/topright_v3");
+            HudBar = c.Load<Texture2D>("HUD/boostbar_v3");
+            BoostBarLine = c.Load<Texture2D>("HUD/boostbarline_v3");
             BoostBar = c.Load<Texture2D>("Images/BoostBar");
+            
             HorizontalSplit = c.Load<Texture2D>("Images/horizontalsplit");
             VerticalSplit = c.Load<Texture2D>("Images/verticalsplit");
             WrongWaySign = c.Load<Texture2D>("Images/wrongway");
