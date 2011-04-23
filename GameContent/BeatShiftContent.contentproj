@@ -353,6 +353,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Visualisation\viz_red.png">
+      <Name>viz_red</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <None Include="MapPointData\DesertMap.bsmp">
       <Name>DesertMap</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

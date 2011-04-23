@@ -143,6 +143,7 @@
     <Compile Include="Utilities &amp; Misc\Beat.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Utilities &amp; Misc\BeatVisualisation.cs" />
     <Compile Include="Utilities &amp; Misc\ButtonDraw.cs" />
     <Compile Include="Utilities &amp; Misc\ControlSelect.cs" />
     <Compile Include="Manager\Menus\IMenuPage.cs" />
