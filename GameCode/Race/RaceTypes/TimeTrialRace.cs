@@ -48,7 +48,7 @@ namespace BeatShift
             totalRaceTime.Start();
             foreach (Racer racer in Race.currentRacers)
             {
-                racer.raceTiming.startNewLapTimer();
+                racer.raceTiming.startLapTimer();
             }
         }
 

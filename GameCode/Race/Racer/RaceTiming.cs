@@ -103,7 +103,7 @@ namespace BeatShift
             return finalRaceTimeString;
         }
 
-        public void startNewLapTimer()
+        public void startLapTimer()
         {
             stopwatch.Start();
         }

@@ -26,7 +26,7 @@ namespace BeatShift.Menus
         {
             addMenuItem("Resume", (Action)(delegate
             {
-                GameLoop.unPause();
+                GameLoop.EndPause();
             }));
             addMenuItem("Main Menu", (Action)(delegate
             {

@@ -31,25 +31,31 @@ namespace BeatShift
 
         private static IMenuPage pauseMenu= new PauseMenu();
 
-        public static void unPause()
-        {
-            paused = false;
-        }
-
         private static void BeginPause(bool UserInitiated)
         {
             paused = true;
             pausedForGuide = !UserInitiated;
+
+            if (Race.currentRaceType.actualRaceBegun)
+            {
+                foreach (Racer racer in Race.currentRacers)
+                    racer.raceTiming.stopLapTimer();
+            }
             //TODO: Pause audio playback
             //TODO: Pause controller vibration
         }
 
-        private static void EndPause()
+        public static void EndPause()
         {
             //TODO: Resume audio
             //TODO: Resume controller vibration
             pausedForGuide = false;
             paused = false;
+            if (Race.currentRaceType.actualRaceBegun)
+            {
+                foreach (Racer racer in Race.currentRacers)
+                    racer.raceTiming.startLapTimer();
+            }
         }
 
         private static void checkPauseKey(GameTime gameTime)
@@ -71,14 +77,14 @@ namespace BeatShift
         private static void checkPauseGuide()
         {
             // Pause if the Guide is up
-            if (!paused && Guide.IsVisible)
+            if (!paused && Guide.IsVisible && currentState == GameState.LocalGame)
             {
                 BeginPause(false);
                 //Console.Write("Game Paused \n");
             }
             // If we paused for the guide, unpause if the guide
             // went away
-            else if (paused && pausedForGuide && !Guide.IsVisible)
+            else if (paused && pausedForGuide && !Guide.IsVisible && currentState == GameState.LocalGame)
             {
                 EndPause();
                 //Console.Write("Game Resumed \n");
