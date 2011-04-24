@@ -22,7 +22,8 @@ namespace BeatShift.Input
 
         int boostBar = 0;
 
-        private Boolean previousCameraFlipped = false;
+        private Boolean previousCameraReverse = false;
+        private Boolean previousPadDown = false;
 
         public RacingControls(Racer myRacer, IInputManager inputManager)//Should also take 'useKeyboard' Boolean
         {
@@ -58,12 +59,17 @@ namespace BeatShift.Input
                 System.Diagnostics.Debug.WriteLine("Camera toggle");
                 ((RacerHuman)racer).toggleCamera();
             }
-            if((chosenInput.actionPressed(InputAction.CameraReverse) != previousCameraFlipped)
-              || (chosenInput.actionPressed(InputAction.PadDown) != previousCameraFlipped))
+            if(chosenInput.actionPressed(InputAction.CameraReverse) != previousCameraReverse)
             {
                 ((RacerHuman)racer).toggleReverseCamera();
-                previousCameraFlipped = !previousCameraFlipped;
+                previousCameraReverse = !previousCameraReverse;
             }
+            else if (chosenInput.actionPressed(InputAction.PadDown) != previousPadDown)
+            {
+                ((RacerHuman)racer).toggleReverseCamera();
+                previousPadDown = !previousPadDown;
+            }
+
 
             if (chosenInput.actionPressed(InputAction.Boost) && (boostBar > 0))
             {
