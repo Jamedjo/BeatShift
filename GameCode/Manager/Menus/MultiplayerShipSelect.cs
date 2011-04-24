@@ -18,7 +18,6 @@ namespace BeatShift
     {
         public Boolean Enabled = false;
         public Boolean Visible = false;
-        public Boolean preGame;
         public int[] signedInPlayers = new int[4];
         public Boolean signInFlag;
 
@@ -58,7 +57,6 @@ namespace BeatShift
 
         public void resetInputsAndScreens()
         {
-            preGame = false;
             ssarea[0] = new SplitScreenArea(new PadInputManager(PlayerIndex.One));
             if (Options.UseKeyboardAsPad2) ssarea[1] = new SplitScreenArea(new KeyInputManager());
             else ssarea[1] = new SplitScreenArea(new PadInputManager(PlayerIndex.Two));
@@ -114,12 +112,6 @@ namespace BeatShift
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public void Update(GameTime gameTime)
         {
-            if (preGame)
-            {
-                GameLoop.startLocalGame(gameTime);
-                return;
-            }
-
             //Update gamePad states and keyboardStates for all input managers
             for (int i = 0; i < 4; i++)
             {
@@ -132,6 +124,16 @@ namespace BeatShift
                 if (ssarea[i].input.actionTapped(InputAction.MenuAccept))
                 {
                     ssarea[i].setActive(true);
+
+                    Array.Clear(signedInPlayers, 0, signedInPlayers.Length);
+                    foreach (SignedInGamer gamer in Gamer.SignedInGamers)
+                    {
+                        signedInPlayers[(int)gamer.PlayerIndex] = 1;
+                    }
+
+                    if (signedInPlayers[i] == 0)
+                        Guide.ShowSignIn(4, false);
+
                     Race.humanRacers[i].shipDrawing.isVisible = true;
                 }
                 if (ssarea[i].input.actionTapped(InputAction.MenuBack))
@@ -189,7 +191,11 @@ namespace BeatShift
             //----------------------------change so only saves active players
 
             //start button changes game state
-            if (ssarea[0].input.actionTapped(InputAction.Start) || ssarea[1].input.actionTapped(InputAction.Start) || ssarea[2].input.actionTapped(InputAction.Start) || ssarea[3].input.actionTapped(InputAction.Start))
+            //
+            if ((ssarea[0].input.actionTapped(InputAction.Start) && (Race.humanRacers[0].shipDrawing.isVisible)) ||
+                (ssarea[1].input.actionTapped(InputAction.Start) && (Race.humanRacers[1].shipDrawing.isVisible)) ||
+                (ssarea[2].input.actionTapped(InputAction.Start) && (Race.humanRacers[2].shipDrawing.isVisible)) ||
+                (ssarea[3].input.actionTapped(InputAction.Start) && (Race.humanRacers[3].shipDrawing.isVisible)))
             {
                 //make sure physics loads
                 while (MapManager.currentMap.physicsLoadingThread.IsAlive) { }
@@ -201,27 +207,11 @@ namespace BeatShift
                 }
 
                 Race.getFullListOfRacerIDsFromSignedInPeople();
-                Array.Clear(signedInPlayers, 0, signedInPlayers.Length) ;
-                foreach (SignedInGamer gamer in Gamer.SignedInGamers)
-                {
-                    signedInPlayers[(int)gamer.PlayerIndex] = 1;
-                }
-
-                signInFlag = false;
-                for (int i = 0; i < 4; i++)
-                    if (Race.humanRacers[i].shipDrawing.isVisible == true)
-                        if (signedInPlayers[i] == 0)
-                            signInFlag = true;
 
                 //If controller was not plugged-in/selected remove that player
                 Race.removeNonVisibleRacers();
- 
-                //If any are not logged in show guide
-                if (signInFlag == true && Race.racerIDs != null)
-                    Guide.ShowSignIn(4, false);
-                else
-                    GameLoop.startLocalGame(gameTime);
-                preGame = true;
+
+                GameLoop.startLocalGame(gameTime);
             }
         }
 
