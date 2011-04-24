@@ -151,6 +151,10 @@ namespace BeatShift.Menus
         {
             return currentItem;
         }
+        protected void resetMenuSelection()
+        {
+            currentItem = 0;
+        }
 
         public virtual void leavingMenu()
         {
