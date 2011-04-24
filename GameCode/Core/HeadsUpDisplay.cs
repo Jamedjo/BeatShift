@@ -54,7 +54,7 @@ namespace BeatShift
             //destination rectange size should be same as source size, but positioned image height above the bottom of the scren
             int srcWidth = (int)(GameTextures.BoostBarLine.Width * racer.raceTiming.previousLapProgress);
             double scaleFactor = (double) BeatShift.graphics.GraphicsDevice.Viewport.Width / (double) GameTextures.BoostBarLine.Width;
-           
+
             int destY_Offset = (BeatShift.graphics.GraphicsDevice.Viewport.Height) - GameTextures.HudBar.Height + (int)(scaleFactor * (138));
 
             
@@ -91,24 +91,32 @@ namespace BeatShift
                 DrawMessage(BeatShift.blueNumbersFont, ":", 710, vOffset - 48, 0.6f);
 
                 // Lap info
-                if (Race.currentRaceType.displayCurrentLapOutofTotalLaps)
-                {
-                    DrawMessage(BeatShift.newfont, (racer.raceTiming.currentLap + 1) + "/" + Race.currentRaceType.maxLaps, 680, 20, 0.4f);
-                    DrawMessage(BeatShift.newfontgreen, "LAPS", 720, 22, 0.4f);
-                }
-                if (Race.currentRaceType.displayCurrentLapTime)
-                {
-                    DrawMessage(BeatShift.newfont, racer.raceTiming.getCurrentLapTime(), 680, 43, 0.4f);
-                }
-                if (Race.currentRaceType.displayCurrentBestLap)
-                {
-                    DrawMessage(BeatShift.newfont, racer.raceTiming.getBestLapTime(), 680, 66, 0.4f);
-                }
-                if (Race.currentRaceType.displayCurrentRank)
-                {
-                    DrawMessage(BeatShift.newfontgreen, racer.raceTiming.currentRanking.ToString(), 10, 10, 1f);
-                    DrawMessage(BeatShift.newfontgreen, calculateRankSuffix(racer.raceTiming.currentRanking), 35 + extraSuffixOffset(racer.raceTiming.currentRanking), 40, 0.4f);
-                }
+                //if (Race.currentRaceType.displayCurrentLapOutofTotalLaps)
+                //{
+                //    DrawMessage(BeatShift.newfont, (racer.raceTiming.currentLap + 1) + "/" + Race.currentRaceType.maxLaps, 680, 20, 0.4f);
+                //    DrawMessage(BeatShift.newfontgreen, "LAPS", 720, 22, 0.4f);
+                //}
+                //if (Race.currentRaceType.displayCurrentLapTime)
+                //{
+                //    DrawMessage(BeatShift.newfont, racer.raceTiming.getCurrentLapTime(), 680, 43, 0.4f);
+                //}
+                //if (Race.currentRaceType.displayCurrentBestLap)
+                //{
+                //    DrawMessage(BeatShift.newfont, racer.raceTiming.getBestLapTime(), 680, 66, 0.4f);
+                //}
+                //if (Race.currentRaceType.displayCurrentRank)
+                //{
+                //    DrawMessage(BeatShift.newfontgreen, racer.raceTiming.currentRanking.ToString(), 10, 10, 1f);
+                //    DrawMessage(BeatShift.newfontgreen, calculateRankSuffix(racer.raceTiming.currentRanking), 35 + extraSuffixOffset(racer.raceTiming.currentRanking), 40, 0.4f);
+                //}
+                double scaleFactorHeight = (double)BeatShift.graphics.GraphicsDevice.Viewport.Height / 720;
+                double scaleFactorWidth = (double)BeatShift.graphics.GraphicsDevice.Viewport.Width / 1280;
+
+                int newBoardWidth = (int)(GameTextures.TopRightBoard.Width * scaleFactorWidth);
+                int newBoardHeight = (int)(GameTextures.TopRightBoard.Height * scaleFactorHeight);
+
+                var d = new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width - newBoardWidth, 0, newBoardWidth, newBoardHeight);
+                BeatShift.spriteBatch.Draw(GameTextures.TopRightBoard, d, Color.White);
 
                 //if wrong way
                 if (racer.shipPhysics.wrongWay == true)
@@ -119,7 +127,9 @@ namespace BeatShift
                 //uses counter to keep sign shown for a few seconds
                 if (racer.raceTiming.displayWrongWay == true && counter < 500)
                 {
-                    BeatShift.spriteBatch.Draw(GameTextures.WrongWaySign, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.WrongWaySign.Width / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - GameTextures.WrongWaySign.Height / 2), Color.White);
+                    int newWarningWidth = (int)(GameTextures.WrongWaySign.Width * scaleFactorWidth);
+                    int newWarningHeight = (int)(GameTextures.WrongWaySign.Height * scaleFactorHeight);
+                    BeatShift.spriteBatch.Draw(GameTextures.WrongWaySign, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - newWarningWidth / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - newWarningHeight / 2, newWarningWidth, newWarningHeight), Color.White);
                     counter++;
                 }
                 else if (counter >= 500) { /*DrawMessage("Right Way", 250, vOffset / 2);*/ counter = 0; racer.raceTiming.displayWrongWay = false; }
