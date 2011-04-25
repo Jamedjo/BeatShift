@@ -75,17 +75,20 @@ namespace BeatShift
         /// <param name="player">which players ship to change</param>
         public void switchShipRight(int player)
         {
-            //find what ship the player has at the moment
-            //Race.humanRacers[player].shipName = (ShipName)IMenuPage.getCurrentItem();
-            ShipName ship = Race.humanRacers[player].shipName;
-            int pos = 0;
-            //find the position in the list the current ship is at
-            for (int i = 0; i < shipsList.Count ; i++)
-                if (shipsList[i] == ship)
-                    pos = i;
-            //change ship to one to the right
-            if (pos != shipsList.Count() - 1)
-                Race.humanRacers[player].shipName = shipsList[pos + 1];
+            if (ssarea[player].input.actionTapped(InputAction.MenuRight))
+            {
+                //find what ship the player has at the moment
+                //Race.humanRacers[player].shipName = (ShipName)IMenuPage.getCurrentItem();
+                ShipName ship = Race.humanRacers[player].shipName;
+                int pos = 0;
+                //find the position in the list the current ship is at
+                for (int i = 0; i < shipsList.Count; i++)
+                    if (shipsList[i] == ship)
+                        pos = i;
+                //change ship to one to the right
+                if (pos != shipsList.Count() - 1)
+                    Race.humanRacers[player].shipName = shipsList[pos + 1];
+            }
         }
 
         /// <summary>
@@ -94,16 +97,19 @@ namespace BeatShift
         /// <param name="player">which players ship to change</param>
         public void switchShipLeft(int player)
         {
-            //find what ship the player has at the moment
-            ShipName ship = Race.humanRacers[player].shipName;
-            int pos = 0;
-            //find the position in the list the current ship is at
-            for (int i = 0; i < shipsList.Count ; i++)
-                if (shipsList[i] == ship)
-                    pos = i;
-            //change ship to one to the left
-            if (pos != 0)
-                Race.humanRacers[player].shipName = shipsList[pos - 1];
+            if (ssarea[player].input.actionTapped(InputAction.MenuLeft))
+            {
+                //find what ship the player has at the moment
+                ShipName ship = Race.humanRacers[player].shipName;
+                int pos = 0;
+                //find the position in the list the current ship is at
+                for (int i = 0; i < shipsList.Count; i++)
+                    if (shipsList[i] == ship)
+                        pos = i;
+                //change ship to one to the left
+                if (pos != 0)
+                    Race.humanRacers[player].shipName = shipsList[pos - 1];
+            }
         }
 
         /// <summary>
@@ -112,106 +118,104 @@ namespace BeatShift
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public void Update(GameTime gameTime)
         {
-            //Update gamePad states and keyboardStates for all input managers
+            bool activePlayerPressedStart = false;
+
+            //For each quadrent area of the screen/for each potential player   
             for (int i = 0; i < 4; i++)
             {
+                //Update gamePad states and keyboardStates for all input managers
                 ssarea[i].Update(gameTime);
+
+                //"signing in" for each player A will make the ship appear
+                resondToButtonA(i);
+
+                // B makes it dissapear if already active, otherwise return to main menu.
+                respondToMenuBack(i);
+
+                //changes the hue for each player
+                respondToUpDown(i);
+
+                //changes the ship to the left/right right for all players
+                switchShipLeft(i);
+                switchShipRight(i);
+               
+                activePlayerPressedStart = activePlayerPressedStart || (ssarea[i].input.actionTapped(InputAction.Start) && (Race.humanRacers[i].shipDrawing.isVisible));
             }
 
-            //"signing in" for each player A will make the ship appear B makes it dissapear.
-            for (int i = 0; i < 4; i++)
-            {
-                if (ssarea[i].input.actionTapped(InputAction.MenuAccept))
-                {
-                    ssarea[i].setActive(true);
-
-                    Array.Clear(signedInPlayers, 0, signedInPlayers.Length);
-                    foreach (SignedInGamer gamer in Gamer.SignedInGamers)
-                    {
-                        signedInPlayers[(int)gamer.PlayerIndex] = 1;
-                    }
-
-                    if (signedInPlayers[i] == 0)
-                        Guide.ShowSignIn(4, false);
-
-                    Race.humanRacers[i].shipDrawing.isVisible = true;
-                }
-                if (ssarea[i].input.actionTapped(InputAction.MenuBack))
-                {
-                    if (ssarea[i].isActive)
-                    {
-                        ssarea[i].setActive(false);
-                        Race.humanRacers[i].shipDrawing.isVisible = false;
-                    }
-                    else
-                    {
-                        //Back button presed on inactive window, go back to main menu.
-                        GameLoop.setGameStateAndResetPlayers(GameState.Menu);
-                    }
-                }
-            }
-
-            //for each controller
-            //if player not active
-            //if 'a' is pressed make active  and set game.players.setShipVisibility(index,true) to make ship visible
-            //if 'b' or 'back' pressed go to last menu
-
-            // is player ISACTIVE (by pressing a) do:
-            // if b is pressed make not active and set visibility to false
-            // if up is pressed change color, left right change ship
-
-            //changes the hue for each player
-            for (int i = 0; i < 4; i++)
-            {
-                if (ssarea[i].input.actionPressed(InputAction.MenuDown))
-                {
-                    increaseShipHue(ssarea[i], 2.5f);
-                    Race.humanRacers[i].setColour((int)ssarea[i].hue);
-                }
-                if (ssarea[i].input.actionPressed(InputAction.MenuUp))
-                {
-                    decreaseShipHue(ssarea[i], 2.5f);
-                    Race.humanRacers[i].setColour((int)ssarea[i].hue);
-                }
-            }
-
-            //changes the ship to the left/right right for all players (in theory, but switches atm.)
-            for (int i = 0; i < 4; i++)
-            {
-                if (ssarea[i].input.actionTapped(InputAction.MenuLeft))
-                {
-                    switchShipLeft(i);
-                }
-                if (ssarea[i].input.actionTapped(InputAction.MenuRight))
-                {
-                    switchShipRight(i);
-                }
-            }
-
-            //----------------------------change so only saves active players
 
             //start button changes game state
-            //
-            if ((ssarea[0].input.actionTapped(InputAction.Start) && (Race.humanRacers[0].shipDrawing.isVisible)) ||
-                (ssarea[1].input.actionTapped(InputAction.Start) && (Race.humanRacers[1].shipDrawing.isVisible)) ||
-                (ssarea[2].input.actionTapped(InputAction.Start) && (Race.humanRacers[2].shipDrawing.isVisible)) ||
-                (ssarea[3].input.actionTapped(InputAction.Start) && (Race.humanRacers[3].shipDrawing.isVisible)))
+            if (activePlayerPressedStart)
             {
-                //make sure physics loads
-                while (MapManager.currentMap.physicsLoadingThread.IsAlive) { }
+                setupGameAndChangeState(gameTime);
+            }
+        }
 
-                //set input managers
-                for (int k = 0; k < 4; k++)
+        private void setupGameAndChangeState(GameTime gameTime)
+        {
+            //make sure physics loads
+            while (MapManager.currentMap.physicsLoadingThread.IsAlive) { }
+
+            //set input managers
+            for (int k = 0; k < 4; k++)
+            {
+                Race.humanRacers[k].setupRacingControls(ssarea[k].input);
+            }
+
+            Race.getFullListOfRacerIDsFromSignedInPeople();
+
+            //If controller was not plugged-in/selected remove that player
+            Race.removeNonVisibleRacers();
+
+            GameLoop.startLocalGame(gameTime);
+        }
+
+        private void respondToMenuBack(int i)
+        {
+            if (ssarea[i].input.actionTapped(InputAction.MenuBack))
+            {
+                if (ssarea[i].isActive)
                 {
-                    Race.humanRacers[k].setupRacingControls(ssarea[k].input);
+                    ssarea[i].setActive(false);
+                    Race.humanRacers[i].shipDrawing.isVisible = false;
+                }
+                else
+                {
+                    //Back button presed on inactive window, go back to main menu.
+                    GameLoop.setGameStateAndResetPlayers(GameState.Menu);
+                }
+            }
+        }
+
+        private void resondToButtonA(int i)
+        {
+            if (ssarea[i].input.actionTapped(InputAction.MenuAccept))
+            {
+                ssarea[i].setActive(true);
+
+                Array.Clear(signedInPlayers, 0, signedInPlayers.Length);
+                foreach (SignedInGamer gamer in Gamer.SignedInGamers)
+                {
+                    signedInPlayers[(int)gamer.PlayerIndex] = 1;
                 }
 
-                Race.getFullListOfRacerIDsFromSignedInPeople();
+                if (signedInPlayers[i] == 0)
+                    Guide.ShowSignIn(4, false);
 
-                //If controller was not plugged-in/selected remove that player
-                Race.removeNonVisibleRacers();
+                Race.humanRacers[i].shipDrawing.isVisible = true;
+            }
+        }
 
-                GameLoop.startLocalGame(gameTime);
+        private void respondToUpDown(int i)
+        {
+            if (ssarea[i].input.actionPressed(InputAction.MenuDown))
+            {
+                increaseShipHue(ssarea[i], 2.5f);
+                Race.humanRacers[i].setColour((int)ssarea[i].hue);
+            }
+            if (ssarea[i].input.actionPressed(InputAction.MenuUp))
+            {
+                decreaseShipHue(ssarea[i], 2.5f);
+                Race.humanRacers[i].setColour((int)ssarea[i].hue);
             }
         }
 

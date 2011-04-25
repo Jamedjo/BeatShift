@@ -194,6 +194,7 @@
     <Compile Include="Race\Racer\ShipDrawing.cs" />
     <Compile Include="Race\Racer\ShipPhysics.cs" />
     <Compile Include="Race\Race.cs" />
+    <Compile Include="Utilities &amp; Misc\RunningTimer.cs" />
     <Compile Include="Utilities &amp; Misc\SoundManager.cs" />
     <Compile Include="Utilities &amp; Misc\InputCombo.cs" />
     <Compile Include="Utilities &amp; Misc\ColorConvert.cs" />
