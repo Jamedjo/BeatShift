@@ -1,6 +1,6 @@
 using System;
 
-namespace TestSimpleRNG
+namespace BeatShift.Util.Random
 {
     /// <summary>
     /// SimpleRNG is a simple random number generator based on 
@@ -8,38 +8,58 @@ namespace TestSimpleRNG
     /// Although it is very simple, it passes Marsaglia's DIEHARD
     /// series of random number generator tests.
     /// 
+    /// The random generator seed can be set three ways:
+    /// 1) specifying two non-zero unsigned integers
+    /// 2) specifying one non-zero unsigned integer and taking a default value for the second
+    /// 3) setting the seed from the system time
+    /// 
     /// Written by John D. Cook 
     /// http://www.johndcook.com
     /// </summary>
-    public class SimpleRNG
+    public static class SimpleRNG
     {
-        private static uint m_w;
-        private static uint m_z;
 
-        static SimpleRNG()
-        {
-            // These values are not magical, just the default values Marsaglia used.
-            // Any pair of unsigned integers should be fine.
-            m_w = 521288629;
-            m_z = 362436069;
-        }
+        #region State Variables
 
-        // The random generator seed can be set three ways:
-        // 1) specifying two non-zero unsigned integers
-        // 2) specifying one non-zero unsigned integer and taking a default value for the second
-        // 3) setting the seed from the system time
+        // Not magical, just the default values Marsaglia used.
+        // Any pair of unsigned integers should be fine.
+        // Used to maintain internal state.
 
+        /// <summary>
+        /// Internal state storage.
+        /// </summary>
+        private static uint m_w = 521288629;
+
+        /// <summary>
+        /// Internal state storage.
+        /// </summary>
+        private static uint m_z = 362436069;
+
+        #endregion
+
+        /// <summary>
+        /// Set both internal seeds. Can be used to repeat a sequence.
+        /// </summary>
+        /// <param name="u">First seed value to use.</param>
+        /// <param name="v">Second seed value to use.</param>
         public static void SetSeed(uint u, uint v)
         {
-            if (u != 0) m_w = u; 
+            if (u != 0) m_w = u;
             if (v != 0) m_z = v;
         }
 
+        /// <summary>
+        /// Set one internal seed.
+        /// </summary>
+        /// <param name="u">Seed value to use.</param>
         public static void SetSeed(uint u)
         {
             m_w = u;
         }
 
+        /// <summary>
+        /// Automatically sets the internal seeds based on current system time.
+        /// </summary>
         public static void SetSeedFromSystemTime()
         {
             System.DateTime dt = System.DateTime.Now;
@@ -47,8 +67,10 @@ namespace TestSimpleRNG
             SetSeed((uint)(x >> 16), (uint)(x % 4294967296));
         }
 
-        // Produce a uniform random sample from the open interval (0, 1).
-        // The method will not return either end point.
+        
+        /// <summary>
+        /// Produce a uniform random sample from the open interval (0, 1).
+        /// </summary>
         public static double GetUniform()
         {
             // 0 <= u < 2^32
@@ -58,28 +80,37 @@ namespace TestSimpleRNG
             return (u + 1.0) * 2.328306435454494e-10;
         }
 
-        // This is the heart of the generator.
-        // It uses George Marsaglia's MWC algorithm to produce an unsigned integer.
-        // See http://www.bobwheeler.com/statistics/Password/MarsagliaPost.txt
+        /// <summary>
+        /// This is the heart of the generator.
+        /// It uses George Marsaglia's MWC algorithm to produce an unsigned integer.
+        /// 
+        /// See http://www.bobwheeler.com/statistics/Password/MarsagliaPost.txt
+        /// </summary>
         private static uint GetUint()
         {
             m_z = 36969 * (m_z & 65535) + (m_z >> 16);
             m_w = 18000 * (m_w & 65535) + (m_w >> 16);
             return (m_z << 16) + m_w;
         }
-        
-        // Get normal (Gaussian) random sample with mean 0 and standard deviation 1
+
+        /// <summary>
+        /// Get a normal (Gaussian) random sample with mean 0 and standard deviation 1.
+        /// </summary>
         public static double GetNormal()
         {
             // Use Box-Muller algorithm
             double u1 = GetUniform();
             double u2 = GetUniform();
-            double r = Math.Sqrt( -2.0*Math.Log(u1) );
-            double theta = 2.0*Math.PI*u2;
-            return r*Math.Sin(theta);
+            double r = Math.Sqrt(-2.0 * Math.Log(u1));
+            double theta = 2.0 * Math.PI * u2;
+            return r * Math.Sin(theta);
         }
-        
-        // Get normal (Gaussian) random sample with specified mean and standard deviation
+
+        /// <summary>
+        /// Get a normal (Gaussian) random sample with specified mean and standard deviation.
+        /// </summary>
+        /// <param name="mean">The mean of the required distribution.</param>
+        /// <param name="standardDeviation">The standard deviation of the required distribution.</param>
         public static double GetNormal(double mean, double standardDeviation)
         {
             if (standardDeviation <= 0.0)
@@ -87,13 +118,13 @@ namespace TestSimpleRNG
                 string msg = string.Format("Shape must be positive. Received {0}.", standardDeviation);
                 throw new ArgumentOutOfRangeException(msg);
             }
-            return mean + standardDeviation*GetNormal();
+            return mean + standardDeviation * GetNormal();
         }
-        
+
         // Get exponential random sample with mean 1
         public static double GetExponential()
         {
-            return -Math.Log( GetUniform() );
+            return -Math.Log(GetUniform());
         }
 
         // Get exponential random sample with specified mean
@@ -104,7 +135,7 @@ namespace TestSimpleRNG
                 string msg = string.Format("Mean must be positive. Received {0}.", mean);
                 throw new ArgumentOutOfRangeException(msg);
             }
-            return mean*GetExponential();
+            return mean * GetExponential();
         }
 
         public static double GetGamma(double shape, double scale)
@@ -117,21 +148,21 @@ namespace TestSimpleRNG
 
             if (shape >= 1.0)
             {
-                d = shape - 1.0/3.0;
-                c = 1.0/Math.Sqrt(9.0*d);
-                for (;;)
+                d = shape - 1.0 / 3.0;
+                c = 1.0 / Math.Sqrt(9.0 * d);
+                for (; ; )
                 {
                     do
                     {
                         x = GetNormal();
-                        v = 1.0 + c*x;
+                        v = 1.0 + c * x;
                     }
                     while (v <= 0.0);
-                    v = v*v*v;
+                    v = v * v * v;
                     u = GetUniform();
-                    xsquared = x*x;
-                    if (u < 1.0 -.0331*xsquared*xsquared || Math.Log(u) < 0.5*xsquared + d*(1.0 - v + Math.Log(v)))
-                        return scale*d*v;
+                    xsquared = x * x;
+                    if (u < 1.0 - .0331 * xsquared * xsquared || Math.Log(u) < 0.5 * xsquared + d * (1.0 - v + Math.Log(v)))
+                        return scale * d * v;
                 }
             }
             else if (shape <= 0.0)
@@ -141,9 +172,9 @@ namespace TestSimpleRNG
             }
             else
             {
-                double g = GetGamma(shape+1.0, 1.0);
+                double g = GetGamma(shape + 1.0, 1.0);
                 double w = GetUniform();
-                return scale*g*Math.Pow(w, 1.0/shape);
+                return scale * g * Math.Pow(w, 1.0 / shape);
             }
         }
 
@@ -182,7 +213,7 @@ namespace TestSimpleRNG
             double p = GetUniform();
 
             // Apply inverse of the Cauchy distribution function to a uniform
-            return median + scale*Math.Tan(Math.PI*(p - 0.5));
+            return median + scale * Math.Tan(Math.PI * (p - 0.5));
         }
 
         public static double GetStudentT(double degreesOfFreedom)
@@ -204,8 +235,8 @@ namespace TestSimpleRNG
         {
             double u = GetUniform();
             return (u < 0.5) ?
-                mean + scale*Math.Log(2.0*u) :
-                mean - scale*Math.Log(2*(1-u));
+                mean + scale * Math.Log(2.0 * u) :
+                mean - scale * Math.Log(2 * (1 - u));
         }
 
         public static double GetLogNormal(double mu, double sigma)
