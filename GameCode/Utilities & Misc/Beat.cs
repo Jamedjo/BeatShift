@@ -6,25 +6,21 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BeatShift
 {
-    public class Beat
+    public struct Beat
     {
-        int time;
-        Buttons key;
+        public readonly long Time;
 
-        public Beat(int ntime, Buttons nKey)
+        public readonly Buttons Button;
+
+        public Beat(long time, Buttons button)
         {
-            time = ntime;
-            key = nKey;
+            Time = time;
+            Button = button;
         }
 
-        public int getTime(int latency)
+        public long getTimeWithLatency(long latency)
         {
-            return time + latency;
-        }
-
-        public Buttons getKey()
-        {
-            return key;
+            return Time + latency;
         }
     }
 }

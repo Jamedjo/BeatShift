@@ -15,6 +15,7 @@ using BEPUphysics.Collidables;
 using BEPUphysics.NarrowPhaseSystems.Pairs;
 using BEPUphysics.CollisionTests;
 using BEPUphysics.CollisionRuleManagement;
+using BeatShift.Util.Random;
 
 
 namespace BeatShift.Input
@@ -24,8 +25,8 @@ namespace BeatShift.Input
         /// <summary>
         ///  Set to false and the player retakes control
         /// </summary>
-        public const Boolean testAI = false;
-        public const int numberOfAI = 8;
+        public const Boolean testAI = true;
+        public const int numberOfAI = 3;
 
         private float randInaccuracy;
         private GameTime lastRandChange;
@@ -34,6 +35,8 @@ namespace BeatShift.Input
         private GamePadState lastState;
         private Racer parent;
         private Box aheadBox;
+
+        private Beat? nextBeatToPress = null;
 
         /// <summary>
         /// An input interface to a virtual controller which acts as an AI racer.
@@ -138,29 +141,13 @@ namespace BeatShift.Input
                 if (gameTime.TotalGameTime.Subtract(lastRandChange.TotalGameTime).Seconds == 1)
                 {
                     lastRandChange = gameTime;
-                    randInaccuracy = (float)randGen.NextDouble() - 0.5f;
-                    if (randInaccuracy > 0)
-                    {
-                        randInaccuracy = randInaccuracy * randInaccuracy;
-                    }
-                    else
-                    {
-                        randInaccuracy = randInaccuracy * randInaccuracy * -1;
-                    }
+                    randInaccuracy = (float) SimpleRNG.GetNormal(0, 2.0 / 9.0);
                 }
             }
             else
             {
                 lastRandChange = gameTime;
-                randInaccuracy = (float)randGen.NextDouble() - 0.5f;
-                if (randInaccuracy > 0)
-                {
-                    randInaccuracy = randInaccuracy * randInaccuracy;
-                }
-                else
-                {
-                    randInaccuracy = randInaccuracy * randInaccuracy * -1;
-                }
+                randInaccuracy = (float)SimpleRNG.GetNormal(0, 2.0 / 9.0);
             }
 
             aheadBox.Position = parent.shipPhysics.ShipPosition + parent.shipPhysics.ShipOrientationMatrix.Forward * 0;
@@ -206,6 +193,17 @@ namespace BeatShift.Input
         private Buttons setButtons()
         {
             Buttons b = new Buttons();
+
+            if (nextBeatToPress == null)
+            {
+                nextBeatToPress = parent.beatQueue.nextBeat();
+            }
+            else if (nextBeatToPress.Value.Time > BeatShift.bgm.songTick())
+            {
+                b |= nextBeatToPress.Value.Button;
+                nextBeatToPress = null;
+            }
+            
 
             // Initially no buttons.
             return b;

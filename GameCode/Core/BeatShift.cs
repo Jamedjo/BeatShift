@@ -13,6 +13,7 @@ using Microsoft.Xna.Framework.Storage;
 using BEPUphysics;
 using BeatShift.Menus;
 using BeatShift.GameDebugTools;
+using BeatShift.Util.Random;
 
 
 namespace BeatShift
@@ -100,6 +101,8 @@ namespace BeatShift
 
             // Now with static constuctor so auto initalized on first access.
             //Viewports.setupViewports();
+
+            SimpleRNG.SetSeedFromSystemTime();
 
             DebugSystem.Initialize(this, "FontA");
             DebugSystem.Instance.FpsCounter.Visible = true;

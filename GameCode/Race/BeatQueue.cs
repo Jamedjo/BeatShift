@@ -16,7 +16,7 @@ namespace BeatShift
         float latency = 185;
         int boostBar = 0;
         int myLayer = 0;
-        int lastTime = 0;
+        long lastTime = 0;
         private long invinciEndtime = 0;
         Queue<Beat> beats;
         BeatVisualisation myBar;
@@ -33,14 +33,16 @@ namespace BeatShift
             }
         }
 
-        public Buttons nextBeatButton()
+        public Beat? nextBeat()
         {
-            return beats.Peek().getKey();
-        }
-
-        public long nextBeatTime()
-        {
-            return beats.Peek().getTime(0);
+            if (beats.Count != 0)
+            {
+                return beats.Peek();
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public int GetBoost()
@@ -58,19 +60,19 @@ namespace BeatShift
         {
             Decimal result = new Decimal(0);
             long time = BeatShift.bgm.songTick();
-                while (beats.Count>0 && (beats.Peek()).getTime((int)latency) < time + leeway)
+                while (beats.Count>0 && (beats.Peek()).getTimeWithLatency((int)latency) < time + leeway)
                 {
                     Beat temp = beats.Peek();
-                    if (temp.getTime((int)latency) < (time - leeway))
+                    if (temp.getTimeWithLatency((int)latency) < (time - leeway))
                     {
                         beats.Dequeue();
-                        //System.Diagnostics.Debug.WriteLine(temp.getTime() + ": Dequeued because way out");
+                        System.Diagnostics.Debug.WriteLine(temp.getTimeWithLatency((int)latency) + ": Dequeued because way out");
                     }
                     else
                     {
-                        if (temp.getKey().Equals(button))
+                        if (temp.Button.Equals(button))
                         {
-                            int difference = (int)(temp.getTime((int)latency) - time);
+                            int difference = (int)(temp.getTimeWithLatency((int)latency) - time);
                             difference = Math.Abs(difference);
                             result = (decimal)(difference / leeway);
                             result = 1 - result;
@@ -80,14 +82,14 @@ namespace BeatShift
                             System.Diagnostics.Debug.WriteLine("Wrong button");
                         }
                         beats.Dequeue();
-                        lastTime = temp.getTime((int)latency);
+                        lastTime = temp.getTimeWithLatency((int)latency);
                         if (myLayer == 0)
                         {
                             AdjustLatency(time);
                         }
-                        /*System.Diagnostics.Debug.WriteLine(temp.getTime(latency) + ": Dequeued with ratio " + result + ". BB @:  \n" +
-                                                    "Distance to next: " + (time - (beats.Peek()).getTime(latency)) + "\n" +
-                                                     "Distance to last: " + (time - lastTime));*/
+                        System.Diagnostics.Debug.WriteLine(temp.getTimeWithLatency((int)latency) + ": Dequeued with ratio " + result + ". BB @:  \n" +
+                                                    "Distance to next: " + (time - (beats.Peek()).getTimeWithLatency((int)latency)) + "\n" +
+                                                     "Distance to last: " + (time - lastTime));
                     }
                 }
             
@@ -129,7 +131,7 @@ namespace BeatShift
             {
                 {
                     long difference;
-                    long next = (time - (beats.Peek()).getTime((int)latency));
+                    long next = (time - (beats.Peek()).getTimeWithLatency((int)latency));
                     long last = (time - lastTime);
 
                     if (Math.Abs(next) > Math.Abs(last))
@@ -192,10 +194,10 @@ namespace BeatShift
                      
             {
                 int duration = 2500;
-                int temp2 = (int)(newBeat.getTime((int)latency) - BeatShift.bgm.songTick());
+                int temp2 = (int)(newBeat.getTimeWithLatency((int)latency) - BeatShift.bgm.songTick());
                 int elapsed = duration - temp2;
                 //System.Console.WriteLine(elapsed + " " + temp2);
-                switch (newBeat.getKey()){
+                switch (newBeat.Button){
                     case Buttons.A:
                         myBar.addBeat(ButtonImage.A, duration,elapsed);
                         //Console.Out.WriteLine("A");
@@ -224,9 +226,9 @@ namespace BeatShift
             if (beats.Count > 0)
             {
                 Beat temp = beats.Peek();
-                if (temp.getTime((int)latency) < (BeatShift.bgm.songTick() - leeway))
+                if (temp.getTimeWithLatency((int)latency) < (BeatShift.bgm.songTick() - leeway))
                 {
-                    lastTime = temp.getTime((int)latency);
+                    lastTime = temp.getTimeWithLatency((int)latency);
                     beats.Dequeue();
 
                     //System.Diagnostics.Debug.WriteLine(temp + ": Dequeued because way out");

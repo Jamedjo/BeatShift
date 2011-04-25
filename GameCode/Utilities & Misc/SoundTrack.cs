@@ -66,13 +66,27 @@ namespace BeatShift
                     int layer = Convert.ToInt32(layerSet[ii]) - 1;
                     if (layer >= 0 && layer < layers)
                     {
-                        // TODO fix this and reenable.
-                        // originalBeats[layer].Enqueue(new Beat(time, buttonSet[ii][0]));
+                        originalBeats[layer].Enqueue(new Beat(time, convertButton(buttonSet[ii][0])));
                     }
                 }
             }
             ResetBeats();
         }
+
+        private Buttons convertButton(char buttonChar)
+        {
+            switch (buttonChar)
+            {
+                case 'A': return Buttons.A;
+                case 'B': return Buttons.B;
+                case 'X': return Buttons.X;
+                case 'Y': return Buttons.Y;
+            }
+
+            // Default.
+            return Buttons.A;
+        }
+
 
         public void ResetBeats()
         {
@@ -232,7 +246,7 @@ namespace BeatShift
         {
             //Adding bets into racers beatqueues.
             for(int i = 0; i<beats.Length;i++) {
-            while ((beats[i].Count != 0) && (tick.ElapsedMilliseconds > (beats[i].Peek().getTime(0) - 2000)))
+            while ((beats[i].Count != 0) && (tick.ElapsedMilliseconds > (beats[i].Peek().Time - 2000)))
             {
                 Beat beat = beats[i].Dequeue();
                 foreach (Racer r in Race.humanRacers)
@@ -243,7 +257,7 @@ namespace BeatShift
                     }
                 }
                 
-                beats[i].Enqueue(new Beat(beat.getTime(0) + songLength,beat.getKey()));
+                beats[i].Enqueue(new Beat(beat.Time + songLength,beat.Button));
             }
             }/*
                 Beat temp = activeBeats.Peek();
