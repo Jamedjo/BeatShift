@@ -21,13 +21,13 @@ namespace BeatShift.Menus
             }));
             addMenuItem("Create LIVE session", (Action)(delegate
             {
-                BeatShift.networkedGame.startSession(SessionType.Create);
-                GameLoop.setGameStateAndResetPlayers(GameState.NetworkedGame);
+                //BeatShift.networkedGame.startSession(SessionType.Create);
+                //GameLoop.setGameStateAndResetPlayers(GameState.NetworkedGame);
             }));
             addMenuItem("Join LIVE session", (Action)(delegate
             {
-                BeatShift.networkedGame.startSession(SessionType.Join);
-                GameLoop.setGameStateAndResetPlayers(GameState.NetworkedGame);
+                //BeatShift.networkedGame.startSession(SessionType.Join);
+                //GameLoop.setGameStateAndResetPlayers(GameState.NetworkedGame);
             }));
 
         }
