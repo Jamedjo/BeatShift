@@ -122,16 +122,7 @@ namespace BeatShift
                 }
             }
 
-            // Draw current track ahead and ship direction
-            if (parentRacer.shipPhysics != null)
-            {
-                DrawVector.drawArrow(camera, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.ShipOrientationMatrix.Forward * 16, Color.Aquamarine.ToVector3());
-                DrawVector.drawArrow(camera, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.nextWaypoint.tangent * 16, Color.Bisque.ToVector3());
-                DrawVector.drawArrow(camera, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.nearestMapPoint.tangent * 16, Color.Black.ToVector3());
-                DrawVector.drawArrow(camera, parentRacer.shipPhysics.ShipPosition, AiInputManager.drawVector, Color.DarkGoldenrod.ToVector3());
-                DrawVector.drawArrow(camera, parentRacer.shipPhysics.ShipPosition, AiInputManager.drawLookVector, Color.Plum.ToVector3());
-                
-            }
+            
 
         }
 

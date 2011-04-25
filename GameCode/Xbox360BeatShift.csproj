@@ -78,6 +78,15 @@
     <Compile Include="Core\HeadsUpDisplay.cs" />
     <Compile Include="Core\Physics.cs" />
     <Compile Include="Core\Program.cs" />
+    <Compile Include="GameDebugTools\DebugCommandUI.cs" />
+    <Compile Include="GameDebugTools\DebugManager.cs" />
+    <Compile Include="GameDebugTools\DebugSystem.cs" />
+    <Compile Include="GameDebugTools\FpsCounter.cs" />
+    <Compile Include="GameDebugTools\IDebugCommandHost.cs" />
+    <Compile Include="GameDebugTools\KeyboardUtils.cs" />
+    <Compile Include="GameDebugTools\Layout.cs" />
+    <Compile Include="GameDebugTools\StringBuilderExtensions.cs" />
+    <Compile Include="GameDebugTools\TimeRuler.cs" />
     <Compile Include="Manager\Input\InputManager.cs" />
     <Compile Include="Manager\Maps\CityMap.cs" />
     <Compile Include="Manager\Maps\DesertMap.cs" />
@@ -138,6 +147,8 @@
     <Compile Include="Utilities &amp; Misc\GameTextures.cs" />
     <Compile Include="Utilities &amp; Misc\InputCombo.cs" />
     <Compile Include="Utilities &amp; Misc\Networking\NetworkedGame.cs" />
+    <Compile Include="Utilities &amp; Misc\Random\SimpleRNG.cs" />
+    <Compile Include="Utilities &amp; Misc\RunningTimer.cs" />
     <Compile Include="Utilities &amp; Misc\SoundManager.cs" />
     <Compile Include="Utilities &amp; Misc\SoundTrack.cs" />
     <Compile Include="Utilities &amp; Misc\Utils.cs" />

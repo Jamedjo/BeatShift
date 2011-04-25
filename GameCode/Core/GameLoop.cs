@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using BeatShift.Input;
 using Microsoft.Xna.Framework.GamerServices;
+using BeatShift.Utilities___Misc;
 
 namespace BeatShift
 {
@@ -79,10 +80,14 @@ namespace BeatShift
                 if (!paused)
                 {
                     BeginPause(true);
+                    pauseMenu.enteringMenu();
                     MenuManager.anyInput.Update(gameTime);//Call update an extra time to flush button press which caused menu to show
                 }
                 else
+                {
                     EndPause();
+                    pauseMenu.leavingMenu();
+                }
             }
         }
 
@@ -204,6 +209,8 @@ namespace BeatShift
                 mainGameinput.Update(gameTime);
                 if (!paused)
                 {
+                    //Update all managed timers.
+                    RunningTimer.Update(gameTime);
 
                     if (MenuManager.Enabled)
                         MenuManager.Update(gameTime);
