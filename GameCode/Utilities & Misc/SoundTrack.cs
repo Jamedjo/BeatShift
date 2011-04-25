@@ -152,6 +152,8 @@ namespace BeatShift
             currentLayer=0;
             BeatShift.engine.SetGlobalVariable("Layer", (currentLayer + 0.1f));
             track.Stop(AudioStopOptions.Immediate);
+            track.Dispose();
+            track = soundBank.GetCue("Interactive");
             shouldPlay = false;
         }
 
@@ -180,6 +182,8 @@ namespace BeatShift
                 {
                     System.Diagnostics.Debug.WriteLine(e.Message);
                     track.Stop(AudioStopOptions.Immediate);
+                    track.Dispose();
+                    track = soundBank.GetCue("Interactive");
                 }
             }
             while(!track.IsPlaying) {
