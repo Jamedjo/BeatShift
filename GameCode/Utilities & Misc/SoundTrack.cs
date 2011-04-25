@@ -80,6 +80,18 @@ namespace BeatShift
             }
         }
 
+        public void Pause()
+        {
+            tick.Stop();
+            track.Pause();
+        }
+
+        public void UnPause()
+        {
+            tick.Start();
+            track.Resume();
+        }
+
         public void MusicUp()
         {
             if (currentLayer < originalBeats.Length - 1)
@@ -154,11 +166,21 @@ namespace BeatShift
         /// </summary>
         public void play()
         {
+            bool started = false;
             tick.Reset();
             ResetBeats();
-            if (!track.IsPlaying)
+            while (!started)
             {
-                track.Play();
+                try
+                {
+                    track.Play();
+                    started = true;
+                }
+                catch (InvalidOperationException e)
+                {
+                    System.Diagnostics.Debug.WriteLine(e.Message);
+                    track.Stop(AudioStopOptions.Immediate);
+                }
             }
             while(!track.IsPlaying) {
                 System.Diagnostics.Debug.WriteLine("Not yet playing");
@@ -166,36 +188,6 @@ namespace BeatShift
             tick.Start();
             shouldPlay = true;
         }
-        /*
-        /// <summary>
-        /// Calculate where in the beat we are.  Returns a value from 0 to 1, 1 being on the beat, and 0 being perfectly between two beats
-        /// </summary>
-        public decimal beatTime()
-        {
-            Decimal result = new Decimal(0);
-            while ((activeBeats.Peek()).getTime()+latency < tick.ElapsedMilliseconds + leeway)
-            {
-                Beat temp = activeBeats.Peek();
-                if(temp.getTime()+latency<(tick.ElapsedMilliseconds-leeway)){
-                    activeBeats.Dequeue();
-                    //System.Diagnostics.Debug.WriteLine(temp.getTime() + ": Dequeued because way out. Off by: " + (tick.ElapsedMilliseconds-temp.getTime()));
-                } else {
-                    int difference = (int)(temp.getTime()+latency - tick.ElapsedMilliseconds);
-                    difference = Math.Abs(difference);
-                    result = (decimal)(difference/leeway);
-                    activeBeats.Dequeue();
-                    //System.Diagnostics.Debug.WriteLine(temp.getTime() + ": Dequeued with ratio " + result);
-                    return result;
-                }
-            }
-            if (result == 0)
-            {
-                System.Diagnostics.Debug.WriteLine("PRESSED WITH NO NEAR BEAT.  Distance to nearest: " + (tick.ElapsedMilliseconds - (activeBeats.Peek()).getTime()));
-            }
-            return result;
-            
-        }
-        */
 
         public long songTick()
         {
@@ -228,7 +220,7 @@ namespace BeatShift
 
         public void Update()
         {
-            //Adding bets into racers beatqueues.
+            //Adding beats into racers beatqueues.
             for(int i = 0; i<beats.Length;i++) {
             while (tick.ElapsedMilliseconds > (beats[i].Peek().getTime(0) - 2000))
             {
