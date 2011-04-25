@@ -27,9 +27,6 @@ namespace BeatShift.Input
         public const Boolean testAI = false;
         public const int numberOfAI = 8;
 
-        public static Vector3 drawVector;
-        public static Vector3 drawLookVector;
-
         private float randInaccuracy;
         private GameTime lastRandChange;
         private Random randGen;
@@ -312,9 +309,6 @@ namespace BeatShift.Input
                 distance = 0;
 
             t = distance / (rayLength - shipWidth);
-            
-            
-            drawVector = rayLength * testVector;
 
             return t * Math.Sign(direction);
         }
@@ -509,8 +503,6 @@ namespace BeatShift.Input
             Physics.currentTrackWall.RayCast(new Ray(rayOrigin, testVector), rayLength, out result);
 
             float distance = result.T == 0 ?  0 : rayLength - result.T;
-            
-            drawLookVector = result.T * testVector;
 
             Physics.currentTrackFloor.RayCast(new Ray(rayOrigin, testVector), rayLength, out result);
             if (distance < result.T)

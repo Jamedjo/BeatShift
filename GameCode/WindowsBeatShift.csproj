@@ -128,6 +128,16 @@
     <Compile Include="Camera\MouseCamera.cs" />
     <Compile Include="Camera\RevolveCamera.cs" />
     <Compile Include="Camera\SharedCameraProperties.cs" />
+    <Compile Include="GameDebugTools\DebugCommandUI.cs" />
+    <Compile Include="GameDebugTools\DebugManager.cs" />
+    <Compile Include="GameDebugTools\DebugSystem.cs" />
+    <Compile Include="GameDebugTools\FpsCounter.cs" />
+    <Compile Include="GameDebugTools\IDebugCommandHost.cs" />
+    <Compile Include="GameDebugTools\KeyboardUtils.cs" />
+    <Compile Include="GameDebugTools\Layout.cs" />
+    <Compile Include="GameDebugTools\RemoteDebugCommand.cs" />
+    <Compile Include="GameDebugTools\StringBuilderExtensions.cs" />
+    <Compile Include="GameDebugTools\TimeRuler.cs" />
     <Compile Include="Manager\Maps\CityMap.cs" />
     <Compile Include="Manager\Maps\DesertMap.cs" />
     <Compile Include="Manager\Maps\FbxModel.cs" />
