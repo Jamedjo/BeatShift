@@ -38,7 +38,7 @@ namespace BeatShift.Menus
                 GameLoop.setGameStateAndResetPlayers(GameState.LocalGame); //TODO: this sucks
                 Race.humanRacers[0].racingControls.chosenInput = new CoOpInputManager(new PadInputManager(PlayerIndex.One), new PadInputManager(PlayerIndex.Two));
                 Race.humanRacers[0].constructRandomShip(324);
-                BeatShift.bgm.play();
+                //BeatShift.bgm.play();
             }));
             addMenuItem("Start Multiplayer", (Action)(delegate
             {

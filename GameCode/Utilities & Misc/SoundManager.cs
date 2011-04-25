@@ -16,15 +16,6 @@ namespace BeatShift
     
     public class SoundManager
     {
-        static Cue mskylar;
-        static Cue momicron;
-        static Cue mwallCollide;
-        static Cue mraceStart;
-        static Cue mfinalLap;
-        static Cue mraceComplete;
-        static Cue mlapComplete;
-        static int raiseTime;
-        static Boolean toBeRaised;
         static GameTime time;
         static SoundBank soundBank;
         static WaveBank waveBank;
@@ -80,14 +71,11 @@ namespace BeatShift
             waveBank = new WaveBank(BeatShift.engine, "Content\\XACT\\SpeechEffects.xwb");
             voiceCategory = BeatShift.engine.GetCategory("Voice");
             effectCategory = BeatShift.engine.GetCategory("Effects");
-            time = new GameTime();
-            //Load the cues
-            mraceStart = soundBank.GetCue("CountDown");
-            mraceComplete = soundBank.GetCue("race_complete");
-            mlapComplete = soundBank.GetCue("lap_complete"); 
-            momicron = soundBank.GetCue("omicron"); 
-            mskylar = soundBank.GetCue("skylar"); 
-            mfinalLap = soundBank.GetCue("final_lap");
+            time = new GameTime();       
+            
+            
+            
+            
             SoundManager.Effect += new VolumechangeHandler(setEffectVolume);
             SoundManager.Voice += new VolumechangeHandler(setVoiceVolume);
         }
@@ -119,27 +107,25 @@ namespace BeatShift
             Console.WriteLine("   ...sounds loaded.");
         }
 
+        public static void FinalLap()
+        {
+            soundBank.PlayCue("final_lap");
+        }
+
         public static void LapComplete()
         {
-
-            //mlapComplete.Play();
-            // TODO:uncomment after and mention on bug
-            toBeRaised = true;
-
+            soundBank.PlayCue("lap_complete"); 
         }
 
         public static void RaceStart(int count)
         {
-            //mraceStart.Play();
-            // TODO:uncomment after and mention on bug
-            soundBank.PlayCue("CountDown");
+            soundBank.PlayCue("CountDown");                
         }
 
         public static void RaceComplete()
         {
 
-            //mraceComplete.Play();
-            // TODO:uncomment after and mention on bug
+            soundBank.PlayCue("race_complete");
         }
 
         public static void PlayShipName(ShipName shipName)
@@ -148,30 +134,12 @@ namespace BeatShift
             switch(shipName)
             {
                 case ShipName.Skylar:
-                    //mskylar.Play();
-                    // TODO:uncomment after and mention on bug
+                    soundBank.PlayCue("skylar"); 
                     break;
                 case ShipName.Omicron:
-                    //momicron.Play();
-                    // TODO:uncomment after and mention on bug
+                    soundBank.PlayCue("omicron"); 
                     break;
             }
-        }
-
-        public static Boolean IsPlaying()
-        {
-            if(mskylar.IsPlaying ||
-            momicron.IsPlaying ||
-            mfinalLap.IsPlaying ||
-            mraceComplete.IsPlaying ||
-            mlapComplete.IsPlaying ||
-                mwallCollide.IsPlaying ||
-                mraceStart.IsPlaying)
-            {
-                return true;
-            }
-
-            return false;
         }
 
     }

@@ -39,6 +39,9 @@ namespace BeatShift
         AudioCategory musicCategory;
         Cue track;
         private int currentLayer = 0;
+        string currentTrack = "Interactive";
+
+
         public void LoadBFF(StreamReader file) {
             string temp = file.ReadLine();
             //TODO: Do stuff with metadata
@@ -47,12 +50,15 @@ namespace BeatShift
             beats = new Queue<Beat>[layers]; 
             originalBeats = new Queue<Beat>[layers]; 
             activeBeats = new Queue<Beat>();
+
             for (int i = 0; i < layers; i++)
             {
                 originalBeats[i] = new Queue<Beat>();
             }
+
             temp = file.ReadLine();
             songLength = Convert.ToInt32(temp.Substring(1, temp.Length - 2));
+
             while((temp=file.ReadLine())!=null)
             {
                 System.Diagnostics.Debug.WriteLine(temp);
@@ -62,6 +68,7 @@ namespace BeatShift
                 string[] layerSet = temp2.Split(',');
                 string temp3 = bits[2].Substring(1, bits[2].Length - 2);
                 string[] buttonSet = temp3.Split(',');
+
                 for(int ii = 0; ii<layerSet.Length; ii++) {
                     int layer = Convert.ToInt32(layerSet[ii]) - 1;
                     if (layer >= 0 && layer < layers)
@@ -71,6 +78,26 @@ namespace BeatShift
                 }
             }
             ResetBeats();
+        }
+
+
+        public void ResetBeats()
+        {
+            for (int i = 0; i < originalBeats.Length; i++)
+            {
+                beats[i] = new Queue<Beat>(originalBeats[i]);
+            }
+        }
+
+        public void Pause()
+        {
+            tick.Stop();
+            track.Pause();
+        }
+   public void UnPause()
+        {
+            tick.Start();
+            track.Resume();
         }
 
         private Buttons convertButton(char buttonChar)
@@ -87,14 +114,6 @@ namespace BeatShift
             return Buttons.A;
         }
 
-
-        public void ResetBeats()
-        {
-            for (int i = 0; i < originalBeats.Length; i++)
-            {
-                beats[i] = new Queue<Beat>(originalBeats[i]);
-            }
-        }
 
         public void MusicUp()
         {
@@ -122,8 +141,8 @@ namespace BeatShift
              waveBank = new WaveBank(BeatShift.engine, "Content\\XACT\\Map1.xwb",0,32);
             effectWave = new WaveBank(BeatShift.engine,"Content\\XACT\\SoundEffects.xwb");
              musicCategory = BeatShift.engine.GetCategory("Music");
-             track = soundBank.GetCue("Interactive");
-            //track.
+             track = soundBank.GetCue(currentTrack);
+
              while (!track.IsPrepared)
              {
                  System.Diagnostics.Debug.WriteLine("Not yet prepped");
@@ -156,6 +175,8 @@ namespace BeatShift
             currentLayer=0;
             BeatShift.engine.SetGlobalVariable("Layer", (currentLayer + 0.1f));
             track.Stop(AudioStopOptions.Immediate);
+            track.Dispose();
+            track = soundBank.GetCue(currentTrack);
             shouldPlay = false;
         }
 
@@ -172,46 +193,38 @@ namespace BeatShift
         {
             tick.Reset();
             ResetBeats();
-            if (!track.IsPlaying)
+
+            try
             {
+                System.Diagnostics.Debug.WriteLine("Playing: " + track.IsPlaying +
+                    "\n Stopped: " + track.IsStopped + 
+                    "\n Stopping: " + track.IsStopping + 
+                    "\n Prepared: " + track.IsPrepared + 
+                    "\n Preparing: " + track.IsPreparing + 
+                    "\n Created: " + track.IsCreated);
+                if (!track.IsPlaying)
+                {
+                    track.Play();
+                }
+            }
+            catch (InvalidOperationException e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+                track.Stop(AudioStopOptions.Immediate);
+                track.Dispose();
+                track = soundBank.GetCue(currentTrack);
+                while (track.IsPreparing)
+                {
+                }
                 track.Play();
             }
+            
             while(!track.IsPlaying) {
                 System.Diagnostics.Debug.WriteLine("Not yet playing");
             }
             tick.Start();
             shouldPlay = true;
         }
-        /*
-        /// <summary>
-        /// Calculate where in the beat we are.  Returns a value from 0 to 1, 1 being on the beat, and 0 being perfectly between two beats
-        /// </summary>
-        public decimal beatTime()
-        {
-            Decimal result = new Decimal(0);
-            while ((activeBeats.Peek()).getTime()+latency < tick.ElapsedMilliseconds + leeway)
-            {
-                Beat temp = activeBeats.Peek();
-                if(temp.getTime()+latency<(tick.ElapsedMilliseconds-leeway)){
-                    activeBeats.Dequeue();
-                    //System.Diagnostics.Debug.WriteLine(temp.getTime() + ": Dequeued because way out. Off by: " + (tick.ElapsedMilliseconds-temp.getTime()));
-                } else {
-                    int difference = (int)(temp.getTime()+latency - tick.ElapsedMilliseconds);
-                    difference = Math.Abs(difference);
-                    result = (decimal)(difference/leeway);
-                    activeBeats.Dequeue();
-                    //System.Diagnostics.Debug.WriteLine(temp.getTime() + ": Dequeued with ratio " + result);
-                    return result;
-                }
-            }
-            if (result == 0)
-            {
-                System.Diagnostics.Debug.WriteLine("PRESSED WITH NO NEAR BEAT.  Distance to nearest: " + (tick.ElapsedMilliseconds - (activeBeats.Peek()).getTime()));
-            }
-            return result;
-            
-        }
-        */
 
         public long songTick()
         {
@@ -225,8 +238,6 @@ namespace BeatShift
         {
             Decimal offset = new Decimal();
             offset = tick.ElapsedMilliseconds / mpb;
-            //Console.Out.WriteLine("Offset: " + offset);
-            //Console.Out.WriteLine("Rounded: " + Math.Round(offset, 0));
             decimal ratio = offset - Math.Round(tick.ElapsedMilliseconds / mpb);
             
             if (ratio > 0)
@@ -237,36 +248,29 @@ namespace BeatShift
             {
                 ratio += 0.5m;
             }
-            //Console.Out.WriteLine("Ratio: " + ratio);
+
             ratio *= 2;
             return Math.Abs(ratio*ratio);
         }
 
         public void Update()
         {
-            //Adding bets into racers beatqueues.
+            //Adding beats into racers beatqueues.
             for(int i = 0; i<beats.Length;i++) {
             while ((beats[i].Count != 0) && (tick.ElapsedMilliseconds > (beats[i].Peek().Time - 2000)))
-            {
-                Beat beat = beats[i].Dequeue();
-                foreach (Racer r in Race.humanRacers)
                 {
-                    if (r.beatQueue.getLayer() == i)
+                    Beat beat = beats[i].Dequeue();
+                    foreach (Racer r in Race.humanRacers)
                     {
-                        r.beatQueue.AddBeat(beat);
+                        if (r.beatQueue.getLayer() == i)
+                        {
+                            r.beatQueue.AddBeat(beat);
+                        }
                     }
-                }
                 
                 beats[i].Enqueue(new Beat(beat.Time + songLength,beat.Button));
+                }
             }
-            }/*
-                Beat temp = activeBeats.Peek();
-                if (temp.getTime() < (tick.ElapsedMilliseconds - leeway))
-                {
-                    activeBeats.Dequeue();
-                    //System.Diagnostics.Debug.WriteLine(temp + ": Dequeued because way out");
-                    //TODO: Decrease Boost Bar here!!
-                }*/
         }
 
     }

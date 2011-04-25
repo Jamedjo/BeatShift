@@ -151,7 +151,7 @@ namespace BeatShift
         public virtual void startRace()
         {
             actualRaceBegun = true;
-
+            BeatShift.bgm.play();
             foreach (Racer racer in Race.currentRacers)
             {
                 racer.raceTiming.isRacing = true;
