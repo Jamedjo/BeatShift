@@ -120,7 +120,7 @@ namespace BeatShift
             //cr.Group = Physics.noSelfCollideGroup;
 
             //Physics.space.NarrowPhase.Pairs..Settings.CollisionDetection.CollisionGroupRules.Add(new CollisionGroupPair(noSelfCollideGroup, noSelfCollideGroup), CollisionRule.NoPair);
-            //cr.Personal = CollisionRule.NoSolver;
+            cr.Personal = CollisionRule.NoSolver;
             //cr.Specific = CollisionRule.Normal.
 
             convexHull = new ConvexHullShape(importPhysicsHull());
@@ -440,11 +440,11 @@ namespace BeatShift
                             //Vector3 bounceVector = physicsBody.Position - collidedBody.Position;
                             //bounceVector.Normalize();
 
-                            //physicsBody.ApplyImpulse(physicsBody.Position, bounceVector * Vector3.Dot(impulse, bounceVector));
+                            //physicsBody.ApplyImpulse(physicsBody.Position, bounceVector * impulse *25f);
 
                             //Apply a bounce impulse
 
-                            physicsBody.ApplyImpulse(physicsBody.Position, bounceVector * 25 * minmaxV);// * angleModifier);
+                           physicsBody.ApplyImpulse(physicsBody.Position, bounceVector * 25 * minmaxV);// * angleModifier);
                             //parentRacer.shipDrawing.drawArrowListPermanent.Add(new D_Arrow { pos = contact.Position, dir = bounceVector * 4f, col = Color.LimeGreen.ToVector3() });
 
                     //TODO: fire off crap on collision
