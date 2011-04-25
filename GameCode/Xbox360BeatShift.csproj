@@ -148,6 +148,7 @@
     <Compile Include="Utilities &amp; Misc\GameTextures.cs" />
     <Compile Include="Utilities &amp; Misc\InputCombo.cs" />
     <Compile Include="Utilities &amp; Misc\Networking\NetworkedGame.cs" />
+    <Compile Include="Utilities &amp; Misc\Random\SimpleRNG.cs" />
     <Compile Include="Utilities &amp; Misc\RunningTimer.cs" />
     <Compile Include="Utilities &amp; Misc\SoundManager.cs" />
     <Compile Include="Utilities &amp; Misc\SoundTrack.cs" />
