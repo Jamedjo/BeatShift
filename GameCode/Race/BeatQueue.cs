@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BeatShift.Utilities___Misc;
+using Microsoft.Xna.Framework.Input;
 
 namespace BeatShift
 {
@@ -30,6 +31,16 @@ namespace BeatShift
             for(int i=0;i<averageLength;i++) {
                 averageDists[i] = (int)latency;
             }
+        }
+
+        public Buttons nextBeatButton()
+        {
+            return beats.Peek().getKey();
+        }
+
+        public long nextBeatTime()
+        {
+            return beats.Peek().getTime(0);
         }
 
         public int GetBoost()
@@ -185,19 +196,19 @@ namespace BeatShift
                 int elapsed = duration - temp2;
                 //System.Console.WriteLine(elapsed + " " + temp2);
                 switch (newBeat.getKey()){
-                    case 'A':
+                    case Buttons.A:
                         myBar.addBeat(ButtonImage.A, duration,elapsed);
                         //Console.Out.WriteLine("A");
                         break;
-                    case 'B':
+                    case Buttons.B:
                         myBar.addBeat(ButtonImage.B, duration, elapsed);
                         //Console.Out.WriteLine("B");
                         break;
-                    case 'X':
+                    case Buttons.X:
                         myBar.addBeat(ButtonImage.X, duration, elapsed);
                         //Console.Out.WriteLine("X");
                         break;
-                    case 'Y':
+                    case Buttons.Y:
                         myBar.addBeat(ButtonImage.Y, duration, elapsed);
                         //Console.Out.WriteLine("Y");
                         break;

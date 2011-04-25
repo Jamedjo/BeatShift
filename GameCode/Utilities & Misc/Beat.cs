@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Input;
 
 namespace BeatShift
 {
     public class Beat
     {
         int time;
-        char key;
+        Buttons key;
 
-        public Beat(int ntime, char nKey)
+        public Beat(int ntime, Buttons nKey)
         {
             time = ntime;
             key = nKey;
@@ -21,7 +22,7 @@ namespace BeatShift
             return time + latency;
         }
 
-        public char getKey()
+        public Buttons getKey()
         {
             return key;
         }

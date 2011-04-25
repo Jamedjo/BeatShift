@@ -55,6 +55,7 @@ namespace BeatShift
             songLength = Convert.ToInt32(temp.Substring(1, temp.Length - 2));
             while((temp=file.ReadLine())!=null)
             {
+                System.Diagnostics.Debug.WriteLine(temp);
                 string[] bits = temp.Split(' ');
                 int time = Convert.ToInt32(bits[0].Substring(1, bits[0].Length - 2));
                 string temp2 = bits[1].Substring(1, bits[1].Length - 2);
@@ -65,7 +66,8 @@ namespace BeatShift
                     int layer = Convert.ToInt32(layerSet[ii]) - 1;
                     if (layer >= 0 && layer < layers)
                     {
-                        originalBeats[layer].Enqueue(new Beat(time, buttonSet[ii][0]));
+                        // TODO fix this and reenable.
+                        // originalBeats[layer].Enqueue(new Beat(time, buttonSet[ii][0]));
                     }
                 }
             }
@@ -230,7 +232,7 @@ namespace BeatShift
         {
             //Adding bets into racers beatqueues.
             for(int i = 0; i<beats.Length;i++) {
-            while (tick.ElapsedMilliseconds > (beats[i].Peek().getTime(0) - 2000))
+            while ((beats[i].Count != 0) && (tick.ElapsedMilliseconds > (beats[i].Peek().getTime(0) - 2000)))
             {
                 Beat beat = beats[i].Dequeue();
                 foreach (Racer r in Race.humanRacers)
