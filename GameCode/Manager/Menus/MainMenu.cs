@@ -19,7 +19,7 @@ namespace BeatShift.Menus
         {
             addMenuItem("Start Singleplayer", (Action)(delegate{
                 MenuManager.setCurrentMenu(MenuPage.RaceSelect);
-                // TODO: Manage PAUSE game state.
+#if XBOX
                 Race.getFullListOfRacerIDsFromSignedInPeople();
                 if (Race.racerIDs != null)
                 {
@@ -32,12 +32,13 @@ namespace BeatShift.Menus
                         Console.Write("RacerID: " + Race.racerIDs[0].gamer.Gamertag);
                     }
                 }
+#endif
             }));
             addMenuItem("Start Co-Op Race", (Action)(delegate
             {
-                GameLoop.setGameStateAndResetPlayers(GameState.LocalGame); //TODO: this sucks
-                Race.humanRacers[0].racingControls.chosenInput = new CoOpInputManager(new PadInputManager(PlayerIndex.One), new PadInputManager(PlayerIndex.Two));
-                Race.humanRacers[0].constructRandomShip(324);
+                //GameLoop.setGameStateAndResetPlayers(GameState.LocalGame); //TODO: this sucks
+                //Race.humanRacers[0].racingControls.chosenInput = new CoOpInputManager(new PadInputManager(PlayerIndex.One), new PadInputManager(PlayerIndex.Two));
+                //Race.humanRacers[0].constructRandomShip(324);
                 //BeatShift.bgm.play();
             }));
             addMenuItem("Start Multiplayer", (Action)(delegate

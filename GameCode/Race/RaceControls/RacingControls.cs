@@ -9,8 +9,7 @@ namespace BeatShift.Input
 {
     public class RacingControls
     {
-        const int controlType=3;
-        const decimal decelfact = 0.001m;
+        //const decimal decelfact = 0.001m;
         decimal[] lastTaps;
         decimal[] tapWeights;
         int tapNo;
@@ -84,23 +83,8 @@ namespace BeatShift.Input
             {
                 //General Input
                 UpdateLocalFromInput();
-                
-                if (controlType == 0)
-                {
-                    applyForwardMotionFromAnalogue();
-                }
-                else if (controlType == 1)
-                {
-                    TapControl();
-                } else if (controlType == 2)
-                {
-                    AverageControl();
-                }
-                else if (controlType == 3)
-                {
-                    BoostControl();
-                }
-          }
+                BoostControl();
+            }
         }
         
         private void UpdateLocalFromInput()
@@ -145,9 +129,6 @@ namespace BeatShift.Input
             //}
         }
 
-
-
-
         public void applyForwardMotionFromAnalogue()
         {
             racer.shipPhysics.physicsBody.ApplyImpulse(racer.shipPhysics.physicsBody.Position, racer.shipPhysics.physicsBody.OrientationMatrix.Forward * 280 * chosenInput.getActionValue(InputAction.Forwards)); //TODO: should be 280?
@@ -163,7 +144,7 @@ namespace BeatShift.Input
             racer.shipPhysics.physicsBody.ApplyImpulse(racer.shipPhysics.physicsBody.Position, racer.shipPhysics.physicsBody.OrientationMatrix.Forward * 70 * (float)average);
         }
 
-        void AverageControl()
+        /*void AverageControl()
         {
             //if (currentPadState.IsConnected)
             {
@@ -210,17 +191,8 @@ namespace BeatShift.Input
                     }
                 }
             AverageMove((double)average);
-        }
+        }*/
         
-        void TapControl()
-        {
-            //if (currentPadState.IsConnected)
-
-                // Increase vibration if the player is tapping the A button.
-                // Subtract vibration otherwise, even if the player holds down A
-           // if (chosenInput.actionTapped(InputAction.Forwards)) Boost((double)BeatShift.bgm.beatTime());
-        }
-
         public decimal getLastPress()
         {
             return (lastTaps[tapNo]);
