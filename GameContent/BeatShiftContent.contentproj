@@ -378,6 +378,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="HUD\resetting_v3.png">
+      <Name>resetting_v3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <None Include="MapPointData\DesertMap.bsmp">
       <Name>DesertMap</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

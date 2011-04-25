@@ -127,13 +127,13 @@ namespace BeatShift.Input
 
                 if (angularSize < 3.5f)
                 {
-                    Vector3 leftVector = racer.shipPhysics.physicsBody.OrientationMatrix.Up * reversingMultiplier * 45f * (1 + (Math.Abs(angularSize) * 0.12f)) * chosenInput.getActionValue(InputAction.Left);
+                    Vector3 leftVector = racer.shipPhysics.physicsBody.OrientationMatrix.Up * reversingMultiplier * 75f * (1 + (Math.Abs(angularSize) * 0.12f)) * chosenInput.getActionValue(InputAction.Left);
                     Physics.ApplyAngularImpulse(ref leftVector, ref racer.shipPhysics.physicsBody);
                 }
 
                 if (angularSize > -3.5f)
                 {
-                    Vector3 rightVector = racer.shipPhysics.physicsBody.OrientationMatrix.Up * reversingMultiplier * -45f * (1 + (Math.Abs(angularSize) * 0.12f)) * chosenInput.getActionValue(InputAction.Right);
+                    Vector3 rightVector = racer.shipPhysics.physicsBody.OrientationMatrix.Up * reversingMultiplier * -75f * (1 + (Math.Abs(angularSize) * 0.12f)) * chosenInput.getActionValue(InputAction.Right);
                     Physics.ApplyAngularImpulse(ref rightVector, ref racer.shipPhysics.physicsBody);
                 }
             //}

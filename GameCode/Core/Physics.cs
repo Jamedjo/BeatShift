@@ -21,6 +21,7 @@ using System.Threading;
 namespace BeatShift
 {
        public struct D_Arrow { public Vector3 pos; public Vector3 dir; public Vector3 col;}
+       //public struct ResetColumn { public Vector3 pos; public int column; public int resetWaypointIncrement; long raceTime; }
 
     /// <summary>
     /// Manages the general physics simulation for collisions and motion.

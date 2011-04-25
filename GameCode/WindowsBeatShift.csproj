@@ -68,7 +68,8 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BEPUphysics">
+    <Reference Include="BEPUphysics, Version=0.15.2.0, Culture=neutral, PublicKeyToken=31f6a8732a21de19, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\BEPUphysics\Windows\BEPUphysics.dll</HintPath>
     </Reference>
     <Reference Include="BEPUphysicsDrawer">

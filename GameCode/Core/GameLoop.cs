@@ -41,6 +41,12 @@ namespace BeatShift
                 foreach (Racer racer in Race.currentRacers)
                     racer.raceTiming.stopLapTimer();
             }
+
+            // Pause during countdown
+            if (Race.currentRaceType.raceProcedureBegun && !Race.currentRaceType.actualRaceBegun)
+            {
+                Race.currentRaceType.countDownTimer.Stop();
+            }
             //TODO: Pause audio playback
             //TODO: Pause controller vibration
         }
@@ -55,6 +61,12 @@ namespace BeatShift
             {
                 foreach (Racer racer in Race.currentRacers)
                     racer.raceTiming.startLapTimer();
+            }
+
+            // Pause during countdown
+            if (Race.currentRaceType.raceProcedureBegun && !Race.currentRaceType.actualRaceBegun)
+            {
+                Race.currentRaceType.countDownTimer.Start();
             }
         }
 
