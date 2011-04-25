@@ -12,6 +12,8 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Storage;
 using BEPUphysics;
 using BeatShift.Menus;
+using BeatShift.GameDebugTools;
+using BeatShift.Util.Random;
 
 
 namespace BeatShift
@@ -100,6 +102,12 @@ namespace BeatShift
             // Now with static constuctor so auto initalized on first access.
             //Viewports.setupViewports();
 
+            SimpleRNG.SetSeedFromSystemTime();
+
+            DebugSystem.Initialize(this, "FontA");
+            DebugSystem.Instance.FpsCounter.Visible = true;
+            DebugSystem.Instance.TimeRuler.Visible = true;
+
             MenuManager.Initialize();
 
            // MapManager.Initialize();
@@ -129,6 +137,7 @@ namespace BeatShift
 
             gamerServices = new GamerServicesComponent(this);
             Components.Add(gamerServices);
+
 
             //gamerServices.Initialize();
         }
@@ -199,10 +208,15 @@ namespace BeatShift
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            DebugSystem.Instance.TimeRuler.StartFrame();
+            DebugSystem.Instance.TimeRuler.BeginMark("SomeCode", Color.Blue);
+
             currentTime = gameTime;
             GameLoop.Update(gameTime);
             engine.Update();
             base.Update(gameTime);
+
+            DebugSystem.Instance.TimeRuler.EndMark("SomeCode");
         }
 
         #endregion

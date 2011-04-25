@@ -22,11 +22,17 @@ namespace BeatShift.Menus
             spriteBatch.Draw(background, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - background.Width / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - background.Height / 2), Color.White);
         }
 
+        public override void enteringMenu()
+        {
+            resetMenuSelection();
+            base.enteringMenu();
+        }
+
         public override void setupMenuItems()
         {
             addMenuItem("Resume", (Action)(delegate
             {
-                GameLoop.unPause();
+                GameLoop.EndPause();
             }));
             addMenuItem("Main Menu", (Action)(delegate
             {

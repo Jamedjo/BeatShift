@@ -52,7 +52,7 @@ namespace BeatShift
 
             //CHANGE TO ALL RACEES THREW LOOP, BE RIGHT BACK TOO
             foreach(Racer racer in Race.currentRacers)
-                racer.raceTiming.startNewLapTimer();
+                racer.raceTiming.startLapTimer();
         }
     }
 }

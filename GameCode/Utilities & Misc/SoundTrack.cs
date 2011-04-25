@@ -61,6 +61,7 @@ namespace BeatShift
 
             while((temp=file.ReadLine())!=null)
             {
+                System.Diagnostics.Debug.WriteLine(temp);
                 string[] bits = temp.Split(' ');
                 int time = Convert.ToInt32(bits[0].Substring(1, bits[0].Length - 2));
                 string temp2 = bits[1].Substring(1, bits[1].Length - 2);
@@ -72,12 +73,13 @@ namespace BeatShift
                     int layer = Convert.ToInt32(layerSet[ii]) - 1;
                     if (layer >= 0 && layer < layers)
                     {
-                        originalBeats[layer].Enqueue(new Beat(time, buttonSet[ii][0]));
+                        originalBeats[layer].Enqueue(new Beat(time, convertButton(buttonSet[ii][0])));
                     }
                 }
             }
             ResetBeats();
         }
+
 
         public void ResetBeats()
         {
@@ -92,12 +94,26 @@ namespace BeatShift
             tick.Stop();
             track.Pause();
         }
-
-        public void UnPause()
+   public void UnPause()
         {
             tick.Start();
             track.Resume();
         }
+
+        private Buttons convertButton(char buttonChar)
+        {
+            switch (buttonChar)
+            {
+                case 'A': return Buttons.A;
+                case 'B': return Buttons.B;
+                case 'X': return Buttons.X;
+                case 'Y': return Buttons.Y;
+            }
+
+            // Default.
+            return Buttons.A;
+        }
+
 
         public void MusicUp()
         {
@@ -241,7 +257,7 @@ namespace BeatShift
         {
             //Adding beats into racers beatqueues.
             for(int i = 0; i<beats.Length;i++) {
-                while (tick.ElapsedMilliseconds > (beats[i].Peek().getTime(0) - 2000))
+            while ((beats[i].Count != 0) && (tick.ElapsedMilliseconds > (beats[i].Peek().Time - 2000)))
                 {
                     Beat beat = beats[i].Dequeue();
                     foreach (Racer r in Race.humanRacers)
@@ -252,7 +268,7 @@ namespace BeatShift
                         }
                     }
                 
-                    beats[i].Enqueue(new Beat(beat.getTime(0) + songLength,beat.getKey()));
+                beats[i].Enqueue(new Beat(beat.Time + songLength,beat.Button));
                 }
             }
         }

@@ -151,6 +151,10 @@ namespace BeatShift.Menus
         {
             return currentItem;
         }
+        protected void resetMenuSelection()
+        {
+            currentItem = 0;
+        }
 
         public virtual void leavingMenu()
         {
@@ -167,6 +171,7 @@ namespace BeatShift.Menus
         public void Draw()
         {
             BeatShift.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+            BeatShift.graphics.GraphicsDevice.Viewport = Viewports.fullViewport;
             BeatShift.spriteBatch.Begin();
 
             DrawSprites(BeatShift.spriteBatch);

@@ -44,7 +44,8 @@ namespace BeatShift
         public override void startRaceVirtual()
         {
             totalRaceTime.Start();
-            Race.currentRacers[0].raceTiming.startNewLapTimer();
+            foreach (Racer racer in Race.currentRacers)
+                racer.raceTiming.startLapTimer();
         }
     }
 }
