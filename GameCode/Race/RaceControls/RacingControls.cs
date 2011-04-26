@@ -15,11 +15,12 @@ namespace BeatShift.Input
         int tapNo;
         public IInputManager chosenInput;
         Racer racer;
+        float coolOff = 0.0f;
         //Boolean useKeyBoard;//Disable keyboard on xbox so chatpad doesn't work?
 
         //TODO: Eventually should give a value based on beat accuracy and trigger distance.
 
-        int boostBar = 0;
+        //int boostBar = 0;
 
         private Boolean previousCameraReverse = false;
         private Boolean previousPadDown = false;
@@ -47,7 +48,6 @@ namespace BeatShift.Input
 
         public void Update(GameTime gameTime)
         {
-            boostBar = 100;
             //System.Diagnostics.Debug.WriteLine("Update controls");
             chosenInput.Update(gameTime);
 
@@ -69,14 +69,27 @@ namespace BeatShift.Input
                 previousPadDown = !previousPadDown;
             }
 
-
-            if (chosenInput.actionPressed(InputAction.Boost) && (boostBar > 0))
+            if (chosenInput.actionPressed(InputAction.Boost) /*&& (racer.beatQueue.GetBoost() > 0)*/)
             {
                 racer.setBoost(true);
+
+                if (chosenInput.GetType() == typeof(PadInputManager))
+                {
+                    GamePad.SetVibration(((PadInputManager)chosenInput).getPlayerIndex(), 1.0f, 1.0f);
+                    coolOff = 1.0f;
+                }
             }
-            else
+            else if( coolOff > 0.0f )
             {
                 racer.setBoost(false);
+                if (chosenInput.GetType() == typeof(PadInputManager))
+                {
+                    GamePad.SetVibration(((PadInputManager)chosenInput).getPlayerIndex(), coolOff, coolOff);
+                    if (coolOff > 0.025f)
+                        coolOff = coolOff - 0.025f;
+                    else
+                        coolOff = 0.0f;
+                }
             }
 
             if (racer.raceTiming.isRacing == true && racer.isRespawning == false)
@@ -236,11 +249,6 @@ namespace BeatShift.Input
                     Boost(0.1);
                 }
             }
-            
-            if (boostBar > 100)
-                boostBar = 100;
-            else if (boostBar < 0)
-                boostBar = 0;
         }
     }
 }

@@ -16,6 +16,11 @@ namespace BeatShift.Input
         private GamePadState currentPadState;
         private GamePadState lastPadState;
 
+        public PlayerIndex getPlayerIndex()
+        {
+            return index;
+        }
+
         public PadInputManager(PlayerIndex playerIndex)
         {
             index = playerIndex;
