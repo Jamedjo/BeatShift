@@ -15,6 +15,8 @@ namespace BeatShift.Input
         int tapNo;
         public IInputManager chosenInput;
         Racer racer;
+        float vibrateBoostControl = 0.0f;
+        float vibrateCollisionControl = 0.0f;
         float vibrateControl = 0.0f;
         //Boolean useKeyBoard;//Disable keyboard on xbox so chatpad doesn't work?
 
@@ -71,44 +73,48 @@ namespace BeatShift.Input
 
             if (racer.isColliding == true)
             {
-                if (vibrateControl < 0.8f)
-                    vibrateControl = vibrateControl + 0.2f;
+                if (vibrateCollisionControl < 0.8f)
+                    vibrateCollisionControl = vibrateCollisionControl + 0.2f;
                 else
-                    vibrateControl = 1.0f;
+                    vibrateCollisionControl = 1.0f;
                 racer.isColliding = false;
+            }
+            else
+            {
+                if (vibrateCollisionControl > 0.05f)
+                    vibrateCollisionControl = vibrateCollisionControl - 0.05f;
+                else
+                    vibrateCollisionControl = 0.0f;
             }
 
             if (chosenInput.actionPressed(InputAction.Boost) /*&& (racer.beatQueue.GetBoost() > 0)*/)
             {
                 racer.setBoost(true);
 
-                //check pad is being used and vibration set to true
-                if (chosenInput.GetType() == typeof(PadInputManager) && (Options.ControllerVibration == true))
+                //max vibrate is currently 0.75f (can be as high as 1.0f)
+                if (vibrateBoostControl < 0.5f)
                 {
-                    //max vibrate is currently 0.75f (can be as high as 1.0f)
-                    if (vibrateControl < 0.5f)
-                    {
-                        //boost increase
-                        vibrateControl = vibrateControl + 0.05f;
-                    }
-                    GamePad.SetVibration(((PadInputManager)chosenInput).getPlayerIndex(), vibrateControl, vibrateControl);
+                    //boost increase
+                    vibrateBoostControl = vibrateBoostControl + 0.05f;
                 }
             }
             else
             {
                 racer.setBoost(false);
 
-                //check pad is being used and vibration set to true
-                if (chosenInput.GetType() == typeof(PadInputManager) && (Options.ControllerVibration == true))
-                {
-                    //boost decrease
-                    if (vibrateControl > 0.02f)
-                        vibrateControl = vibrateControl - 0.02f;
-                    else
-                        vibrateControl = 0.0f;
-                    GamePad.SetVibration(((PadInputManager)chosenInput).getPlayerIndex(), vibrateControl, vibrateControl);
-                }
+                //boost decrease
+                if (vibrateBoostControl > 0.02f)
+                    vibrateBoostControl = vibrateBoostControl - 0.02f;
+                else
+                   vibrateBoostControl = 0.0f;
             }
+
+            vibrateControl = vibrateCollisionControl + vibrateBoostControl;
+            if (vibrateControl > 1.0f)
+                vibrateControl = 1.0f;
+            //check pad is being used and vibration set to true
+            if (chosenInput.GetType() == typeof(PadInputManager) && (Options.ControllerVibration == true))
+                GamePad.SetVibration(((PadInputManager)chosenInput).getPlayerIndex(), vibrateControl, vibrateControl);
 
             if (racer.raceTiming.isRacing == true && racer.isRespawning == false)
             {
