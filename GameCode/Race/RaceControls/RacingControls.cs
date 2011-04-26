@@ -15,7 +15,7 @@ namespace BeatShift.Input
         int tapNo;
         public IInputManager chosenInput;
         Racer racer;
-        float coolOff = 0.0f;
+        float vibrateControl = 0.0f;
         //Boolean useKeyBoard;//Disable keyboard on xbox so chatpad doesn't work?
 
         //TODO: Eventually should give a value based on beat accuracy and trigger distance.
@@ -73,22 +73,31 @@ namespace BeatShift.Input
             {
                 racer.setBoost(true);
 
+                //check pad is being used
                 if (chosenInput.GetType() == typeof(PadInputManager))
                 {
-                    GamePad.SetVibration(((PadInputManager)chosenInput).getPlayerIndex(), 1.0f, 1.0f);
-                    coolOff = 1.0f;
+                    //max vibrate is currently 0.75f (can be as high as 1.0f)
+                    if (vibrateControl < 0.75f)
+                    {
+                        //boost increase
+                        vibrateControl = vibrateControl + 0.075f;
+                    }
+                    GamePad.SetVibration(((PadInputManager)chosenInput).getPlayerIndex(), vibrateControl, vibrateControl);
                 }
             }
-            else if( coolOff > 0.0f )
+            else if( vibrateControl > 0.0f )
             {
                 racer.setBoost(false);
+
+                //check pad is being used
                 if (chosenInput.GetType() == typeof(PadInputManager))
                 {
-                    GamePad.SetVibration(((PadInputManager)chosenInput).getPlayerIndex(), coolOff, coolOff);
-                    if (coolOff > 0.025f)
-                        coolOff = coolOff - 0.025f;
+                    //boost decrease
+                    if (vibrateControl > 0.025)
+                        vibrateControl = vibrateControl - 0.025f;
                     else
-                        coolOff = 0.0f;
+                        vibrateControl = 0;
+                    GamePad.SetVibration(((PadInputManager)chosenInput).getPlayerIndex(), vibrateControl, vibrateControl);
                 }
             }
 
