@@ -413,6 +413,8 @@ namespace BeatShift
                             //Vector3 bounceVector = collidedBody.Position - physicsBody.Position;
                             //bounceVector.Normalize();
 
+                            
+
                             //float realtiveVelInShipBounceDirection = Vector3.Dot(physicsBody.LinearVelocity, bounceVector) - Vector3.Dot(collidedBody.LinearVelocity, bounceVector);// no need to divide by bounceVector.Length() as normalized
                             //physicsBody.LinearVelocity -= bounceVector * realtiveVelInShipBounceDirection;
                             ////physicsBody.LinearVelocity *= 0.82f;
