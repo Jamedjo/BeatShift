@@ -359,6 +359,9 @@ namespace BeatShift
                     ////Stop all rotation
                     //physicsBody.AngularVelocity = new Vector3(0, 0, 0);
 
+                    //Initiate controller vibration
+                    parentRacer.isColliding = true;
+
                     //Calculate direction to bounce
                     Vector3 v1 = Vector3.Cross(nearestMapPoint.trackUp, contact.Normal);
                     Vector3 bounceVector = Vector3.Cross(nearestMapPoint.trackUp, v1);
@@ -408,6 +411,9 @@ namespace BeatShift
                             //    physicsBody.ApplyImpulse(physicsBody.Position, physicsBody.WorldTransform.Left * impulseLeft);
 
                             //}
+
+                            //Initiate controller vibration
+                            parentRacer.isColliding = true;
 
                             Vector3 bounceVector = physicsBody.Position - collidedBody.Position;
                             bounceVector.Normalize();

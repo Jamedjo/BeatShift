@@ -69,6 +69,15 @@ namespace BeatShift.Input
                 previousPadDown = !previousPadDown;
             }
 
+            if (racer.isColliding == true)
+            {
+                if (vibrateControl < 0.8f)
+                    vibrateControl = vibrateControl + 0.2f;
+                else
+                    vibrateControl = 1.0f;
+                racer.isColliding = false;
+            }
+
             if (chosenInput.actionPressed(InputAction.Boost) /*&& (racer.beatQueue.GetBoost() > 0)*/)
             {
                 racer.setBoost(true);
@@ -77,10 +86,10 @@ namespace BeatShift.Input
                 if (chosenInput.GetType() == typeof(PadInputManager) && (Options.ControllerVibration == true))
                 {
                     //max vibrate is currently 0.75f (can be as high as 1.0f)
-                    if (vibrateControl < 0.75f)
+                    if (vibrateControl < 0.5f)
                     {
                         //boost increase
-                        vibrateControl = vibrateControl + 0.075f;
+                        vibrateControl = vibrateControl + 0.05f;
                     }
                     GamePad.SetVibration(((PadInputManager)chosenInput).getPlayerIndex(), vibrateControl, vibrateControl);
                 }
@@ -93,8 +102,8 @@ namespace BeatShift.Input
                 if (chosenInput.GetType() == typeof(PadInputManager) && (Options.ControllerVibration == true))
                 {
                     //boost decrease
-                    if (vibrateControl > 0.025f)
-                        vibrateControl = vibrateControl - 0.025f;
+                    if (vibrateControl > 0.02f)
+                        vibrateControl = vibrateControl - 0.02f;
                     else
                         vibrateControl = 0.0f;
                     GamePad.SetVibration(((PadInputManager)chosenInput).getPlayerIndex(), vibrateControl, vibrateControl);
