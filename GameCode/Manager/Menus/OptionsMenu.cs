@@ -72,6 +72,14 @@ namespace BeatShift.Menus
             (Func<string>) delegate { return Options.DrawShipBoundingBoxes.ToString(); }
             );
 
+            addMenuItem("Controller Vibration: ", (Action)(delegate
+            {
+                Options.ControllerVibration = !Options.ControllerVibration;
+            })
+            ,
+            (Func<string>)delegate { return Options.ControllerVibration.ToString(); }
+            );
+
             addMenuItem("Master Volume: ", (Action) (delegate
             {
                 if (Options.MasterVolume > 90)

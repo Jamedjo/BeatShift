@@ -73,8 +73,8 @@ namespace BeatShift.Input
             {
                 racer.setBoost(true);
 
-                //check pad is being used
-                if (chosenInput.GetType() == typeof(PadInputManager))
+                //check pad is being used and vibration set to true
+                if (chosenInput.GetType() == typeof(PadInputManager) && (Options.ControllerVibration == true))
                 {
                     //max vibrate is currently 0.75f (can be as high as 1.0f)
                     if (vibrateControl < 0.75f)
@@ -85,18 +85,18 @@ namespace BeatShift.Input
                     GamePad.SetVibration(((PadInputManager)chosenInput).getPlayerIndex(), vibrateControl, vibrateControl);
                 }
             }
-            else if( vibrateControl > 0.0f )
+            else
             {
                 racer.setBoost(false);
 
-                //check pad is being used
-                if (chosenInput.GetType() == typeof(PadInputManager))
+                //check pad is being used and vibration set to true
+                if (chosenInput.GetType() == typeof(PadInputManager) && (Options.ControllerVibration == true))
                 {
                     //boost decrease
-                    if (vibrateControl > 0.025)
+                    if (vibrateControl > 0.025f)
                         vibrateControl = vibrateControl - 0.025f;
                     else
-                        vibrateControl = 0;
+                        vibrateControl = 0.0f;
                     GamePad.SetVibration(((PadInputManager)chosenInput).getPlayerIndex(), vibrateControl, vibrateControl);
                 }
             }

@@ -101,6 +101,23 @@ namespace BeatShift
         }
 
         /// <summary>
+        /// Controls whether controller vibration is on or off
+        /// </summary>
+        public static Boolean ControllerVibration
+        {
+            get
+            {
+                return controllerVibration;
+            }
+
+            set
+            {
+                controllerVibration = value;
+                optsDoc.Root.Descendants("ControllerVibration").First().Value = value.ToString();
+            }
+        }
+
+        /// <summary>
         /// Used to scale volume of all in game sounds.
         /// </summary>
         public static byte MasterVolume
@@ -213,6 +230,7 @@ namespace BeatShift
         private static Boolean drawTrackNormals;
         private static Boolean drawWaypoints;
         private static Boolean drawShipBoundingBoxes;
+        private static Boolean controllerVibration;
         private static byte masterVolume;
         private static byte musicVolume;
         private static byte voiceVolume;
@@ -267,6 +285,7 @@ namespace BeatShift
                 drawTrackNormals = (from item in optsDoc.Root.Descendants() where item.Name == "DrawTrackNormals" select Boolean.Parse(item.Value)).First();
                 addAItoGame = (from item in optsDoc.Root.Descendants() where item.Name == "AddAI" select Boolean.Parse(item.Value)).First();
                 drawShipBoundingBoxes = (from item in optsDoc.Root.Descendants() where item.Name == "DrawShipBoundingBoxes" select Boolean.Parse(item.Value)).First();
+                controllerVibration = (from item in optsDoc.Root.Descendants() where item.Name == "ControllerVibration" select Boolean.Parse(item.Value)).First();
                 try
                 {
                     masterVolume = (from item in optsDoc.Root.Descendants() where item.Name == "MasterVolume" select byte.Parse(item.Value)).First();
