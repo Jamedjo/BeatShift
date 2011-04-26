@@ -14,9 +14,6 @@ namespace BeatShift
         public static String[] Ranks = { "th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th", "th" }; //increase for more players
         public static int updatePeriod = 92;
         
-
-
-
         public static BeatVisualisation beatVisualisation = new BeatVisualisation(new Vector2(-60,450), new Vector2(400,450), 0.5f);
 
         //for displayingw rong way sign
@@ -126,7 +123,7 @@ namespace BeatShift
 
                 foreach (Racer r in Race.humanRacers)
                 {
-                    if (r.isRespawning)
+                    if (r.isRespawning && r.shipPhysics.millisecsLeftTillReset<2000)
                     {
                         int newWarningWidth = (int)(GameTextures.ResettingSign.Width * scaleFactorWidth);
                         int newWarningHeight = (int)(GameTextures.ResettingSign.Height * scaleFactorHeight);

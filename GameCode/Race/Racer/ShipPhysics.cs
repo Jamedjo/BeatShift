@@ -397,8 +397,9 @@ namespace BeatShift
                         if (candidate.Equals(collidedBody.CollisionInformation))
                         {
                             //Console.WriteLine("ship hit ship ");
-                            //if (contact.Position
-                            //Calculate direction to bounce
+
+                            //parentRacer.raceTiming.previousLinearVelocity = 
+
 
                             // Deal with on top collision (NOT TESTED)
                             //if (r.shipPhysics.shipRayToTrackTime < 23f && shipRayToTrackTime > 23f)
@@ -409,43 +410,15 @@ namespace BeatShift
 
                             //}
 
-                            Vector3 bounceVector = physicsBody.Position - collidedBody.Position;
-                            bounceVector.Normalize();
-
-                            float shipVelocity_inShipBounceDirection = Vector3.Dot(physicsBody.LinearVelocity, bounceVector);// no need to divide by bounceVector.Length() as normalized
-                            //physicsBody.LinearVelocity -= bounceVector * shipVelocity_inShipBounceDirection;
-
-                            //Slow ship down in other components
-                            physicsBody.LinearVelocity *= 0.82f;
-
-                            //Get scale of bounce based on speed ship was moving towards the ship.
-                            //Minimum bounce until 5 speed, max bounce after 100;
-                            float minmaxV = Math.Min(100, Math.Max(5, (Math.Abs(shipVelocity_inShipBounceDirection))));
-                            //float bounceScale = minmaxV / 20;//scale velocity down so max bounce is 5 times as strong as bounce at 20mph, and 20mph bounce is unscaled
-
-                            //float angleModifier = Math.Abs(Vector3.Dot(physicsBody.OrientationMatrix.Forward, bounceVector)) - 1;
-                            //angleModifier *= 10;
-
-                            //float m1 = physicsBody.Mass;
-                            //float m2 = collidedBody.Mass;
-
-                            //Vector3 u1 = physicsBody.LinearVelocity;
-                            //Vector3 u2 = collidedBody.LinearVelocity;
-
-                            //float e = 0.5f;
-
-                            //Vector3 v1 = (m1 * u1 + m2 * u2 - m2 * e * (u1 - u2)) / (m1 + m2);
-                            //Vector3 impulse = m1 * (v1 - u1);
-
-                            //Vector3 bounceVector = physicsBody.Position - collidedBody.Position;
+                            //Vector3 bounceVector = collidedBody.Position - physicsBody.Position;
                             //bounceVector.Normalize();
 
-                            //physicsBody.ApplyImpulse(physicsBody.Position, bounceVector * impulse *25f);
-
-                            //Apply a bounce impulse
-
-                           physicsBody.ApplyImpulse(physicsBody.Position, bounceVector * 25 * minmaxV);// * angleModifier);
-                            //parentRacer.shipDrawing.drawArrowListPermanent.Add(new D_Arrow { pos = contact.Position, dir = bounceVector * 4f, col = Color.LimeGreen.ToVector3() });
+                            //float realtiveVelInShipBounceDirection = Vector3.Dot(physicsBody.LinearVelocity, bounceVector) - Vector3.Dot(collidedBody.LinearVelocity, bounceVector);// no need to divide by bounceVector.Length() as normalized
+                            //physicsBody.LinearVelocity -= bounceVector * realtiveVelInShipBounceDirection;
+                            ////physicsBody.LinearVelocity *= 0.82f;
+                            //float minmaxV = Math.Min(100, Math.Max(5, (Math.Abs(realtiveVelInShipBounceDirection))));
+                          
+                            //physicsBody.ApplyImpulse(physicsBody.Position, -bounceVector * 5 * minmaxV);// * angleModifier);
 
                     //TODO: fire off crap on collision
                     //BeatShift.emitter = new ParticleEmitter((Func<Vector3>)delegate { return contacts[0].Position; }, BeatShift.settingsb, BeatShift.pEffect);
@@ -463,7 +436,7 @@ namespace BeatShift
         #region Ship Raycasts
 
 
-        private double millisecsLeftTillReset = 4000;
+        public double millisecsLeftTillReset = 4000;
         private float currentDistanceToNearestWaypoint;
 
         /// <summary>
@@ -492,7 +465,7 @@ namespace BeatShift
                     //Ship is either upside-down or not on the track or race has not begun
 
                     millisecsLeftTillReset -= (BeatShift.singleton.currentTime.ElapsedGameTime.TotalMilliseconds); //* currentDistanceToNearestWaypoint);
-                    physicsBody.LinearDamping = 0.5f;
+                    //physicsBody.LinearDamping = 0.8f;
 
                     if (parentRacer.raceTiming.isRacing && millisecsLeftTillReset > 0)//Checked before updatewithraycasts is called
                     {
@@ -502,7 +475,7 @@ namespace BeatShift
                         //TODO: wait a bit 
                         //currentDistanceToNearestWaypoint = (float)((nextWaypoint.position - ShipPosition).Length()) / 125; //TODO: use actual width of track
 
-                        physicsBody.LinearDamping = 0.7f; //BUG!!!
+                        //physicsBody.LinearDamping = 0.7f; //BUG!!!
 
                         //Console.WriteLine(currentDistanceToNearestWaypoint);
 
@@ -510,7 +483,7 @@ namespace BeatShift
                     else
                     {
                         parentRacer.isRespawning = false;
-                        millisecsLeftTillReset = 4000;
+                        millisecsLeftTillReset = 5000;
                                //public struct ResetColumn { public Vector3 pos; int column; int resetWaypointIncrement; }
 
                         Vector3 originalPos = currentProgressWaypoint.position;

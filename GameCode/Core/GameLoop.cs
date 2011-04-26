@@ -39,6 +39,7 @@ namespace BeatShift
 
             if (Race.currentRaceType.actualRaceBegun)
             {
+                Race.currentRaceType.totalRaceTime.Stop();
                 foreach (Racer racer in Race.currentRacers)
                     racer.raceTiming.stopLapTimer();
             }
@@ -60,6 +61,7 @@ namespace BeatShift
             paused = false;
             if (Race.currentRaceType.actualRaceBegun)
             {
+                Race.currentRaceType.totalRaceTime.Start();
                 foreach (Racer racer in Race.currentRacers)
                     racer.raceTiming.startLapTimer();
             }
