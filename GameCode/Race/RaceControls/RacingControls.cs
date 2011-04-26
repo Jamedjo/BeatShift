@@ -15,11 +15,12 @@ namespace BeatShift.Input
         int tapNo;
         public IInputManager chosenInput;
         Racer racer;
+        float vibrateControl = 0.0f;
         //Boolean useKeyBoard;//Disable keyboard on xbox so chatpad doesn't work?
 
         //TODO: Eventually should give a value based on beat accuracy and trigger distance.
 
-        int boostBar = 0;
+        //int boostBar = 0;
 
         private Boolean previousCameraReverse = false;
         private Boolean previousPadDown = false;
@@ -47,7 +48,6 @@ namespace BeatShift.Input
 
         public void Update(GameTime gameTime)
         {
-            boostBar = 100;
             //System.Diagnostics.Debug.WriteLine("Update controls");
             chosenInput.Update(gameTime);
 
@@ -69,14 +69,36 @@ namespace BeatShift.Input
                 previousPadDown = !previousPadDown;
             }
 
-
-            if (chosenInput.actionPressed(InputAction.Boost) && (boostBar > 0))
+            if (chosenInput.actionPressed(InputAction.Boost) /*&& (racer.beatQueue.GetBoost() > 0)*/)
             {
                 racer.setBoost(true);
+
+                //check pad is being used
+                if (chosenInput.GetType() == typeof(PadInputManager))
+                {
+                    //max vibrate is currently 0.75f (can be as high as 1.0f)
+                    if (vibrateControl < 0.75f)
+                    {
+                        //boost increase
+                        vibrateControl = vibrateControl + 0.075f;
+                    }
+                    GamePad.SetVibration(((PadInputManager)chosenInput).getPlayerIndex(), vibrateControl, vibrateControl);
+                }
             }
-            else
+            else if( vibrateControl > 0.0f )
             {
                 racer.setBoost(false);
+
+                //check pad is being used
+                if (chosenInput.GetType() == typeof(PadInputManager))
+                {
+                    //boost decrease
+                    if (vibrateControl > 0.025)
+                        vibrateControl = vibrateControl - 0.025f;
+                    else
+                        vibrateControl = 0;
+                    GamePad.SetVibration(((PadInputManager)chosenInput).getPlayerIndex(), vibrateControl, vibrateControl);
+                }
             }
 
             if (racer.raceTiming.isRacing == true && racer.isRespawning == false)
@@ -236,11 +258,6 @@ namespace BeatShift.Input
                     Boost(0.1);
                 }
             }
-            
-            if (boostBar > 100)
-                boostBar = 100;
-            else if (boostBar < 0)
-                boostBar = 0;
         }
     }
 }
