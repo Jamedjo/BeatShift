@@ -73,10 +73,8 @@ namespace BeatShift.Input
 
             if (racer.isColliding == true)
             {
-                if (vibrateCollisionControl < 0.8f)
-                    vibrateCollisionControl = vibrateCollisionControl + 0.2f;
-                else
-                    vibrateCollisionControl = 1.0f;
+                //TODO: divide by 2*top speed instead of 600
+                vibrateCollisionControl = vibrateCollisionControl + (racer.raceTiming.previousSpeed/600.0f);
                 racer.isColliding = false;
             }
             else
@@ -113,6 +111,7 @@ namespace BeatShift.Input
             if (vibrateControl > 1.0f)
                 vibrateControl = 1.0f;
             //check pad is being used and vibration set to true
+
             if (chosenInput.GetType() == typeof(PadInputManager) && (Options.ControllerVibration == true))
                 GamePad.SetVibration(((PadInputManager)chosenInput).getPlayerIndex(), vibrateControl, vibrateControl);
 
