@@ -37,6 +37,12 @@ namespace BeatShift
             paused = true;
             pausedForGuide = !UserInitiated;
 
+            //turn off vibrations
+            GamePad.SetVibration(PlayerIndex.One, 0.0f, 0.0f);
+            GamePad.SetVibration(PlayerIndex.Two, 0.0f, 0.0f);
+            GamePad.SetVibration(PlayerIndex.Three, 0.0f, 0.0f);
+            GamePad.SetVibration(PlayerIndex.Four, 0.0f, 0.0f);
+
             if (Race.currentRaceType.actualRaceBegun)
             {
                 foreach (Racer racer in Race.currentRacers)
