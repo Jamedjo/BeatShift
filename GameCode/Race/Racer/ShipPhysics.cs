@@ -360,7 +360,7 @@ namespace BeatShift
                     //physicsBody.AngularVelocity = new Vector3(0, 0, 0);
 
                     //Initiate controller vibration
-                    parentRacer.isColliding = true;
+                    parentRacer.isCollidingWall = true;
 
                     //Calculate direction to bounce
                     Vector3 v1 = Vector3.Cross(nearestMapPoint.trackUp, contact.Normal);
@@ -399,6 +399,10 @@ namespace BeatShift
                         CompoundBody collidedBody = r.shipPhysics.physicsBody;
                         if (candidate.Equals(collidedBody.CollisionInformation))
                         {
+
+                            Vector3 colVel = collidedBody.LinearVelocity;
+                            r.raceTiming.previousSpeedOfCollidedBody = Math.Abs(colVel.Length());
+
                             //Console.WriteLine("ship hit ship ");
                             //if (contact.Position
                             //Calculate direction to bounce
@@ -413,7 +417,7 @@ namespace BeatShift
                             //}
 
                             //Initiate controller vibration
-                            parentRacer.isColliding = true;
+                            r.isCollidingShip = true;
 
                             Vector3 bounceVector = physicsBody.Position - collidedBody.Position;
                             bounceVector.Normalize();

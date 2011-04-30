@@ -18,6 +18,14 @@ namespace BeatShift.Input
         float vibrateBoostControl = 0.0f;
         float vibrateCollisionControl = 0.0f;
         float vibrateControl = 0.0f;
+        float jumpHeight = 27.5f;
+        bool justCollided = false;
+        bool justBoost = false;
+        bool justJump = false;
+
+        //TODO: sort topspeed variable
+        int topSpeed = 300;
+
         //Boolean useKeyBoard;//Disable keyboard on xbox so chatpad doesn't work?
 
         //TODO: Eventually should give a value based on beat accuracy and trigger distance.
@@ -71,49 +79,103 @@ namespace BeatShift.Input
                 previousPadDown = !previousPadDown;
             }
 
-            if (racer.isColliding == true)
+            #region Vibrations
+
+            #region COLLISIONS
+
+            // checking for ship jump, saving peak height
+            if (racer.shipPhysics.shipRayToTrackTime > jumpHeight)
             {
-                //TODO: divide by 2*top speed instead of 600
-                vibrateCollisionControl = vibrateCollisionControl + (racer.raceTiming.previousSpeed/600.0f);
-                racer.isColliding = false;
+                jumpHeight = racer.shipPhysics.shipRayToTrackTime;
+                justJump = true;
             }
-            else
+            // checking for ship landing
+            else if ((racer.shipPhysics.shipRayToTrackTime < 22) && justJump)
+            {
+                // TODO: VALUES STILL NEED TWEAKING
+                vibrateCollisionControl = vibrateCollisionControl + ((jumpHeight - 27.5f) / 20);
+                // reset jump threshold
+                jumpHeight = 27.5f;
+                justJump = false;
+                justCollided = true;
+            }
+            // checking for wall collisions
+            if (racer.isCollidingWall && !justCollided)
+            {
+                vibrateCollisionControl = vibrateCollisionControl + (float)Math.Sqrt(racer.raceTiming.previousSpeed / 300.0f);
+                justCollided = true;
+            }
+            // checking for ship collisions
+            //else if (racer.isCollidingShip && !justCollided)
+            //{
+            //    //TODO: based on speed difference of colliding ships
+            //    float relativeCollisionVel = (racer.raceTiming.previousSpeed - racer.raceTiming.previousSpeedOfCollidedBody);
+            //    System.Diagnostics.Debug.WriteLine( relativeCollisionVel );
+            //    vibrateCollisionControl = vibrateCollisionControl + (relativeCollisionVel);
+            //    justCollided = true;
+            //}
+            // cooldown after collisions
+            else if (justCollided)
             {
                 if (vibrateCollisionControl > 0.05f)
                     vibrateCollisionControl = vibrateCollisionControl - 0.05f;
                 else
+                {
                     vibrateCollisionControl = 0.0f;
+                    justCollided = false;
+                    racer.isCollidingWall = false;
+                    racer.isCollidingShip = false;
+                }
             }
 
+            #endregion
+
+            #region BOOST
+
+            // vibrations from boost
+            // TODO: uncomment when music is added
             if (chosenInput.actionPressed(InputAction.Boost) /*&& (racer.beatQueue.GetBoost() > 0)*/)
             {
                 racer.setBoost(true);
+                justBoost = true;
 
-                //max vibrate is currently 0.75f (can be as high as 1.0f)
+                // max vibrate is currently 0.5f (can be as high as 1.0f)
                 if (vibrateBoostControl < 0.5f)
                 {
-                    //boost increase
+                    // boost increase
                     vibrateBoostControl = vibrateBoostControl + 0.05f;
                 }
             }
-            else
+            else if (justBoost)
             {
                 racer.setBoost(false);
 
-                //boost decrease
-                if (vibrateBoostControl > 0.02f)
-                    vibrateBoostControl = vibrateBoostControl - 0.02f;
+                // boost decay
+                if (vibrateBoostControl > 0.015f)
+                    vibrateBoostControl = vibrateBoostControl - 0.015f;
                 else
-                   vibrateBoostControl = 0.0f;
+                {
+                    vibrateBoostControl = 0.0f;
+                    justBoost = false;
+                }
             }
 
+            #endregion
+
+            #region CALCULATIONS
+
+            // check vibration values are capped at 1.0
             vibrateControl = vibrateCollisionControl + vibrateBoostControl;
             if (vibrateControl > 1.0f)
                 vibrateControl = 1.0f;
-            //check pad is being used and vibration set to true
 
+            //check pad is being used and vibration option is set to true
             if (chosenInput.GetType() == typeof(PadInputManager) && (Options.ControllerVibration == true))
                 GamePad.SetVibration(((PadInputManager)chosenInput).getPlayerIndex(), vibrateControl, vibrateControl);
+
+            #endregion
+
+            #endregion
 
             if (racer.raceTiming.isRacing == true && racer.isRespawning == false)
             {

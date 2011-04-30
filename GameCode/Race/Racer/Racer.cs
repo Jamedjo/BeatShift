@@ -30,7 +30,9 @@ namespace BeatShift
         /// </summary>
         public Boolean isRespawning { get; set; }
 
-        public Boolean isColliding { get; set; }
+        public Boolean isCollidingWall { get; set; }
+
+        public Boolean isCollidingShip { get; set; }
 
         /// <summary>
         /// The point in GameTime when the ship is reactivated after resetting.
