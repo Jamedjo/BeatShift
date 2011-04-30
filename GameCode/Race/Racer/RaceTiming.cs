@@ -45,8 +45,11 @@ namespace BeatShift
         public bool displayWrongWay = false;
         public int lastUpdatedTimer;
         public String speedToDisplay = String.Format("{0:0000}", 0);
+
+        // Physics per frame variables
         public float previousSpeed = 0f;
         public float previousRoll = 0f;
+        public float previousSpeedOfCollidedBody = 0f;
 
         public RaceTiming(Racer racer)
         {

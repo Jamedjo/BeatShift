@@ -5,6 +5,7 @@
   <DrawTrackNormals>true</DrawTrackNormals>
   <AddAI>false</AddAI>
   <DrawShipBoundingBoxes>true</DrawShipBoundingBoxes>
+  <ControllerVibration>true</ControllerVibration>
   <UseKeyboardAsPad2>true</UseKeyboardAsPad2>
   <MasterVolume>1000</MasterVolume>
   <MusicVolume>100</MusicVolume>

@@ -206,6 +206,7 @@ namespace BeatShift
                     //Back button presed on inactive window, go back to main menu.
                     GameLoop.setGameStateAndResetPlayers(GameState.Menu);
                 }
+                GameLoop.setActiveControllers(false, i);
             }
         }
 
@@ -221,7 +222,7 @@ namespace BeatShift
 #if WINDOWS
                 Race.humanRacers[i].shipDrawing.isVisible = true;
 #endif
-
+                GameLoop.setActiveControllers(true, i);
             }
         }
 

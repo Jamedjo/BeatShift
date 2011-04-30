@@ -27,15 +27,28 @@ namespace BeatShift
         public static GameState getCurrentState() { return currentState; }
 
         private static bool paused = false;
-        //private bool pauseKeyDown = false;
         private static bool pausedForGuide = false;
+        private static bool pausedForControllers = false;
+
+        private static bool[] activeControllers = new bool[4];
 
         private static IMenuPage pauseMenu= new PauseMenu();
+
+        public static void setActiveControllers( bool set, int index)
+        {
+            activeControllers[index] = set;
+        }
 
         private static void BeginPause(bool UserInitiated)
         {
             paused = true;
             pausedForGuide = !UserInitiated;
+
+            //turn off vibrations
+            GamePad.SetVibration(PlayerIndex.One, 0.0f, 0.0f);
+            GamePad.SetVibration(PlayerIndex.Two, 0.0f, 0.0f);
+            GamePad.SetVibration(PlayerIndex.Three, 0.0f, 0.0f);
+            GamePad.SetVibration(PlayerIndex.Four, 0.0f, 0.0f);
 
             if (Race.currentRaceType.actualRaceBegun)
             {
@@ -59,6 +72,7 @@ namespace BeatShift
             //TODO: Resume controller vibration
             pausedForGuide = false;
             paused = false;
+            pausedForControllers = false;
             if (Race.currentRaceType.actualRaceBegun)
             {
                 Race.currentRaceType.totalRaceTime.Start();
@@ -107,6 +121,24 @@ namespace BeatShift
             {
                 EndPause();
                 //Console.Write("Game Resumed \n");
+            }
+        }
+
+
+        private static void checkControllers(GameTime gameTime)
+        {
+            // Pause if the Guide is up
+            if (!paused && currentState == GameState.LocalGame)
+            {
+                for (int i = 0; i < 4; i++)
+                    if (activeControllers[i] && !GamePad.GetState((PlayerIndex)(i)).IsConnected)
+                    {
+                        BeginPause(true);
+                        pausedForControllers = true;
+                        pauseMenu.enteringMenu();
+                        MenuManager.anyInput.Update(gameTime);
+                        break;
+                    }
             }
         }
 
@@ -203,6 +235,8 @@ namespace BeatShift
                 checkPauseKey(gameTime);
 
             checkPauseGuide();
+
+            checkControllers(gameTime);
 
             // If the user hasn't paused, Update normally
 
