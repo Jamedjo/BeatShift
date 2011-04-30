@@ -106,6 +106,8 @@ namespace BeatShift.Menus
             //while waiting for physics multithread to load do nothing
             while (MapManager.currentMap.physicsLoadingThread.IsAlive) {}// Console.WriteLine("physics thread alive!!");}
 
+            GameLoop.setActiveControllers(true, 0);
+
             GameLoop.setGameState(GameState.LocalGame);
             if ((Keyboard.GetState().IsKeyDown(Keys.Enter)) && !AiInputManager.testAI)
             {
