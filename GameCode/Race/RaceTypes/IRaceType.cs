@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 
 namespace BeatShift
 {
+
     // Default race type has:-
     // 1) Countdown
     // 2) Continuous ranking and final ranking
@@ -36,6 +37,7 @@ namespace BeatShift
         public bool areLapsRequired         { get; protected set; }
         public int maxLaps                 { get; protected set; }
         public Stopwatch totalRaceTime      { get; protected set; }
+        public List<ResetColumn> resettingShips { get; set; }
 
         // Rank variables
         public bool areRanksRequired        { get; protected set; }
@@ -58,6 +60,7 @@ namespace BeatShift
 
         public IRaceType()
         {
+            resettingShips = new List<ResetColumn>();
             actualRaceBegun = false;
             raceProcedureBegun = false;
 
@@ -177,7 +180,21 @@ namespace BeatShift
                     calculateRanks();
                 }
             }
+            clearOutResettingShips();
         }
+
+        public void clearOutResettingShips()
+        {
+            foreach (ResetColumn rc in Race.currentRaceType.resettingShips.ToList())
+            {
+                if (this.totalRaceTime.ElapsedMilliseconds - rc.timeFromReset > 2000f)
+                {
+                    Race.currentRaceType.resettingShips.Remove(rc);
+                }
+            }
+
+        }
+
 
         public bool everyoneHasFinished()
         {

@@ -18,6 +18,17 @@ using DPSF;
 
 namespace BeatShift
 {
+    public class ResetColumn
+    {
+        public Vector3 position;
+        public long timeFromReset;
+
+        public ResetColumn(Vector3 pos, long time)
+        {
+            position = pos;
+            timeFromReset = time;
+        }
+    }
 
     public delegate void VolumechangeHandler(EventArgs e);
     /// <summary>
@@ -76,8 +87,10 @@ namespace BeatShift
         {
             singleton = this;
             graphics = new GraphicsDeviceManager(this);
-            //graphics.PreferredBackBufferWidth = 1280;
-            //graphics.PreferredBackBufferHeight = 800;
+#if XBOX
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 720;
+#endif
             // TODO: uncomment the above at your peril, performance profiling needed
             particleManager = new ParticleSystemManager();
             Content.RootDirectory = "Content";

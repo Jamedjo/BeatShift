@@ -23,6 +23,7 @@ namespace BeatShift
         public static Texture2D HorizontalSplit;
         public static Texture2D VerticalSplit;
         public static Texture2D WrongWaySign;
+        public static Texture2D ResettingSign;
         public static Texture2D BeatVisualisation;
 
         public static void load(ContentManager c)
@@ -44,6 +45,7 @@ namespace BeatShift
             HorizontalSplit = c.Load<Texture2D>("Images/horizontalsplit");
             VerticalSplit = c.Load<Texture2D>("Images/verticalsplit");
             WrongWaySign = c.Load<Texture2D>("HUD/warning_v3");
+            ResettingSign = c.Load<Texture2D>("HUD/resetting_v3");
             BeatVisualisation = c.Load<Texture2D>("Visualisation/viz_red");
             Console.WriteLine("   ...textures loaded.");
 

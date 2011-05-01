@@ -126,8 +126,13 @@ namespace BeatShift
                 //Update gamePad states and keyboardStates for all input managers
                 ssarea[i].Update(gameTime);
 
-                //"signing in" for each player A will make the ship appear
-                resondToButtonA(i);
+                //A makes player active
+                respondToButtonA(i);
+
+#if XBOX
+                //"signing in"
+                signIn(i);
+#endif
 
                 // B makes it dissapear if already active, otherwise return to main menu.
                 respondToMenuBack(i);
@@ -148,6 +153,24 @@ namespace BeatShift
             {
                 setupGameAndChangeState(gameTime);
             }
+        }
+
+        private void signIn(int i)
+        {
+            Race.getFullListOfRacerIDsFromSignedInPeople();
+            Array.Clear(signedInPlayers, 0, signedInPlayers.Length);
+            foreach (SignedInGamer gamer in Gamer.SignedInGamers)
+            {
+                signedInPlayers[(int)gamer.PlayerIndex] = 1;
+            }
+
+            if (!Guide.IsVisible) if (ssarea[i].isActive && (Race.humanRacers[i].shipDrawing.isVisible == false))
+                {
+                    if (signedInPlayers[i] == 1)
+                        Race.humanRacers[i].shipDrawing.isVisible = true;
+                    else
+                        ssarea[i].setActive(false);
+                }
         }
 
         private void setupGameAndChangeState(GameTime gameTime)
@@ -178,30 +201,28 @@ namespace BeatShift
                     ssarea[i].setActive(false);
                     Race.humanRacers[i].shipDrawing.isVisible = false;
                 }
-                else
+                else if( !ssarea[0].isActive && !ssarea[1].isActive && !ssarea[2].isActive && !ssarea[3].isActive )
                 {
                     //Back button presed on inactive window, go back to main menu.
                     GameLoop.setGameStateAndResetPlayers(GameState.Menu);
                 }
+                GameLoop.setActiveControllers(false, i);
             }
         }
 
-        private void resondToButtonA(int i)
+        private void respondToButtonA(int i)
         {
             if (ssarea[i].input.actionTapped(InputAction.MenuAccept))
             {
                 ssarea[i].setActive(true);
-
-                Array.Clear(signedInPlayers, 0, signedInPlayers.Length);
-                foreach (SignedInGamer gamer in Gamer.SignedInGamers)
-                {
-                    signedInPlayers[(int)gamer.PlayerIndex] = 1;
-                }
-
+#if XBOX
                 if (signedInPlayers[i] == 0)
                     Guide.ShowSignIn(4, false);
-
+#endif
+#if WINDOWS
                 Race.humanRacers[i].shipDrawing.isVisible = true;
+#endif
+                GameLoop.setActiveControllers(true, i);
             }
         }
 

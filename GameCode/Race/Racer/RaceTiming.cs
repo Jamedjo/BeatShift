@@ -17,7 +17,7 @@ namespace BeatShift
         Racer currentRacer;
 
         //Time related
-        Stopwatch stopwatch;
+        public Stopwatch stopwatch;
         public TimeSpan fastedLap;
         public int currentLap;
         public int racePosition;
@@ -46,6 +46,11 @@ namespace BeatShift
         public int lastUpdatedTimer;
         public String speedToDisplay = String.Format("{0:0000}", 0);
 
+        // Physics per frame variables
+        public float previousSpeed = 0f;
+        public float previousRoll = 0f;
+        public float previousSpeedOfCollidedBody = 0f;
+
         public RaceTiming(Racer racer)
         {
             currentRacer = racer;
@@ -67,6 +72,7 @@ namespace BeatShift
             currentLap++;
             if (currentLap == 1 || stopwatch.Elapsed.TotalMilliseconds < fastedLap.TotalMilliseconds)
                 fastedLap = stopwatch.Elapsed;
+
 
             // Penultimate racer destroys the guy in last place on each lap
             int racersStillGoing = Race.currentRacers.Count;

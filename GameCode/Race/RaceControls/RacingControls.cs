@@ -9,18 +9,28 @@ namespace BeatShift.Input
 {
     public class RacingControls
     {
-        const int controlType=3;
-        const decimal decelfact = 0.001m;
+        //const decimal decelfact = 0.001m;
         decimal[] lastTaps;
         decimal[] tapWeights;
         int tapNo;
         public IInputManager chosenInput;
         Racer racer;
+        float vibrateBoostControl = 0.0f;
+        float vibrateCollisionControl = 0.0f;
+        float vibrateControl = 0.0f;
+        float jumpHeight = 27.5f;
+        bool justCollided = false;
+        bool justBoost = false;
+        bool justJump = false;
+
+        //TODO: sort topspeed variable
+        int topSpeed = 300;
+
         //Boolean useKeyBoard;//Disable keyboard on xbox so chatpad doesn't work?
 
         //TODO: Eventually should give a value based on beat accuracy and trigger distance.
 
-        int boostBar = 0;
+        //int boostBar = 0;
 
         private Boolean previousCameraReverse = false;
         private Boolean previousPadDown = false;
@@ -48,7 +58,6 @@ namespace BeatShift.Input
 
         public void Update(GameTime gameTime)
         {
-            boostBar = 100;
             //System.Diagnostics.Debug.WriteLine("Update controls");
             chosenInput.Update(gameTime);
 
@@ -70,37 +79,110 @@ namespace BeatShift.Input
                 previousPadDown = !previousPadDown;
             }
 
+            #region Vibrations
 
-            if (chosenInput.actionPressed(InputAction.Boost) && (boostBar > 0))
+            #region COLLISIONS
+
+            // checking for ship jump, saving peak height
+            if (racer.shipPhysics.shipRayToTrackTime > jumpHeight)
+            {
+                jumpHeight = racer.shipPhysics.shipRayToTrackTime;
+                justJump = true;
+            }
+            // checking for ship landing
+            else if ((racer.shipPhysics.shipRayToTrackTime < 22) && justJump)
+            {
+                // TODO: VALUES STILL NEED TWEAKING
+                vibrateCollisionControl = vibrateCollisionControl + ((jumpHeight - 27.5f) / 20);
+                // reset jump threshold
+                jumpHeight = 27.5f;
+                justJump = false;
+                justCollided = true;
+            }
+            // checking for wall collisions
+            if (racer.isCollidingWall && !justCollided)
+            {
+                vibrateCollisionControl = vibrateCollisionControl + (float)Math.Sqrt(racer.raceTiming.previousSpeed / 300.0f);
+                justCollided = true;
+            }
+            // checking for ship collisions
+            //else if (racer.isCollidingShip && !justCollided)
+            //{
+            //    //TODO: based on speed difference of colliding ships
+            //    float relativeCollisionVel = (racer.raceTiming.previousSpeed - racer.raceTiming.previousSpeedOfCollidedBody);
+            //    System.Diagnostics.Debug.WriteLine( relativeCollisionVel );
+            //    vibrateCollisionControl = vibrateCollisionControl + (relativeCollisionVel);
+            //    justCollided = true;
+            //}
+            // cooldown after collisions
+            else if (justCollided)
+            {
+                if (vibrateCollisionControl > 0.05f)
+                    vibrateCollisionControl = vibrateCollisionControl - 0.05f;
+                else
+                {
+                    vibrateCollisionControl = 0.0f;
+                    justCollided = false;
+                    racer.isCollidingWall = false;
+                    racer.isCollidingShip = false;
+                }
+            }
+
+            #endregion
+
+            #region BOOST
+
+            // vibrations from boost
+            // TODO: uncomment when music is added
+            if (chosenInput.actionPressed(InputAction.Boost) /*&& (racer.beatQueue.GetBoost() > 0)*/)
             {
                 racer.setBoost(true);
+                justBoost = true;
+
+                // max vibrate is currently 0.5f (can be as high as 1.0f)
+                if (vibrateBoostControl < 0.5f)
+                {
+                    // boost increase
+                    vibrateBoostControl = vibrateBoostControl + 0.05f;
+                }
             }
-            else
+            else if (justBoost)
             {
                 racer.setBoost(false);
+
+                // boost decay
+                if (vibrateBoostControl > 0.015f)
+                    vibrateBoostControl = vibrateBoostControl - 0.015f;
+                else
+                {
+                    vibrateBoostControl = 0.0f;
+                    justBoost = false;
+                }
             }
+
+            #endregion
+
+            #region CALCULATIONS
+
+            // check vibration values are capped at 1.0
+            vibrateControl = vibrateCollisionControl + vibrateBoostControl;
+            if (vibrateControl > 1.0f)
+                vibrateControl = 1.0f;
+
+            //check pad is being used and vibration option is set to true
+            if (chosenInput.GetType() == typeof(PadInputManager) && (Options.ControllerVibration == true))
+                GamePad.SetVibration(((PadInputManager)chosenInput).getPlayerIndex(), vibrateControl, vibrateControl);
+
+            #endregion
+
+            #endregion
 
             if (racer.raceTiming.isRacing == true && racer.isRespawning == false)
             {
                 //General Input
                 UpdateLocalFromInput();
-                
-                if (controlType == 0)
-                {
-                    applyForwardMotionFromAnalogue();
-                }
-                else if (controlType == 1)
-                {
-                    TapControl();
-                } else if (controlType == 2)
-                {
-                    AverageControl();
-                }
-                else if (controlType == 3)
-                {
-                    BoostControl();
-                }
-          }
+                BoostControl();
+            }
         }
         
         private void UpdateLocalFromInput()
@@ -133,20 +215,17 @@ namespace BeatShift.Input
 
                 if (angularSize < 3.5f)
                 {
-                    Vector3 leftVector = racer.shipPhysics.physicsBody.OrientationMatrix.Up * reversingMultiplier * 45f * (1 + (Math.Abs(angularSize) * 0.12f)) * chosenInput.getActionValue(InputAction.Left);
+                    Vector3 leftVector = racer.shipPhysics.physicsBody.OrientationMatrix.Up * reversingMultiplier * 75f * (1 + (Math.Abs(angularSize) * 0.12f)) * chosenInput.getActionValue(InputAction.Left);
                     Physics.ApplyAngularImpulse(ref leftVector, ref racer.shipPhysics.physicsBody);
                 }
 
                 if (angularSize > -3.5f)
                 {
-                    Vector3 rightVector = racer.shipPhysics.physicsBody.OrientationMatrix.Up * reversingMultiplier * -45f * (1 + (Math.Abs(angularSize) * 0.12f)) * chosenInput.getActionValue(InputAction.Right);
+                    Vector3 rightVector = racer.shipPhysics.physicsBody.OrientationMatrix.Up * reversingMultiplier * -75f * (1 + (Math.Abs(angularSize) * 0.12f)) * chosenInput.getActionValue(InputAction.Right);
                     Physics.ApplyAngularImpulse(ref rightVector, ref racer.shipPhysics.physicsBody);
                 }
             //}
         }
-
-
-
 
         public void applyForwardMotionFromAnalogue()
         {
@@ -163,7 +242,7 @@ namespace BeatShift.Input
             racer.shipPhysics.physicsBody.ApplyImpulse(racer.shipPhysics.physicsBody.Position, racer.shipPhysics.physicsBody.OrientationMatrix.Forward * 70 * (float)average);
         }
 
-        void AverageControl()
+        /*void AverageControl()
         {
             //if (currentPadState.IsConnected)
             {
@@ -210,17 +289,8 @@ namespace BeatShift.Input
                     }
                 }
             AverageMove((double)average);
-        }
+        }*/
         
-        void TapControl()
-        {
-            //if (currentPadState.IsConnected)
-
-                // Increase vibration if the player is tapping the A button.
-                // Subtract vibration otherwise, even if the player holds down A
-           // if (chosenInput.actionTapped(InputAction.Forwards)) Boost((double)BeatShift.bgm.beatTime());
-        }
-
         public decimal getLastPress()
         {
             return (lastTaps[tapNo]);
@@ -264,11 +334,6 @@ namespace BeatShift.Input
                     Boost(0.1);
                 }
             }
-            
-            if (boostBar > 100)
-                boostBar = 100;
-            else if (boostBar < 0)
-                boostBar = 0;
         }
     }
 }

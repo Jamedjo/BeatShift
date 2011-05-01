@@ -14,9 +14,6 @@ namespace BeatShift
         public static String[] Ranks = { "th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th", "th" }; //increase for more players
         public static int updatePeriod = 92;
         
-
-
-
         public static BeatVisualisation beatVisualisation = new BeatVisualisation(new Vector2(-60,450), new Vector2(400,450), 0.5f);
 
         //for displayingw rong way sign
@@ -76,17 +73,23 @@ namespace BeatShift
             }
             else
             {
+
+                racer.raceTiming.previousSpeed = MathHelper.Lerp(racer.raceTiming.previousSpeed, (Math.Abs((int)racer.shipPhysics.getForwardSpeed())), 0.05f);
+
                 // Speed info, updates every update period
-                racer.raceTiming.lastUpdatedTimer += gameTime.ElapsedGameTime.Milliseconds;
-                if (racer.raceTiming.lastUpdatedTimer >= updatePeriod)
-                {
-                    racer.raceTiming.lastUpdatedTimer -= updatePeriod;
-                    try
-                    {
-                        racer.raceTiming.speedToDisplay = String.Format("{0:0000}", (Math.Abs((int)racer.shipPhysics.getForwardSpeed())));
-                    }
-                    catch (Exception e) {}
-                }
+                //racer.raceTiming.lastUpdatedTimer += gameTime.ElapsedGameTime.Milliseconds;
+                //if (racer.raceTiming.lastUpdatedTimer >= updatePeriod)
+                //{
+                //    racer.raceTiming.lastUpdatedTimer -= updatePeriod;
+                //    try
+                //    {
+                //        racer.raceTiming.speedToDisplay = String.Format("{0:0000}", (Math.Abs((int)racer.shipPhysics.getForwardSpeed())));
+                //    }
+                //    catch (Exception e) {}
+                //}
+
+                racer.raceTiming.speedToDisplay = String.Format("{0:0000}", racer.raceTiming.previousSpeed);
+
                 DrawMessage(BeatShift.blueNumbersFont, racer.raceTiming.speedToDisplay, 575, vOffset - 48, 0.6f);
                 DrawMessage(BeatShift.blueNumbersFont, ":", 710, vOffset - 48, 0.6f);
 
@@ -96,10 +99,10 @@ namespace BeatShift
                 //    DrawMessage(BeatShift.newfont, (racer.raceTiming.currentLap + 1) + "/" + Race.currentRaceType.maxLaps, 680, 20, 0.4f);
                 //    DrawMessage(BeatShift.newfontgreen, "LAPS", 720, 22, 0.4f);
                 //}
-                //if (Race.currentRaceType.displayCurrentLapTime)
-                //{
-                //    DrawMessage(BeatShift.newfont, racer.raceTiming.getCurrentLapTime(), 680, 43, 0.4f);
-                //}
+                if (Race.currentRaceType.displayCurrentLapTime)
+                {
+                    DrawMessage(BeatShift.newfont, racer.raceTiming.getCurrentLapTime(), 680, 43, 0.4f);
+                }
                 //if (Race.currentRaceType.displayCurrentBestLap)
                 //{
                 //    DrawMessage(BeatShift.newfont, racer.raceTiming.getBestLapTime(), 680, 66, 0.4f);
@@ -116,7 +119,19 @@ namespace BeatShift
                 int newBoardHeight = (int)(GameTextures.TopRightBoard.Height * scaleFactorHeight);
 
                 var d = new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width - newBoardWidth, 0, newBoardWidth, newBoardHeight);
-                BeatShift.spriteBatch.Draw(GameTextures.TopRightBoard, d, Color.White);
+                //BeatShift.spriteBatch.Draw(GameTextures.TopRightBoard, d, Color.White);
+
+                foreach (Racer r in Race.humanRacers)
+                {
+                    if (r.isRespawning && r.shipPhysics.millisecsLeftTillReset<2000)
+                    {
+                        int newWarningWidth = (int)(GameTextures.ResettingSign.Width * scaleFactorWidth);
+                        int newWarningHeight = (int)(GameTextures.ResettingSign.Height * scaleFactorHeight);
+                        BeatShift.spriteBatch.Draw(GameTextures.ResettingSign, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - newWarningWidth / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - newWarningHeight / 2, newWarningWidth, newWarningHeight), Color.White);
+                    }
+
+                }
+
 
                 //if wrong way
                 if (racer.shipPhysics.wrongWay == true)

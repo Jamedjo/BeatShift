@@ -33,15 +33,46 @@ namespace BeatShift
         //DefaultTexturedQuadParticleSystem engineGlow;
 
         public Vector3 ShipPosition { get { return physicsBody.Position; /*shipHull.CenterPosition;*/ } set { physicsBody.Position = value; /*shipHull.CenterPosition = value;*/ } }
-        public Quaternion ShipOrientationQuaternion { get { return physicsBody.Orientation; } set { physicsBody.Orientation = value; } }
-        public Matrix ShipOrientationMatrix { get { return Matrix.CreateFromQuaternion(physicsBody.Orientation); } set { physicsBody.Orientation = Quaternion.CreateFromRotationMatrix(value); } }
         public Matrix DrawOrientationMatrix { get { var rQ = Quaternion.CreateFromAxisAngle(Vector3.Forward, getRoll()); var oldQ = physicsBody.Orientation; var mulQ = oldQ * rQ; return Matrix.CreateFromQuaternion(mulQ); } }
         public float ShipSpeed { get { return getForwardSpeed(); } }
         public float radiusForGrip = 100;
         List<Vector3> stabilizerRaycastList;
         public float maxSpeed = 200f; //TODO: ship specific
 
+        private Quaternion previousOrientation;
 
+        public Quaternion ShipOrientationQuaternion
+        {
+            get
+            {
+                if (float.IsNaN(physicsBody.Orientation.W))
+                {
+                    return previousOrientation;
+                }
+                return physicsBody.Orientation;
+            }
+
+            set
+            {
+                physicsBody.Orientation = value;
+            }
+        }
+
+        public Matrix ShipOrientationMatrix
+        {
+            get
+            {
+                if (float.IsNaN(physicsBody.Orientation.W))
+                {
+                    return Matrix.CreateFromQuaternion(previousOrientation);
+                }
+                return Matrix.CreateFromQuaternion(physicsBody.Orientation);
+            }
+            set
+            {
+                physicsBody.Orientation = Quaternion.CreateFromRotationMatrix(value);
+            }
+        }
 
 
         // Map related variables
@@ -104,16 +135,22 @@ namespace BeatShift
             //BoxShape b2 = new BoxShape(4f, 1f, 6f);
             //b2.CollisionMargin = 0.4f;
 
-            var bodies = new List<DynamicCompoundChildData>()
+            var bodies = new List<CompoundChildData>()
             {
-                new DynamicCompoundChildData(new CompoundChildData(new CompoundShapeEntry(convexHull, Vector3.Zero) ,cr), 60f)
+                new CompoundChildData(new CompoundShapeEntry(convexHull, Vector3.Zero, 25f),cr)
                 //new DynamicCompoundChildData(new CompoundChildData(new CompoundShapeEntry(b1, Vector3.Zero) ,cr), 15f),
                 //new DynamicCompoundChildData(new CompoundChildData(new CompoundShapeEntry(b2, Vector3.Zero) ,cr), 45f)
             };
 
-            CompoundShapeEntry cse = new CompoundShapeEntry(convexHull, Vector3.Zero);
+            //CompoundShapeEntry cse = new CompoundShapeEntry(convexHull, Vector3.Zero);
 
-            physicsBody = new CompoundBody(bodies);
+            //var body = new CompoundBody(
+
+            //Build the first body
+
+            //var cb1 = new CompoundBody(bodies);
+
+            physicsBody = new CompoundBody(bodies, 60f);
 
             //physicsBody.PositionUpdateMode = BEPUphysics.PositionUpdating.PositionUpdateMode.Continuous;
 
@@ -172,6 +209,13 @@ namespace BeatShift
 
         private void resetShipAndFaceNextWaypoint(Vector3 newShipPosition)
         {
+            if (float.IsNaN(physicsBody.Position.X) == true)
+            {
+                previousOrientation = physicsBody.Orientation;
+            }
+            //previousOrientationMatrix = physicsBody.OrientationMatrix;
+
+
             //Make ship face towards the next waypoint at start, so it faces the right way around the track.
             ShipPosition = newShipPosition;
             physicsBody.WorldTransform = Matrix.CreateWorld(newShipPosition, mapData.nextPoint(currentProgressWaypoint).position - newShipPosition, currentProgressWaypoint.trackUp);
@@ -318,6 +362,9 @@ namespace BeatShift
                     ////Stop all rotation
                     //physicsBody.AngularVelocity = new Vector3(0, 0, 0);
 
+                    //Initiate controller vibration
+                    parentRacer.isCollidingWall = true;
+
                     //Calculate direction to bounce
                     Vector3 v1 = Vector3.Cross(nearestMapPoint.trackUp, contact.Normal);
                     Vector3 bounceVector = Vector3.Cross(nearestMapPoint.trackUp, v1);
@@ -345,10 +392,10 @@ namespace BeatShift
                 else
                 {
                     //Only hit wall once per collision by only ignoring hits which are close in time.
-                    //if (BeatShift.singleton.currentTime.TotalGameTime.TotalMilliseconds - lastThisShipTime > 100)
-                    //{
-                    //    //Console.WriteLine("Creating Bounce");
-                    //    lastThisShipTime = BeatShift.singleton.currentTime.TotalGameTime.TotalMilliseconds;
+                    if (BeatShift.singleton.currentTime.TotalGameTime.TotalMilliseconds - lastThisShipTime > 100)
+                    {
+                        //Console.WriteLine("Creating Bounce");
+                        lastThisShipTime = BeatShift.singleton.currentTime.TotalGameTime.TotalMilliseconds;
 
                     foreach (Racer r in Race.currentRacers)
                     {
@@ -356,45 +403,41 @@ namespace BeatShift
                         if (candidate.Equals(collidedBody.CollisionInformation))
                         {
                             //Console.WriteLine("ship hit ship ");
-                            //if (contact.Position
-                            //Calculate direction to bounce
+
+                            Vector3 colVel = collidedBody.LinearVelocity;
+                            r.raceTiming.previousSpeedOfCollidedBody = Math.Abs(colVel.Length());
+
 
                             // Deal with on top collision (NOT TESTED)
-                            if (r.shipPhysics.shipRayToTrackTime < 23f && shipRayToTrackTime > 23f)
-                            {
-                                Console.WriteLine("Landed on top");
-                                float impulseLeft = Vector3.Dot(physicsBody.Position - r.shipPhysics.physicsBody.Position, physicsBody.WorldTransform.Left);
-                                physicsBody.ApplyImpulse(physicsBody.Position, physicsBody.WorldTransform.Left * impulseLeft);
+                            //if (r.shipPhysics.shipRayToTrackTime < 23f && shipRayToTrackTime > 23f)
+                            //{
+                            //    Console.WriteLine("Landed on top");
+                            //    float impulseLeft = Vector3.Dot(physicsBody.Position - r.shipPhysics.physicsBody.Position, physicsBody.WorldTransform.Left);
+                            //    physicsBody.ApplyImpulse(physicsBody.Position, physicsBody.WorldTransform.Left * impulseLeft);
 
-                            }
+                            //}
 
-                            Vector3 bounceVector = physicsBody.Position - collidedBody.Position;
-                            bounceVector.Normalize();
+                            //Initiate controller vibration
+                            r.isCollidingShip = true;
 
-                            float shipVelocity_inShipBounceDirection = Vector3.Dot(physicsBody.LinearVelocity, bounceVector);// no need to divide by bounceVector.Length() as normalized
-                            //physicsBody.LinearVelocity -= bounceVector * shipVelocity_inShipBounceDirection;
+                            //Vector3 bounceVector = collidedBody.Position - physicsBody.Position;
+                            //bounceVector.Normalize();
 
-                            //Slow ship down in other components
-                            physicsBody.LinearVelocity *= 0.82f;
+                            
 
-                            //Get scale of bounce based on speed ship was moving towards the ship.
-                            //Minimum bounce until 5 speed, max bounce after 100;
-                            float minmaxV = Math.Min(100, Math.Max(5, (Math.Abs(shipVelocity_inShipBounceDirection))));
-                            //float bounceScale = minmaxV / 20;//scale velocity down so max bounce is 5 times as strong as bounce at 20mph, and 20mph bounce is unscaled
+                            //float realtiveVelInShipBounceDirection = Vector3.Dot(physicsBody.LinearVelocity, bounceVector) - Vector3.Dot(collidedBody.LinearVelocity, bounceVector);// no need to divide by bounceVector.Length() as normalized
+                            //physicsBody.LinearVelocity -= bounceVector * realtiveVelInShipBounceDirection;
+                            ////physicsBody.LinearVelocity *= 0.82f;
+                            //float minmaxV = Math.Min(100, Math.Max(5, (Math.Abs(realtiveVelInShipBounceDirection))));
+                          
+                            //physicsBody.ApplyImpulse(physicsBody.Position, -bounceVector * 5 * minmaxV);// * angleModifier);
 
-                            float angleModifier = Math.Abs(Vector3.Dot(physicsBody.OrientationMatrix.Forward, bounceVector)) - 1;
-                            //angleModifier *= 10;
-
-                            //Apply a bounce impulse
-                            physicsBody.ApplyImpulse(physicsBody.Position, bounceVector * 25 * minmaxV * angleModifier);
-                            //parentRacer.shipDrawing.drawArrowListPermanent.Add(new D_Arrow { pos = contact.Position, dir = bounceVector * 4f, col = Color.LimeGreen.ToVector3() });
-
-                            //TODO: fire off crap on collision
-                            //BeatShift.emitter = new ParticleEmitter((Func<Vector3>)delegate { return contacts[0].Position; }, BeatShift.settingsb, BeatShift.pEffect);
+                    //TODO: fire off crap on collision
+                    //BeatShift.emitter = new ParticleEmitter((Func<Vector3>)delegate { return contacts[0].Position; }, BeatShift.settingsb, BeatShift.pEffect);
                         }
-                        //}
                     }
-                }
+                    }
+                        }
             }
             catch (Exception e)
             {
@@ -405,7 +448,7 @@ namespace BeatShift
         #region Ship Raycasts
 
 
-        private double millisecsLeftTillReset = 4000;
+        public double millisecsLeftTillReset = 4000;
         private float currentDistanceToNearestWaypoint;
 
         /// <summary>
@@ -434,7 +477,7 @@ namespace BeatShift
                     //Ship is either upside-down or not on the track or race has not begun
 
                     millisecsLeftTillReset -= (BeatShift.singleton.currentTime.ElapsedGameTime.TotalMilliseconds); //* currentDistanceToNearestWaypoint);
-                    physicsBody.LinearDamping = 0.5f;
+                    //physicsBody.LinearDamping = 0.8f;
 
                     if (parentRacer.raceTiming.isRacing && millisecsLeftTillReset > 0)//Checked before updatewithraycasts is called
                     {
@@ -444,7 +487,7 @@ namespace BeatShift
                         //TODO: wait a bit 
                         //currentDistanceToNearestWaypoint = (float)((nextWaypoint.position - ShipPosition).Length()) / 125; //TODO: use actual width of track
 
-                        physicsBody.LinearDamping = 0.7f;
+                        //physicsBody.LinearDamping = 0.7f; //BUG!!!
 
                         //Console.WriteLine(currentDistanceToNearestWaypoint);
 
@@ -452,8 +495,67 @@ namespace BeatShift
                     else
                     {
                         parentRacer.isRespawning = false;
-                        millisecsLeftTillReset = 4000;
-                        resetShipAtLastWaypoint(); //TODO: start some kind of animation, white noise
+                        millisecsLeftTillReset = 5000;
+                               //public struct ResetColumn { public Vector3 pos; int column; int resetWaypointIncrement; }
+
+                        Vector3 originalPos = currentProgressWaypoint.position;
+                        Vector3 putativePos = currentProgressWaypoint.position; //nearestMapPoint.position;
+
+                        float shipLength = 1.5f;//TODO:don't set manually
+                        int columnInc = 0;
+                        int waypointInc = 0;
+                        bool readyToPlaceOnTrack = false;
+                        ResetColumn newRC = new ResetColumn(putativePos, parentRacer.raceTiming.stopwatch.ElapsedMilliseconds);
+
+                        // On each iteration - 5 horizontal slots
+                        while(!readyToPlaceOnTrack && waypointInc < 8)
+                        {
+                            putativePos -= 2 * shipLength * currentProgressWaypoint.tangent;
+                            // Start at current way point, go left and right to find an empty spot, then start going forward.
+                            if (Race.currentRaceType.resettingShips.Count == 0)
+                            {
+                                readyToPlaceOnTrack = true;
+                                newRC.position = putativePos;
+                                newRC.timeFromReset = parentRacer.raceTiming.stopwatch.ElapsedMilliseconds;
+                            }             
+              
+                            // Go across 5
+                            while (!readyToPlaceOnTrack && columnInc<3)
+                            {
+                                foreach(ResetColumn rc in Race.currentRaceType.resettingShips)
+                                {
+                                        if ((rc.position.X - putativePos.X) < shipLength && (rc.position.Y - putativePos.Y) < shipLength && (rc.position.Z - putativePos.Z) < shipLength)
+                                        {
+                                            readyToPlaceOnTrack = false;
+                                            
+                                        }
+                                        else
+                                        {
+                                            // Found a good location to place the ship
+                                            readyToPlaceOnTrack = true;
+                                            newRC.position = putativePos;
+                                            newRC.timeFromReset = parentRacer.raceTiming.stopwatch.ElapsedMilliseconds;
+                                            //newRC.column = columnInc;
+                                            //newRC.resetWaypointIncrement = resetWaypointInc;}
+                                        }
+                                }
+
+                                putativePos += shipLength * currentProgressWaypoint.tangent;
+                                columnInc++; 
+                            }
+                            columnInc = 0;
+                            waypointInc++;
+                            currentProgressWaypoint = mapData.nextPoint(currentProgressWaypoint);
+                        }
+
+                        Race.currentRaceType.resettingShips.Add(newRC);
+
+                        Vector3 newShipPosition = newRC.position + currentProgressWaypoint.trackUp*4;
+
+                        ShipPosition = newShipPosition;
+                        physicsBody.WorldTransform = Matrix.CreateWorld(newShipPosition, mapData.nextPoint(currentProgressWaypoint).position - newShipPosition, currentProgressWaypoint.trackUp);
+
+                        //resetShipAtLastWaypoint(); //TODO: start some kind of animation, white noise
                     }
 
                 }
@@ -737,7 +839,7 @@ namespace BeatShift
 
         public float getForwardSpeed()
         {
-            return Vector3.Dot(physicsBody.LinearVelocity, physicsBody.OrientationMatrix.Forward);
+            return Vector3.Dot(physicsBody.LinearVelocity, this.ShipOrientationMatrix.Forward); // physicsBody.OrientationMatrix.Forward);
         }
 
         //TODO: finish and rename!
@@ -745,11 +847,16 @@ namespace BeatShift
         {
             if (Race.currentRaceType.raceProcedureBegun)
             {
+                
+
                 // Max Roll = arctan(1/3) prbly 1/4 in reality to be sure //TODO: using code below already
                 Vector3 a = Vector3.Up;
                 Vector3 b = physicsBody.BufferedStates.Entity.AngularVelocity;
                 float angularSize = Vector3.Dot(a, b);
-                return -(0.322f * (angularSize) / 3.5f) * 3f * (getForwardSpeed() / maxSpeed);
+                //return -(0.322f * (angularSize) / 3.5f) * 5f * (getForwardSpeed() / maxSpeed);
+
+                parentRacer.raceTiming.previousRoll = Math.Min(0.5f, MathHelper.Lerp(parentRacer.raceTiming.previousRoll, -(0.322f * (angularSize) / 3.5f) * 6f * (getForwardSpeed() / maxSpeed), 0.08f));
+                return parentRacer.raceTiming.previousRoll;
             }
             else
                 return 0f;
