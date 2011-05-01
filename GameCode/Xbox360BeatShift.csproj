@@ -198,6 +198,9 @@
     <Reference Include="BEPUphysics">
       <HintPath>..\lib\BEPUphysics\Xbox360\BEPUphysics.dll</HintPath>
     </Reference>
+    <Reference Include="DPSFXbox360">
+      <HintPath>..\lib\DPSF\DPSFXbox360.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xna.Framework">
       <Private>False</Private>
     </Reference>

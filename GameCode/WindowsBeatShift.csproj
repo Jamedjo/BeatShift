@@ -74,6 +74,9 @@
     <Reference Include="BEPUphysicsDrawer">
       <HintPath>..\lib\BEPUphysicsDrawer\bin\x86\Release\BEPUphysicsDrawer.dll</HintPath>
     </Reference>
+    <Reference Include="DPSF">
+      <HintPath>..\lib\DPSF\DPSF.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <Private>False</Private>
     </Reference>
@@ -103,6 +106,9 @@
     </Reference>
     <Reference Include="mscorlib">
       <Private>False</Private>
+    </Reference>
+    <Reference Include="ProjectMercury">
+      <HintPath>..\lib\Mercury\X86\ProjectMercury.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Private>False</Private>

@@ -14,7 +14,7 @@ using BEPUphysics;
 using BeatShift.Menus;
 using BeatShift.GameDebugTools;
 using BeatShift.Util.Random;
-
+using DPSF;
 
 namespace BeatShift
 {
@@ -62,6 +62,7 @@ namespace BeatShift
         public static NetworkedGame networkedGame;
         public static BeatShift singleton;
         public static GamerServicesComponent gamerServices { get; private set; }
+        public static ParticleSystemManager particleManager;
         public GameTime currentTime;
 
         #endregion
@@ -78,7 +79,7 @@ namespace BeatShift
             //graphics.PreferredBackBufferWidth = 1280;
             //graphics.PreferredBackBufferHeight = 800;
             // TODO: uncomment the above at your peril, performance profiling needed
-
+            particleManager = new ParticleSystemManager();
             Content.RootDirectory = "Content";
             contentManager = Content;
 
@@ -210,13 +211,14 @@ namespace BeatShift
         {
             DebugSystem.Instance.TimeRuler.StartFrame();
             DebugSystem.Instance.TimeRuler.BeginMark("SomeCode", Color.Blue);
-
             currentTime = gameTime;
             GameLoop.Update(gameTime);
             engine.Update();
             base.Update(gameTime);
 
             DebugSystem.Instance.TimeRuler.EndMark("SomeCode");
+
+            particleManager.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
         }
 
         #endregion

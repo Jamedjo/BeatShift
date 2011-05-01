@@ -14,7 +14,6 @@ using System.Diagnostics;
 using System.Collections;
 using System.IO;
 
-
 namespace BeatShift
 {
     /// <summary>
@@ -109,7 +108,6 @@ namespace BeatShift
                 case 'X': return Buttons.X;
                 case 'Y': return Buttons.Y;
             }
-
             // Default.
             return Buttons.A;
         }

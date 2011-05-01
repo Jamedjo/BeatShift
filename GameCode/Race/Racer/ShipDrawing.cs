@@ -8,6 +8,7 @@ using BEPUphysics.DataStructures;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using BeatShift.Input;
+using DPSF;
 
 namespace BeatShift
 {

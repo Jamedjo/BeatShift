@@ -20,6 +20,7 @@ using BEPUphysics.NarrowPhaseSystems.Pairs;
 using BEPUphysics.Settings;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using DPSF;
 
 namespace BeatShift
 {
@@ -28,6 +29,8 @@ namespace BeatShift
         // Physics related variables
         public CompoundBody physicsBody;
         public ConvexHullShape convexHull;
+
+        //DefaultTexturedQuadParticleSystem engineGlow;
 
         public Vector3 ShipPosition { get { return physicsBody.Position; /*shipHull.CenterPosition;*/ } set { physicsBody.Position = value; /*shipHull.CenterPosition = value;*/ } }
         public Quaternion ShipOrientationQuaternion { get { return physicsBody.Orientation; } set { physicsBody.Orientation = value; } }
