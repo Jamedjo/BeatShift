@@ -60,11 +60,6 @@ namespace BeatShift
                 if (MapManager.Visible && Options.DrawWaypoints)
                     MapManager.currentMap.drawSpheres(gameTime, h_racer.localCamera);
 
-                if (!MenuManager.Enabled && BeatShift.emitter != null)
-                {
-                    //Particles
-                    BeatShift.emitter.Draw(h_racer.localCamera);
-                }
 
                 foreach (Racer allRacer in currentRacers)
                 {

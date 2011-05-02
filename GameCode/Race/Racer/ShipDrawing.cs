@@ -121,9 +121,9 @@ namespace BeatShift
 
 
 
-            engineGlow.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
+            engineGlow.SetWorldViewProjectionMatrices(Matrix.Identity*100, viewMatrix, projectionMatrix);
            // engineGlow.SetCameraPosition(camera.
-
+            engineGlow.Draw();
             //if (Options.DrawCollisionPoints)
             {
                 foreach (D_Arrow arrow in drawArrowListPermanent)

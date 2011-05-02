@@ -232,6 +232,8 @@ namespace BeatShift
             DebugSystem.Instance.TimeRuler.EndMark("SomeCode");
 
             particleManager.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
+            //System.Diagnostics.Debug.WriteLine("Active Particles: " + particleManager.TotalNumberOfActiveParticles + 
+            //                                    "\n Drawn Particles: " + particleManager.TotalNumberOfParticlesBeingDrawn);
         }
 
         #endregion
@@ -246,7 +248,7 @@ namespace BeatShift
         {
             GameLoop.Draw(gameTime);
             base.Draw(gameTime);
-            particleManager.DrawAllParticleSystems();
+            //particleManager.DrawAllParticleSystems();
         }
 
         #endregion
