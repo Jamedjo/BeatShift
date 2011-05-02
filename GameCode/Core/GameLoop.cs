@@ -128,10 +128,11 @@ namespace BeatShift
         private static void checkControllers(GameTime gameTime)
         {
             // Pause if the Guide is up
+            // SORT FOR WINDOWS
             if (!paused && currentState == GameState.LocalGame)
             {
-                for (int i = 0; i < 4; i++)
-                    if (activeControllers[i] && !GamePad.GetState((PlayerIndex)(i)).IsConnected)
+                for (int k = 0; k < 4; k++)
+                    if (activeControllers[k] && !GamePad.GetState((PlayerIndex)(k)).IsConnected)
                     {
                         BeginPause(true);
                         pausedForControllers = true;
@@ -236,7 +237,9 @@ namespace BeatShift
 
             checkPauseGuide();
 
+#if XBOX
             checkControllers(gameTime);
+#endif
 
             // If the user hasn't paused, Update normally
 
