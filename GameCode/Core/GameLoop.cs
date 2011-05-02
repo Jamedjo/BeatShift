@@ -128,10 +128,16 @@ namespace BeatShift
         private static void checkControllers(GameTime gameTime)
         {
             // Pause if the Guide is up
+            // SORT FOR WINDOWS
+            int k = 0;
+#if WINDOWS
+            k = 1;
+#endif
             if (!paused && currentState == GameState.LocalGame)
-            {
-                for (int i = 0; i < 4; i++)
-                    if (activeControllers[i] && !GamePad.GetState((PlayerIndex)(i)).IsConnected)
+                while (k < 4)
+                {
+
+                    if (activeControllers[k] && !GamePad.GetState((PlayerIndex)(k)).IsConnected)
                     {
                         BeginPause(true);
                         pausedForControllers = true;
@@ -139,7 +145,8 @@ namespace BeatShift
                         MenuManager.anyInput.Update(gameTime);
                         break;
                     }
-            }
+                    k++;
+                }
         }
 
         //Input manager for exiting game
