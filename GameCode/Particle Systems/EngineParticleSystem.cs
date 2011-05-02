@@ -376,8 +376,8 @@ namespace DPSF.ParticleSystems
 			// TODO: Change any Initialization parameters desired
 			//-----------------------------------------------------------
 			// Initialize the Particle System before doing anything else
-			InitializeTexturedQuadParticleSystem(cGraphicsDevice, cContentManager, 1000, 50000, 
-													UpdateVertexProperties, "particles/Bubble");
+			InitializeTexturedQuadParticleSystem(cGraphicsDevice, cContentManager, 100000, 5000000, 
+													UpdateVertexProperties, "Particles/Bubble");
 
 			// Finish loading the Particle System in a separate function call, so if
 			// we want to reset the Particle System later we don't need to completely 

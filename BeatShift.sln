@@ -9,11 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xbox360BeatShift", "GameCod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContentPipelineProject", "ContentPipelineProject\ContentPipelineProject.csproj", "{A2C02CD0-E2F6-490A-BEA1-3190B13480AB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2763F8C6-D67A-4CD6-9312-F020104522F2}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\BeatShift.vsd = ..\..\BeatShift.vsd
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Mixed Platforms = Debug|Mixed Platforms
