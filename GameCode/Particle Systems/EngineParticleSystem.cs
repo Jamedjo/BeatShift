@@ -36,7 +36,7 @@ namespace DPSF.ParticleSystems
 #if (WINDOWS)
 	[Serializable]
 #endif
-	class EngineParticleSystemParticle : DPSFParticle
+	public class EngineParticleSystemParticle : DPSFParticle
 	{
 		//-----------------------------------------------------------
 		// TODO: Add in any properties that you want your Particles to have here.
@@ -132,7 +132,7 @@ namespace DPSF.ParticleSystems
 #if (WINDOWS)
 	[Serializable]
 #endif
-	struct EngineParticleSystemParticleVertex : IDPSFParticleVertex
+	public struct EngineParticleSystemParticleVertex : IDPSFParticleVertex
 	{
 		//===========================================================
 		// TODO: Add any more Vertex variables needed to draw your Particles here.
@@ -200,7 +200,7 @@ namespace DPSF.ParticleSystems
 #if (WINDOWS)
 	[Serializable]
 #endif
-	class EngineParticleSystem : DPSF<EngineParticleSystemParticle, EngineParticleSystemParticleVertex>
+	public class EngineParticleSystem : DPSF<EngineParticleSystemParticle, EngineParticleSystemParticleVertex>
 	{
 		/// <summary>
 		/// Constructor
@@ -377,7 +377,7 @@ namespace DPSF.ParticleSystems
 			//-----------------------------------------------------------
 			// Initialize the Particle System before doing anything else
 			InitializeTexturedQuadParticleSystem(cGraphicsDevice, cContentManager, 1000, 50000, 
-													UpdateVertexProperties, "Textures/Bubble");
+													UpdateVertexProperties, "particles/Bubble");
 
 			// Finish loading the Particle System in a separate function call, so if
 			// we want to reset the Particle System later we don't need to completely 

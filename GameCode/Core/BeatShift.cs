@@ -144,7 +144,7 @@ namespace BeatShift
    
             Texture2D map = Content.Load<Texture2D>("Particles/defcol");
             Texture2D paticle = Content.Load<Texture2D>("Particles/try");
-            pEffect = Content.Load<Effect>("Particles/Particle");
+           // pEffect = Content.Load<Effect>("Particles/Particle");
             settingsb = new BoostSettings(map, paticle);
 
             base.Initialize();
@@ -246,6 +246,7 @@ namespace BeatShift
         {
             GameLoop.Draw(gameTime);
             base.Draw(gameTime);
+            particleManager.DrawAllParticleSystems();
         }
 
         #endregion

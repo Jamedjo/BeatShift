@@ -114,7 +114,7 @@
     <Compile Include="Manager\Particles\BoostSettings.cs" />
     <Compile Include="Manager\Particles\ParticleEmitter.cs" />
     <Compile Include="Manager\Particles\ParticleSettings.cs" />
-    <Compile Include="Race\BeatQueue.cs" />
+    <Compile Include="Particle Systems\EngineParticleSystem.cs" />
     <Compile Include="Race\Race.cs" />
     <Compile Include="Race\RaceCameras\Viewports.cs" />
     <Compile Include="Race\RaceControls\AiInputManager.cs" />
@@ -126,6 +126,7 @@
     <Compile Include="Race\RaceControls\NullInputManager.cs" />
     <Compile Include="Race\RaceControls\PadInputManager.cs" />
     <Compile Include="Race\RaceControls\RacingControls.cs" />
+    <Compile Include="Race\Racer\BeatQueue.cs" />
     <Compile Include="Race\Racer\Racer.cs" />
     <Compile Include="Race\Racer\RacerHuman.cs" />
     <Compile Include="Race\Racer\RacerId.cs" />

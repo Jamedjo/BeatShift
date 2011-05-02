@@ -20,7 +20,7 @@ using BEPUphysics.NarrowPhaseSystems.Pairs;
 using BEPUphysics.Settings;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using DPSF;
+
 
 namespace BeatShift
 {
@@ -30,7 +30,7 @@ namespace BeatShift
         public CompoundBody physicsBody;
         public ConvexHullShape convexHull;
 
-        //DefaultTexturedQuadParticleSystem engineGlow;
+        
 
         public Vector3 ShipPosition { get { return physicsBody.Position; /*shipHull.CenterPosition;*/ } set { physicsBody.Position = value; /*shipHull.CenterPosition = value;*/ } }
         public Matrix DrawOrientationMatrix { get { var rQ = Quaternion.CreateFromAxisAngle(Vector3.Forward, getRoll()); var oldQ = physicsBody.Orientation; var mulQ = oldQ * rQ; return Matrix.CreateFromQuaternion(mulQ); } }
@@ -98,10 +98,14 @@ namespace BeatShift
 
             constructPhysicsBody();
 
+
+
             Physics.space.Add(physicsBody);
+
             //physicsBody.CollisionInformation.Hierarchy.CollisionInformation.CollisionRules.InitialCollisionDetected += new BEPUphysics.Events.InitialCollisionDetectedEventHandler(alertCollision); TODO: GET COLLISIONS WORKING
             placeShipOnStartingGrid(parentRacer.shipNumber);
 
+            
 
             if (parentRacer.racerType == RacerType.AI)
             {

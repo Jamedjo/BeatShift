@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using BeatShift.Input;
 using DPSF;
+using DPSF.ParticleSystems;
 
 namespace BeatShift
 {
@@ -23,7 +24,7 @@ namespace BeatShift
         public List<D_Arrow> drawArrowListRays = new List<D_Arrow>();
         public List<D_Arrow> drawArrowListPermanent = new List<D_Arrow>();
         public Boolean isVisible = true;
-
+        public EngineParticleSystem engineGlow;
         //Physics delegate functions
         Func<Matrix> getShipDrawOrientationMatrix;
         Func<Vector3> getShipPosition;
@@ -35,7 +36,10 @@ namespace BeatShift
             parentRacer = parent;
 
             setPositionFunctions(getDrawOrientationMatrix, getPosition);
-
+            engineGlow = new EngineParticleSystem(null);
+            BeatShift.particleManager.AddParticleSystem(engineGlow);
+            engineGlow.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
+            //System.Diagnostics.Debug.WriteLine(engineGlow.Emitter.ParticlesPerSecond);
             LoadContent();
         }
 
@@ -114,7 +118,12 @@ namespace BeatShift
                 }
                 drawArrowListRays.Clear();
             }
-            
+
+
+
+            engineGlow.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
+           // engineGlow.SetCameraPosition(camera.
+
             //if (Options.DrawCollisionPoints)
             {
                 foreach (D_Arrow arrow in drawArrowListPermanent)

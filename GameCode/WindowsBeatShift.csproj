@@ -155,7 +155,8 @@
     <Compile Include="Manager\Menus\PauseMenu.cs" />
     <Compile Include="Manager\Menus\SplashMenu.cs" />
     <Compile Include="Manager\Particles\BoostSettings.cs" />
-    <Compile Include="Race\BeatQueue.cs" />
+    <Compile Include="Particle Systems\EngineParticleSystem.cs" />
+    <Compile Include="Race\Racer\BeatQueue.cs" />
     <Compile Include="Utilities &amp; Misc\Beat.cs">
       <SubType>Code</SubType>
     </Compile>
