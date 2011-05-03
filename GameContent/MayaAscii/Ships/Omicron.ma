@@ -1,6 +1,6 @@
 //Maya ASCII 2011 scene
 //Name: Omicron.ma
-//Last modified: Fri, Apr 15, 2011 03:35:40 AM
+//Last modified: Sun, May 01, 2011 09:52:59 PM
 //Codeset: 1252
 requires maya "2011";
 requires "stereoCamera" "10.0";
@@ -13,13 +13,13 @@ fileInfo "osv" "Microsoft Windows 7 Business Edition, 32-bit Windows 7  (Build 7
 fileInfo "license" "student";
 createNode transform -s -n "persp";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" 11.491821509018706 6.2209478703867607 -4.5731122463327987 ;
-	setAttr ".r" -type "double3" 155.66172268854285 427.39999999902761 179.99999997950653 ;
+	setAttr ".t" -type "double3" 17.314931205601926 10.52142610783951 -11.835907063880653 ;
+	setAttr ".r" -type "double3" 154.46172269584648 55.799999998900645 179.99999998604324 ;
 createNode camera -s -n "perspShape" -p "persp";
 	setAttr -k off ".v" no;
 	setAttr ".pze" yes;
 	setAttr ".fl" 34.999999999999986;
-	setAttr ".coi" 13.75775148010954;
+	setAttr ".coi" 23.201881712939812;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
@@ -27,13 +27,13 @@ createNode camera -s -n "perspShape" -p "persp";
 	setAttr ".hc" -type "string" "viewSet -p %camera";
 createNode transform -s -n "top";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" 0 101.2722394939106 -0.19861435890195511 ;
+	setAttr ".t" -type "double3" 0 101.42314506507523 -0.068691968917824281 ;
 	setAttr ".r" -type "double3" -89.999999999999986 0 0 ;
 createNode camera -s -n "topShape" -p "top";
 	setAttr -k off ".v" no;
 	setAttr ".rnd" no;
 	setAttr ".coi" 100.1;
-	setAttr ".ow" 9.8178472259299951;
+	setAttr ".ow" 8.1794447796987075;
 	setAttr ".imn" -type "string" "top";
 	setAttr ".den" -type "string" "top_depth";
 	setAttr ".man" -type "string" "top_mask";
@@ -41,12 +41,12 @@ createNode camera -s -n "topShape" -p "top";
 	setAttr ".o" yes;
 createNode transform -s -n "front";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" 0 0.65948420763015747 100.4475893397526 ;
+	setAttr ".t" -type "double3" 0 0.51877039670944214 100.44765935398817 ;
 createNode camera -s -n "frontShape" -p "front";
 	setAttr -k off ".v" no;
 	setAttr ".rnd" no;
 	setAttr ".coi" 100.1;
-	setAttr ".ow" 7.0517989993095398;
+	setAttr ".ow" 7.5435584920053271;
 	setAttr ".imn" -type "string" "front";
 	setAttr ".den" -type "string" "front_depth";
 	setAttr ".man" -type "string" "front_mask";
@@ -54,13 +54,13 @@ createNode camera -s -n "frontShape" -p "front";
 	setAttr ".o" yes;
 createNode transform -s -n "side";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" 100.46516278975965 0.65948420763015747 -0.19861435890195533 ;
+	setAttr ".t" -type "double3" 100.4653453414505 0.51877039670944214 -0.068691968917824378 ;
 	setAttr ".r" -type "double3" 0 89.999999999999986 0 ;
 createNode camera -s -n "sideShape" -p "side";
 	setAttr -k off ".v" no;
 	setAttr ".rnd" no;
 	setAttr ".coi" 100.1;
-	setAttr ".ow" 12.598122546547341;
+	setAttr ".ow" 12.089618381701021;
 	setAttr ".imn" -type "string" "side";
 	setAttr ".den" -type "string" "side_depth";
 	setAttr ".man" -type "string" "side_mask";
@@ -1314,9 +1314,9 @@ createNode mesh -n "Omicron_LowShape" -p "Omicron_Low";
 	setAttr -k off ".v";
 	setAttr ".vir" yes;
 	setAttr ".vif" yes;
-	setAttr ".pv" -type "double2" 0.89373156428337097 0.3478839099407196 ;
+	setAttr ".pv" -type "double2" 0.93107479810714722 0.41171032190322876 ;
 	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 471 ".uvst[0].uvsp";
+	setAttr -s 495 ".uvst[0].uvsp";
 	setAttr ".uvst[0].uvsp[0:249]" -type "float2" 0.5680182 0.66242063 0.60030937 
 		0.93080437 0.5841136 0.93080413 0.59354794 0.93686122 0.59087062 0.9368611 0.6165098 
 		0.22528224 0.28122488 0.078369737 0.28122488 0.2870698 0.28986734 0.070716381 0.28986734 
@@ -1381,7 +1381,7 @@ createNode mesh -n "Omicron_LowShape" -p "Omicron_Low";
 		0.33973828 0.7255525 0.76696861 0.61640024 0.66242063 0.62886274 0.65618938 0.70818985 
 		0.73453993 0.46202901 0.28707069 0.32259673 0.98026168 0.32259673 0.98026168 0.32263565 
 		0.42069927 0.26087216 0.98087633;
-	setAttr ".uvst[0].uvsp[250:470]" 0.12112376 0.28706968 0.13498142 0.31207174 
+	setAttr ".uvst[0].uvsp[250:494]" 0.12112376 0.28706968 0.13498142 0.31207174 
 		0.26051694 0.4206982 0.26087216 0.98087633 0.98156077 0.4570823 0.97943336 0.48734209 
 		0.97943336 0.48734209 0.97943336 0.39658719 0.98156101 0.42683893 0.97943336 0.39658719 
 		0.12111697 0.28707492 0.23136681 0.078358352 0.26051846 0.078369737 0.26051846 0.2870698 
@@ -1436,12 +1436,20 @@ createNode mesh -n "Omicron_LowShape" -p "Omicron_Low";
 		0.85763407 0.68110394 0.8576352 0.78317392 0.9351939 0.78086257 0.8825345 0.50163609 
 		0.85843015 0.40107 0.93479782 0.042681254 0.052251101 0.042711653 0.051682837 0.5033145 
 		0.85763198 0.40368742 0.88306445 0.03242182 0.13600142 0.50163609 0.85843015 0.13508879 
-		0.14570792 0.40355608 0.88252848 0.9922924 0.10204855 0.067258358 0.013859808;
+		0.14570792 0.40355608 0.88252848 0.9922924 0.10204855 0.067258358 0.013859808 0.90566337 
+		0.42683268 0.90566337 0.4570823 0.90566337 0.44445586 0.90566337 0.43945706 0.95151865 
+		0.42683643 0.95151854 0.4570823 0.95151854 0.44445586 0.95151865 0.43945706 0.97025776 
+		0.42345181 0.89189184 0.42344534 0.91746336 0.39996886 0.94303489 0.39997098 0.89068079 
+		0.46010649 0.97146857 0.46010649 0.94340456 0.48431519 0.91704261 0.48431304 0.94176483 
+		0.41491365 0.92038476 0.4149119 0.92736125 0.40850699 0.93433779 0.40850756 0.92071885 
+		0.46910763 0.94143051 0.46910763 0.93423569 0.47531405 0.92747724 0.47531348;
 	setAttr ".cuvs" -type "string" "map1";
 	setAttr ".dcc" -type "string" "Ambient+Diffuse";
 	setAttr ".covm[0]"  0 1 1;
 	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 192 ".vt";
+	setAttr -s 8 ".pt[208:215]" -type "float3"  0 0 -1.2433543 0 0 -1.2433543 
+		0 0 -1.2433543 0 0 -1.2433543 0 0 -1.2433543 0 0 -1.2433543 0 0 -1.2433543 0 0 -1.2433543;
+	setAttr -s 216 ".vt";
 	setAttr ".vt[0:165]"  -0.37596297 -0.30632281 0.99303865 -0.37766552 0.21448112 
 		-5.800756 0.37766552 0.79184711 5.1555729 -0.37766552 0.79184711 5.1555729 -2.9678814 
 		-0.078092337 5.2323513 -2.8349442 -0.081171155 5.6738768 -2.8349442 -0.14931262 5.6738763 
@@ -1505,7 +1513,7 @@ createNode mesh -n "Omicron_LowShape" -p "Omicron_Low";
 		2.9785223 0.58547729 0.81761265 4.6280146 1.6626828 0.75044811 3.0178657 0.834952 
 		0.75044811 4.5848827 0.61605358 1.1789857 3.0178657 0.6160534 0.84718025 4.5848827 
 		1.9314716 0.37085336 2.716311 2.5640144 0.17377366 3.2407384;
-	setAttr ".vt[166:191]" 1.7380533 0.37085366 3.6287637 2.51227 0.17377366 3.4314446 
+	setAttr ".vt[166:215]" 1.7380533 0.37085366 3.6287637 2.51227 0.17377366 3.4314446 
 		-1.9314717 0.37085342 2.7163105 -2.5640144 0.17377369 3.2407379 -2.51227 0.17377369 
 		3.4314446 -1.7380533 0.37085372 3.6287637 1.9349275 0.31535232 2.7648897 2.5042162 
 		0.13798063 3.2368741 1.7608511 0.31535262 3.5860972 2.4576459 0.13798063 3.4085097 
@@ -1514,17 +1522,26 @@ createNode mesh -n "Omicron_LowShape" -p "Omicron_Low";
 		-0.14449731 5.1976209 -2.9552333 -0.072427064 5.1976204 -1.4170001 0.43551886 4.0339999 
 		-2.9104707 -0.0055685714 3.6578488 -2.9104707 0.053183638 3.6578488 1.4174531 0.19001135 
 		4.034163 2.910471 -0.0055685863 3.6578491 2.9104707 0.053183623 3.6578493 1.4174529 
-		0.43551886 4.034163 2.9552336 -0.072427034 5.1976199 2.9552336 -0.14449728 5.1976199;
-	setAttr -s 406 ".ed";
+		0.43551886 4.034163 2.9552336 -0.072427034 5.1976199 2.9552336 -0.14449728 5.1976199 
+		-0.12587142 0.57700002 5.122488 0.12588871 0.57700002 5.122488 0.020802354 0.57700002 
+		5.2163048 -0.020802163 0.57700002 5.2163048 -0.12584046 0.205 5.1263733 0.1258885 
+		0.205 5.1263733 0.020802159 0.205 5.2202482 -0.020802358 0.205 5.2202482 -0.1565132 
+		0.67480206 5.2072182 -0.15646277 0.072062202 5.2131133 -0.34272698 0.5604732 5.2124047 
+		-0.3427102 0.22131316 5.2126384 0.15651426 0.67479348 5.2072182 0.1565139 0.072053626 
+		5.2131133 0.34277758 0.22140764 5.2126384 0.34276086 0.56002438 5.2124047 -0.1565132 
+		0.67480206 5.2072182 -0.15646277 0.072062202 5.2131133 -0.34272698 0.5604732 5.2124047 
+		-0.3427102 0.22131316 5.2126384 0.15651426 0.67479348 5.2072182 0.1565139 0.072053626 
+		5.2131133 0.34277758 0.22140764 5.2126384 0.34276086 0.56002438 5.2124047;
+	setAttr -s 452 ".ed";
 	setAttr ".ed[0:165]"  0 1 0 1 11 0 6 7 
 		0 4 5 0 86 82 0 6 5 0 9 10 
 		0 97 9 0 13 14 0 104 80 0 17 18 
-		0 19 20 0 15 19 0 16 20 0 21 18 
-		0 22 17 0 22 15 0 21 16 0 16 23 
+		0 19 20 0 15 19 0 16 20 0 21 192 
+		0 22 193 0 22 15 0 21 16 0 16 23 
 		1 20 24 0 23 24 0 15 25 1 25 23 
 		1 19 26 0 25 26 0 26 24 0 22 27 
-		0 17 28 0 27 28 0 21 29 0 29 27 
-		0 18 30 0 29 30 0 28 30 0 29 23 
+		0 17 28 0 27 194 0 21 29 0 29 27 
+		0 18 30 0 29 195 0 28 30 0 29 23 
 		0 27 25 0 97 32 1 31 32 0 10 33 
 		0 33 31 0 9 34 0 34 33 0 32 34 
 		0 13 36 0 35 36 0 14 37 0 36 37 
@@ -1600,7 +1617,7 @@ createNode mesh -n "Omicron_LowShape" -p "Omicron_Low";
 		0 0 80 0 87 117 0 119 2 0 87 156 
 		1 119 157 1 156 157 0 117 158 1 156 158 
 		0 2 159 1 159 158 0 157 159 0;
-	setAttr ".ed[332:405]" 156 160 0 157 161 0 160 161 
+	setAttr ".ed[332:451]" 156 160 0 157 161 0 160 161 
 		0 158 162 0 160 162 0 159 163 0 163 162 
 		0 161 163 0 14 109 0 33 31 0 10 98 
 		0 14 164 1 37 165 1 164 165 0 109 166 
@@ -1618,8 +1635,20 @@ createNode mesh -n "Omicron_LowShape" -p "Omicron_Low";
 		0 105 186 0 35 187 0 186 187 0 38 188 
 		0 188 187 0 109 189 0 189 188 0 186 189 
 		0 110 190 0 189 190 0 108 191 0 190 191 
-		0 186 191 0 5 4 0 6 7 0;
-	setAttr -s 200 ".fc[0:199]" -type "polyFaces" 
+		0 186 191 0 5 4 0 6 7 0 192 196 
+		0 193 197 0 194 198 0 195 199 0 194 195 
+		1 193 194 1 192 195 1 196 18 0 197 17 
+		0 198 28 0 199 30 0 198 199 1 197 198 
+		1 196 199 1 58 200 1 59 201 1 200 201 
+		0 78 202 1 200 202 0 131 203 1 202 203 
+		0 201 203 0 55 204 1 57 205 1 204 205 
+		0 77 206 1 205 206 0 95 207 1 207 206 
+		0 204 207 0 200 208 0 201 209 0 208 209 
+		0 202 210 0 208 210 0 203 211 0 210 211 
+		0 209 211 0 204 212 0 205 213 0 212 213 
+		0 206 214 0 213 214 0 207 215 0 215 214 
+		0 212 215 0;
+	setAttr -s 222 ".fc[0:221]" -type "polyFaces" 
 		f 3 131 132 -134 
 		mu 0 3 114 115 116 
 		f 3 -63 -65 -66 
@@ -1702,8 +1731,8 @@ createNode mesh -n "Omicron_LowShape" -p "Omicron_Low";
 		mu 0 4 209 210 211 212 
 		f 4 -21 -23 24 25 
 		mu 0 4 13 9 12 17 
-		f 4 -29 -31 32 -34 
-		mu 0 4 49 48 50 51 
+		f 4 -416 417 416 -34 
+		mu 0 4 49 477 478 51 
 		f 4 -17 270 195 194 
 		mu 0 4 213 214 215 216 
 		f 4 -35 30 35 22 
@@ -1714,10 +1743,10 @@ createNode mesh -n "Omicron_LowShape" -p "Omicron_Low";
 		mu 0 4 16 14 17 12 
 		f 4 315 317 -320 -321 
 		mu 0 4 400 401 402 403 
-		f 4 -16 26 28 -28 
-		mu 0 4 47 46 48 49 
-		f 4 14 31 -33 -30 
-		mu 0 4 52 53 51 50 
+		f 4 -415 418 415 -28 
+		mu 0 4 47 476 477 49 
+		f 4 14 412 -33 -30 
+		mu 0 4 52 471 474 50 
 		f 4 -11 27 33 -32 
 		mu 0 4 2 1 3 4 
 		f 4 -18 29 34 -19 
@@ -1766,12 +1795,12 @@ createNode mesh -n "Omicron_LowShape" -p "Omicron_Low";
 		mu 0 4 98 40 66 65 
 		f 4 -145 204 77 -76 
 		mu 0 4 252 253 64 66 
-		f 4 15 80 -82 -79 
-		mu 0 4 46 47 69 68 
+		f 6 15 407 414 80 -82 -79 
+		mu 0 6 46 472 476 47 69 68 
 		f 4 -206 206 207 -81 
 		mu 0 4 254 255 256 69 
-		f 4 -15 82 84 -84 
-		mu 0 4 53 52 71 70 
+		f 6 -414 -407 -15 82 84 -84 
+		mu 0 6 53 475 471 52 71 70 
 		f 4 -209 83 209 -211 
 		mu 0 4 257 258 70 259 
 		f 4 -88 90 93 -92 
@@ -1852,10 +1881,10 @@ createNode mesh -n "Omicron_LowShape" -p "Omicron_Low";
 		mu 0 4 347 343 348 90 
 		f 3 -119 119 121 
 		mu 0 3 90 91 36 
-		f 4 -85 249 243 -251 
-		mu 0 4 70 71 90 348 
-		f 4 81 251 -112 -253 
-		mu 0 4 68 69 89 113 
+		f 4 -439 440 442 -444 
+		mu 0 4 487 488 489 490 
+		f 4 446 448 -451 -452 
+		mu 0 4 491 492 493 494 
 		f 3 241 253 -243 
 		mu 0 3 343 346 348 
 		f 3 120 254 -231 
@@ -2019,7 +2048,51 @@ createNode mesh -n "Omicron_LowShape" -p "Omicron_Low";
 		f 4 -169 391 403 -402 
 		mu 0 4 449 456 445 444 
 		f 4 5 404 -376 -406 
-		mu 0 4 404 470 221 462 ;
+		mu 0 4 404 470 221 462 
+		f 4 -411 -29 -31 32 
+		mu 0 4 474 473 48 50 
+		f 4 -412 -16 26 28 
+		mu 0 4 473 472 46 48 
+		f 4 -413 406 419 -410 
+		mu 0 4 474 471 475 478 
+		f 4 -418 -409 410 409 
+		mu 0 4 478 477 473 474 
+		f 4 -419 -408 411 408 
+		mu 0 4 477 476 472 473 
+		f 4 -420 413 31 -417 
+		mu 0 4 478 475 53 51 
+		f 4 -85 420 422 -422 
+		mu 0 4 70 71 480 479 
+		f 4 249 423 -425 -421 
+		mu 0 4 71 90 481 480 
+		f 4 243 425 -427 -424 
+		mu 0 4 90 348 482 481 
+		f 4 -251 421 427 -426 
+		mu 0 4 348 70 479 482 
+		f 4 81 429 -431 -429 
+		mu 0 4 68 69 484 483 
+		f 4 251 431 -433 -430 
+		mu 0 4 69 89 485 484 
+		f 4 -112 433 434 -432 
+		mu 0 4 89 113 486 485 
+		f 4 -253 428 435 -434 
+		mu 0 4 113 68 483 486 
+		f 4 -423 436 438 -438 
+		mu 0 4 479 480 488 487 
+		f 4 424 439 -441 -437 
+		mu 0 4 480 481 489 488 
+		f 4 426 441 -443 -440 
+		mu 0 4 481 482 490 489 
+		f 4 -428 437 443 -442 
+		mu 0 4 482 479 487 490 
+		f 4 430 445 -447 -445 
+		mu 0 4 483 484 492 491 
+		f 4 432 447 -449 -446 
+		mu 0 4 484 485 493 492 
+		f 4 -435 449 450 -448 
+		mu 0 4 485 486 494 493 
+		f 4 -436 444 451 -450 
+		mu 0 4 486 483 491 494 ;
 	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
 	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
 	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
@@ -2292,7 +2365,7 @@ createNode script -n "uiConfigurationScriptNode";
 		+ "                -lineWidth 1\n                -textureAnisotropic 0\n                -textureHilight 1\n                -textureSampling 2\n                -textureDisplay \"modulate\" \n                -textureMaxSize 4096\n                -fogging 0\n                -fogSource \"fragment\" \n                -fogMode \"linear\" \n                -fogStart 0\n                -fogEnd 100\n                -fogDensity 0.1\n                -fogColor 0.5 0.5 0.5 1 \n                -maxConstantTransparency 1\n                -colorResolution 4 4 \n                -bumpResolution 4 4 \n                -textureCompression 0\n                -transparencyAlgorithm \"frontAndBackCull\" \n                -transpInShadows 0\n                -cullingOverride \"none\" \n                -lowQualityLighting 0\n                -maximumNumHardwareLights 0\n                -occlusionCulling 0\n                -shadingModel 0\n                -useBaseRenderer 0\n                -useReducedRenderer 0\n                -smallObjectCulling 0\n                -smallObjectThreshold -1 \n"
 		+ "                -interactiveDisableShadows 0\n                -interactiveBackFaceCull 0\n                -sortTransparent 1\n                -nurbsCurves 1\n                -nurbsSurfaces 1\n                -polymeshes 1\n                -subdivSurfaces 1\n                -planes 1\n                -lights 1\n                -cameras 1\n                -controlVertices 1\n                -hulls 1\n                -grid 1\n                -joints 1\n                -ikHandles 1\n                -deformers 1\n                -dynamics 1\n                -fluids 1\n                -hairSystems 1\n                -follicles 1\n                -nCloths 1\n                -nParticles 1\n                -nRigids 1\n                -dynamicConstraints 1\n                -locators 1\n                -manipulators 1\n                -dimensions 1\n                -handles 1\n                -pivots 1\n                -textures 1\n                -strokes 1\n                -shadows 0\n                -displayMode \"centerEye\" \n                -viewColor 0 0 0 1 \n"
 		+ "                $editorName;\nstereoCameraView -e -viewSelected 0 $editorName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"multiListerPanel\" (localizedPanelLabel(\"Multilister\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"multiListerPanel\" -l (localizedPanelLabel(\"Multilister\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Multilister\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextPanel \"devicePanel\" (localizedPanelLabel(\"Devices\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\tdevicePanel -unParent -l (localizedPanelLabel(\"Devices\")) -mbv $menusOkayInPanels ;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tdevicePanel -edit -l (localizedPanelLabel(\"Devices\")) -mbv $menusOkayInPanels  $panelName;\n"
-		+ "\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"webBrowserPanel\" (localizedPanelLabel(\"Web Browser\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"webBrowserPanel\" -l (localizedPanelLabel(\"Web Browser\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Web Browser\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\tif ($useSceneConfig) {\n        string $configName = `getPanel -cwl (localizedPanelLabel(\"Current Layout\"))`;\n        if (\"\" != $configName) {\n\t\t\tpanelConfiguration -edit -label (localizedPanelLabel(\"Current Layout\")) \n\t\t\t\t-defaultImage \"\"\n\t\t\t\t-image \"\"\n\t\t\t\t-sc false\n\t\t\t\t-configString \"global string $gMainPane; paneLayout -e -cn \\\"quad\\\" -ps 1 23 64 -ps 2 77 64 -ps 3 50 36 -ps 4 50 36 $gMainPane;\"\n\t\t\t\t-removeAllPanels\n\t\t\t\t-ap false\n"
+		+ "\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"webBrowserPanel\" (localizedPanelLabel(\"Web Browser\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"webBrowserPanel\" -l (localizedPanelLabel(\"Web Browser\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Web Browser\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\tif ($useSceneConfig) {\n        string $configName = `getPanel -cwl (localizedPanelLabel(\"Current Layout\"))`;\n        if (\"\" != $configName) {\n\t\t\tpanelConfiguration -edit -label (localizedPanelLabel(\"Current Layout\")) \n\t\t\t\t-defaultImage \"\"\n\t\t\t\t-image \"\"\n\t\t\t\t-sc false\n\t\t\t\t-configString \"global string $gMainPane; paneLayout -e -cn \\\"quad\\\" -ps 1 21 66 -ps 2 79 66 -ps 3 50 34 -ps 4 50 34 $gMainPane;\"\n\t\t\t\t-removeAllPanels\n\t\t\t\t-ap false\n"
 		+ "\t\t\t\t\t(localizedPanelLabel(\"Top View\")) \n\t\t\t\t\t\"modelPanel\"\n"
 		+ "\t\t\t\t\t\"$panelName = `modelPanel -unParent -l (localizedPanelLabel(\\\"Top View\\\")) -mbv $menusOkayInPanels `;\\n$editorName = $panelName;\\nmodelEditor -e \\n    -cam `findStartUpCamera top` \\n    -useInteractiveMode 0\\n    -displayLights \\\"default\\\" \\n    -displayAppearance \\\"wireframe\\\" \\n    -activeOnly 0\\n    -ignorePanZoom 0\\n    -wireframeOnShaded 1\\n    -headsUpDisplay 1\\n    -selectionHiliteDisplay 1\\n    -useDefaultMaterial 0\\n    -bufferMode \\\"double\\\" \\n    -twoSidedLighting 1\\n    -backfaceCulling 0\\n    -xray 0\\n    -jointXray 0\\n    -activeComponentsXray 0\\n    -displayTextures 0\\n    -smoothWireframe 0\\n    -lineWidth 1\\n    -textureAnisotropic 0\\n    -textureHilight 1\\n    -textureSampling 2\\n    -textureDisplay \\\"modulate\\\" \\n    -textureMaxSize 4096\\n    -fogging 0\\n    -fogSource \\\"fragment\\\" \\n    -fogMode \\\"linear\\\" \\n    -fogStart 0\\n    -fogEnd 100\\n    -fogDensity 0.1\\n    -fogColor 0.5 0.5 0.5 1 \\n    -maxConstantTransparency 1\\n    -rendererName \\\"base_OpenGL_Renderer\\\" \\n    -colorResolution 256 256 \\n    -bumpResolution 512 512 \\n    -textureCompression 0\\n    -transparencyAlgorithm \\\"frontAndBackCull\\\" \\n    -transpInShadows 0\\n    -cullingOverride \\\"none\\\" \\n    -lowQualityLighting 0\\n    -maximumNumHardwareLights 0\\n    -occlusionCulling 0\\n    -shadingModel 0\\n    -useBaseRenderer 0\\n    -useReducedRenderer 0\\n    -smallObjectCulling 0\\n    -smallObjectThreshold -1 \\n    -interactiveDisableShadows 0\\n    -interactiveBackFaceCull 0\\n    -sortTransparent 1\\n    -nurbsCurves 1\\n    -nurbsSurfaces 1\\n    -polymeshes 1\\n    -subdivSurfaces 1\\n    -planes 1\\n    -lights 1\\n    -cameras 1\\n    -controlVertices 1\\n    -hulls 1\\n    -grid 1\\n    -joints 1\\n    -ikHandles 1\\n    -deformers 1\\n    -dynamics 1\\n    -fluids 1\\n    -hairSystems 1\\n    -follicles 1\\n    -nCloths 1\\n    -nParticles 1\\n    -nRigids 1\\n    -dynamicConstraints 1\\n    -locators 1\\n    -manipulators 1\\n    -dimensions 1\\n    -handles 1\\n    -pivots 1\\n    -textures 1\\n    -strokes 1\\n    -shadows 0\\n    $editorName;\\nmodelEditor -e -viewSelected 0 $editorName\"\n"
 		+ "\t\t\t\t\t\"modelPanel -edit -l (localizedPanelLabel(\\\"Top View\\\")) -mbv $menusOkayInPanels  $panelName;\\n$editorName = $panelName;\\nmodelEditor -e \\n    -cam `findStartUpCamera top` \\n    -useInteractiveMode 0\\n    -displayLights \\\"default\\\" \\n    -displayAppearance \\\"wireframe\\\" \\n    -activeOnly 0\\n    -ignorePanZoom 0\\n    -wireframeOnShaded 1\\n    -headsUpDisplay 1\\n    -selectionHiliteDisplay 1\\n    -useDefaultMaterial 0\\n    -bufferMode \\\"double\\\" \\n    -twoSidedLighting 1\\n    -backfaceCulling 0\\n    -xray 0\\n    -jointXray 0\\n    -activeComponentsXray 0\\n    -displayTextures 0\\n    -smoothWireframe 0\\n    -lineWidth 1\\n    -textureAnisotropic 0\\n    -textureHilight 1\\n    -textureSampling 2\\n    -textureDisplay \\\"modulate\\\" \\n    -textureMaxSize 4096\\n    -fogging 0\\n    -fogSource \\\"fragment\\\" \\n    -fogMode \\\"linear\\\" \\n    -fogStart 0\\n    -fogEnd 100\\n    -fogDensity 0.1\\n    -fogColor 0.5 0.5 0.5 1 \\n    -maxConstantTransparency 1\\n    -rendererName \\\"base_OpenGL_Renderer\\\" \\n    -colorResolution 256 256 \\n    -bumpResolution 512 512 \\n    -textureCompression 0\\n    -transparencyAlgorithm \\\"frontAndBackCull\\\" \\n    -transpInShadows 0\\n    -cullingOverride \\\"none\\\" \\n    -lowQualityLighting 0\\n    -maximumNumHardwareLights 0\\n    -occlusionCulling 0\\n    -shadingModel 0\\n    -useBaseRenderer 0\\n    -useReducedRenderer 0\\n    -smallObjectCulling 0\\n    -smallObjectThreshold -1 \\n    -interactiveDisableShadows 0\\n    -interactiveBackFaceCull 0\\n    -sortTransparent 1\\n    -nurbsCurves 1\\n    -nurbsSurfaces 1\\n    -polymeshes 1\\n    -subdivSurfaces 1\\n    -planes 1\\n    -lights 1\\n    -cameras 1\\n    -controlVertices 1\\n    -hulls 1\\n    -grid 1\\n    -joints 1\\n    -ikHandles 1\\n    -deformers 1\\n    -dynamics 1\\n    -fluids 1\\n    -hairSystems 1\\n    -follicles 1\\n    -nCloths 1\\n    -nParticles 1\\n    -nRigids 1\\n    -dynamicConstraints 1\\n    -locators 1\\n    -manipulators 1\\n    -dimensions 1\\n    -handles 1\\n    -pivots 1\\n    -textures 1\\n    -strokes 1\\n    -shadows 0\\n    $editorName;\\nmodelEditor -e -viewSelected 0 $editorName\"\n"
@@ -2341,81 +2414,9 @@ createNode displayLayer -n "LowPoly";
 	setAttr ".dt" 2;
 	setAttr ".c" 1;
 	setAttr ".do" 1;
-createNode polyBridgeEdge -n "polyBridgeEdge1";
-	setAttr ".c[0]"  0 1 1;
-	setAttr ".dv" 0;
-createNode polyBridgeEdge -n "polyBridgeEdge21";
-	setAttr ".c[0]"  0 1 1;
-	setAttr ".dv" 0;
-createNode polyBridgeEdge -n "polyBridgeEdge22";
-	setAttr ".c[0]"  0 1 1;
-	setAttr ".dv" 0;
-createNode polyBridgeEdge -n "polyBridgeEdge29";
-	setAttr ".c[0]"  0 1 1;
-	setAttr ".dv" 0;
-createNode polyBridgeEdge -n "polyBridgeEdge30";
-	setAttr ".c[0]"  0 1 1;
-	setAttr ".dv" 0;
-createNode polyBridgeEdge -n "polyBridgeEdge48";
-	setAttr ".c[0]"  0 1 1;
-	setAttr ".dv" 0;
-createNode polyBridgeEdge -n "polyBridgeEdge56";
-	setAttr ".c[0]"  0 1 1;
-	setAttr ".dv" 0;
-createNode polyBridgeEdge -n "polyBridgeEdge58";
-	setAttr ".c[0]"  0 1 1;
-	setAttr ".dv" 0;
-createNode polyBridgeEdge -n "polyBridgeEdge59";
-	setAttr ".c[0]"  0 1 1;
-	setAttr ".dv" 0;
-createNode polyBridgeEdge -n "polyBridgeEdge60";
-	setAttr ".c[0]"  0 1 1;
-	setAttr ".dv" 0;
-createNode polyBridgeEdge -n "polyBridgeEdge61";
-	setAttr ".c[0]"  0 1 1;
-	setAttr ".dv" 0;
-createNode polyBridgeEdge -n "polyBridgeEdge64";
-	setAttr ".c[0]"  0 1 1;
-	setAttr ".dv" 0;
-createNode polyBridgeEdge -n "polyBridgeEdge65";
-	setAttr ".c[0]"  0 1 1;
-	setAttr ".dv" 0;
-createNode polyBridgeEdge -n "polyBridgeEdge66";
-	setAttr ".c[0]"  0 1 1;
-	setAttr ".dv" 0;
-createNode polyBridgeEdge -n "polyBridgeEdge68";
-	setAttr ".c[0]"  0 1 1;
-	setAttr ".dv" 0;
-createNode polyBridgeEdge -n "polyBridgeEdge76";
-	setAttr ".c[0]"  0 1 1;
-	setAttr ".dv" 0;
-createNode polyBridgeEdge -n "polyBridgeEdge77";
-	setAttr ".c[0]"  0 1 1;
-	setAttr ".dv" 0;
-createNode polyBridgeEdge -n "polyBridgeEdge80";
-	setAttr ".c[0]"  0 1 1;
-	setAttr ".dv" 0;
-createNode polyBridgeEdge -n "polyBridgeEdge82";
-	setAttr ".c[0]"  0 1 1;
-	setAttr ".dv" 0;
-createNode polyBridgeEdge -n "polyBridgeEdge88";
-	setAttr ".c[0]"  0 1 1;
-	setAttr ".dv" 0;
-createNode polyBridgeEdge -n "polyBridgeEdge89";
-	setAttr ".c[0]"  0 1 1;
-	setAttr ".dv" 0;
-createNode polyBridgeEdge -n "polyBridgeEdge90";
-	setAttr ".c[0]"  0 1 1;
-	setAttr ".dv" 0;
 createNode objectSet -n "textureEditorIsolateSelectSet";
 	setAttr ".ihi" 0;
 	setAttr ".fo" yes;
-createNode polyBridgeEdge -n "polyBridgeEdge95";
-	setAttr ".c[0]"  0 1 1;
-	setAttr ".dv" 0;
-createNode polyBridgeEdge -n "polyBridgeEdge96";
-	setAttr ".c[0]"  0 1 1;
-	setAttr ".dv" 0;
 createNode displayLayer -n "HighPoly";
 	setAttr ".v" no;
 	setAttr ".c" 13;

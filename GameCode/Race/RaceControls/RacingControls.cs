@@ -93,7 +93,7 @@ namespace BeatShift.Input
             else if ((racer.shipPhysics.shipRayToTrackTime < 22) && justJump)
             {
                 // TODO: VALUES STILL NEED TWEAKING
-                vibrateCollisionControl = vibrateCollisionControl + ((jumpHeight - 27.5f) / 20);
+                vibrateCollisionControl = vibrateCollisionControl + ((jumpHeight - 27.5f) / 15);
                 // reset jump threshold
                 jumpHeight = 27.5f;
                 justJump = false;
@@ -140,10 +140,10 @@ namespace BeatShift.Input
                 justBoost = true;
 
                 // max vibrate is currently 0.5f (can be as high as 1.0f)
-                if (vibrateBoostControl < 0.5f)
+                if (vibrateBoostControl < 0.33f)
                 {
                     // boost increase
-                    vibrateBoostControl = vibrateBoostControl + 0.05f;
+                    vibrateBoostControl = vibrateBoostControl + 0.03f;
                 }
             }
             else if (justBoost)
