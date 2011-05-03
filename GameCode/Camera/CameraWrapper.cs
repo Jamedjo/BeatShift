@@ -102,6 +102,11 @@ namespace BeatShift.Cameras
 #endif
         }
 
+        public Vector3 cameraPosition()
+        {
+            return currentCamera.CamPosition;
+        }
+
         void resetProjection()
         {
             //Projection = Matrix.CreatePerspectiveFieldOfView(

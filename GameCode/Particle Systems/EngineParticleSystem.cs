@@ -148,7 +148,6 @@ namespace DPSF.ParticleSystems
 		public Vector3 Position;            // The Position of the Particle in 3D space
 		public Vector2 TextureCoordinate;   // The Texture Coordinates of the Vertex
 		public Color Color;                 // The Color of the Particle
-
 		// Describe the vertex structure used to display a Particle
 		private static readonly VertexElement[] msVertexElements =
 		{
@@ -202,12 +201,17 @@ namespace DPSF.ParticleSystems
 #endif
 	public class EngineParticleSystem : DPSF<EngineParticleSystemParticle, EngineParticleSystemParticleVertex>
 	{
-		/// <summary>
+		
+        /// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="cGame">Handle to the Game object being used. Pass in null for this 
 		/// parameter if not using a Game object.</param>
-		public EngineParticleSystem(Game cGame) : base(cGame) { }
+		public EngineParticleSystem(Game cGame) : base(cGame) {
+            //defaultColor = Color.AntiqueWhite;
+            //boostColor = Color.DarkOrange;
+            Color = defaultColor;
+        }
 
 		//===========================================================
 		// Structures and Variables
@@ -217,7 +221,9 @@ namespace DPSF.ParticleSystems
 		// TODO: Place any Particle System properties here
 		//-----------------------------------------------------------
 		Vector3 msCameraPosition = Vector3.Zero;
-
+        static Color defaultColor = Color.AntiqueWhite;
+        static Color boostColor = Color.DarkOrange;
+        protected Color Color;
 		/// <summary>
 		/// Get / Set the Position of the Camera.
 		/// NOTE: This should be Set (updated) every frame if Billboarding will be used 
@@ -376,8 +382,8 @@ namespace DPSF.ParticleSystems
 			// TODO: Change any Initialization parameters desired
 			//-----------------------------------------------------------
 			// Initialize the Particle System before doing anything else
-			InitializeTexturedQuadParticleSystem(cGraphicsDevice, cContentManager, 100000, 5000000, 
-													UpdateVertexProperties, "Particles/Bubble");
+			InitializeTexturedQuadParticleSystem(cGraphicsDevice, cContentManager, 100000, 5000000,
+                                                    UpdateVertexProperties, "Particles/Textures/Particle006");
 
 			// Finish loading the Particle System in a separate function call, so if
 			// we want to reset the Particle System later we don't need to completely 
@@ -408,11 +414,11 @@ namespace DPSF.ParticleSystems
 			ParticleEvents.AddEveryTimeEvent(UpdateParticleToFaceTheCamera, 1000);
 
 			// Set the Particle System's Emitter to toggle on and off every 0.5 seconds
-			ParticleSystemEvents.LifetimeData.EndOfLifeOption = CParticleSystemEvents.EParticleSystemEndOfLifeOptions.Repeat;
-			ParticleSystemEvents.LifetimeData.Lifetime = 1.0f;
-			ParticleSystemEvents.AddTimedEvent(0.0f, UpdateParticleSystemEmitParticlesAutomaticallyOn);
-			ParticleSystemEvents.AddTimedEvent(0.5f, UpdateParticleSystemEmitParticlesAutomaticallyOff);
-
+			//ParticleSystemEvents.LifetimeData.EndOfLifeOption = CParticleSystemEvents.EParticleSystemEndOfLifeOptions.Repeat;
+			//ParticleSystemEvents.LifetimeData.Lifetime = 1.0f;
+			//ParticleSystemEvents.AddTimedEvent(0.0f, UpdateParticleSystemEmitParticlesAutomaticallyOn);
+			//ParticleSystemEvents.AddTimedEvent(0.5f, UpdateParticleSystemEmitParticlesAutomaticallyOff);
+            
 			// Setup the Emitter
 			Emitter.ParticlesPerSecond = 50;
 			Emitter.PositionData.Position = new Vector3(0, 0, 0);
@@ -431,25 +437,25 @@ namespace DPSF.ParticleSystems
 			//-----------------------------------------------------------
 
 			// Set the Particle's Lifetime (how long it should exist for)
-			cParticle.Lifetime = 2.0f;
+			cParticle.Lifetime = 0.3f;
 
 			// Set the Particle's initial Position to be wherever the Emitter is
 			cParticle.Position = Emitter.PositionData.Position;
 
 			// Set the Particle's Velocity
-			Vector3 sVelocityMin = new Vector3(-50, 50, -50);
-			Vector3 sVelocityMax = new Vector3(50, 100, 50);
+			Vector3 sVelocityMin = new Vector3(-1, -1, 5);
+			Vector3 sVelocityMax = new Vector3(1, 1, 10);
 			cParticle.Velocity = DPSFHelper.RandomVectorBetweenTwoVectors(sVelocityMin, sVelocityMax);
 
 			// Adjust the Particle's Velocity direction according to the Emitter's Orientation
 			cParticle.Velocity = Vector3.Transform(cParticle.Velocity, Emitter.OrientationData.Orientation);
 
 			// Give the Particle a random Size
-			cParticle.Width = RandomNumber.Next(20, 40);
-			cParticle.Height = RandomNumber.Next(20, 40);
+			cParticle.Width = 1;
+			cParticle.Height = 1;
 
 			// Give the Particle a random Color
-			cParticle.Color = DPSFHelper.RandomColor();
+            cParticle.Color = Color;// DPSFHelper.RandomColor();
 		}
 
 		//===========================================================
@@ -521,5 +527,20 @@ namespace DPSF.ParticleSystems
 		//-----------------------------------------------------------
 		// TODO: Place any other functions here
 		//-----------------------------------------------------------
+
+        public void SetPosition(Vector3 newPosition)
+        {
+            Emitter.PositionData.Position = newPosition;
+        }
+
+        public void BoostOn()
+        {
+            Color = boostColor;
+        }
+
+        public void BoostOff()
+        {
+            Color = defaultColor;
+        }
 	}
 }

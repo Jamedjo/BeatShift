@@ -39,6 +39,7 @@ namespace BeatShift
             engineGlow = new EngineParticleSystem(null);
             BeatShift.particleManager.AddParticleSystem(engineGlow);
             engineGlow.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
+            engineGlow.SetPosition(new Vector3(0, 0.5f, 4.5f));
             //System.Diagnostics.Debug.WriteLine(engineGlow.Emitter.ParticlesPerSecond);
             LoadContent();
         }
@@ -121,13 +122,13 @@ namespace BeatShift
 
 
 
-            engineGlow.SetWorldViewProjectionMatrices(Matrix.CreateScale(10f), viewMatrix, projectionMatrix);
+            engineGlow.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
 
             //was using camera position (0,0,0) so all particles were facing towards the centre
             //as particles are one sided this made them invisible
             //this line faces them towards the ship which works as a quick hack when they originate from the centre/center
             //needs to be replaced with engineGlow.SetCameraPosition(camera.getPosition()); or somthing that uses the camera's position.
-            engineGlow.SetCameraPosition(getShipPosition());
+            engineGlow.SetCameraPosition(camera.cameraPosition());
 
             engineGlow.Draw();
             //if (Options.DrawCollisionPoints)
