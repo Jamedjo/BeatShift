@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using BeatShift.Input;
+using Microsoft.Xna.Framework.Input;
 
 namespace BeatShift.Menus
 {
@@ -33,9 +33,13 @@ namespace BeatShift.Menus
 
         public override void setupMenuItems()
         {
-            foreach(ShipName type in Utils.GetValues<ShipName>())
+            foreach (ShipName type in Utils.GetValues<ShipName>())
             {
-                addMenuItem(type.ToString(), new Action(startSinglePlayerGame));
+                addMenuItem(type.ToString(), (Action)(delegate
+                {
+                    startSinglePlayerGame();
+                    MenuManager.setCurrentMenu(MenuPage.Loading);
+                }));
             }
         }
 
@@ -97,25 +101,15 @@ namespace BeatShift.Menus
 
         private void startSinglePlayerGame()
         {
+
             SoundManager.PlayShipName(Race.humanRacers[0].shipName);
             if (Options.AddAItoGame)
             {
                 Race.setupAIRacers(AiInputManager.numberOfAI);
             }
 
-            //while waiting for physics multithread to load do nothing
-            while (MapManager.currentMap.physicsLoadingThread.IsAlive) {}// Console.WriteLine("physics thread alive!!");}
-
             GameLoop.setActiveControllers(true, 0);
 
-            GameLoop.setGameState(GameState.LocalGame);
-            if ((Keyboard.GetState().IsKeyDown(Keys.Enter)) && !AiInputManager.testAI)
-            {
-                Race.humanRacers[0].racingControls.chosenInput = new KeyInputManager();
-                //TODO: Make it so the input type corresponds to the input pressed
-                //Could be done by checking each possible input manually, bypassing inputManger if necessary
-            }
-            
             //BeatShift.bgm.play();
         }
 

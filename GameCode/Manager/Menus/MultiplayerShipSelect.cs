@@ -176,7 +176,7 @@ namespace BeatShift
         private void setupGameAndChangeState(GameTime gameTime)
         {
             //make sure physics loads
-            while (MapManager.currentMap.physicsLoadingThread.IsAlive) { }
+            //while (MapManager.currentMap.physicsLoadingThread.IsAlive) { }
 
             //set input managers
             for (int k = 0; k < 4; k++)
@@ -189,7 +189,8 @@ namespace BeatShift
             //If controller was not plugged-in/selected remove that player
             Race.removeNonVisibleRacers();
 
-            GameLoop.startLocalGame(gameTime);
+            GameLoop.setGameState(GameState.Menu);
+            MenuManager.setCurrentMenu(MenuPage.Loading);
         }
 
         private void respondToMenuBack(int i)
