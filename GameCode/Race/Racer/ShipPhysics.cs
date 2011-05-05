@@ -314,7 +314,7 @@ namespace BeatShift
             
             if (Vector3.Dot(physicsBody.OrientationMatrix.Forward, nearestMapPoint.tangent)< -0.2 && parentRacer.raceTiming.isRacing)
             {
-                System.Diagnostics.Debug.WriteLine("Wrong Way!!! Point:" + wrongwayPoint.getIndex() + "\n");
+                //System.Diagnostics.Debug.WriteLine("Wrong Way!!! Point:" + wrongwayPoint.getIndex() + "\n");
                 currentProgressWaypoint = wrongwayPoint;
                 wrongWay = true;
             }
