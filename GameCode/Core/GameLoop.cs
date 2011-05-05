@@ -130,9 +130,7 @@ namespace BeatShift
             // Pause if the Guide is up
             // SORT FOR WINDOWS
             int k = 0;
-#if WINDOWS
-            k = 1;
-#endif
+
             if (!paused && currentState == GameState.LocalGame)
                 while (k < 4)
                 {
@@ -243,7 +241,9 @@ namespace BeatShift
 
             checkPauseGuide();
 
+#if XBOX
             checkControllers(gameTime);
+#endif
 
             // If the user hasn't paused, Update normally
 

@@ -413,14 +413,16 @@ namespace BeatShift
                             r.raceTiming.previousSpeedOfCollidedBody = Math.Abs(colVel.Length());
 
 
-                            // Deal with on top collision (NOT TESTED)
-                            if (r.shipPhysics.shipRayToTrackTime < 23f && shipRayToTrackTime > 23f)
-                            {
-                                Console.WriteLine("Landed on top");
-                                float impulseLeft = Vector3.Dot(physicsBody.Position - r.shipPhysics.physicsBody.Position, physicsBody.WorldTransform.Left);
-                                physicsBody.ApplyImpulse(physicsBody.Position, physicsBody.WorldTransform.Left * impulseLeft);
+                            //// Deal with on top collision (NOT TESTED)
+                            //if (r.shipPhysics.shipRayToTrackTime < 23f && shipRayToTrackTime > 23f)
+                            //{
+                            //    Console.WriteLine("Landed on top");
+                            //    float impulseLeft = Vector3.Dot(physicsBody.Position - r.shipPhysics.physicsBody.Position, physicsBody.WorldTransform.Left);
+                            //    physicsBody.ApplyImpulse(physicsBody.Position, physicsBody.WorldTransform.Left * impulseLeft);
 
-                            }
+                            //}
+
+                            
 
                             //Initiate controller vibration
                             r.isCollidingShip = true;
@@ -428,14 +430,49 @@ namespace BeatShift
                             Vector3 bounceVector = collidedBody.Position - physicsBody.Position;
                             bounceVector.Normalize();
 
+                            Vector3 relativeVelocity = collidedBody.LinearVelocity - physicsBody.LinearVelocity;
+                            
+                            float realtiveVelInShipBounceDirection = Vector3.Dot(physicsBody.LinearVelocity, bounceVector) - Vector3.Dot(collidedBody.LinearVelocity, bounceVector);// no need to divide by bounceVector.Length() as normalized
+                            
+                            float shipWidth = 5f;//TODO:don't set manually //TODO: optimize
+                            float shipLength = 7.5f;//TODO:don't set manually
+                            Vector3 backPosRight = new Vector3(shipWidth / 2, 0f, shipLength / 2);//x+-
+                            Vector3 backPosLeft = new Vector3(-shipWidth / 2, 0f, shipLength / 2);
+                            var worldCoordinates = physicsBody.Position + Vector3.Transform(backPosLeft, physicsBody.Orientation);
+                           
+                            //Vector3.tran
+                            ////Front stabilizers, not as far out as physicsBody is not that wide
+                            //stabilizerRaycastList.Add(new Vector3(shipWidth / 4, 0f, -shipLength / 2));
+                            //stabilizerRaycastList.Add(new Vector3(-shipWidth / 4, 0f, -shipLength / 2));
+
+                            ////Back stabilizers
+                            //stabilizerRaycastList.Add(new Vector3(shipWidth / 2, 0f, shipLength / 2));
+                            //stabilizerRaycastList.Add(new Vector3(-shipWidth / 2, 0f, shipLength / 2));
 
 
-                            float realtiveVelInShipBounceDirection = Vector3.Dot(physicsBody.LinearVelocity, bounceVector) - Vector3.Dot(collidedBody.LinearVelocity, -bounceVector);// no need to divide by bounceVector.Length() as normalized
-                            physicsBody.LinearVelocity -= bounceVector * realtiveVelInShipBounceDirection;
-                            //physicsBody.LinearVelocity *= 0.82f;
-                            float minmaxV = Math.Min(100, Math.Max(5, (Math.Abs(realtiveVelInShipBounceDirection))));
+                            //if(contact.Position - 
 
-                            physicsBody.ApplyImpulse(physicsBody.Position, -bounceVector * 5 * minmaxV);// * angleModifier);
+                            
+                            //physicsBody.LinearVelocity -= bounceVector * realtiveVelInShipBounceDirection;
+                            
+                            
+                            // Dampens both ships' speeds
+                            physicsBody.LinearVelocity *= 0.94f;
+                            
+                            //Create ramming effect by speeding up front ship and slowing down back ship
+                            float skewfactor = 7/8;
+                            if (physicsBody.LinearVelocity.Length() != 0)
+                            {
+                                Vector3 normalisedVel = physicsBody.LinearVelocity;
+                                normalisedVel.Normalize();
+                                physicsBody.LinearVelocity = normalisedVel * (skewfactor * physicsBody.LinearVelocity.Length() + (1 - skewfactor) * collidedBody.LinearVelocity.Length());
+                            }
+                            //else move slightly in direction of bounce vector from other ship
+
+                            
+                            //float minmaxV = Math.Min(100, Math.Max(5, (Math.Abs(realtiveVelInShipBounceDirection))));
+
+                            //physicsBody.ApplyImpulse(physicsBody.Position, -bounceVector * 5 * minmaxV);// * angleModifier);
 
                     //TODO: fire off crap on collision
                     //BeatShift.emitter = new ParticleEmitter((Func<Vector3>)delegate { return contacts[0].Position; }, BeatShift.settingsb, BeatShift.pEffect);
