@@ -683,6 +683,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Textures\skylarTexture.png">
+      <Name>skylarTexture</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <None Include="Particles\Textures\License.txt">
       <Name>License</Name>
     </None>

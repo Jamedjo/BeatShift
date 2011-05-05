@@ -85,19 +85,19 @@ namespace BeatShift.Menus
             return MenuManager.anyInput.actionTapped(InputAction.MenuRight) || MenuManager.anyInput.actionTapped(InputAction.PadRight);
         }
 
-        public override void otherUpdate()
-        {
-            if (MenuManager.anyInput.actionPressed(InputAction.MenuUp) || MenuManager.anyInput.actionTapped(InputAction.PadUp))
-            {
-                decreaseShipHue(2.5f);
-                Race.humanRacers[0].setColour((int)shipHue);
-            }
-            if (MenuManager.anyInput.actionPressed(InputAction.MenuDown) || MenuManager.anyInput.actionTapped(InputAction.PadDown))
-            {
-                increaseShipHue(2.5f);
-                Race.humanRacers[0].setColour((int)shipHue);
-            }
-        }
+        //public override void otherUpdate()
+        //{
+        //    if (MenuManager.anyInput.actionPressed(InputAction.MenuUp) || MenuManager.anyInput.actionTapped(InputAction.PadUp))
+        //    {
+        //        decreaseShipHue(2.5f);
+        //        Race.humanRacers[0].setColour((int)shipHue);
+        //    }
+        //    if (MenuManager.anyInput.actionPressed(InputAction.MenuDown) || MenuManager.anyInput.actionTapped(InputAction.PadDown))
+        //    {
+        //        increaseShipHue(2.5f);
+        //        Race.humanRacers[0].setColour((int)shipHue);
+        //    }
+        //}
 
         private void startSinglePlayerGame()
         {
