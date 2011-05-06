@@ -20,10 +20,12 @@ using BEPUphysics.NarrowPhaseSystems.Pairs;
 using BEPUphysics.Settings;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using BEPUphysics.MathExtensions;
 
 
 namespace BeatShift
 {
+    enum Quadrent { Front, Back, Left, Right, FrontLeft, FrontRight, BackLeft, BackRight };
     public class ShipPhysics
     {
         // Physics related variables
@@ -422,24 +424,74 @@ namespace BeatShift
 
                             //}
 
-                            
+
+                            Vector3 bounceVector = physicsBody.Position - collidedBody.Position;
+                            bounceVector.Normalize();
+
+                            Vector3 contactVector = contact.Position - collidedBody.Position;
+
+                            //Find quarent
+                            Quadrent FL_BR = Quadrent.FrontLeft;
+                            Quadrent FR_BL = Quadrent.FrontRight;
+
+                            //old line test was between (contactVector, collidedBody.OrientationMatrix.Forward)
+                            Matrix3X3 m = collidedBody.OrientationMatrix;//just to make code shorter
+                            if (Vector3.Dot(contactVector, m.Backward + m.Right) > 0) FL_BR = Quadrent.BackRight;
+                            if (Vector3.Dot(contactVector, m.Backward + m.Left) > 0) FR_BL = Quadrent.BackLeft;
+
+                            Quadrent? result = null;// '?' makes it nullable
+
+                            if ((FL_BR == Quadrent.FrontLeft) && (FR_BL == Quadrent.FrontRight)) result = Quadrent.Front;
+                            else if ((FL_BR == Quadrent.BackRight) && (FR_BL == Quadrent.BackLeft)) result = Quadrent.Back;
+                            else if ((FL_BR == Quadrent.FrontLeft) && (FR_BL == Quadrent.BackLeft)) result = Quadrent.Left;
+                            else if ((FL_BR == Quadrent.BackRight) && (FR_BL == Quadrent.FrontRight)) result = Quadrent.Right;
+
+
+                            //Console.WriteLine("Collision in quadrent " + result.ToString());
+
+                            /////////////////////////////////
+                            ////Remove ships velocity towards the other ship
+                            ////by setting velocity component in direction of bounce to 0
+                            float shipVelocity_inShipBounceDirection = Vector3.Dot(physicsBody.LinearVelocity, bounceVector);// no need to divide by bounceVector.Length() as normalized
+
+                            //Get scale of bounce based on speed ship was moving towards the ship.
+                            //Minimum bounce until 5 speed, max bounce after 100;
+                            float minmaxV = Math.Min(100, Math.Max(5, (Math.Abs(shipVelocity_inShipBounceDirection))));
+                            //float bounceScale = minmaxV / 20;//scale velocity down so max bounce is 5 times as strong as bounce at 20mph, and 20mph bounce is unscaled
+
+                            //Apply a bounce impulse
+                            physicsBody.ApplyImpulse(physicsBody.Position, bounceVector * 25 * minmaxV);
+                            /////////////////////////////////
+
+                            //float bounceVal = 2000f;
+                            //if (!((Vector3.Dot(collidedBody.Position - contact.Position, collidedBody.OrientationMatrix.Left) < 0)))
+                            //{
+                            //    bounceVal = -bounceVal;
+                            //    Console.Out.WriteLine("Bounce Inverted");
+                            //}
+                            //else
+                            //    Console.Out.WriteLine("Bounce Normal");
+
+                            //Keep the slower ship still, while pushing the other ship around it
+                            if (physicsBody.LinearVelocity.Length() > collidedBody.LinearVelocity.Length())
+                            {
+                                //Bounce the ship to the left
+                                //physicsBody.ApplyImpulse(physicsBody.Position, collidedBody.OrientationMatrix.Left * 2000);
+                            }
 
                             //Initiate controller vibration
                             r.isCollidingShip = true;
 
-                            Vector3 bounceVector = collidedBody.Position - physicsBody.Position;
-                            bounceVector.Normalize();
-
                             Vector3 relativeVelocity = collidedBody.LinearVelocity - physicsBody.LinearVelocity;
-                            
+
                             float realtiveVelInShipBounceDirection = Vector3.Dot(physicsBody.LinearVelocity, bounceVector) - Vector3.Dot(collidedBody.LinearVelocity, bounceVector);// no need to divide by bounceVector.Length() as normalized
-                            
+
                             float shipWidth = 5f;//TODO:don't set manually //TODO: optimize
                             float shipLength = 7.5f;//TODO:don't set manually
                             Vector3 backPosRight = new Vector3(shipWidth / 2, 0f, shipLength / 2);//x+-
                             Vector3 backPosLeft = new Vector3(-shipWidth / 2, 0f, shipLength / 2);
                             var worldCoordinates = physicsBody.Position + Vector3.Transform(backPosLeft, physicsBody.Orientation);
-                           
+
                             //Vector3.tran
                             ////Front stabilizers, not as far out as physicsBody is not that wide
                             //stabilizerRaycastList.Add(new Vector3(shipWidth / 4, 0f, -shipLength / 2));
@@ -450,32 +502,30 @@ namespace BeatShift
                             //stabilizerRaycastList.Add(new Vector3(-shipWidth / 2, 0f, shipLength / 2));
 
 
-                            //if(contact.Position - 
-
-                            
                             //physicsBody.LinearVelocity -= bounceVector * realtiveVelInShipBounceDirection;
-                            
-                            
-                            // Dampens both ships' speeds
-                            physicsBody.LinearVelocity *= 0.94f;
-                            
-                            //Create ramming effect by speeding up front ship and slowing down back ship
-                            float skewfactor = 7/8;
-                            if (physicsBody.LinearVelocity.Length() != 0)
-                            {
-                                Vector3 normalisedVel = physicsBody.LinearVelocity;
-                                normalisedVel.Normalize();
-                                physicsBody.LinearVelocity = normalisedVel * (skewfactor * physicsBody.LinearVelocity.Length() + (1 - skewfactor) * collidedBody.LinearVelocity.Length());
-                            }
-                            //else move slightly in direction of bounce vector from other ship
 
-                            
+
+                            // Dampens both ships' speeds
+                            //physicsBody.LinearVelocity *= 0.94f;
+
+                            //Create ramming effect by speeding up front ship and slowing down back ship
+                            //float skewfactor = 7 / 8;
+                            //physicsBody.LinearVelocity = skewfactor * physicsBody.LinearVelocity + (1 - skewfactor) * collidedBody.LinearVelocity;
+                            //if (physicsBody.LinearVelocity.Length() != 0)
+                            //{
+                            //    Vector3 normalisedVel = physicsBody.LinearVelocity;
+                            //    normalisedVel.Normalize();
+                            //    physicsBody.LinearVelocity = normalisedVel * (skewfactor * physicsBody.LinearVelocity.Length() + (1 - skewfactor) * collidedBody.LinearVelocity.Length());
+                            //}
+                            ////else move slightly in direction of bounce vector from other ship
+
+
                             //float minmaxV = Math.Min(100, Math.Max(5, (Math.Abs(realtiveVelInShipBounceDirection))));
 
                             //physicsBody.ApplyImpulse(physicsBody.Position, -bounceVector * 5 * minmaxV);// * angleModifier);
 
-                    //TODO: fire off crap on collision
-                    //BeatShift.emitter = new ParticleEmitter((Func<Vector3>)delegate { return contacts[0].Position; }, BeatShift.settingsb, BeatShift.pEffect);
+                            //TODO: fire off crap on collision
+                            //BeatShift.emitter = new ParticleEmitter((Func<Vector3>)delegate { return contacts[0].Position; }, BeatShift.settingsb, BeatShift.pEffect);
                         }
                     }
                     }
@@ -486,6 +536,48 @@ namespace BeatShift
                 System.Diagnostics.Debug.WriteLine("Unfound pair");
             }
         }
+
+
+        //bool lineTest(Vector3 one, Vector3 two)
+        //{
+
+        //}
+
+        //bool isFrontFace(Vector3 contactPosition, CompoundBody collidedBody, Vector3 backPosLeft, Vector3 backPosRight)
+        //{
+        //    float angleLeft = angleBetween(backPosLeft - collidedBody.Position, collidedBody.OrientationMatrix.Forward);
+        //    float angleRight = angleBetween(backPosRight - collidedBody.Position, collidedBody.OrientationMatrix.Forward);
+
+        //    Vector3 target = contactPosition - collidedBody.Position;
+        //    float angleAtBack = angleBetween(target, collidedBody.OrientationMatrix.Backward);
+
+        //    if (angleAtBack < angleLeft || angleAtBack < angleRight)
+        //    {
+        //        return true;
+        //    }
+        //    return false;
+        //}
+
+
+        //bool isBackFace(Vector3 contactPosition, CompoundBody collidedBody, Vector3 backPosLeft, Vector3 backPosRight)
+        //{
+        //    float angleLeft = angleBetween(backPosLeft-collidedBody.Position, collidedBody.OrientationMatrix.Backward);
+        //    float angleRight = angleBetween(backPosRight-collidedBody.Position, collidedBody.OrientationMatrix.Backward);
+
+        //    Vector3 target = contactPosition - collidedBody.Position;
+        //    float angleAtBack = angleBetween(target, collidedBody.OrientationMatrix.Backward);
+
+        //    if (angleAtBack < angleLeft || angleAtBack < angleRight)
+        //    {
+        //        return true;
+        //    }
+        //    return false;
+        //}
+
+        //float angleBetween(Vector3 one, Vector3 two)
+        //{
+        //    return (float)Math.Acos(Vector3.Dot(one, two) / (one.Length() * two.Length()));
+        //}
 
         #region Ship Raycasts
 
