@@ -12,3 +12,8 @@ glob:GameCode/obj/Xbox 360/Debug/
 glob:GameContent/obj/BeatShiftContent.contentproj.XactOutput.FileList.txt
 glob:**DeployCache.txt
 glob:GameCode/bin/x86/Release/BEPUphysics.dll
+glob:GameCode/bin/x86
+glob:GameCode/obj
+glob:GameContent/obj
+glob:**.vs10x
+glob:**.cachefile
