@@ -311,9 +311,10 @@ namespace BeatShift
             MapPoint wrongwayPoint = mapData.wrongwayPoint(mapData.wrongwayPoint(currentProgressWaypoint));
             //distance = (ShipPosition - wrongwayPoint.position).Length();
             Boolean behindWrongwaypoint = (Vector3.Dot(wrongwayPoint.tangent, (ShipPosition - wrongwayPoint.position)) < 0);
-            if (behindWrongwaypoint && parentRacer.raceTiming.isRacing)
+            
+            if (Vector3.Dot(physicsBody.OrientationMatrix.Forward, nearestMapPoint.tangent)< -0.2 && parentRacer.raceTiming.isRacing)
             {
-                System.Diagnostics.Debug.WriteLine("Wrong Way!!! Point:" + wrongwayPoint.getIndex() + "\n");
+                //System.Diagnostics.Debug.WriteLine("Wrong Way!!! Point:" + wrongwayPoint.getIndex() + "\n");
                 currentProgressWaypoint = wrongwayPoint;
                 wrongWay = true;
             }
@@ -413,28 +414,28 @@ namespace BeatShift
 
 
                             // Deal with on top collision (NOT TESTED)
-                            //if (r.shipPhysics.shipRayToTrackTime < 23f && shipRayToTrackTime > 23f)
-                            //{
-                            //    Console.WriteLine("Landed on top");
-                            //    float impulseLeft = Vector3.Dot(physicsBody.Position - r.shipPhysics.physicsBody.Position, physicsBody.WorldTransform.Left);
-                            //    physicsBody.ApplyImpulse(physicsBody.Position, physicsBody.WorldTransform.Left * impulseLeft);
+                            if (r.shipPhysics.shipRayToTrackTime < 23f && shipRayToTrackTime > 23f)
+                            {
+                                Console.WriteLine("Landed on top");
+                                float impulseLeft = Vector3.Dot(physicsBody.Position - r.shipPhysics.physicsBody.Position, physicsBody.WorldTransform.Left);
+                                physicsBody.ApplyImpulse(physicsBody.Position, physicsBody.WorldTransform.Left * impulseLeft);
 
-                            //}
+                            }
 
                             //Initiate controller vibration
                             r.isCollidingShip = true;
 
-                            //Vector3 bounceVector = collidedBody.Position - physicsBody.Position;
-                            //bounceVector.Normalize();
+                            Vector3 bounceVector = collidedBody.Position - physicsBody.Position;
+                            bounceVector.Normalize();
 
-                            
 
-                            //float realtiveVelInShipBounceDirection = Vector3.Dot(physicsBody.LinearVelocity, bounceVector) - Vector3.Dot(collidedBody.LinearVelocity, bounceVector);// no need to divide by bounceVector.Length() as normalized
-                            //physicsBody.LinearVelocity -= bounceVector * realtiveVelInShipBounceDirection;
-                            ////physicsBody.LinearVelocity *= 0.82f;
-                            //float minmaxV = Math.Min(100, Math.Max(5, (Math.Abs(realtiveVelInShipBounceDirection))));
-                          
-                            //physicsBody.ApplyImpulse(physicsBody.Position, -bounceVector * 5 * minmaxV);// * angleModifier);
+
+                            float realtiveVelInShipBounceDirection = Vector3.Dot(physicsBody.LinearVelocity, bounceVector) - Vector3.Dot(collidedBody.LinearVelocity, -bounceVector);// no need to divide by bounceVector.Length() as normalized
+                            physicsBody.LinearVelocity -= bounceVector * realtiveVelInShipBounceDirection;
+                            //physicsBody.LinearVelocity *= 0.82f;
+                            float minmaxV = Math.Min(100, Math.Max(5, (Math.Abs(realtiveVelInShipBounceDirection))));
+
+                            physicsBody.ApplyImpulse(physicsBody.Position, -bounceVector * 5 * minmaxV);// * angleModifier);
 
                     //TODO: fire off crap on collision
                     //BeatShift.emitter = new ParticleEmitter((Func<Vector3>)delegate { return contacts[0].Position; }, BeatShift.settingsb, BeatShift.pEffect);

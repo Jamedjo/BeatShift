@@ -16,10 +16,6 @@ namespace BeatShift
         
         public static BeatVisualisation beatVisualisation = new BeatVisualisation(new Vector2(-60,450), new Vector2(400,450), 0.5f);
 
-        //for displayingw rong way sign
-        
-        public static int counter = 0;
-
         public static void Update(GameTime gameTime)
         {
             beatVisualisation.Update(gameTime);
@@ -121,33 +117,23 @@ namespace BeatShift
                 var d = new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width - newBoardWidth, 0, newBoardWidth, newBoardHeight);
                 //BeatShift.spriteBatch.Draw(GameTextures.TopRightBoard, d, Color.White);
 
-                foreach (Racer r in Race.humanRacers)
-                {
-                    if (r.isRespawning && r.shipPhysics.millisecsLeftTillReset<2000)
+                //foreach (Racer r in Race.humanRacers)
+                //{
+                    if (racer.isRespawning && racer.shipPhysics.millisecsLeftTillReset<2000)
                     {
                         int newWarningWidth = (int)(GameTextures.ResettingSign.Width * scaleFactorWidth);
                         int newWarningHeight = (int)(GameTextures.ResettingSign.Height * scaleFactorHeight);
                         BeatShift.spriteBatch.Draw(GameTextures.ResettingSign, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - newWarningWidth / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - newWarningHeight / 2, newWarningWidth, newWarningHeight), Color.White);
                     }
 
-                }
+                //}
 
-
-                //if wrong way
                 if (racer.shipPhysics.wrongWay == true)
-                {
-                    racer.raceTiming.displayWrongWay = true;
-                    //DrawMessage("Wrong Way!", 300, vOffset / 2);
-                }
-                //uses counter to keep sign shown for a few seconds
-                if (racer.raceTiming.displayWrongWay == true && counter < 500)
                 {
                     int newWarningWidth = (int)(GameTextures.WrongWaySign.Width * scaleFactorWidth);
                     int newWarningHeight = (int)(GameTextures.WrongWaySign.Height * scaleFactorHeight);
                     BeatShift.spriteBatch.Draw(GameTextures.WrongWaySign, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - newWarningWidth / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - newWarningHeight / 2, newWarningWidth, newWarningHeight), Color.White);
-                    counter++;
                 }
-                else if (counter >= 500) { /*DrawMessage("Right Way", 250, vOffset / 2);*/ counter = 0; racer.raceTiming.displayWrongWay = false; }
 
                 // Other info
                 //DrawMessage("Progress: " + racer.getLapPercentage() + "%", 10, vOffset + 26);

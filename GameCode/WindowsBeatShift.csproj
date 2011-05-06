@@ -152,6 +152,7 @@
     <Compile Include="Manager\Maps\OldHillMap.cs" />
     <Compile Include="Manager\Maps\RingMap.cs" />
     <Compile Include="Manager\Maps\SpaceMap.cs" />
+    <Compile Include="Manager\Menus\LoadingMenu.cs" />
     <Compile Include="Manager\Menus\PauseMenu.cs" />
     <Compile Include="Manager\Menus\SplashMenu.cs" />
     <Compile Include="Manager\Particles\BoostSettings.cs" />
