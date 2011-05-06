@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using BeatShift.Utilities___Misc;
 using Microsoft.Xna.Framework.Input;
+using DPSF;
+using DPSF.ParticleSystems;
 
 namespace BeatShift
 {
@@ -19,18 +21,23 @@ namespace BeatShift
         long lastTime = 0;
         private long invinciEndtime = 0;
         Queue<Beat> beats;
-        BeatVisualisation myBar;
+        //BeatVisualisation myBar;
         int maxLayer;
         private int[] averageDists;
         private int averageCounter = 0;
+        public BeatRingParticleSystem visualisation;
         public BeatQueue() {
             beats = new Queue<Beat>();
-            myBar =  HeadsUpDisplay.beatVisualisation;
+            //myBar =  HeadsUpDisplay.beatVisualisation;
             maxLayer = BeatShift.bgm.Layers();
             averageDists = new int[averageLength];
             for(int i=0;i<averageLength;i++) {
                 averageDists[i] = (int)latency;
             }
+
+            visualisation = new BeatRingParticleSystem(null);
+            BeatShift.particleManager.AddParticleSystem(visualisation);
+            visualisation.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
         }
 
         public Beat? nextBeat()
@@ -56,7 +63,7 @@ namespace BeatShift
             return myLayer;
         }
 
-        public void BeatTap(char button)
+        public void BeatTap(Buttons button)
         {
             Decimal result = new Decimal(0);
             long time = BeatShift.bgm.songTick();
@@ -167,7 +174,7 @@ namespace BeatShift
                 myLayer--;
                 BeatShift.bgm.MusicDown();
                 boostBar = 80;
-                myBar.Clear();
+                visualisation.Clear();
                 beats.Clear();
             }
             else
@@ -184,7 +191,7 @@ namespace BeatShift
                 myLayer++;
                 BeatShift.bgm.MusicUp();
                 boostBar = 20;
-                myBar.Clear();
+                visualisation.Clear();
                 beats.Clear();
             }
         }
@@ -199,19 +206,19 @@ namespace BeatShift
                 //System.Console.WriteLine(elapsed + " " + temp2);
                 switch (newBeat.Button){
                     case Buttons.A:
-                        myBar.addBeat(ButtonImage.A, duration,elapsed);
+                        visualisation.addBeat(Buttons.A, duration,elapsed);
                         //Console.Out.WriteLine("A");
                         break;
                     case Buttons.B:
-                        myBar.addBeat(ButtonImage.B, duration, elapsed);
+                        visualisation.addBeat(Buttons.B, duration, elapsed);
                         //Console.Out.WriteLine("B");
                         break;
                     case Buttons.X:
-                        myBar.addBeat(ButtonImage.X, duration, elapsed);
+                        visualisation.addBeat(Buttons.X, duration, elapsed);
                         //Console.Out.WriteLine("X");
                         break;
                     case Buttons.Y:
-                        myBar.addBeat(ButtonImage.Y, duration, elapsed);
+                        visualisation.addBeat(Buttons.Y, duration, elapsed);
                         //Console.Out.WriteLine("Y");
                         break;
                 }

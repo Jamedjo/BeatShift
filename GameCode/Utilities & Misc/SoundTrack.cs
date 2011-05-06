@@ -22,6 +22,7 @@ namespace BeatShift
     public class SoundTrack
     {
         const float leeway = 100.0f;
+        const float warmUp = 5000.0f;
         int latency = 0;
         Boolean shouldPlay = false;
         Boolean recentBeat = false;
@@ -254,19 +255,25 @@ namespace BeatShift
         public void Update()
         {
             //Adding beats into racers beatqueues.
-            for(int i = 0; i<beats.Length;i++) {
-            while ((beats[i].Count != 0) && (tick.ElapsedMilliseconds > (beats[i].Peek().Time - 2000)))
+            if (shouldPlay)
+            {
+                for (int i = 0; i < beats.Length; i++)
                 {
-                    Beat beat = beats[i].Dequeue();
-                    foreach (Racer r in Race.humanRacers)
+                    while ((beats[i].Count != 0) && (tick.ElapsedMilliseconds > (beats[i].Peek().Time - 2000)))
                     {
-                        if (r.beatQueue.getLayer() == i)
+                        Beat beat = beats[i].Dequeue();
+                        if (tick.ElapsedMilliseconds > warmUp)
                         {
-                            r.beatQueue.AddBeat(beat);
+                            foreach (Racer r in Race.humanRacers)
+                            {
+                                if (r.beatQueue.getLayer() == i)
+                                {
+                                    r.beatQueue.AddBeat(beat);
+                                }
+                            }
                         }
+                        beats[i].Enqueue(new Beat(beat.Time + songLength, beat.Button));
                     }
-                
-                beats[i].Enqueue(new Beat(beat.Time + songLength,beat.Button));
                 }
             }
         }
