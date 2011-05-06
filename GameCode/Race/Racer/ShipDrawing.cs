@@ -34,7 +34,7 @@ namespace BeatShift
         public ShipDrawing(Func<Matrix> getDrawOrientationMatrix, Func<Vector3> getPosition, Racer parent)
         {
             parentRacer = parent;
-
+            //parent.raceTiming.previousSpeed();
             setPositionFunctions(getDrawOrientationMatrix, getPosition);
             engineGlow = new EngineParticleSystem(null);
             BeatShift.particleManager.AddParticleSystem(engineGlow);
@@ -128,9 +128,31 @@ namespace BeatShift
             //as particles are one sided this made them invisible
             //this line faces them towards the ship which works as a quick hack when they originate from the centre/center
             //needs to be replaced with engineGlow.SetCameraPosition(camera.getPosition()); or somthing that uses the camera's position.
-            engineGlow.SetCameraPosition(camera.cameraPosition());
-
+            Vector3 temp = camera.cameraPosition();
+            if (parentRacer.shipPhysics != null)
+            {
+                  engineGlow.SetCameraPosition(Vector3.Transform(camera.cameraPosition(),Matrix.Invert(worldMatrix)));
+            }
+            else
+            {
+                engineGlow.SetCameraPosition(camera.cameraPosition());
+            }
             engineGlow.Draw();
+            //Vector3.Transform(camera.cameraPosition(),Matrix.Invert(worldMatrix));
+            if (isThisTheCamerasShip)
+            {
+                parentRacer.beatQueue.visualisation.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
+                if (parentRacer.shipPhysics != null)
+                {
+                    parentRacer.beatQueue.visualisation.SetCameraPosition(Vector3.Transform(camera.cameraPosition(),Matrix.Invert(worldMatrix)));
+                }
+                else
+                {
+                    parentRacer.beatQueue.visualisation.SetCameraPosition(camera.cameraPosition());
+                }
+                
+                parentRacer.beatQueue.visualisation.Draw();
+            }
             //if (Options.DrawCollisionPoints)
             {
                 foreach (D_Arrow arrow in drawArrowListPermanent)

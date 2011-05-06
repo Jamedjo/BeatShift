@@ -55,6 +55,7 @@ namespace BeatShift
                 Race.currentRaceType.totalRaceTime.Stop();
                 foreach (Racer racer in Race.currentRacers)
                     racer.raceTiming.stopLapTimer();
+                BeatShift.bgm.Pause();
             }
 
             // Pause during countdown
@@ -78,6 +79,7 @@ namespace BeatShift
                 Race.currentRaceType.totalRaceTime.Start();
                 foreach (Racer racer in Race.currentRacers)
                     racer.raceTiming.startLapTimer();
+                BeatShift.bgm.UnPause();
             }
 
             // Pause during countdown
@@ -85,6 +87,7 @@ namespace BeatShift
             {
                 Race.currentRaceType.countDownTimer.Start();
             }
+
         }
 
         private static void checkPauseKey(GameTime gameTime)

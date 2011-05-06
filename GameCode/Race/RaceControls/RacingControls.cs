@@ -309,16 +309,16 @@ namespace BeatShift.Input
             // Subtract vibration otherwise, even if the player holds down A
             if (chosenInput.actionTapped(InputAction.Green))
             {
-                racer.beatQueue.BeatTap('A');
+                racer.beatQueue.BeatTap(Buttons.A);
             } else if (chosenInput.actionTapped(InputAction.Red))
             {
-                racer.beatQueue.BeatTap('B');
+                racer.beatQueue.BeatTap(Buttons.B);
             } else if (chosenInput.actionTapped(InputAction.Blue))
             {
-                racer.beatQueue.BeatTap('X');
+                racer.beatQueue.BeatTap(Buttons.X);
             } else if (chosenInput.actionTapped(InputAction.Yellow))
             {
-                racer.beatQueue.BeatTap('Y');
+                racer.beatQueue.BeatTap(Buttons.Y);
             }
 
             //if (chosenInput.actionTapped(InputAction.Boost))//Should be actionPressed&notAlreadyBoosting

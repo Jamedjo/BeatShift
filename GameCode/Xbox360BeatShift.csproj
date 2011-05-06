@@ -114,6 +114,7 @@
     <Compile Include="Manager\Particles\BoostSettings.cs" />
     <Compile Include="Manager\Particles\ParticleEmitter.cs" />
     <Compile Include="Manager\Particles\ParticleSettings.cs" />
+    <Compile Include="Particle Systems\BeatRingParticleSystem.cs" />
     <Compile Include="Particle Systems\EngineParticleSystem.cs" />
     <Compile Include="Race\Race.cs" />
     <Compile Include="Race\RaceCameras\Viewports.cs" />
