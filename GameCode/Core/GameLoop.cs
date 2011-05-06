@@ -28,7 +28,6 @@ namespace BeatShift
 
         private static bool paused = false;
         private static bool pausedForGuide = false;
-        private static bool pausedForControllers = false;
 
         private static bool[] activeControllers = new bool[4];
 
@@ -72,7 +71,6 @@ namespace BeatShift
             //TODO: Resume controller vibration
             pausedForGuide = false;
             paused = false;
-            pausedForControllers = false;
             if (Race.currentRaceType.actualRaceBegun)
             {
                 Race.currentRaceType.totalRaceTime.Start();
@@ -128,22 +126,15 @@ namespace BeatShift
         private static void checkControllers(GameTime gameTime)
         {
             // Pause if the Guide is up
-            // SORT FOR WINDOWS
-            int k = 0;
             if (!paused && currentState == GameState.LocalGame)
-                while (k < 4)
-                {
-
+                for (int k = 0; k<4 ; k++)
                     if (activeControllers[k] && !GamePad.GetState((PlayerIndex)(k)).IsConnected)
                     {
                         BeginPause(true);
-                        pausedForControllers = true;
                         pauseMenu.enteringMenu();
                         MenuManager.anyInput.Update(gameTime);
                         break;
                     }
-                    k++;
-                }
         }
 
         //Input manager for exiting game
@@ -248,47 +239,47 @@ namespace BeatShift
 
             BeatShift.gamerServices.Update(gameTime);
 
-                mainGameinput.Update(gameTime);
-                if (!paused)
-                {
-                    //Update all managed timers.
-                    RunningTimer.Update(gameTime);
+            mainGameinput.Update(gameTime);
+            if (!paused)
+            {
+                //Update all managed timers.
+                RunningTimer.Update(gameTime);
 
-                    if (MenuManager.Enabled)
-                        MenuManager.Update(gameTime);
-                    if (Race.Enabled)
-                    {
-                        Race.Update(gameTime);
-                        HeadsUpDisplay.Update(gameTime);
-                    }
-                    //if (MapManager.Enabled)
-                    //    MapManager.tempMap.Update(gameTime);
-                    if (BeatShift.shipSelect.Enabled)
-                        BeatShift.shipSelect.Update(gameTime);
-                    //if (networkedGame.Enabled) networkedGame.Update(gameTime);
-                    if (Physics.Enabled)
-                        Physics.Update(gameTime);
-                    if (MapManager.Enabled)
-                        Race.Update(gameTime);
-                    if (Race.Visible && !MenuManager.Enabled && BeatShift.emitter != null)
-                    {
-                        BeatShift.emitter.Update(gameTime);
-                    }
-                    // Game should be exited through the menu systems.
-                    // Allows the game to return to main menu
-                    //if (mainGameinput.actionTapped(InputAction.BackButton))
-                    //{
-                    //    //MenuManager.setCurrentMenu(MenuPage.Main);
-                    //    GameLoop.setGameStateAndResetPlayers(GameState.Menu);
-                    //}
-                }
-
-                if( paused && !pausedForGuide )
+                if (MenuManager.Enabled)
+                    MenuManager.Update(gameTime);
+                if (Race.Enabled)
                 {
-                    //update pause menu
-                    pauseMenu.Update(gameTime);
-                    MenuManager.anyInput.Update(gameTime);
+                    Race.Update(gameTime);
+                    HeadsUpDisplay.Update(gameTime);
                 }
+                //if (MapManager.Enabled)
+                //    MapManager.tempMap.Update(gameTime);
+                if (BeatShift.shipSelect.Enabled)
+                    BeatShift.shipSelect.Update(gameTime);
+                //if (networkedGame.Enabled) networkedGame.Update(gameTime);
+                if (Physics.Enabled)
+                    Physics.Update(gameTime);
+                if (MapManager.Enabled)
+                    Race.Update(gameTime);
+                if (Race.Visible && !MenuManager.Enabled && BeatShift.emitter != null)
+                {
+                    BeatShift.emitter.Update(gameTime);
+                }
+                // Game should be exited through the menu systems.
+                // Allows the game to return to main menu
+                //if (mainGameinput.actionTapped(InputAction.BackButton))
+                //{
+                //    //MenuManager.setCurrentMenu(MenuPage.Main);
+                //    GameLoop.setGameStateAndResetPlayers(GameState.Menu);
+                //}
+            }
+
+            if( paused && !pausedForGuide )
+            {
+                //update pause menu
+                pauseMenu.Update(gameTime);
+                MenuManager.anyInput.Update(gameTime);
+            }
 
             //full screen option
 #if WINDOWS
