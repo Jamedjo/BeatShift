@@ -130,7 +130,6 @@ namespace BeatShift
             // Pause if the Guide is up
             // SORT FOR WINDOWS
             int k = 0;
-
             if (!paused && currentState == GameState.LocalGame)
                 while (k < 4)
                 {

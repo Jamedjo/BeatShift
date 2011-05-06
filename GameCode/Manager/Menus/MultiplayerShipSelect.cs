@@ -138,7 +138,7 @@ namespace BeatShift
                 respondToMenuBack(i);
 
                 //changes the hue for each player
-                respondToUpDown(i);
+                //respondToUpDown(i);
 
                 //changes the ship to the left/right right for all players
                 switchShipLeft(i);
@@ -176,7 +176,7 @@ namespace BeatShift
         private void setupGameAndChangeState(GameTime gameTime)
         {
             //make sure physics loads
-            while (MapManager.currentMap.physicsLoadingThread.IsAlive) { }
+            //while (MapManager.currentMap.physicsLoadingThread.IsAlive) { }
 
             //set input managers
             for (int k = 0; k < 4; k++)
@@ -189,7 +189,8 @@ namespace BeatShift
             //If controller was not plugged-in/selected remove that player
             Race.removeNonVisibleRacers();
 
-            GameLoop.startLocalGame(gameTime);
+            GameLoop.setGameState(GameState.Menu);
+            MenuManager.setCurrentMenu(MenuPage.Loading);
         }
 
         private void respondToMenuBack(int i)
@@ -226,19 +227,19 @@ namespace BeatShift
             }
         }
 
-        private void respondToUpDown(int i)
-        {
-            if (ssarea[i].input.actionPressed(InputAction.MenuDown))
-            {
-                increaseShipHue(ssarea[i], 2.5f);
-                Race.humanRacers[i].setColour((int)ssarea[i].hue);
-            }
-            if (ssarea[i].input.actionPressed(InputAction.MenuUp))
-            {
-                decreaseShipHue(ssarea[i], 2.5f);
-                Race.humanRacers[i].setColour((int)ssarea[i].hue);
-            }
-        }
+        //private void respondToUpDown(int i)
+        //{
+        //    if (ssarea[i].input.actionPressed(InputAction.MenuDown))
+        //    {
+        //        increaseShipHue(ssarea[i], 2.5f);
+        //        Race.humanRacers[i].setColour((int)ssarea[i].hue);
+        //    }
+        //    if (ssarea[i].input.actionPressed(InputAction.MenuUp))
+        //    {
+        //        decreaseShipHue(ssarea[i], 2.5f);
+        //        Race.humanRacers[i].setColour((int)ssarea[i].hue);
+        //    }
+        //}
 
         /// <summary>
         /// Draws borders and graphics on splitscreen ship selection menu. Includes button graphics, arrows and text.

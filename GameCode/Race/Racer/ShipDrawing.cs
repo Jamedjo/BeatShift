@@ -78,7 +78,7 @@ namespace BeatShift
             BeatShift.graphics.GraphicsDevice.Viewport = camera.Viewport;
 
             //Set light to colour
-            shipClasses[(int)currentShip].shipRenderer.DiffuseColor = shipColour.ToVector3();
+            //shipClasses[(int)currentShip].shipRenderer.DiffuseColor = shipColour.ToVector3();
             //shipClasses[(int)currentShip].shipRenderer.DirectionalLight0.DiffuseColor = shipColour.ToVector3();
 
             shipClasses[(int)currentShip].shipRenderer.View = viewMatrix;
