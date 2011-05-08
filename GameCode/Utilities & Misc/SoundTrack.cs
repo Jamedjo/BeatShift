@@ -61,7 +61,9 @@ namespace BeatShift
 
             while((temp=file.ReadLine())!=null)
             {
+#if WINDOWS
                 System.Diagnostics.Debug.WriteLine(temp);
+#endif
                 string[] bits = temp.Split(' ');
                 int time = Convert.ToInt32(bits[0].Substring(1, bits[0].Length - 2));
                 string temp2 = bits[1].Substring(1, bits[1].Length - 2);
@@ -195,12 +197,14 @@ namespace BeatShift
 
             try
             {
+#if WINDOWS
                 System.Diagnostics.Debug.WriteLine("Playing: " + track.IsPlaying +
                     "\n Stopped: " + track.IsStopped + 
                     "\n Stopping: " + track.IsStopping + 
                     "\n Prepared: " + track.IsPrepared + 
                     "\n Preparing: " + track.IsPreparing + 
                     "\n Created: " + track.IsCreated);
+#endif
                 if (!track.IsPlaying)
                 {
                     track.Play();

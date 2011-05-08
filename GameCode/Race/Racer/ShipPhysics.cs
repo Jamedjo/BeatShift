@@ -416,7 +416,9 @@ namespace BeatShift
                             // Deal with on top collision (NOT TESTED)
                             if (r.shipPhysics.shipRayToTrackTime < 23f && shipRayToTrackTime > 23f)
                             {
+#if WINDOWS
                                 Console.WriteLine("Landed on top");
+#endif
                                 float impulseLeft = Vector3.Dot(physicsBody.Position - r.shipPhysics.physicsBody.Position, physicsBody.WorldTransform.Left);
                                 physicsBody.ApplyImpulse(physicsBody.Position, physicsBody.WorldTransform.Left * impulseLeft);
 

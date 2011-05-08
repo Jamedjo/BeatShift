@@ -69,8 +69,10 @@ namespace BeatShift.Cameras
 
             CamPosition += outRay.T * adjustPositionDirection;
 
+#if WINDOWS
             if (outRay.T != 0)
                 System.Diagnostics.Debug.WriteLine(outRay.T);
+#endif
 
             View = Matrix.CreateLookAt(CamPosition, CameraTarget, camLastUp);
 

@@ -45,7 +45,7 @@ namespace BeatShift.Menus
 
         public override void enteringMenu()
         {
-            base.enteringMenu();
+            //base.enteringMenu();
             Race.setupSelectionRacers(1,true);
             Race.Enabled = true;
             Race.Visible = true;

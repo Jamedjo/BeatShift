@@ -76,7 +76,7 @@ namespace BeatShift
                     if (temp.getTimeWithLatency((int)latency) < (time - leeway))
                     {
                         beats.Dequeue();
-                        System.Diagnostics.Debug.WriteLine(temp.getTimeWithLatency((int)latency) + ": Dequeued because way out");
+                        //System.Diagnostics.Debug.WriteLine(temp.getTimeWithLatency((int)latency) + ": Dequeued because way out");
                     }
                     else
                     {
@@ -89,7 +89,7 @@ namespace BeatShift
                         }
                         else
                         {
-                            System.Diagnostics.Debug.WriteLine("Wrong button");
+                            //System.Diagnostics.Debug.WriteLine("Wrong button");
                         }
                         beats.Dequeue();
                         lastTime = temp.getTimeWithLatency((int)latency);
@@ -97,9 +97,9 @@ namespace BeatShift
                         {
                             AdjustLatency(time);
                         }
-                        System.Diagnostics.Debug.WriteLine(temp.getTimeWithLatency((int)latency) + ": Dequeued with ratio " + result + ". BB @:  \n" +
-                                                    "Distance to next: " + (time - (beats.Peek()).getTimeWithLatency((int)latency)) + "\n" +
-                                                     "Distance to last: " + (time - lastTime));
+                        //System.Diagnostics.Debug.WriteLine(temp.getTimeWithLatency((int)latency) + ": Dequeued with ratio " + result + ". BB @:  \n" +
+                                                   // "Distance to next: " + (time - (beats.Peek()).getTimeWithLatency((int)latency)) + "\n" +
+                                                    // "Distance to last: " + (time - lastTime));
                     }
                 }
             
@@ -163,7 +163,7 @@ namespace BeatShift
                 /*System.Diagnostics.Debug.WriteLine(temp.getTime(latency) + ": Dequeued with ratio " + result + ". BB @:  \n" +
                                 "Distance to next: " + (time - (beats.Peek()).getTime(latency)) + "\n" +
                                  "Distance to last: " + (time - lastTime));*/
-                System.Diagnostics.Debug.WriteLine("New Latency: " + latency);
+                //System.Diagnostics.Debug.WriteLine("New Latency: " + latency);
             }
         }
 

@@ -21,17 +21,8 @@ namespace BeatShift.Menus
                 MenuManager.setCurrentMenu(MenuPage.RaceSelect);
 #if XBOX
                 Race.getFullListOfRacerIDsFromSignedInPeople();
-                if (Race.racerIDs != null)
-                {
-                    if (Race.racerIDs.Count() == 0)
-                    {
-                        Guide.ShowSignIn(1, false);
-                    }
-                    else
-                    {
-                        Console.Write("RacerID: " + Race.racerIDs[0].gamer.Gamertag);
-                    }
-                }
+                if (Race.racerIDs != null && Race.racerIDs.Count() == 0)
+                    Guide.ShowSignIn(1, false);
 #endif
             }));
             addMenuItem("Start Co-Op Race", (Action)(delegate

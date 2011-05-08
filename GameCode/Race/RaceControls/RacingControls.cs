@@ -72,7 +72,7 @@ namespace BeatShift.Input
             if(chosenInput.actionTapped(InputAction.CameraToggle)
               || chosenInput.actionTapped(InputAction.PadUp))
             {
-                System.Diagnostics.Debug.WriteLine("Camera toggle");
+                //System.Diagnostics.Debug.WriteLine("Camera toggle");
                 ((RacerHuman)racer).toggleCamera();
             }
             if(chosenInput.actionPressed(InputAction.CameraReverse) != previousCameraReverse)
