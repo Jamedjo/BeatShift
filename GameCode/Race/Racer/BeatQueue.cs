@@ -57,11 +57,14 @@ namespace BeatShift
             return boostBar;
         }
 
-
         public int getLayer()
         {
             return myLayer;
         }
+
+        public Boolean isLevellingUp { get; set; }
+
+        public Boolean isLevellingDown { get; set; }
 
         public void BeatTap(Buttons button)
         {
@@ -119,8 +122,6 @@ namespace BeatShift
                 if(time>invinciEndtime)
                     boostBar -= penalty;
 
-
-
             if (boostBar > 100)
             {
                 boostBar = 100;
@@ -176,6 +177,7 @@ namespace BeatShift
                 boostBar = 80;
                 visualisation.Clear();
                 beats.Clear();
+                isLevellingDown = true;
             }
             else
             {
@@ -193,6 +195,7 @@ namespace BeatShift
                 boostBar = 20;
                 visualisation.Clear();
                 beats.Clear();
+                isLevellingUp = true;
             }
         }
 

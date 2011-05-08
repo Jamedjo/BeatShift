@@ -18,10 +18,13 @@ namespace BeatShift.Input
         float vibrateBoostControl = 0.0f;
         float vibrateCollisionControl = 0.0f;
         float vibrateControl = 0.0f;
+        float vibrateLevelControl = 0.0f;
         float jumpHeight = 27.5f;
         bool justCollided = false;
         bool justBoost = false;
         bool justJump = false;
+        bool vibrateSequence = false;
+        int sequenceNumber;
 
         //TODO: sort topspeed variable
         int topSpeed = 300;
@@ -43,6 +46,10 @@ namespace BeatShift.Input
             tapNo = 0;
             lastTaps = new decimal[4];
             tapWeights = new decimal[4] {1,.3m,.1m,.05m};
+            racer.beatQueue.isLevellingDown = false;
+            racer.beatQueue.isLevellingUp = false;
+            sequenceNumber = 0;
+            vibrateSequence = true;
             
         }
         public RacingControls(Racer myRacer)
@@ -80,6 +87,43 @@ namespace BeatShift.Input
             }
 
             #region Vibrations
+
+            #region LEVEL CHANGE
+
+            if (racer.beatQueue.isLevellingDown)
+            {
+                if( vibrateSequence )
+                {
+                    if (vibrateLevelControl < 0.3f)
+                    {
+                        // boost increase
+                        vibrateLevelControl = vibrateLevelControl + 0.05f;
+                    }
+                    else
+                        vibrateSequence = false ;
+                }
+                else
+                {
+                    if (vibrateLevelControl > 0.03f)
+                    {
+                        // boost increase
+                        vibrateLevelControl = vibrateLevelControl - 0.03f;
+                    }
+                    else
+                    {
+                        vibrateLevelControl = 0;
+                        vibrateSequence = true ;
+                        sequenceNumber++;
+                    }
+                }
+                if (sequenceNumber == 2)
+                {
+                    racer.beatQueue.isLevellingDown = false;
+                    sequenceNumber = 0;
+                }
+            }
+
+            #endregion
 
             #region COLLISIONS
 
@@ -133,18 +177,30 @@ namespace BeatShift.Input
             #region BOOST
 
             // vibrations from boost
-            // TODO: uncomment when music is added
-            if (chosenInput.actionPressed(InputAction.Boost) /*&& (racer.beatQueue.GetBoost() > 0)*/)
+            if (((chosenInput.actionPressed(InputAction.Boost)) || (racer.beatQueue.isLevellingUp)) && (racer.beatQueue.GetBoost() > 0))
             {
                 racer.setBoost(true);
                 justBoost = true;
+                float boostIncrease = 0.05f;
 
-                // max vibrate is currently 0.5f (can be as high as 1.0f)
-                if (vibrateBoostControl < 0.33f)
+                if (racer.beatQueue.isLevellingUp)
+                    Boost(0.2);
+                else
+                {
+                    racer.beatQueue.DrainBoost();
+                    Boost(0.1);
+                    boostIncrease = 0.03f;
+                }
+
+                // max vibrate is currently 0.3f (can be as high as 1.0f)
+                if (vibrateBoostControl < 0.3f)
                 {
                     // boost increase
-                    vibrateBoostControl = vibrateBoostControl + 0.03f;
+                    vibrateBoostControl = vibrateBoostControl + boostIncrease;
                 }
+                else
+                    racer.beatQueue.isLevellingUp = false;
+
             }
             else if (justBoost)
             {
@@ -165,7 +221,7 @@ namespace BeatShift.Input
             #region CALCULATIONS
 
             // check vibration values are capped at 1.0
-            vibrateControl = vibrateCollisionControl + vibrateBoostControl;
+            vibrateControl = vibrateCollisionControl + vibrateBoostControl + vibrateLevelControl;
             if (vibrateControl > 1.0f)
                 vibrateControl = 1.0f;
 
@@ -326,14 +382,6 @@ namespace BeatShift.Input
             //    //Create particle boost.
             //    BeatShift.emitter = new ParticleEmitter((Func<Matrix>)delegate { return Race.humanRacers[0].shipPhysics.ShipOrientationMatrix /*+ Vector3.Transform(new Vector3(0f, -1f, -2f), Race.humanRacers[0].shipPhysics.ShipOrientationMatrix)*/; }, BeatShift.settingsb, BeatShift.pEffect);
             //}
-            if (chosenInput.actionPressed(InputAction.Boost))
-            {
-                if (racer.beatQueue.GetBoost() > 0)
-                {
-                    racer.beatQueue.DrainBoost();
-                    Boost(0.1);
-                }
-            }
         }
     }
 }
