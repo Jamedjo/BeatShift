@@ -11,15 +11,15 @@ namespace BeatShift.Menus
 {
     class SplashMenu : IMenuPage
     {
-        Video video ;
+        //Video video ;
         VideoPlayer player = new VideoPlayer() ;
         //texture for current frame in video
         Texture2D videoTexture = null;
 
         public SplashMenu()
         {
-            title = "";
-            video = BeatShift.contentManager.Load<Video>("splashVideo");
+            //title = "";
+            //video = BeatShift.contentManager.Load<Video>("Videos/splashVideo");
             player = new VideoPlayer();
             player.IsLooped = true;
             //player.Play(video);
@@ -57,7 +57,7 @@ namespace BeatShift.Menus
                 if (player.State == MediaState.Stopped)
                 {
                     player.IsLooped = true;
-                    player.Play(video);
+                    player.Play(GameVideos.splashVideo);
                 }
             }
 

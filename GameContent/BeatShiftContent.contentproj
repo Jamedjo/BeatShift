@@ -338,7 +338,7 @@
       <Name>try</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Compile Include="splashVideo.wmv">
+    <Compile Include="Videos\splashVideo.wmv">
       <Name>splashVideo</Name>
       <Importer>WmvImporter</Importer>
       <Processor>VideoProcessor</Processor>
@@ -707,6 +707,56 @@
       <Name>black_background</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Images\ShipSelect\ShipSelectBasis.png">
+      <Name>ShipSelectBasis</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Images\ShipSelect\Flux.png">
+      <Name>Flux</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Images\ShipSelect\Omicron.png">
+      <Name>Omicron</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Images\ShipSelect\skylar.png">
+      <Name>skylar</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Images\ShipSelect\wraith.png">
+      <Name>wraith</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Images\ShipSelect\ShipSelectBox.png">
+      <Name>ShipSelectBox</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Videos\SkylarVideo.wmv">
+      <Name>SkylarVideo</Name>
+      <Importer>WmvImporter</Importer>
+      <Processor>VideoProcessor</Processor>
+    </Compile>
+    <Compile Include="Videos\OmicronVideo.wmv">
+      <Name>OmicronVideo</Name>
+      <Importer>WmvImporter</Importer>
+      <Processor>VideoProcessor</Processor>
+    </Compile>
+    <Compile Include="Videos\WraithVideo.wmv">
+      <Name>WraithVideo</Name>
+      <Importer>WmvImporter</Importer>
+      <Processor>VideoProcessor</Processor>
+    </Compile>
+    <Compile Include="Videos\FluxVideo.wmv">
+      <Name>FluxVideo</Name>
+      <Importer>WmvImporter</Importer>
+      <Processor>VideoProcessor</Processor>
     </Compile>
     <None Include="Particles\Textures\License.txt">
       <Name>License</Name>
