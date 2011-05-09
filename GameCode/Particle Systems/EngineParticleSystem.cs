@@ -54,6 +54,7 @@ namespace DPSF.ParticleSystems
 		public float Width;             // The Width of the Particle
 		public float Height;            // The Height of the Particle
 		public Color Color;             // The Color of the Particle
+        public Boolean boostParticle;
 		/// <summary>
 		/// Get / Set the Normal (forward) direction of the Particle (i.e. which direction it is facing)
 		/// </summary>
@@ -209,7 +210,6 @@ namespace DPSF.ParticleSystems
 		public EngineParticleSystem(Game cGame) : base(cGame) {
             //defaultColor = Color.AntiqueWhite;
             //boostColor = Color.DarkOrange;
-            Color = defaultColor;
         }
 
 		//===========================================================
@@ -220,11 +220,11 @@ namespace DPSF.ParticleSystems
 		// TODO: Place any Particle System properties here
 		//-----------------------------------------------------------
 		Vector3 msCameraPosition = Vector3.Zero;
-        static Color defaultColor = Color.DarkBlue;//Color.AntiqueWhite;
-        static Color FadeEndColor = Color.OrangeRed;
-        static Color boostColor = Color.Lime;
-        static Color boostFadeEnd = Color.AntiqueWhite;
-        protected Color Color;
+        protected Color defaultColor = Color.DarkBlue;//Color.AntiqueWhite;
+        protected Color defaultEnd = Color.OrangeRed;
+        protected Color boostColor = Color.Lime;
+        protected Color boostFadeEnd = Color.AntiqueWhite;
+        protected Boolean boosting;
         private float lifeTime;
         private float maxLifeTime = 0.6f;
         private const int particleRate = 35;
@@ -440,7 +440,7 @@ namespace DPSF.ParticleSystems
 			// In addition to initializing the Particle properties you added, you
 			// must also initialize the Lifetime property that is inherited from DPSFParticle
 			//-----------------------------------------------------------
-
+            cParticle.boostParticle = boosting;
 			// Set the Particle's Lifetime (how long it should exist for)
 			cParticle.Lifetime = 0.1f + lifeTime;
 
@@ -460,7 +460,7 @@ namespace DPSF.ParticleSystems
 			cParticle.Height = 1;
 
 			// Give the Particle a random Color
-            cParticle.Color = Color;
+            cParticle.Color = defaultColor;
 		}
 
 		//===========================================================
@@ -490,8 +490,15 @@ namespace DPSF.ParticleSystems
         /// <param name="fElapsedTimeInSeconds">How long it has been since the last update</param>
         protected void UpdateParticleColor(EngineParticleSystemParticle cParticle, float fElapsedTimeInSeconds)
         {
-            cParticle.Color = new Color((cParticle.NormalizedElapsedTime*(FadeEndColor.ToVector3()-Color.ToVector3())) + Color.ToVector3());
-            
+            if (cParticle.boostParticle)
+            {
+                cParticle.Color = new Color((cParticle.NormalizedElapsedTime * (boostFadeEnd.ToVector3() - boostColor.ToVector3())) + boostColor.ToVector3());
+            }
+            else
+            {
+                Color temp = new Color((cParticle.NormalizedElapsedTime * (defaultEnd.ToVector3() - defaultColor.ToVector3())) + defaultColor.ToVector3()); ;
+                cParticle.Color = temp;
+            }
            // System.Diagnostics.Debug.WriteLine("LOLADSFADS");
         }
 
@@ -552,12 +559,12 @@ namespace DPSF.ParticleSystems
 
         public void BoostOn()
         {
-            Color = boostColor;
+            boosting = true;
         }
 
         public void BoostOff()
         {
-            Color = defaultColor;
+            boosting = false;
         }
 
         internal void setSpeed(float speed)
