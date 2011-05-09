@@ -56,9 +56,9 @@ namespace BeatShift.Menus
         public override void enteringMenu()
         {
             //base.enteringMenu();
-            Race.setupSelectionRacers(1,false);
+            Race.setupSelectionRacers(1,true);
             Race.Enabled = true;
-            Race.Visible = true;
+            Race.Visible = false;
             player = new VideoPlayer();
             player.IsLooped = true;
             shipChanged = true;
