@@ -25,7 +25,7 @@ using BEPUphysics.MathExtensions;
 
 namespace BeatShift
 {
-    enum Quadrent { Front, Back, Left, Right, FrontLeft, FrontRight, BackLeft, BackRight };
+    enum Quadrant { Front, Back, Left, Right, FrontLeft, FrontRight, BackLeft, BackRight };
     public class ShipPhysics
     {
         // Physics related variables
@@ -40,6 +40,8 @@ namespace BeatShift
         public float radiusForGrip = 100;
         List<Vector3> stabilizerRaycastList;
         public float maxSpeed = 200f; //TODO: ship specific
+        Quadrant? opponentQuadrant;//?means nullable, not sure why used here
+        Quadrant? localQuadrant;
 
         private Quaternion previousOrientation;
 
@@ -398,11 +400,11 @@ namespace BeatShift
                 }
                 else
                 {
-                    //Only hit wall once per collision by only ignoring hits which are close in time.
-                    if (BeatShift.singleton.currentTime.TotalGameTime.TotalMilliseconds - lastThisShipTime > 100)
-                    {
-                        //Console.WriteLine("Creating Bounce");
-                        lastThisShipTime = BeatShift.singleton.currentTime.TotalGameTime.TotalMilliseconds;
+                    ////Only hit wall once per collision by only ignoring hits which are close in time.
+                    //if (BeatShift.singleton.currentTime.TotalGameTime.TotalMilliseconds - lastThisShipTime > 100)
+                    //{
+                    //    //Console.WriteLine("Creating Bounce");
+                    //    lastThisShipTime = BeatShift.singleton.currentTime.TotalGameTime.TotalMilliseconds;
 
                     foreach (Racer r in Race.currentRacers)
                     {
@@ -425,26 +427,192 @@ namespace BeatShift
                             //}
 
 
+                            /////////////////////////
+                            //Find opponents quadrant
+                            /////////////////////////
+                            Vector3 opponentContactVector = contact.Position - collidedBody.Position;
+
+                            //Find quarent
+                            Quadrant oFL_BR = Quadrant.FrontLeft;
+                            Quadrant oFR_BL = Quadrant.FrontRight;
+
+                            //old line test was between (contactVector, collidedBody.OrientationMatrix.Forward)
+                            Matrix3X3 oM = collidedBody.OrientationMatrix;//opponent Matrix
+                            if (Vector3.Dot(opponentContactVector, oM.Backward + oM.Right) > 0) oFL_BR = Quadrant.BackRight;
+                            if (Vector3.Dot(opponentContactVector, oM.Backward + oM.Left) > 0) oFR_BL = Quadrant.BackLeft;
+
+                            //Quadrent? result = null;// '?' makes it nullable
+
+                            if ((oFL_BR == Quadrant.FrontLeft) && (oFR_BL == Quadrant.FrontRight)) opponentQuadrant = Quadrant.Front;
+                            else if ((oFL_BR == Quadrant.BackRight) && (oFR_BL == Quadrant.BackLeft)) opponentQuadrant = Quadrant.Back;
+                            else if ((oFL_BR == Quadrant.FrontLeft) && (oFR_BL == Quadrant.BackLeft)) opponentQuadrant = Quadrant.Left;
+                            else if ((oFL_BR == Quadrant.BackRight) && (oFR_BL == Quadrant.FrontRight)) opponentQuadrant = Quadrant.Right;
+
+                            /////////////////////
+                            //Find local quadrant
+                            /////////////////////
+                            Vector3 localContactVector = contact.Position - physicsBody.Position;
+
+
+                            //Find quarent
+                            Quadrant lFL_BR = Quadrant.FrontLeft;
+                            Quadrant lFR_BL = Quadrant.FrontRight;
+
+                            //old line test was between (contactVector, collidedBody.OrientationMatrix.Forward)
+                            Matrix3X3 lM = collidedBody.OrientationMatrix;//opponent Matrix
+                            if (Vector3.Dot(localContactVector, lM.Backward + lM.Right) > 0) lFL_BR = Quadrant.BackRight;
+                            if (Vector3.Dot(localContactVector, lM.Backward + lM.Left) > 0) lFR_BL = Quadrant.BackLeft;
+
+                            //Quadrent? result = null;// '?' makes it nullable
+
+                            if ((lFL_BR == Quadrant.FrontLeft) && (lFR_BL == Quadrant.FrontRight)) localQuadrant = Quadrant.Front;
+                            else if ((lFL_BR == Quadrant.BackRight) && (lFR_BL == Quadrant.BackLeft)) localQuadrant = Quadrant.Back;
+                            else if ((lFL_BR == Quadrant.FrontLeft) && (lFR_BL == Quadrant.BackLeft)) localQuadrant = Quadrant.Left;
+                            else if ((lFL_BR == Quadrant.BackRight) && (lFR_BL == Quadrant.FrontRight)) localQuadrant = Quadrant.Right;
+
+
+
+                            /////////////////////////////////////
+                            /////////////////////////////////////
+                            /////////////////////////////////////
+
+
                             Vector3 bounceVector = physicsBody.Position - collidedBody.Position;
                             bounceVector.Normalize();
 
-                            Vector3 contactVector = contact.Position - collidedBody.Position;
 
-                            //Find quarent
-                            Quadrent FL_BR = Quadrent.FrontLeft;
-                            Quadrent FR_BL = Quadrent.FrontRight;
+                            float shipVelocity_inShipBounceDirection = Vector3.Dot(physicsBody.LinearVelocity, bounceVector);// no need to divide by bounceVector.Length() as normalized
+                            Vector3 relativeVelocity = collidedBody.LinearVelocity - physicsBody.LinearVelocity;
+                            float realtiveVelInShipBounceDirection = Vector3.Dot(physicsBody.LinearVelocity, bounceVector) - Vector3.Dot(collidedBody.LinearVelocity, bounceVector);// no need to divide by bounceVector.Length() as normalized
 
-                            //old line test was between (contactVector, collidedBody.OrientationMatrix.Forward)
-                            Matrix3X3 m = collidedBody.OrientationMatrix;//just to make code shorter
-                            if (Vector3.Dot(contactVector, m.Backward + m.Right) > 0) FL_BR = Quadrent.BackRight;
-                            if (Vector3.Dot(contactVector, m.Backward + m.Left) > 0) FR_BL = Quadrent.BackLeft;
+                            bool localQuadIsSide = (localQuadrant == Quadrant.Left || localQuadrant == Quadrant.Right);
+                            bool opponentQuadIsSide = (opponentQuadrant == Quadrant.Left || opponentQuadrant == Quadrant.Right);
 
-                            Quadrent? result = null;// '?' makes it nullable
+                            if (localQuadrant == Quadrant.Front)
+                            {
+                                var shipLength = 7.5f; //TODO: change
+                                Vector3 frontOff = new Vector3(0f, 0f, -shipLength / 2);
+                                var frontPost = physicsBody.Position + Vector3.Transform(frontOff, physicsBody.Orientation);
+                                
+                                Vector3 fusionVector = frontPost - collidedBody.Position;
+                                Vector3 direction = physicsBody.OrientationMatrix.Left;
+                                if (Vector3.Dot(physicsBody.OrientationMatrix.Left, fusionVector) < 0)
+                                {
+                                    //Bend to right
+                                    direction *= -1;
+                                }
 
-                            if ((FL_BR == Quadrent.FrontLeft) && (FR_BL == Quadrent.FrontRight)) result = Quadrent.Front;
-                            else if ((FL_BR == Quadrent.BackRight) && (FR_BL == Quadrent.BackLeft)) result = Quadrent.Back;
-                            else if ((FL_BR == Quadrent.FrontLeft) && (FR_BL == Quadrent.BackLeft)) result = Quadrent.Left;
-                            else if ((FL_BR == Quadrent.BackRight) && (FR_BL == Quadrent.FrontRight)) result = Quadrent.Right;
+                                Vector3 a = collidedBody.Position - physicsBody.Position;
+                                Vector3 b = physicsBody.OrientationMatrix.Forward;
+
+                                var tau = Math.Sin(angleBetween(a, b)) / a.Length();
+                                float scaleFactor = (float)Math.Abs(2f - tau);
+
+
+                                physicsBody.ApplyImpulse(physicsBody.Position, direction * (200*scaleFactor));
+                            }
+
+
+                            if (physicsBody.LinearVelocity.Length() < 50) //TODO: tweak
+                            {
+                                /////////////////
+                                //Bounce in a similar way to when hitting walls
+
+                                //Slow ship down in other components
+                                physicsBody.LinearVelocity *= 0.94f;
+
+                                //Get scale of bounce based on speed ship was moving towards the ship.
+                                //Minimum bounce until 5 speed, max bounce after 100;
+                                float minmaxV = Math.Min(50, Math.Max(10, (Math.Abs(shipVelocity_inShipBounceDirection))));
+                                //float bounceScale = minmaxV / 20;//scale velocity down so max bounce is 5 times as strong as bounce at 20mph, and 20mph bounce is unscaled
+                                physicsBody.LinearVelocity -= bounceVector * shipVelocity_inShipBounceDirection;
+
+                                //Apply a bounce impulse
+                                physicsBody.ApplyImpulse(physicsBody.Position, bounceVector * 25 * minmaxV);
+                            }
+                            
+
+                            else if (localQuadIsSide && opponentQuadIsSide)
+                            {
+                                /////////////////
+                                //Bounce in a similar way to when hitting walls
+
+                                //Slow ship down in other components
+                                physicsBody.LinearVelocity *= 0.94f;
+
+                                //Get scale of bounce based on speed ship was moving towards the ship.
+                                //Minimum bounce until 5 speed, max bounce after 100;
+                                float minmaxV = Math.Min(100, Math.Max(5, (Math.Abs(shipVelocity_inShipBounceDirection))));
+                                //float bounceScale = minmaxV / 20;//scale velocity down so max bounce is 5 times as strong as bounce at 20mph, and 20mph bounce is unscaled
+                                physicsBody.LinearVelocity -= bounceVector * shipVelocity_inShipBounceDirection;
+
+                                //Apply a bounce impulse
+                                physicsBody.ApplyImpulse(physicsBody.Position, bounceVector * 15 * minmaxV);
+
+
+                            }
+
+                            else if ((localQuadrant == Quadrant.Front) && opponentQuadrant == Quadrant.Back)
+                            {
+                                /////////////////
+                                //Create ramming effect
+
+                                float shipWidth = 5f;//TODO:don't set manually //TODO: optimize
+                                float shipLength = 7.5f;//TODO:don't set manually
+                                Vector3 backPosRight = new Vector3(shipWidth / 2, 0f, shipLength / 2);//x+-
+                                Vector3 backPosLeft = new Vector3(-shipWidth / 2, 0f, shipLength / 2);
+                                var worldCoordinates = physicsBody.Position + Vector3.Transform(backPosLeft, physicsBody.Orientation);
+
+                                physicsBody.LinearVelocity -= bounceVector * realtiveVelInShipBounceDirection;
+
+
+                                // Dampens both ships' speeds
+                                if (localQuadrant == Quadrant.Front) physicsBody.LinearVelocity *= 0.98f;
+                                else physicsBody.LinearVelocity *= 0.92f;
+
+                                //Create ramming effect by speeding up front ship and slowing down back ship
+                                float skewfactor = 7 / 8;
+                                if (localQuadrant == Quadrant.Front) skewfactor = 1 / 9;
+
+                                //physicsBody.LinearVelocity = skewfactor * physicsBody.LinearVelocity + (1 - skewfactor) * collidedBody.LinearVelocity;
+                                if (physicsBody.LinearVelocity.Length() != 0)
+                                {
+                                    Vector3 normalisedVel = physicsBody.LinearVelocity;
+                                    normalisedVel.Normalize();
+                                    physicsBody.LinearVelocity = normalisedVel * (skewfactor * physicsBody.LinearVelocity.Length() + (1 - skewfactor) * collidedBody.LinearVelocity.Length());
+                                }
+
+                                //float minmaxV = Math.Min(100, Math.Max(5, (Math.Abs(realtiveVelInShipBounceDirection))));
+                                //physicsBody.ApplyImpulse(physicsBody.Position, -bounceVector * 5 * minmaxV);// * angleModifier);
+                            }
+
+                            //else if () //FrontFront, BackBack, BackLeft, BackSide, FrontSide
+                            //{
+
+
+
+
+                            //}
+                            else
+                            {
+                                /////////////////
+                                //Bounce in a similar way to when hitting walls, but less violently than side to sides
+
+                                //Slow ship down in other components
+                                //if (localQuadrant == Quadrant.Front) physicsBody.LinearVelocity *= 0.98f;
+                                //else 
+                                physicsBody.LinearVelocity *= 0.92f;
+
+                                //Get scale of bounce based on speed ship was moving towards the ship.
+                                //Minimum bounce until 5 speed, max bounce after 100;
+                                float minmaxV = Math.Min(100, Math.Max(25, (Math.Abs(shipVelocity_inShipBounceDirection))));
+                                //float bounceScale = minmaxV / 20;//scale velocity down so max bounce is 5 times as strong as bounce at 20mph, and 20mph bounce is unscaled
+                                physicsBody.LinearVelocity -= bounceVector * shipVelocity_inShipBounceDirection;
+
+                                //Apply a bounce impulse
+                                physicsBody.ApplyImpulse(physicsBody.Position, bounceVector * 12 * minmaxV);
+                            }
+
 
 
                             //Console.WriteLine("Collision in quadrent " + result.ToString());
@@ -452,15 +620,15 @@ namespace BeatShift
                             /////////////////////////////////
                             ////Remove ships velocity towards the other ship
                             ////by setting velocity component in direction of bounce to 0
-                            float shipVelocity_inShipBounceDirection = Vector3.Dot(physicsBody.LinearVelocity, bounceVector);// no need to divide by bounceVector.Length() as normalized
+                            //float shipVelocity_inShipBounceDirection = Vector3.Dot(physicsBody.LinearVelocity, bounceVector);// no need to divide by bounceVector.Length() as normalized
 
-                            //Get scale of bounce based on speed ship was moving towards the ship.
-                            //Minimum bounce until 5 speed, max bounce after 100;
-                            float minmaxV = Math.Min(100, Math.Max(5, (Math.Abs(shipVelocity_inShipBounceDirection))));
-                            //float bounceScale = minmaxV / 20;//scale velocity down so max bounce is 5 times as strong as bounce at 20mph, and 20mph bounce is unscaled
+                            ////Get scale of bounce based on speed ship was moving towards the ship.
+                            ////Minimum bounce until 5 speed, max bounce after 100;
+                            //float minmaxV = Math.Min(100, Math.Max(5, (Math.Abs(shipVelocity_inShipBounceDirection))));
+                            ////float bounceScale = minmaxV / 20;//scale velocity down so max bounce is 5 times as strong as bounce at 20mph, and 20mph bounce is unscaled
 
-                            //Apply a bounce impulse
-                            physicsBody.ApplyImpulse(physicsBody.Position, bounceVector * 25 * minmaxV);
+                            ////Apply a bounce impulse
+                            //physicsBody.ApplyImpulse(physicsBody.Position, bounceVector * 25 * minmaxV);
                             /////////////////////////////////
 
                             //float bounceVal = 2000f;
@@ -482,15 +650,15 @@ namespace BeatShift
                             //Initiate controller vibration
                             r.isCollidingShip = true;
 
-                            Vector3 relativeVelocity = collidedBody.LinearVelocity - physicsBody.LinearVelocity;
+                            //Vector3 relativeVelocity = collidedBody.LinearVelocity - physicsBody.LinearVelocity;
 
-                            float realtiveVelInShipBounceDirection = Vector3.Dot(physicsBody.LinearVelocity, bounceVector) - Vector3.Dot(collidedBody.LinearVelocity, bounceVector);// no need to divide by bounceVector.Length() as normalized
+                            //float realtiveVelInShipBounceDirection = Vector3.Dot(physicsBody.LinearVelocity, bounceVector) - Vector3.Dot(collidedBody.LinearVelocity, bounceVector);// no need to divide by bounceVector.Length() as normalized
 
-                            float shipWidth = 5f;//TODO:don't set manually //TODO: optimize
-                            float shipLength = 7.5f;//TODO:don't set manually
-                            Vector3 backPosRight = new Vector3(shipWidth / 2, 0f, shipLength / 2);//x+-
-                            Vector3 backPosLeft = new Vector3(-shipWidth / 2, 0f, shipLength / 2);
-                            var worldCoordinates = physicsBody.Position + Vector3.Transform(backPosLeft, physicsBody.Orientation);
+                            //float shipWidth = 5f;//TODO:don't set manually //TODO: optimize
+                            //float shipLength = 7.5f;//TODO:don't set manually
+                            //Vector3 backPosRight = new Vector3(shipWidth / 2, 0f, shipLength / 2);//x+-
+                            //Vector3 backPosLeft = new Vector3(-shipWidth / 2, 0f, shipLength / 2);
+                            //var worldCoordinates = physicsBody.Position + Vector3.Transform(backPosLeft, physicsBody.Orientation);
 
                             //Vector3.tran
                             ////Front stabilizers, not as far out as physicsBody is not that wide
@@ -527,7 +695,7 @@ namespace BeatShift
                             //TODO: fire off crap on collision
                             //BeatShift.emitter = new ParticleEmitter((Func<Vector3>)delegate { return contacts[0].Position; }, BeatShift.settingsb, BeatShift.pEffect);
                         }
-                    }
+                    //}
                     }
                         }
             }
@@ -537,6 +705,10 @@ namespace BeatShift
             }
         }
 
+        float angleBetween(Vector3 a, Vector3 b)
+        {
+            return (float)Math.Acos(Vector3.Dot(a,b)/(a.Length()*b.Length())     );
+        }
 
         //bool lineTest(Vector3 one, Vector3 two)
         //{
