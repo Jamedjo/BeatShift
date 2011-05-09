@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using BeatShift.Utilities___Misc;
 using Microsoft.Xna.Framework.Input;
+using DPSF;
+using DPSF.ParticleSystems;
 
 namespace BeatShift
 {
@@ -19,18 +21,23 @@ namespace BeatShift
         long lastTime = 0;
         private long invinciEndtime = 0;
         Queue<Beat> beats;
-        BeatVisualisation myBar;
+        //BeatVisualisation myBar;
         int maxLayer;
         private int[] averageDists;
         private int averageCounter = 0;
+        public BeatRingParticleSystem visualisation;
         public BeatQueue() {
             beats = new Queue<Beat>();
-            myBar =  HeadsUpDisplay.beatVisualisation;
+            //myBar =  HeadsUpDisplay.beatVisualisation;
             maxLayer = BeatShift.bgm.Layers();
             averageDists = new int[averageLength];
             for(int i=0;i<averageLength;i++) {
                 averageDists[i] = (int)latency;
             }
+
+            visualisation = new BeatRingParticleSystem(null);
+            BeatShift.particleManager.AddParticleSystem(visualisation);
+            visualisation.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
         }
 
         public Beat? nextBeat()
@@ -50,13 +57,16 @@ namespace BeatShift
             return boostBar;
         }
 
-
         public int getLayer()
         {
             return myLayer;
         }
 
-        public void BeatTap(char button)
+        public Boolean isLevellingUp { get; set; }
+
+        public Boolean isLevellingDown { get; set; }
+
+        public void BeatTap(Buttons button)
         {
             Decimal result = new Decimal(0);
             long time = BeatShift.bgm.songTick();
@@ -66,7 +76,7 @@ namespace BeatShift
                     if (temp.getTimeWithLatency((int)latency) < (time - leeway))
                     {
                         beats.Dequeue();
-                        System.Diagnostics.Debug.WriteLine(temp.getTimeWithLatency((int)latency) + ": Dequeued because way out");
+                        //System.Diagnostics.Debug.WriteLine(temp.getTimeWithLatency((int)latency) + ": Dequeued because way out");
                     }
                     else
                     {
@@ -79,7 +89,7 @@ namespace BeatShift
                         }
                         else
                         {
-                            System.Diagnostics.Debug.WriteLine("Wrong button");
+                            //System.Diagnostics.Debug.WriteLine("Wrong button");
                         }
                         beats.Dequeue();
                         lastTime = temp.getTimeWithLatency((int)latency);
@@ -87,9 +97,9 @@ namespace BeatShift
                         {
                             AdjustLatency(time);
                         }
-                        System.Diagnostics.Debug.WriteLine(temp.getTimeWithLatency((int)latency) + ": Dequeued with ratio " + result + ". BB @:  \n" +
-                                                    "Distance to next: " + (time - (beats.Peek()).getTimeWithLatency((int)latency)) + "\n" +
-                                                     "Distance to last: " + (time - lastTime));
+                        //System.Diagnostics.Debug.WriteLine(temp.getTimeWithLatency((int)latency) + ": Dequeued with ratio " + result + ". BB @:  \n" +
+                                                   // "Distance to next: " + (time - (beats.Peek()).getTimeWithLatency((int)latency)) + "\n" +
+                                                    // "Distance to last: " + (time - lastTime));
                     }
                 }
             
@@ -111,8 +121,6 @@ namespace BeatShift
             else if ((boostBar > 0) && (result == 0m))
                 if(time>invinciEndtime)
                     boostBar -= penalty;
-
-
 
             if (boostBar > 100)
             {
@@ -155,7 +163,7 @@ namespace BeatShift
                 /*System.Diagnostics.Debug.WriteLine(temp.getTime(latency) + ": Dequeued with ratio " + result + ". BB @:  \n" +
                                 "Distance to next: " + (time - (beats.Peek()).getTime(latency)) + "\n" +
                                  "Distance to last: " + (time - lastTime));*/
-                System.Diagnostics.Debug.WriteLine("New Latency: " + latency);
+                //System.Diagnostics.Debug.WriteLine("New Latency: " + latency);
             }
         }
 
@@ -167,8 +175,9 @@ namespace BeatShift
                 myLayer--;
                 BeatShift.bgm.MusicDown();
                 boostBar = 80;
-                myBar.Clear();
+                visualisation.Clear();
                 beats.Clear();
+                isLevellingDown = true;
             }
             else
             {
@@ -184,8 +193,9 @@ namespace BeatShift
                 myLayer++;
                 BeatShift.bgm.MusicUp();
                 boostBar = 20;
-                myBar.Clear();
+                visualisation.Clear();
                 beats.Clear();
+                isLevellingUp = true;
             }
         }
 
@@ -199,19 +209,19 @@ namespace BeatShift
                 //System.Console.WriteLine(elapsed + " " + temp2);
                 switch (newBeat.Button){
                     case Buttons.A:
-                        myBar.addBeat(ButtonImage.A, duration,elapsed);
+                        visualisation.addBeat(Buttons.A, duration,elapsed);
                         //Console.Out.WriteLine("A");
                         break;
                     case Buttons.B:
-                        myBar.addBeat(ButtonImage.B, duration, elapsed);
+                        visualisation.addBeat(Buttons.B, duration, elapsed);
                         //Console.Out.WriteLine("B");
                         break;
                     case Buttons.X:
-                        myBar.addBeat(ButtonImage.X, duration, elapsed);
+                        visualisation.addBeat(Buttons.X, duration, elapsed);
                         //Console.Out.WriteLine("X");
                         break;
                     case Buttons.Y:
-                        myBar.addBeat(ButtonImage.Y, duration, elapsed);
+                        visualisation.addBeat(Buttons.Y, duration, elapsed);
                         //Console.Out.WriteLine("Y");
                         break;
                 }

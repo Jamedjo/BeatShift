@@ -28,18 +28,26 @@ namespace BeatShift
 
         private static bool paused = false;
         private static bool pausedForGuide = false;
-        private static bool pausedForControllers = false;
+
+        private static bool raceComplete = false;
 
         private static bool[] activeControllers = new bool[4];
 
-        private static IMenuPage pauseMenu= new PauseMenu();
+        private static IMenuPage pauseMenu = new PauseMenu();
+        private static IMenuPage resultsMenu = new ResultsMenu();
 
-        public static void setActiveControllers( bool set, int index)
+        public static void setActiveControllers(bool set, int index)
         {
             activeControllers[index] = set;
         }
 
-        private static void BeginPause(bool UserInitiated)
+        public static void showResults(GameTime gameTime)
+        {
+            resultsMenu.enteringMenu();
+            MenuManager.anyInput.Update(gameTime);
+        }
+
+        public static void BeginPause(bool UserInitiated)
         {
             paused = true;
             pausedForGuide = !UserInitiated;
@@ -55,6 +63,7 @@ namespace BeatShift
                 Race.currentRaceType.totalRaceTime.Stop();
                 foreach (Racer racer in Race.currentRacers)
                     racer.raceTiming.stopLapTimer();
+                BeatShift.bgm.Pause();
             }
 
             // Pause during countdown
@@ -72,12 +81,12 @@ namespace BeatShift
             //TODO: Resume controller vibration
             pausedForGuide = false;
             paused = false;
-            pausedForControllers = false;
             if (Race.currentRaceType.actualRaceBegun)
             {
                 Race.currentRaceType.totalRaceTime.Start();
                 foreach (Racer racer in Race.currentRacers)
                     racer.raceTiming.startLapTimer();
+                BeatShift.bgm.UnPause();
             }
 
             // Pause during countdown
@@ -85,6 +94,7 @@ namespace BeatShift
             {
                 Race.currentRaceType.countDownTimer.Start();
             }
+
         }
 
         private static void checkPauseKey(GameTime gameTime)
@@ -128,22 +138,23 @@ namespace BeatShift
         private static void checkControllers(GameTime gameTime)
         {
             // Pause if the Guide is up
-            // SORT FOR WINDOWS
-            int k = 0;
             if (!paused && currentState == GameState.LocalGame)
-                while (k < 4)
-                {
-
+                for (int k = 0; k<4 ; k++)
                     if (activeControllers[k] && !GamePad.GetState((PlayerIndex)(k)).IsConnected)
                     {
                         BeginPause(true);
-                        pausedForControllers = true;
                         pauseMenu.enteringMenu();
                         MenuManager.anyInput.Update(gameTime);
                         break;
                     }
-                    k++;
-                }
+        }
+
+        public static void endGame(GameTime gameTime)
+        {
+            BeginPause(true);
+            raceComplete = true;
+            resultsMenu.enteringMenu();
+            MenuManager.anyInput.Update(gameTime);
         }
 
         //Input manager for exiting game
@@ -194,6 +205,7 @@ namespace BeatShift
             BeatShift.shipSelect.Enabled = false;
             BeatShift.shipSelect.Visible = false;
             paused = false;
+            raceComplete = false;
 
             //physics.collisionSystem.cl
 
@@ -234,7 +246,6 @@ namespace BeatShift
         public static void Update(GameTime gameTime)
         {
             // Check to see if the user has paused or unpaused
-
             if(currentState == GameState.LocalGame || currentState == GameState.NetworkedGame)
                 checkPauseKey(gameTime);
 
@@ -248,47 +259,49 @@ namespace BeatShift
 
             BeatShift.gamerServices.Update(gameTime);
 
-                mainGameinput.Update(gameTime);
-                if (!paused)
-                {
-                    //Update all managed timers.
-                    RunningTimer.Update(gameTime);
+            mainGameinput.Update(gameTime);
+            if (!paused)
+            {
+                //Update all managed timers.
+                RunningTimer.Update(gameTime);
 
-                    if (MenuManager.Enabled)
-                        MenuManager.Update(gameTime);
-                    if (Race.Enabled)
-                    {
-                        Race.Update(gameTime);
-                        HeadsUpDisplay.Update(gameTime);
-                    }
-                    //if (MapManager.Enabled)
-                    //    MapManager.tempMap.Update(gameTime);
-                    if (BeatShift.shipSelect.Enabled)
-                        BeatShift.shipSelect.Update(gameTime);
-                    //if (networkedGame.Enabled) networkedGame.Update(gameTime);
-                    if (Physics.Enabled)
-                        Physics.Update(gameTime);
-                    if (MapManager.Enabled)
-                        Race.Update(gameTime);
-                    if (Race.Visible && !MenuManager.Enabled && BeatShift.emitter != null)
-                    {
-                        BeatShift.emitter.Update(gameTime);
-                    }
-                    // Game should be exited through the menu systems.
-                    // Allows the game to return to main menu
-                    //if (mainGameinput.actionTapped(InputAction.BackButton))
-                    //{
-                    //    //MenuManager.setCurrentMenu(MenuPage.Main);
-                    //    GameLoop.setGameStateAndResetPlayers(GameState.Menu);
-                    //}
+                if (MenuManager.Enabled)
+                    MenuManager.Update(gameTime);
+                if (Race.Enabled)
+                {
+                    Race.Update(gameTime);
+                    HeadsUpDisplay.Update(gameTime);
                 }
-
-                if( paused && !pausedForGuide )
+                //if (MapManager.Enabled)
+                //    MapManager.tempMap.Update(gameTime);
+                if (BeatShift.shipSelect.Enabled)
+                    BeatShift.shipSelect.Update(gameTime);
+                //if (networkedGame.Enabled) networkedGame.Update(gameTime);
+                if (Physics.Enabled)
+                    Physics.Update(gameTime);
+                if (MapManager.Enabled)
+                    Race.Update(gameTime);
+                if (Race.Visible && !MenuManager.Enabled && BeatShift.emitter != null)
                 {
-                    //update pause menu
+                    BeatShift.emitter.Update(gameTime);
+                }
+                // Game should be exited through the menu systems.
+                // Allows the game to return to main menu
+                //if (mainGameinput.actionTapped(InputAction.BackButton))
+                //{
+                //    //MenuManager.setCurrentMenu(MenuPage.Main);
+                //    GameLoop.setGameStateAndResetPlayers(GameState.Menu);
+                //}
+            }
+
+            if( paused && !pausedForGuide )
+            {
+                if (raceComplete)
+                    resultsMenu.Update(gameTime);
+                else
                     pauseMenu.Update(gameTime);
-                    MenuManager.anyInput.Update(gameTime);
-                }
+                MenuManager.anyInput.Update(gameTime);
+            }
 
             //full screen option
 #if WINDOWS
@@ -317,8 +330,6 @@ namespace BeatShift
             {
                 //GraphicsDevice.Clear(Color.CornflowerBlue);
                 BeatShift.spriteBatch.Draw(GameTextures.MenuBackground, viewArea, Color.White);
-                
-
             }
             BeatShift.spriteBatch.End();
 
@@ -337,10 +348,11 @@ namespace BeatShift
             }
 
             if (paused && !pausedForGuide)
-                pauseMenu.Draw();
+                if (raceComplete)
+                    resultsMenu.Draw();
+                else
+                    pauseMenu.Draw();
             //if (networkedGame.Visible) networkedGame.Draw(gameTime);
-
-
         }
 
     }

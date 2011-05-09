@@ -235,12 +235,16 @@ namespace BeatShift.Input
                 foreach (ContactInformation contactInformation in pair.Contacts)
                 {
                     c = contactInformation.Contact;
+#if WINDOWS
                     System.Diagnostics.Debug.WriteLine("{0} {1}", (c.Position - parent.shipPhysics.ShipPosition).Length(), c.Normal);
+#endif
                 }
             }
             else
             {
+#if WINDOWS
                 System.Diagnostics.Debug.WriteLine("{0}", candidate.Shape);
+#endif
             }
         }
 
@@ -254,12 +258,16 @@ namespace BeatShift.Input
                 foreach (ContactInformation contactInformation in pair.Contacts)
                 {
                     c = contactInformation.Contact;
+#if WINDOWS
                     System.Diagnostics.Debug.WriteLine("{0} {1}", (c.Position - parent.shipPhysics.ShipPosition).Length(), c.Normal);
+#endif
                 }
             }
             else
             {
+#if WINDOWS
                 System.Diagnostics.Debug.WriteLine("{0}", candidate.Shape);
+#endif
             }
         }
 

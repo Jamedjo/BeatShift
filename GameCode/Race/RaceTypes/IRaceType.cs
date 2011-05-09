@@ -58,6 +58,10 @@ namespace BeatShift
         public bool displayCurrentRank = false;
         public bool displayMinimap = false;
 
+        // Race ending variables
+        public Stopwatch endRaceTimer { get; protected set; }
+        public static bool raceOver          { get; protected set; }
+
         public IRaceType()
         {
             resettingShips = new List<ResetColumn>();
@@ -65,6 +69,7 @@ namespace BeatShift
             raceProcedureBegun = false;
 
             countDownTimer = new Stopwatch();
+            endRaceTimer = new Stopwatch();
             countdownState = GameTextures.CountdownReady;
             countDownRunning = false;
 
@@ -85,6 +90,7 @@ namespace BeatShift
         {
             // Not the actual race but the putting of the cars on the map before countdown
             raceProcedureBegun = true;
+            raceOver = false;
 
             // Give each ship a ship physics
             Console.Write("Started adding physics to each ship...");
@@ -112,29 +118,37 @@ namespace BeatShift
         {
             if (countDownTimer.IsRunning == true)
             {
-                runStandardCountdown(gameTime);
+                runStandardCountdown(gameTime, true, 6);
+            }
+            if (endRaceTimer.IsRunning == true)
+            {
+                runStandardCountdown(gameTime, false, 3);
             }
         }
 
-        protected void runStandardCountdown(GameTime gameTime)
+        protected void runStandardCountdown(GameTime gameTime, bool startOfRace, int countdownLength)
         {
-            countDownInt = 6 - countDownTimer.Elapsed.Seconds;
-
-            switch (countDownInt)
+            if (startOfRace == true)
             {
-                case 3:
-                    SoundManager.RaceStart(3);
-                    countdownState = GameTextures.Countdown3;
-                    break;
-                case 2:
-                    SoundManager.RaceStart(2);
-                    countdownState = GameTextures.Countdown2;
-                    break;
-                case 1:
-                    SoundManager.RaceStart(1);
-                    countdownState = GameTextures.Countdown1;
-                    break;
+                countDownInt = countdownLength - countDownTimer.Elapsed.Seconds;
+                switch (countDownInt)
+                {
+                    case 3:
+                        SoundManager.RaceStart(3);
+                        countdownState = GameTextures.Countdown3;
+                        break;
+                    case 2:
+                        SoundManager.RaceStart(2);
+                        countdownState = GameTextures.Countdown2;
+                        break;
+                    case 1:
+                        SoundManager.RaceStart(1);
+                        countdownState = GameTextures.Countdown1;
+                        break;
+                }
             }
+            else
+                countDownInt = countdownLength - endRaceTimer.Elapsed.Seconds;
 
             if (countDownInt < 1)
             {
@@ -143,23 +157,35 @@ namespace BeatShift
                     countDownRunning = false;
                     countDownTimer.Reset();
                 }
-                countdownState=GameTextures.CountdownGo;
-                // Call GO sound effect
-                // Call music sound effect
-                SoundManager.RaceStart(0);
-                startRace();
+                if (startOfRace == true)
+                {
+                    countdownState = GameTextures.CountdownGo;
+                    // Call GO sound effect
+                    // Call music sound effect
+                    SoundManager.RaceStart(0);
+                    startRace();
+                }
+                else
+                {
+                    endRaceTimer.Stop();
+                    //SoundManager.RaceComplete();
+                    GameLoop.endGame(gameTime);
+                }
             }
         }
 
         public virtual void startRace()
         {
-            actualRaceBegun = true;
-            BeatShift.bgm.play();
-            foreach (Racer racer in Race.currentRacers)
+            if (!actualRaceBegun)
             {
-                racer.raceTiming.isRacing = true;
+                actualRaceBegun = true;
+                BeatShift.bgm.play();
+                foreach (Racer racer in Race.currentRacers)
+                {
+                    racer.raceTiming.isRacing = true;
+                }
+                startRaceVirtual();
             }
-            startRaceVirtual();
         }
 
         public virtual void startRaceVirtual() { }
@@ -258,7 +284,7 @@ namespace BeatShift
         {
             totalRaceTime.Stop();
             totalRaceTime.Reset();
-
+            endRaceTimer.Start();
             // WARNING: May be problematic on xbox //Also causes build to fail if on PC with some xbox projects loaded
             //totalRaceTime.Restart();
         }

@@ -109,7 +109,6 @@ namespace BeatShift
             // Add 'None' racers for ship selection screen
             currentRacers.Clear();
             for (int i = 0; i < numberOfPlayersInSelectionScreen; i++) 
-                
             currentRacers.Add(new RacerHuman(new RacerId(randomString(3)), currentRacers.Count, RacerType.None, humanRacers.Count, false));
 
             foreach (Racer racer in currentRacers)

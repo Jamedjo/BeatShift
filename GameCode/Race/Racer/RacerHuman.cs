@@ -15,7 +15,6 @@ namespace BeatShift
             private set;
         }
 
-
         // Index of the viewport this ship is controlled by.
         // Alows things to be drawn which only appear in the player's own screen
         int cameraIndex;

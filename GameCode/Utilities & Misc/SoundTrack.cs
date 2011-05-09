@@ -22,6 +22,7 @@ namespace BeatShift
     public class SoundTrack
     {
         const float leeway = 100.0f;
+        const float warmUp = 5000.0f;
         int latency = 0;
         Boolean shouldPlay = false;
         Boolean recentBeat = false;
@@ -60,7 +61,9 @@ namespace BeatShift
 
             while((temp=file.ReadLine())!=null)
             {
+#if WINDOWS
                 System.Diagnostics.Debug.WriteLine(temp);
+#endif
                 string[] bits = temp.Split(' ');
                 int time = Convert.ToInt32(bits[0].Substring(1, bits[0].Length - 2));
                 string temp2 = bits[1].Substring(1, bits[1].Length - 2);
@@ -194,12 +197,14 @@ namespace BeatShift
 
             try
             {
+#if WINDOWS
                 System.Diagnostics.Debug.WriteLine("Playing: " + track.IsPlaying +
                     "\n Stopped: " + track.IsStopped + 
                     "\n Stopping: " + track.IsStopping + 
                     "\n Prepared: " + track.IsPrepared + 
                     "\n Preparing: " + track.IsPreparing + 
                     "\n Created: " + track.IsCreated);
+#endif
                 if (!track.IsPlaying)
                 {
                     track.Play();
@@ -254,19 +259,25 @@ namespace BeatShift
         public void Update()
         {
             //Adding beats into racers beatqueues.
-            for(int i = 0; i<beats.Length;i++) {
-            while ((beats[i].Count != 0) && (tick.ElapsedMilliseconds > (beats[i].Peek().Time - 2000)))
+            if (shouldPlay)
+            {
+                for (int i = 0; i < beats.Length; i++)
                 {
-                    Beat beat = beats[i].Dequeue();
-                    foreach (Racer r in Race.humanRacers)
+                    while ((beats[i].Count != 0) && (tick.ElapsedMilliseconds > (beats[i].Peek().Time - 2000)))
                     {
-                        if (r.beatQueue.getLayer() == i)
+                        Beat beat = beats[i].Dequeue();
+                        if (tick.ElapsedMilliseconds > warmUp)
                         {
-                            r.beatQueue.AddBeat(beat);
+                            foreach (Racer r in Race.humanRacers)
+                            {
+                                if (r.beatQueue.getLayer() == i)
+                                {
+                                    r.beatQueue.AddBeat(beat);
+                                }
+                            }
                         }
+                        beats[i].Enqueue(new Beat(beat.Time + songLength, beat.Button));
                     }
-                
-                beats[i].Enqueue(new Beat(beat.Time + songLength,beat.Button));
                 }
             }
         }
