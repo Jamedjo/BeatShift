@@ -166,6 +166,8 @@ namespace BeatShift.Menus
 
         virtual public void DrawSprites(SpriteBatch spriteBatch){
             //Draws within SpriteBatch Begin()/End()Blocks
+            spriteBatch.Draw(GameTextures.MenuBackgroundBlack, new Rectangle(0, 0, BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height), Color.White);              
+
         }
 
         public void Draw()

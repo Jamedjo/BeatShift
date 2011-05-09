@@ -39,7 +39,7 @@ namespace BeatShift
                 currentMap.currentMapName = map;
 
                 MapManager.currentMap.addMapToPhysics();
-            
+                GC.Collect();            
         }
 
     }

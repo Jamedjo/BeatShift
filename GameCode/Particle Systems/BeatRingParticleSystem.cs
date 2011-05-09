@@ -227,8 +227,8 @@ namespace DPSF.ParticleSystems
         static Color FadeEndColor = Color.Red;
         static Color boostColor = Color.DarkOrange;
         static float duration = 2f;
-        const int noOfRingParticles = 200;
-        const float startingRadius = 4;
+        const int noOfRingParticles = 1;
+        const float startingRadius = 7;
         float lastElapsed = 0;
         protected Color Color;
 		/// <summary>
@@ -389,8 +389,8 @@ namespace DPSF.ParticleSystems
 			// TODO: Change any Initialization parameters desired
 			//-----------------------------------------------------------
 			// Initialize the Particle System before doing anything else
-			InitializeTexturedQuadParticleSystem(cGraphicsDevice, cContentManager, 100000, 5000000,
-                                                    UpdateVertexProperties, "Particles/Particle");
+			InitializeTexturedQuadParticleSystem(cGraphicsDevice, cContentManager, noOfRingParticles*20, noOfRingParticles*100,
+                                                    UpdateVertexProperties, "Particles/textures/ring002");
 
 			// Finish loading the Particle System in a separate function call, so if
 			// we want to reset the Particle System later we don't need to completely 
@@ -451,8 +451,8 @@ namespace DPSF.ParticleSystems
             //InitializeParticleUsingInitialProperties(cParticle);
             Emitter.OrientationData.Orientation = cBackup;
 
-            cParticle.Position = DPSFHelper.PointOnSphere(MathHelper.PiOver2, RandomNumber.Between(0, MathHelper.TwoPi), startingRadius);
-            cParticle.Position = Vector3.Transform(cParticle.Position, Emitter.OrientationData.Orientation);
+            //cParticle.Position = DPSFHelper.PointOnSphere(MathHelper.PiOver2, RandomNumber.Between(0, MathHelper.TwoPi), startingRadius);
+            cParticle.Position = new Vector3(0,0,0);
             cParticle.Position += Emitter.PositionData.Position;
 
 			// Set the Particle's initial Position to be wherever the Emitter is
@@ -467,8 +467,8 @@ namespace DPSF.ParticleSystems
 			cParticle.Velocity = Vector3.Transform(cParticle.Velocity, Emitter.OrientationData.Orientation);
 
 			// Give the Particle a random Size
-			cParticle.Width = 1;
-			cParticle.Height = 1;
+			cParticle.Width = startingRadius;
+            cParticle.Height = startingRadius;
             
 			// Give the Particle a random Color
             cParticle.Color = Color;// DPSFHelper.RandomColor();

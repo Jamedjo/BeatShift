@@ -87,10 +87,10 @@ namespace BeatShift
         {
             singleton = this;
             graphics = new GraphicsDeviceManager(this);
-#if XBOX
+//#if XBOX
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 720;
-#endif
+//#endif
             // TODO: uncomment the above at your peril, performance profiling needed
             particleManager = new ParticleSystemManager();
             Content.RootDirectory = "Content";
@@ -152,7 +152,7 @@ namespace BeatShift
             gamerServices = new GamerServicesComponent(this);
             Components.Add(gamerServices);
 
-
+            GC.Collect();
             //gamerServices.Initialize();
         }
 
@@ -184,6 +184,7 @@ namespace BeatShift
             blueNumbersFont = Content.Load<SpriteFont>("bluenumbersfont");
             buttonsFont = Content.Load<SpriteFont>("xboxControllerSpriteFont");
             ButtonDraw.initialize(buttonsFont);
+            GC.Collect();
         }
 
         private void getStorage(IAsyncResult result)
