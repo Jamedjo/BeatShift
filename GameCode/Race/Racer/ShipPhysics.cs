@@ -508,7 +508,6 @@ namespace BeatShift
                                 var tau = Math.Sin(angleBetween(a, b)) / a.Length();
                                 float scaleFactor = (float)Math.Abs(2f - tau);
 
-
                                 physicsBody.ApplyImpulse(physicsBody.Position, direction * (200*scaleFactor));
                             }
 
