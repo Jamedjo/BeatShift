@@ -11,6 +11,8 @@ namespace BeatShift
         /// <summary>
         /// Contains the map of the game world.
         /// </summary>
+        /// 
+        public static MapName mapToLoad;
         public static Map currentMap;//TODO:should not be public!!!
         
         public static Boolean Enabled = false;
@@ -22,13 +24,13 @@ namespace BeatShift
         }*/
 
         //Unloads the previous map if needed and then loads the new one and changes to it
-        public static void loadMap(MapName map)
+        public static void loadMap()
         {
-            if (currentMap != null && map == (currentMap.currentMapName)) return;
+            if (currentMap != null && mapToLoad == (currentMap.currentMapName)) return;
 
-                if (currentMap != null && map != (currentMap.currentMapName) ) MapManager.currentMap.UnloadContent();
+                if (currentMap != null && mapToLoad != (currentMap.currentMapName) ) MapManager.currentMap.UnloadContent();
 
-                switch (map)
+                switch (mapToLoad)
                 {
                     case MapName.DesertMap: MapManager.currentMap = new DesertMap(); break;
                     case MapName.LoopMap: MapManager.currentMap = new LoopMap(); break;
@@ -36,11 +38,10 @@ namespace BeatShift
                     case MapName.JumpMap: MapManager.currentMap = new JumpMap(); break;
                     case MapName.OldHillMap: MapManager.currentMap = new OldHillMap(); break;
                 }
-                currentMap.currentMapName = map;
+                currentMap.currentMapName = mapToLoad;
 
                 MapManager.currentMap.addMapToPhysics();
                 GC.Collect();            
         }
-
     }
 }

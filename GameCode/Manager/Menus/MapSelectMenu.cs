@@ -26,21 +26,21 @@ namespace BeatShift.Menus
         {
             addMenuItem("Desert Map", (Action)(delegate
             {
-                MapManager.loadMap(MapName.DesertMap);
+                MapManager.mapToLoad = MapName.DesertMap;
 
                 if (isSinglePlayer()) MenuManager.setCurrentMenu(MenuPage.SinglePlayerShipSelect);
                 else GameLoop.setGameState(GameState.MultiplayerShipSelect);
             }));
             addMenuItem("Jump Map", (Action)(delegate
             {
-                MapManager.loadMap(MapName.JumpMap);
+                MapManager.mapToLoad = MapName.JumpMap;
 
                 if (isSinglePlayer()) MenuManager.setCurrentMenu(MenuPage.SinglePlayerShipSelect);
                 else GameLoop.setGameState(GameState.MultiplayerShipSelect);
             }));
             addMenuItem("Ring Map", (Action)(delegate
             {
-                MapManager.loadMap(MapName.RingMap);
+                MapManager.mapToLoad = MapName.RingMap;
 
                 if (isSinglePlayer()) MenuManager.setCurrentMenu(MenuPage.SinglePlayerShipSelect);
                 else GameLoop.setGameState(GameState.MultiplayerShipSelect);
@@ -48,14 +48,14 @@ namespace BeatShift.Menus
             }));
             addMenuItem("Loop Physics Map", (Action)(delegate
             {
-                MapManager.loadMap(MapName.LoopMap);
+                MapManager.mapToLoad = MapName.LoopMap;
 
                 if (isSinglePlayer()) MenuManager.setCurrentMenu(MenuPage.SinglePlayerShipSelect);
                 else GameLoop.setGameState(GameState.MultiplayerShipSelect);
             }));
             addMenuItem("Old Hills Map", (Action)(delegate
             {
-                MapManager.loadMap(MapName.OldHillMap);
+                MapManager.mapToLoad = MapName.OldHillMap;
 
                 if (isSinglePlayer()) MenuManager.setCurrentMenu(MenuPage.SinglePlayerShipSelect);
                 else GameLoop.setGameState(GameState.MultiplayerShipSelect);

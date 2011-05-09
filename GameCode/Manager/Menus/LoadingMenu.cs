@@ -6,12 +6,13 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using BeatShift.Input;
 using Microsoft.Xna.Framework.Input;
+using System.Threading;
 
 namespace BeatShift.Menus
 {
     class LoadingMenu : IMenuPage
     {
-        private bool loadComplete;
+        public Thread loadingThread;
 
         public LoadingMenu()
         {
@@ -25,12 +26,11 @@ namespace BeatShift.Menus
             spriteBatch.Draw(background, new Rectangle(0,0,BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height), Color.White);        
         }
 
-
         public override void setupMenuItems()
         {
             addMenuItem("", (Action)(delegate
             {
-                if (loadComplete == true)
+                if (!loadingThread.IsAlive)
                 {
                     GameLoop.setGameState(GameState.LocalGame);
 #if WINDOWS
@@ -46,20 +46,19 @@ namespace BeatShift.Menus
         }
 
         //DO THE LOADING HERE
-        private void load()
+        void load()
         {
-            while (MapManager.currentMap.physicsLoadingThread.IsAlive) { }
+            MapManager.loadMap();
             foreach (Racer racer in Race.currentRacers)
                 racer.Load();
             GC.Collect();
-            loadComplete = true;
         }
 
         public override void enteringMenu()
         {
-            loadComplete = false;
             base.enteringMenu();
-            load();
+            loadingThread = new Thread(load);
+            loadingThread.Start();
         }
     }
 }

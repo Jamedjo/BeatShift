@@ -46,9 +46,11 @@ namespace BeatShift
             indicator = new BeatIndicatorParticleSystem(null);
             BeatShift.particleManager.AddParticleSystem(indicator);
             indicator.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
+
             engineGlow = new EngineParticleSystem(null);
             BeatShift.particleManager.AddParticleSystem(engineGlow);
             engineGlow.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
+
             if (currentShip == ShipName.Skylar)
                 engineGlow.SetPosition(new Vector3(0, 0.5f, 4.5f));
             else if (currentShip == ShipName.Omicron)
