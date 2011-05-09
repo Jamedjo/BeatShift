@@ -203,6 +203,7 @@
     <Compile Include="Race\Racer\ShipDrawing.cs" />
     <Compile Include="Race\Racer\ShipPhysics.cs" />
     <Compile Include="Race\Race.cs" />
+    <Compile Include="Utilities &amp; Misc\GameVideos.cs" />
     <Compile Include="Utilities &amp; Misc\Random\SimpleRNG.cs" />
     <Compile Include="Utilities &amp; Misc\RunningTimer.cs" />
     <Compile Include="Utilities &amp; Misc\SoundManager.cs" />

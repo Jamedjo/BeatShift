@@ -177,6 +177,7 @@ namespace BeatShift
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             GameTextures.load(Content);
+            GameVideos.load(Content);
             //MapManager.tempMap.LoadContent(Content);
             font = Content.Load<SpriteFont>("FontA");
             newfont = Content.Load<SpriteFont>("fontfile");
