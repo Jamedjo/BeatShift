@@ -10,7 +10,8 @@ namespace BeatShift
 {
     public static class GameTextures
     {
-        public static Texture2D MenuBackground;
+        public static Texture2D MenuBackgroundBlue;
+        public static Texture2D MenuBackgroundBlack;
         public static Texture2D CountdownReady;
         public static Texture2D Countdown3;
         public static Texture2D Countdown2;
@@ -31,7 +32,8 @@ namespace BeatShift
         {
 
             Console.Write("Loading game textures... ");
-            MenuBackground = c.Load<Texture2D>("Images/splash");
+            MenuBackgroundBlue = c.Load<Texture2D>("Images/blue_background");
+            MenuBackgroundBlack = c.Load<Texture2D>("Images/black_background");
             CountdownReady = c.Load<Texture2D>("Images/ready");
             Countdown3 = c.Load<Texture2D>("Images/3");
             Countdown2 = c.Load<Texture2D>("Images/2");
