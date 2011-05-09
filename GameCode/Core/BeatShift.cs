@@ -152,7 +152,7 @@ namespace BeatShift
             gamerServices = new GamerServicesComponent(this);
             Components.Add(gamerServices);
 
-
+            GC.Collect();
             //gamerServices.Initialize();
         }
 
@@ -184,6 +184,7 @@ namespace BeatShift
             blueNumbersFont = Content.Load<SpriteFont>("bluenumbersfont");
             buttonsFont = Content.Load<SpriteFont>("xboxControllerSpriteFont");
             ButtonDraw.initialize(buttonsFont);
+            GC.Collect();
         }
 
         private void getStorage(IAsyncResult result)

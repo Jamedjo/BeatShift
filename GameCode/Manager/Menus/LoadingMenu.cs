@@ -49,6 +49,7 @@ namespace BeatShift.Menus
         private void load()
         {
             while (MapManager.currentMap.physicsLoadingThread.IsAlive) { }
+            GC.Collect();
             loadComplete = true;
         }
 
