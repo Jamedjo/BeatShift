@@ -253,9 +253,7 @@ namespace BeatShift
             }
             if (boostBar < 0)
                 LevelDown();
-
         }
-
 
         public void DrainBoost()
         {

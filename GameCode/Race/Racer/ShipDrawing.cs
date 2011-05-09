@@ -25,6 +25,7 @@ namespace BeatShift
         public List<D_Arrow> drawArrowListPermanent = new List<D_Arrow>();
         public Boolean isVisible = true;
         public EngineParticleSystem engineGlow;
+        public BeatIndicatorParticleSystem indicator;
         //Physics delegate functions
         Func<Matrix> getShipDrawOrientationMatrix;
         Func<Vector3> getShipPosition;
@@ -42,10 +43,20 @@ namespace BeatShift
 
         public void LoadParticles()
         {
+            indicator = new BeatIndicatorParticleSystem(null);
+            BeatShift.particleManager.AddParticleSystem(indicator);
+            indicator.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
             engineGlow = new EngineParticleSystem(null);
             BeatShift.particleManager.AddParticleSystem(engineGlow);
             engineGlow.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
-            engineGlow.SetPosition(new Vector3(0, 0.5f, 4.5f));
+            if (currentShip == ShipName.Skylar)
+                engineGlow.SetPosition(new Vector3(0, 0.5f, 4.5f));
+            else if (currentShip == ShipName.Omicron)
+                engineGlow.SetPosition(new Vector3(0, 0.3f, 5.0f));
+            else if (currentShip == ShipName.Wraith)
+                engineGlow.SetPosition(new Vector3(0, 0.25f, 4.5f));
+            else if (currentShip == ShipName.Flux)
+                engineGlow.SetPosition(new Vector3(0, 0.7f, 6.25f));
         }
 
         public void setPositionFunctions(Func<Matrix> getOrientationMatrix, Func<Vector3> getPosition)
@@ -133,7 +144,7 @@ namespace BeatShift
                 //as particles are one sided this made them invisible
                 //this line faces them towards the ship which works as a quick hack when they originate from the centre/center
                 //needs to be replaced with engineGlow.SetCameraPosition(camera.getPosition()); or somthing that uses the camera's position.
-                Vector3 temp = camera.cameraPosition();
+                //Vector3 temp = camera.cameraPosition();
                 if (parentRacer.shipPhysics != null)
                 {
                     engineGlow.SetCameraPosition(Vector3.Transform(camera.cameraPosition(), Matrix.Invert(worldMatrix)));
@@ -143,6 +154,18 @@ namespace BeatShift
                     engineGlow.SetCameraPosition(camera.cameraPosition());
                 }
                 engineGlow.Draw();
+
+                indicator.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
+                if (parentRacer.shipPhysics != null)
+                {
+                    indicator.SetCameraPosition(Vector3.Transform(camera.cameraPosition(), Matrix.Invert(worldMatrix)));
+                }
+                else
+                {
+                    indicator.SetCameraPosition(camera.cameraPosition());
+                }
+                indicator.Draw();
+
                 //Vector3.Transform(camera.cameraPosition(),Matrix.Invert(worldMatrix));
                 if (isThisTheCamerasShip)
                 {
