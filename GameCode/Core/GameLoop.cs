@@ -29,16 +29,25 @@ namespace BeatShift
         private static bool paused = false;
         private static bool pausedForGuide = false;
 
+        private static bool raceComplete = false;
+
         private static bool[] activeControllers = new bool[4];
 
-        private static IMenuPage pauseMenu= new PauseMenu();
+        private static IMenuPage pauseMenu = new PauseMenu();
+        private static IMenuPage resultsMenu = new ResultsMenu();
 
-        public static void setActiveControllers( bool set, int index)
+        public static void setActiveControllers(bool set, int index)
         {
             activeControllers[index] = set;
         }
 
-        private static void BeginPause(bool UserInitiated)
+        public static void showResults(GameTime gameTime)
+        {
+            resultsMenu.enteringMenu();
+            MenuManager.anyInput.Update(gameTime);
+        }
+
+        public static void BeginPause(bool UserInitiated)
         {
             paused = true;
             pausedForGuide = !UserInitiated;
@@ -140,6 +149,14 @@ namespace BeatShift
                     }
         }
 
+        public static void endGame(GameTime gameTime)
+        {
+            BeginPause(true);
+            raceComplete = true;
+            resultsMenu.enteringMenu();
+            MenuManager.anyInput.Update(gameTime);
+        }
+
         //Input manager for exiting game
         static IInputManager mainGameinput = new AnyInputManager();
 #if WINDOWS
@@ -188,6 +205,7 @@ namespace BeatShift
             BeatShift.shipSelect.Enabled = false;
             BeatShift.shipSelect.Visible = false;
             paused = false;
+            raceComplete = false;
 
             //physics.collisionSystem.cl
 
@@ -228,7 +246,6 @@ namespace BeatShift
         public static void Update(GameTime gameTime)
         {
             // Check to see if the user has paused or unpaused
-
             if(currentState == GameState.LocalGame || currentState == GameState.NetworkedGame)
                 checkPauseKey(gameTime);
 
@@ -279,8 +296,10 @@ namespace BeatShift
 
             if( paused && !pausedForGuide )
             {
-                //update pause menu
-                pauseMenu.Update(gameTime);
+                if (raceComplete)
+                    resultsMenu.Update(gameTime);
+                else
+                    pauseMenu.Update(gameTime);
                 MenuManager.anyInput.Update(gameTime);
             }
 
@@ -311,8 +330,6 @@ namespace BeatShift
             {
                 //GraphicsDevice.Clear(Color.CornflowerBlue);
                 BeatShift.spriteBatch.Draw(GameTextures.MenuBackground, viewArea, Color.White);
-                
-
             }
             BeatShift.spriteBatch.End();
 
@@ -331,10 +348,11 @@ namespace BeatShift
             }
 
             if (paused && !pausedForGuide)
-                pauseMenu.Draw();
+                if (raceComplete)
+                    resultsMenu.Draw();
+                else
+                    pauseMenu.Draw();
             //if (networkedGame.Visible) networkedGame.Draw(gameTime);
-
-
         }
 
     }

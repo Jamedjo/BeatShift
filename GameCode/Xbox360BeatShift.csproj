@@ -101,6 +101,7 @@
     <Compile Include="Manager\Maps\SpaceMap.cs" />
     <Compile Include="Manager\Menus\LoadingMenu.cs" />
     <Compile Include="Manager\Menus\PauseMenu.cs" />
+    <Compile Include="Manager\Menus\ResultsMenu.cs" />
     <Compile Include="Manager\Menus\SplashMenu.cs" />
     <Compile Include="Manager\Menus\IMenuPage.cs" />
     <Compile Include="Manager\Menus\MainMenu.cs" />
