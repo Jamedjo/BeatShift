@@ -25,6 +25,7 @@ namespace BeatShift
         public static Texture2D WrongWaySign;
         public static Texture2D ResettingSign;
         public static Texture2D BeatVisualisation;
+        public static Texture2D TutorialScreen;
 
         public static void load(ContentManager c)
         {
@@ -47,6 +48,7 @@ namespace BeatShift
             WrongWaySign = c.Load<Texture2D>("HUD/warning_v3");
             ResettingSign = c.Load<Texture2D>("HUD/resetting_v3");
             BeatVisualisation = c.Load<Texture2D>("Visualisation/viz_red");
+            TutorialScreen = c.Load<Texture2D>("Images/tutorial_screen");
             Console.WriteLine("   ...textures loaded.");
 
         }
