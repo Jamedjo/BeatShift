@@ -329,7 +329,7 @@ namespace BeatShift
             //if (menuSystem.Visible || shipSelect.Visible)
             {
                 //GraphicsDevice.Clear(Color.CornflowerBlue);
-                BeatShift.spriteBatch.Draw(GameTextures.MenuBackground, viewArea, Color.White);
+                BeatShift.spriteBatch.Draw(GameTextures.MenuBackgroundBlue, viewArea, Color.White);
             }
             BeatShift.spriteBatch.End();
 

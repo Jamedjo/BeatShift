@@ -15,18 +15,20 @@ namespace BeatShift.Menus
 
         public LoadingMenu()
         {
-            title = "Racing Controls";
+            //title = "Racing Controls";
         }
 
         public override void DrawSprites(SpriteBatch spriteBatch)
         {
-            Texture2D background = GameTextures.CountdownReady;
-            spriteBatch.Draw(background, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - background.Width / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - background.Height / 2), Color.White);
+            Texture2D background = GameTextures.TutorialScreen;
+            //spriteBatch.Draw(background, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - background.Width / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - background.Height / 2), Color.White);
+            spriteBatch.Draw(background, new Rectangle(0,0,BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height), Color.White);        
         }
+
 
         public override void setupMenuItems()
         {
-            addMenuItem("Continue...", (Action)(delegate
+            addMenuItem("", (Action)(delegate
             {
                 if (loadComplete == true)
                 {

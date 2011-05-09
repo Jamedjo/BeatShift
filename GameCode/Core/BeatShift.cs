@@ -87,10 +87,10 @@ namespace BeatShift
         {
             singleton = this;
             graphics = new GraphicsDeviceManager(this);
-#if XBOX
+//#if XBOX
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 720;
-#endif
+//#endif
             // TODO: uncomment the above at your peril, performance profiling needed
             particleManager = new ParticleSystemManager();
             Content.RootDirectory = "Content";
@@ -177,6 +177,7 @@ namespace BeatShift
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             GameTextures.load(Content);
+            GameVideos.load(Content);
             //MapManager.tempMap.LoadContent(Content);
             font = Content.Load<SpriteFont>("FontA");
             newfont = Content.Load<SpriteFont>("fontfile");

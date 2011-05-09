@@ -149,6 +149,7 @@
     <Compile Include="Utilities &amp; Misc\ColorConvert.cs" />
     <Compile Include="Utilities &amp; Misc\DebugGraphics\DrawVector.cs" />
     <Compile Include="Utilities &amp; Misc\GameTextures.cs" />
+    <Compile Include="Utilities &amp; Misc\GameVideos.cs" />
     <Compile Include="Utilities &amp; Misc\InputCombo.cs" />
     <Compile Include="Utilities &amp; Misc\Networking\NetworkedGame.cs" />
     <Compile Include="Utilities &amp; Misc\Random\SimpleRNG.cs" />

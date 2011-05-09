@@ -10,7 +10,8 @@ namespace BeatShift
 {
     public static class GameTextures
     {
-        public static Texture2D MenuBackground;
+        public static Texture2D MenuBackgroundBlue;
+        public static Texture2D MenuBackgroundBlack;
         public static Texture2D CountdownReady;
         public static Texture2D Countdown3;
         public static Texture2D Countdown2;
@@ -25,12 +26,21 @@ namespace BeatShift
         public static Texture2D WrongWaySign;
         public static Texture2D ResettingSign;
         public static Texture2D BeatVisualisation;
+        public static Texture2D TutorialScreen;
+
+        public static Texture2D ShipSelectBasis;
+        public static Texture2D Skylar;
+        public static Texture2D Omicron;
+        public static Texture2D Wraith;
+        public static Texture2D Flux;
+        public static Texture2D ShipSelectBox;
 
         public static void load(ContentManager c)
         {
 
             Console.Write("Loading game textures... ");
-            MenuBackground = c.Load<Texture2D>("Images/splash");
+            MenuBackgroundBlue = c.Load<Texture2D>("Images/blue_background");
+            MenuBackgroundBlack = c.Load<Texture2D>("Images/black_background");
             CountdownReady = c.Load<Texture2D>("Images/ready");
             Countdown3 = c.Load<Texture2D>("Images/3");
             Countdown2 = c.Load<Texture2D>("Images/2");
@@ -47,6 +57,15 @@ namespace BeatShift
             WrongWaySign = c.Load<Texture2D>("HUD/warning_v3");
             ResettingSign = c.Load<Texture2D>("HUD/resetting_v3");
             BeatVisualisation = c.Load<Texture2D>("Visualisation/viz_red");
+            TutorialScreen = c.Load<Texture2D>("Images/tutorial_screen");
+
+            ShipSelectBasis = c.Load<Texture2D>("Images/ShipSelect/ShipSelectBasis");
+            Skylar = c.Load<Texture2D>("Images/ShipSelect/Skylar");
+            Omicron = c.Load<Texture2D>("Images/ShipSelect/Omicron");
+            Wraith = c.Load<Texture2D>("Images/ShipSelect/Wraith");
+            Flux = c.Load<Texture2D>("Images/ShipSelect/Flux");
+            ShipSelectBox = c.Load<Texture2D>("Images/ShipSelect/ShipSelectBox");
+
             Console.WriteLine("   ...textures loaded.");
 
         }

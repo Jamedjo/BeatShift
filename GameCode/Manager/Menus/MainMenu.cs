@@ -47,5 +47,20 @@ namespace BeatShift.Menus
 
         }
 
+        public override void overrideMenuPositions()
+        {
+            //Set title position
+            DrawTitleFromTextCentre = true;
+            DrawMenuItemsFromTextCentre = true;
+            TitlePos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, 75);
+            TitleStartPos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, -100);
+
+            //Set position of menu items
+            MenuPos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, 220);
+            Offset = new Vector2(0, 40);//additional vertical spaceing.
+
+        }
+
+
     }
 }
