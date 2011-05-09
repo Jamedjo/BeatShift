@@ -26,8 +26,6 @@ namespace BeatShift.Menus
         public SinglePlayerShipSelect()
         {
             title = "";
-            player = new VideoPlayer();
-            player.IsLooped = true;
         }
 
         /*public override void overrideMenuPositions()
@@ -61,6 +59,9 @@ namespace BeatShift.Menus
             Race.setupSelectionRacers(1,false);
             Race.Enabled = true;
             Race.Visible = true;
+            player = new VideoPlayer();
+            player.IsLooped = true;
+            shipChanged = true;
             updateShipSelection();
             base.enteringMenu();
         }
@@ -102,7 +103,7 @@ namespace BeatShift.Menus
             return MenuManager.anyInput.actionTapped(InputAction.MenuRight) || MenuManager.anyInput.actionTapped(InputAction.PadRight);
         }
 
-        public override void otherUpdate()
+        /*public override void otherUpdate()
         {
             if (MenuManager.anyInput.actionPressed(InputAction.MenuUp) || MenuManager.anyInput.actionTapped(InputAction.PadUp))
             {
@@ -114,7 +115,7 @@ namespace BeatShift.Menus
                 //increaseShipHue(2.5f);
                 //Race.humanRacers[0].setColour((int)shipHue);
             }
-        }
+        }*/
 
         private void startSinglePlayerGame()
         {
