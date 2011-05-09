@@ -27,7 +27,7 @@ namespace BeatShift.Input
         int sequenceNumber;
 
         //TODO: sort topspeed variable
-        int topSpeed = 300;
+        int topSpeed = 350;
 
         //Boolean useKeyBoard;//Disable keyboard on xbox so chatpad doesn't work?
 

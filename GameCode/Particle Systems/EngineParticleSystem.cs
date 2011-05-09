@@ -220,13 +220,14 @@ namespace DPSF.ParticleSystems
 		// TODO: Place any Particle System properties here
 		//-----------------------------------------------------------
 		Vector3 msCameraPosition = Vector3.Zero;
-        static Color defaultColor = Color.Blue;//Color.AntiqueWhite;
-        static Color FadeEndColor = Color.Red;
-        static Color boostColor = Color.Green;
+        static Color defaultColor = Color.DarkBlue;//Color.AntiqueWhite;
+        static Color FadeEndColor = Color.OrangeRed;
+        static Color boostColor = Color.Lime;
         static Color boostFadeEnd = Color.AntiqueWhite;
         protected Color Color;
         private float lifeTime;
         private float maxLifeTime = 0.6f;
+        private const int particleRate = 35;
 		/// <summary>
 		/// Get / Set the Position of the Camera.
 		/// NOTE: This should be Set (updated) every frame if Billboarding will be used 
@@ -385,8 +386,8 @@ namespace DPSF.ParticleSystems
 			// TODO: Change any Initialization parameters desired
 			//-----------------------------------------------------------
 			// Initialize the Particle System before doing anything else
-			InitializeTexturedQuadParticleSystem(cGraphicsDevice, cContentManager, 100000, 5000000,
-                                                    UpdateVertexProperties, "Particles/Textures/Particle006");
+			InitializeTexturedQuadParticleSystem(cGraphicsDevice, cContentManager, particleRate*6, particleRate*30,
+                                                    UpdateVertexProperties, "Particles/Textures/Particle004");
 
 			// Finish loading the Particle System in a separate function call, so if
 			// we want to reset the Particle System later we don't need to completely 
@@ -423,7 +424,7 @@ namespace DPSF.ParticleSystems
 			//ParticleSystemEvents.AddTimedEvent(0.5f, UpdateParticleSystemEmitParticlesAutomaticallyOff);
             
 			// Setup the Emitter
-			Emitter.ParticlesPerSecond = 50;
+			Emitter.ParticlesPerSecond = particleRate;
 			Emitter.PositionData.Position = new Vector3(0, 0, 0);
             lifeTime = 0.1f;
 		}
