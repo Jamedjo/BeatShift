@@ -53,6 +53,7 @@ namespace BeatShift
             TutorialScreen = c.Load<Texture2D>("Images/tutorial_screen");
             Console.WriteLine("   ...textures loaded.");
 
+            GC.Collect();
         }
     }
 }

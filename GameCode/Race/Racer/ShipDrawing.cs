@@ -36,12 +36,16 @@ namespace BeatShift
             parentRacer = parent;
             //parent.raceTiming.previousSpeed();
             setPositionFunctions(getDrawOrientationMatrix, getPosition);
+            //System.Diagnostics.Debug.WriteLine(engineGlow.Emitter.ParticlesPerSecond);
+            LoadContent();
+        }
+
+        public void LoadParticles()
+        {
             engineGlow = new EngineParticleSystem(null);
             BeatShift.particleManager.AddParticleSystem(engineGlow);
             engineGlow.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
             engineGlow.SetPosition(new Vector3(0, 0.5f, 4.5f));
-            //System.Diagnostics.Debug.WriteLine(engineGlow.Emitter.ParticlesPerSecond);
-            LoadContent();
         }
 
         public void setPositionFunctions(Func<Matrix> getOrientationMatrix, Func<Vector3> getPosition)
@@ -121,37 +125,39 @@ namespace BeatShift
             }
 
 
+            if (engineGlow != null)
+            {
+                engineGlow.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
 
-            engineGlow.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
-
-            //was using camera position (0,0,0) so all particles were facing towards the centre
-            //as particles are one sided this made them invisible
-            //this line faces them towards the ship which works as a quick hack when they originate from the centre/center
-            //needs to be replaced with engineGlow.SetCameraPosition(camera.getPosition()); or somthing that uses the camera's position.
-            Vector3 temp = camera.cameraPosition();
-            if (parentRacer.shipPhysics != null)
-            {
-                  engineGlow.SetCameraPosition(Vector3.Transform(camera.cameraPosition(),Matrix.Invert(worldMatrix)));
-            }
-            else
-            {
-                engineGlow.SetCameraPosition(camera.cameraPosition());
-            }
-            engineGlow.Draw();
-            //Vector3.Transform(camera.cameraPosition(),Matrix.Invert(worldMatrix));
-            if (isThisTheCamerasShip)
-            {
-                parentRacer.beatQueue.visualisation.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
+                //was using camera position (0,0,0) so all particles were facing towards the centre
+                //as particles are one sided this made them invisible
+                //this line faces them towards the ship which works as a quick hack when they originate from the centre/center
+                //needs to be replaced with engineGlow.SetCameraPosition(camera.getPosition()); or somthing that uses the camera's position.
+                Vector3 temp = camera.cameraPosition();
                 if (parentRacer.shipPhysics != null)
                 {
-                    parentRacer.beatQueue.visualisation.SetCameraPosition(Vector3.Transform(camera.cameraPosition(),Matrix.Invert(worldMatrix)));
+                    engineGlow.SetCameraPosition(Vector3.Transform(camera.cameraPosition(), Matrix.Invert(worldMatrix)));
                 }
                 else
                 {
-                    parentRacer.beatQueue.visualisation.SetCameraPosition(camera.cameraPosition());
+                    engineGlow.SetCameraPosition(camera.cameraPosition());
                 }
-                
-                parentRacer.beatQueue.visualisation.Draw();
+                engineGlow.Draw();
+                //Vector3.Transform(camera.cameraPosition(),Matrix.Invert(worldMatrix));
+                if (isThisTheCamerasShip)
+                {
+                    parentRacer.beatQueue.visualisation.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
+                    if (parentRacer.shipPhysics != null)
+                    {
+                        parentRacer.beatQueue.visualisation.SetCameraPosition(Vector3.Transform(camera.cameraPosition(), Matrix.Invert(worldMatrix)));
+                    }
+                    else
+                    {
+                        parentRacer.beatQueue.visualisation.SetCameraPosition(camera.cameraPosition());
+                    }
+
+                    parentRacer.beatQueue.visualisation.Draw();
+                }
             }
             //if (Options.DrawCollisionPoints)
             {

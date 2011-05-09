@@ -49,6 +49,8 @@ namespace BeatShift.Menus
         private void load()
         {
             while (MapManager.currentMap.physicsLoadingThread.IsAlive) { }
+            foreach (Racer racer in Race.currentRacers)
+                racer.Load();
             GC.Collect();
             loadComplete = true;
         }
