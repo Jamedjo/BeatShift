@@ -63,6 +63,12 @@ namespace BeatShift
             //SetupHullRenderer();
         }
 
+        public void Load()
+        {
+            beatQueue.Load();
+            shipDrawing.LoadParticles();
+        }
+
         public virtual void insertShipOnMap(RacerType newRacerType)
         {
             racerType = newRacerType;

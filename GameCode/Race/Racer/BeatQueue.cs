@@ -34,10 +34,6 @@ namespace BeatShift
             for(int i=0;i<averageLength;i++) {
                 averageDists[i] = (int)latency;
             }
-
-            visualisation = new BeatRingParticleSystem(null);
-            BeatShift.particleManager.AddParticleSystem(visualisation);
-            visualisation.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
         }
 
         public Beat? nextBeat()
@@ -65,6 +61,13 @@ namespace BeatShift
         public Boolean isLevellingUp { get; set; }
 
         public Boolean isLevellingDown { get; set; }
+
+        public void Load()
+        {
+            visualisation = new BeatRingParticleSystem(null);
+            BeatShift.particleManager.AddParticleSystem(visualisation);
+            visualisation.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
+        }
 
         public void BeatTap(Buttons button)
         {
@@ -250,9 +253,7 @@ namespace BeatShift
             }
             if (boostBar < 0)
                 LevelDown();
-
         }
-
 
         public void DrainBoost()
         {

@@ -68,6 +68,7 @@ namespace BeatShift
 
             Console.WriteLine("   ...textures loaded.");
 
+            GC.Collect();
         }
     }
 }

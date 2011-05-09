@@ -12,7 +12,6 @@ using BEPUphysics;
 using BEPUphysics.DataStructures;
 using BeatShift.DebugGraphics;
 using BeatShift.Cameras;
-using System.Threading;
 
 namespace BeatShift
 {
@@ -23,8 +22,6 @@ namespace BeatShift
     {
         protected MapData mapData;//List of all MapPoints/Waypoints
         public MapData CurrentMapData { get { return mapData; } }
-
-        public Thread physicsLoadingThread;
 
         protected ContentManager MapContent;
 
@@ -66,13 +63,6 @@ namespace BeatShift
         {
             Physics.reset();
 
-            physicsLoadingThread = new Thread(threadAddPhysics);
-            physicsLoadingThread.Start();
-        }
-
-        //Thread to add the map to the physics in physics class
-        void threadAddPhysics()
-        {
             Console.Write("adding physics to map... ");
             foreach (FbxModel mod in modelList)
             {

@@ -30,7 +30,6 @@ namespace BeatShift.Menus
         float animateInElapsedTime = 0;
         float animateInLerp = 0;
 
-
         public IMenuPage()
         {
             setDefaultValues();
