@@ -491,6 +491,7 @@ namespace BeatShift
                             bool opponentQuadIsSide = (opponentQuadrant == Quadrant.Left || opponentQuadrant == Quadrant.Right);
 
                             if (localQuadrant == Quadrant.Front)
+                            {
                                 var shipLength = 7.5f; //TODO: change
                                 Vector3 frontOff = new Vector3(0f, 0f, -shipLength / 2);
                                 var frontPost = physicsBody.Position + Vector3.Transform(frontOff, physicsBody.Orientation);
@@ -695,7 +696,7 @@ namespace BeatShift
                         }
                     //}
                     }
-                        }
+                }
             }
             catch (Exception e)
             {

@@ -24,6 +24,8 @@ namespace BeatShift
             omicronVideo = BeatShift.contentManager.Load<Video>("Videos/OmicronVideo");
             wraithVideo = BeatShift.contentManager.Load<Video>("Videos/WraithVideo");
             fluxVideo = BeatShift.contentManager.Load<Video>("Videos/FluxVideo");
+
+            GC.Collect();
         }
     }
 }
