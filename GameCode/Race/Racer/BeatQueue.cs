@@ -16,7 +16,7 @@ namespace BeatShift
         const int latencyLeeway = 300;
         const int penalty = 1;
         float latency = 185;
-        int boostBar = 0;
+        double boostBar = 0;
         int myLayer = 0;
         long lastTime = 0;
         private long invinciEndtime = 0;
@@ -48,7 +48,7 @@ namespace BeatShift
             }
         }
 
-        public int GetBoost()
+        public double GetBoost()
         {
             return boostBar;
         }
@@ -120,7 +120,7 @@ namespace BeatShift
             if (boostBar == 100 && result > 0.9m)
                 LevelUp();
             else if ((boostBar < 100) && (result > 0m))
-                boostBar +=(int)(result * 5);
+                boostBar +=(int)(result * 10);
             else if ((boostBar > 0) && (result == 0m))
                 if(time>invinciEndtime)
                     boostBar -= penalty;
@@ -257,7 +257,7 @@ namespace BeatShift
 
         public void DrainBoost()
         {
-            boostBar -= 1;
+            boostBar -= 0.5;
             if (boostBar < 0)
                 boostBar = 0;
         }

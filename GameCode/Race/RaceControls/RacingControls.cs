@@ -354,7 +354,7 @@ namespace BeatShift.Input
             return (lastTaps[tapNo]);
         }
 
-        public int getBoostValue()
+        public double getBoostValue()
         {
             return racer.beatQueue.GetBoost();
         }
