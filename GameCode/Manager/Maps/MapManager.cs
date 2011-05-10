@@ -49,10 +49,8 @@ namespace BeatShift
                 switch (mapToLoad)
                 {
                     case MapName.DesertMap: MapManager.currentMap = new DesertMap(); break;
-                    case MapName.LoopMap: MapManager.currentMap = new LoopMap(); break;
-                    case MapName.RingMap: MapManager.currentMap = new RingMap(); break;
-                    case MapName.JumpMap: MapManager.currentMap = new JumpMap(); break;
-                    case MapName.OldHillMap: MapManager.currentMap = new OldHillMap(); break;
+                    case MapName.CityMap: MapManager.currentMap = new CityMap(); break;
+                    case MapName.SpaceMap: MapManager.currentMap = new SpaceMap(); break;
                 }
                 currentMap.currentMapName = mapToLoad;
 

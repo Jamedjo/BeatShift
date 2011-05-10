@@ -92,7 +92,6 @@
     <Compile Include="Manager\Maps\DesertMap.cs" />
     <Compile Include="Manager\Maps\FbxModel.cs" />
     <Compile Include="Manager\Maps\JumpMap.cs" />
-    <Compile Include="Manager\Maps\LoopMap.cs" />
     <Compile Include="Manager\Maps\Map.cs" />
     <Compile Include="Manager\Maps\MapData.cs" />
     <Compile Include="Manager\Maps\MapManager.cs" />

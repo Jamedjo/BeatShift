@@ -15,7 +15,7 @@ using BeatShift.Cameras;
 
 namespace BeatShift
 {
-    public enum MapName { None, All, OldHillMap, RingMap, LoopMap, JumpMap, DesertMap, CityMap, SpaceMap }
+    public enum MapName { None, All, CityMap, SpaceMap, DesertMap }
     public enum ModelCategory { Scenery, Wall, Track } //In draw order
 
     public abstract class Map
@@ -33,7 +33,7 @@ namespace BeatShift
         protected Texture2D mapTrackAlphaTexture;
         protected Texture2D mapTrackNormalTexture;
         
-        public MapName currentMapName=MapName.RingMap;
+        public MapName currentMapName;
 
 
         public Texture2D skyboxTexture;
@@ -105,9 +105,9 @@ namespace BeatShift
             bshiftEffect.Parameters["wit_Mx"].SetValue(worldInverseTranspose);
 
 
-            if (currentMapName == MapName.JumpMap)
+            if (currentMapName == MapName.SpaceMap)
                 bshiftEffect.Parameters["ambientColour"].SetValue(Color.Purple.ToVector4());
-            else if (currentMapName == MapName.RingMap)
+            else if (currentMapName == MapName.CityMap)
                 bshiftEffect.Parameters["ambientColour"].SetValue(Color.OrangeRed.ToVector4());
             else bshiftEffect.Parameters["ambientColour"].SetValue(Color.White.ToVector4());
 
@@ -159,7 +159,7 @@ namespace BeatShift
 
         void drawModel(FbxModel modelObject, GameTime gameTime, CameraWrapper camera)
         {
-            if (modelObject.category == ModelCategory.Track || currentMapName==MapName.LoopMap)
+            if (modelObject.category == ModelCategory.Track)
             {
                 drawWithBShiftEffect(modelObject.model, modelObject.transforms, camera);
             }
