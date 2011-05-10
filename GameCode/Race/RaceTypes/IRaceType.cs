@@ -152,13 +152,10 @@ namespace BeatShift
 
             if (countDownInt < 1)
             {
-                if (countDownInt < 0)
+                if (startOfRace == true)
                 {
                     countDownRunning = false;
                     countDownTimer.Reset();
-                }
-                if (startOfRace == true)
-                {
                     countdownState = GameTextures.CountdownGo;
                     // Call GO sound effect
                     // Call music sound effect
@@ -167,9 +164,9 @@ namespace BeatShift
                 }
                 else
                 {
-                    endRaceTimer.Stop();
                     //SoundManager.RaceComplete();
                     GameLoop.endGame(gameTime);
+                    endRaceTimer.Reset();
                 }
             }
         }

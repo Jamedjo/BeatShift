@@ -28,6 +28,8 @@ namespace BeatShift
 
         public static List<RacerId> racerIDs = new List<RacerId>();
 
+        public static string[] AInames;
+
         public static void removeNonVisibleRacers()
         {
             currentRacers = currentRacers.Where(r => r.shipDrawing.isVisible).ToList();
@@ -93,9 +95,10 @@ namespace BeatShift
         public static void setupAIRacers(int numberOfAiRacers)
         {
             //Add AI racers
+            initializeAiNames();
             for (int i = 0; i < numberOfAiRacers; i++)
             {
-                Racer r = new Racer(new RacerId(randomString(8)), currentRacers.Count, RacerType.AI);
+                Racer r = new Racer(new RacerId(pickAiName(i)), currentRacers.Count, RacerType.AI);
                 currentRacers.Add(r);
                 r.insertShipOnMap(RacerType.AI);
             }
@@ -108,8 +111,19 @@ namespace BeatShift
             getFullListOfRacerIDsFromSignedInPeople();
             // Add 'None' racers for ship selection screen
             currentRacers.Clear();
-            for (int i = 0; i < numberOfPlayersInSelectionScreen; i++) 
-            currentRacers.Add(new RacerHuman(new RacerId(randomString(3)), currentRacers.Count, RacerType.None, humanRacers.Count, false));
+            initializeAiNames();
+            for (int i = 0; i < numberOfPlayersInSelectionScreen; i++)
+            {
+                currentRacers.Add(new RacerHuman(new RacerId(randomString(3)), currentRacers.Count, RacerType.None, humanRacers.Count, false));
+                try
+                {
+                    currentRacers[i].racerID = new RacerId(racerIDs[i].gamer);
+                }
+                catch
+                {
+                    currentRacers[i].racerID = new RacerId(pickAiName(i));
+                }
+            }
 
             foreach (Racer racer in currentRacers)
             {
@@ -157,6 +171,28 @@ namespace BeatShift
                     break;
             }
 
+        }
+
+        /// <summary>
+        /// Chooses a new AI name
+        /// </summary>
+        public static void initializeAiNames()
+        {
+            AInames = new string[10];
+            AInames[0] = "Simba";
+            AInames[1] = "Scar";
+            AInames[2] = "Mufasa";
+            AInames[3] = "Timone";
+            AInames[4] = "Pumba";
+            AInames[5] = "Zazu";
+
+            Random random = new Random();
+            AInames = AInames.OrderByDescending(x=>random.Next(0,1000)).ToArray();
+        }
+
+        public static string pickAiName(int racerNumber)
+        {
+            return AInames[racerNumber];
         }
 
         /// <summary>

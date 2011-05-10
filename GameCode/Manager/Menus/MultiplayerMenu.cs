@@ -13,6 +13,16 @@ namespace BeatShift.Menus
             title = "Multiplayer";
         }
 
+        public override void overrideMenuPositions()
+        {
+            DrawMenuItemsFromTextCentre = true;
+            DrawTitleFromTextCentre = true;
+            TitlePos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, 75);
+            MenuPos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, 220);
+            TitleStartPos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, -100);
+            Offset = new Vector2(0, 40);//additional vertical spaceing.
+        }
+
         public override void setupMenuItems()
         {
             addMenuItem("Split Screen" , (Action)(delegate

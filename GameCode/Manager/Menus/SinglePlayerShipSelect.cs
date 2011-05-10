@@ -159,7 +159,7 @@ namespace BeatShift.Menus
                     player.Play(GameVideos.skylarVideo);
                 }
                 videoTexture = player.GetTexture();
-                BeatShift.spriteBatch.Draw(videoTexture, screen, Color.White);
+                spriteBatch.Draw(videoTexture, screen, Color.White);
                 //draw select box and write correct name of ship
                 spriteBatch.Draw(GameTextures.ShipSelectBox, new Rectangle(415, 230, 90, 90), Color.White);
                 spriteBatch.DrawString(BeatShift.newfont, "Skylar", new Vector2(390, 420), Color.White);

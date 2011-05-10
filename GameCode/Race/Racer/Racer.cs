@@ -16,7 +16,7 @@ namespace BeatShift
         public ShipPhysics shipPhysics { get; private set; }
         public ShipDrawing shipDrawing { get; private set; }
         public RaceTiming raceTiming { get; private set; }
-        public RacerId racerID  { get; private set; }
+        public RacerId racerID  { get;  set; }
         public RacerType racerType { get; private set; }
         public BeatQueue beatQueue;
 

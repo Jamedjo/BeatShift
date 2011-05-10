@@ -10,8 +10,8 @@ namespace BeatShift
 {
     public class RacerId
     {
-        private String playerName;
-        private String AIName;
+        private String playerName = "";
+        private String AIName = "";
 
         //public string Name { get{ if(XboxLiveName not null) return XboxLiveName, then same for GamerTag and AiName }; }
 
@@ -29,6 +29,13 @@ namespace BeatShift
             this.AIName = AIName;
         }
 
+        public override string ToString()
+        {
+            if ( !playerName.Equals(""))
+                return playerName;
+            else
+                return AIName;
+        }
 
         public void createNewId()
         {
@@ -53,6 +60,7 @@ namespace BeatShift
             else
             {
                 Guide.ShowSignIn(4, false);
+
             }
         }
 

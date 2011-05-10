@@ -60,13 +60,13 @@ namespace BeatShift
 
             BeatShift.spriteBatch.Draw(GameTextures.BoostBar, new Rectangle(((int)(BeatShift.graphics.GraphicsDevice.Viewport.Width * racer.raceTiming.previousLapProgress) - BeatShift.graphics.GraphicsDevice.Viewport.Width), (BeatShift.graphics.GraphicsDevice.Viewport.Height - h) - 12, BeatShift.graphics.GraphicsDevice.Viewport.Width, h), Color.Yellow);
             //BeatShift.spriteBatch.Draw(GameTextures.BoostBar, new Rectangle(((int)(BeatShift.graphics.GraphicsDevice.Viewport.Width * previousBoost) - BeatShift.graphics.GraphicsDevice.Viewport.Width), BeatShift.graphics.GraphicsDevice.Viewport.Height - h, BeatShift.graphics.GraphicsDevice.Viewport.Width, h), Color.White);
-            
-            
-            if (racer.raceTiming.hasCompletedRace)
-            {
-                DrawMessage("Finished!", 325, vOffset/2);
-                DrawMessage("Final Time: " + racer.raceTiming.getFinalTotalTime(), 300, vOffset/2 + 40);
-            }
+
+
+            if (racer.raceTiming.hasCompletedRace) { }
+            //{
+            //    DrawMessage("Finished!", 325, vOffset/2);
+            //    DrawMessage("Final Time: " + racer.raceTiming.getFinalTotalTime(), 300, vOffset/2 + 40);
+            //}
             else
             {
 
@@ -119,12 +119,12 @@ namespace BeatShift
 
                 //foreach (Racer r in Race.humanRacers)
                 //{
-                    if (racer.isRespawning && racer.shipPhysics.millisecsLeftTillReset<2000)
-                    {
-                        int newWarningWidth = (int)(GameTextures.ResettingSign.Width * scaleFactorWidth);
-                        int newWarningHeight = (int)(GameTextures.ResettingSign.Height * scaleFactorHeight);
-                        BeatShift.spriteBatch.Draw(GameTextures.ResettingSign, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - newWarningWidth / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - newWarningHeight / 2, newWarningWidth, newWarningHeight), Color.White);
-                    }
+                if (racer.isRespawning && racer.shipPhysics.millisecsLeftTillReset < 2000)
+                {
+                    int newWarningWidth = (int)(GameTextures.ResettingSign.Width * scaleFactorWidth);
+                    int newWarningHeight = (int)(GameTextures.ResettingSign.Height * scaleFactorHeight);
+                    BeatShift.spriteBatch.Draw(GameTextures.ResettingSign, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - newWarningWidth / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - newWarningHeight / 2, newWarningWidth, newWarningHeight), Color.White);
+                }
 
                 //}
 
@@ -137,7 +137,7 @@ namespace BeatShift
 
                 // Other info
                 //DrawMessage("Progress: " + racer.getLapPercentage() + "%", 10, vOffset + 26);
-                
+
                 //DrawMessage("Accuracy: " + racer.racingControls.getLastPress(), 10, vOffset - 30);
 
 

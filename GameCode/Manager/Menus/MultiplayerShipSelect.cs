@@ -75,7 +75,7 @@ namespace BeatShift
         /// <param name="player">which players ship to change</param>
         public void switchShipRight(int player)
         {
-            if (ssarea[player].input.actionTapped(InputAction.MenuRight))
+            if (ssarea[player].input.actionTapped(InputAction.Right))
             {
                 //find what ship the player has at the moment
                 //Race.humanRacers[player].shipName = (ShipName)IMenuPage.getCurrentItem();
@@ -97,7 +97,7 @@ namespace BeatShift
         /// <param name="player">which players ship to change</param>
         public void switchShipLeft(int player)
         {
-            if (ssarea[player].input.actionTapped(InputAction.MenuLeft))
+            if (ssarea[player].input.actionTapped(InputAction.Left))
             {
                 //find what ship the player has at the moment
                 ShipName ship = Race.humanRacers[player].shipName;

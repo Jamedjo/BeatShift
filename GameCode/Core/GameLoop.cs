@@ -41,12 +41,6 @@ namespace BeatShift
             activeControllers[index] = set;
         }
 
-        public static void showResults(GameTime gameTime)
-        {
-            resultsMenu.enteringMenu();
-            MenuManager.anyInput.Update(gameTime);
-        }
-
         public static void BeginPause(bool UserInitiated)
         {
             paused = true;
@@ -154,7 +148,6 @@ namespace BeatShift
             BeginPause(true);
             raceComplete = true;
             resultsMenu.enteringMenu();
-            MenuManager.anyInput.Update(gameTime);
         }
 
         //Input manager for exiting game
