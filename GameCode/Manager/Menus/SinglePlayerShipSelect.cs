@@ -120,13 +120,7 @@ namespace BeatShift.Menus
         private void startSinglePlayerGame()
         {
             SoundManager.PlayShipName(Race.humanRacers[0].shipName);
-            if (Options.AddAItoGame)
-            {
-                Race.setupAIRacers(AiInputManager.numberOfAI);
-            }
-
             GameLoop.setActiveControllers(true, 0);
-
             //BeatShift.bgm.play();
         }
 

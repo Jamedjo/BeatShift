@@ -53,6 +53,8 @@ namespace BeatShift.Menus
         void load()
         {
             MapManager.loadMap();
+            if (Options.AddAItoGame)
+                Race.setupAIRacers(AiInputManager.numberOfAI);
             foreach (Racer racer in Race.currentRacers)
                 racer.Load();
             GC.Collect();
