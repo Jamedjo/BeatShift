@@ -198,7 +198,7 @@ namespace BeatShift
         {
             Vector3[] verts;
             int[] indics;
-            Model shipPhysicsModel = BeatShift.contentManager.Load<Model>("Models/ShipPhysics");
+            Model shipPhysicsModel = BeatShift.contentManager.Load<Model>("Models/Ships/ShipPhysics");
             Matrix[] transforms = new Matrix[shipPhysicsModel.Bones.Count];
             shipPhysicsModel.CopyAbsoluteBoneTransformsTo(transforms);
             Physics.GetVerticesAndIndicesFromModelPipeline(shipPhysicsModel, out verts, out indics);
