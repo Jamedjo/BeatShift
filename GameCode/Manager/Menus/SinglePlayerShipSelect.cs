@@ -7,6 +7,7 @@ using BeatShift.Input;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
+using System.Threading;
 
 namespace BeatShift.Menus
 {
@@ -15,8 +16,14 @@ namespace BeatShift.Menus
 
         float shipHue = 1;
 
+        public Thread playVideosThread;
+
         //Stuff for playing videos of ships
-        VideoPlayer player = new VideoPlayer();
+        VideoPlayer playerSkylar = new VideoPlayer();
+        VideoPlayer playerOmicron = new VideoPlayer();
+        VideoPlayer playerWraith = new VideoPlayer();
+        VideoPlayer playerFlux = new VideoPlayer();
+
         Texture2D videoTexture = null;
         // Rectangle for the size of the video
         Rectangle screen = new Rectangle(590, 350, BeatShift.graphics.GraphicsDevice.Viewport.Width / 4, BeatShift.graphics.GraphicsDevice.Viewport.Height / 4);
@@ -27,18 +34,6 @@ namespace BeatShift.Menus
         {
             title = "";
         }
-
-        /*public override void overrideMenuPositions()
-        {
-            //Set title position
-            DrawTitleFromTextCentre = true;
-            TitlePos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, 75);
-
-            //Set position of menu items
-            MenuPos = new Vector2(220, 400);
-            UseTextWidthAsOffset = true;
-            Offset = new Vector2(20, 0);//additional horizontal spaceing.
-        }*/
 
         public override void setupMenuItems()
         {
@@ -59,20 +54,53 @@ namespace BeatShift.Menus
             Race.setupSelectionRacers(1,true);
             Race.Enabled = true;
             Race.Visible = false;
-            player = new VideoPlayer();
-            player.IsLooped = true;
+            playerSkylar = new VideoPlayer();
+            playerSkylar.IsLooped = true;
+            playerOmicron = new VideoPlayer();
+            playerOmicron.IsLooped = true;
+            playerWraith = new VideoPlayer();
+            playerWraith.IsLooped = true;
+            playerFlux = new VideoPlayer();
+            playerFlux.IsLooped = true;
             shipChanged = true;
+
+            playVideosThread = new Thread(playAllVideos);
+            playVideosThread.Start();
+
             updateShipSelection();
             base.enteringMenu();
+        }
+
+        public void playAllVideos()
+        {
+            playerSkylar.Play(GameVideos.skylarVideo);
+            playerOmicron.Play(GameVideos.omicronVideo);
+            playerWraith.Play(GameVideos.wraithVideo);
+            playerFlux.Play(GameVideos.fluxVideo);
+        }
+
+        public void disposeVideos()
+        {
+            playerSkylar.Stop();
+            //playerSkylar.Volume.Equals(0);
+            playerSkylar.Dispose();
+            playerOmicron.Stop();
+            //playerOmicron.Volume.Equals(0);
+            playerOmicron.Dispose();
+            playerWraith.Stop();
+            //playerWraith.Volume.Equals(0);
+            playerWraith.Dispose();
+            playerFlux.Stop();
+            //playerFlux.Volume.Equals(0);
+            playerFlux.Dispose();
         }
 
         public override void leavingMenu()
         {
             Race.Enabled = false;
             Race.Visible = false;
-            player.Stop();
-            player.Volume.Equals(0);
-            player.Dispose();
+            Thread unloadVideos = new Thread(disposeVideos);
+            unloadVideos.Start();
             base.leavingMenu();
         }
 
@@ -145,60 +173,60 @@ namespace BeatShift.Menus
 
             if ((ShipName)getCurrentItem() == ShipName.Skylar)
             {
-                //if just changed to this ship stop old and vid play new
                 if (shipChanged == true)
                 {
                     shipChanged = false;
-                    player.Stop();
-                    player.Play(GameVideos.skylarVideo);
                 }
-                videoTexture = player.GetTexture();
-                spriteBatch.Draw(videoTexture, screen, Color.White);
+                if (!playVideosThread.IsAlive)
+                {
+                    videoTexture = playerSkylar.GetTexture();
+                    spriteBatch.Draw(videoTexture, screen, Color.White);
+                }
                 //draw select box and write correct name of ship
                 spriteBatch.Draw(GameTextures.ShipSelectBox, new Rectangle(415, 230, 90, 90), Color.White);
                 spriteBatch.DrawString(BeatShift.newfont, "Skylar", new Vector2(390, 420), Color.White);
             }
             if ((ShipName)getCurrentItem() == ShipName.Omicron)
             {
-                //if just changed to this ship stop old vid and play new
                 if (shipChanged == true)
                 {
                     shipChanged = false;
-                    player.Stop();
-                    player.Play(GameVideos.omicronVideo);
                 }
-                videoTexture = player.GetTexture();
-                BeatShift.spriteBatch.Draw(videoTexture, screen, Color.White);
+                if (!playVideosThread.IsAlive)
+                {
+                    videoTexture = playerOmicron.GetTexture();
+                    BeatShift.spriteBatch.Draw(videoTexture, screen, Color.White);
+                }
                 //draw select box and write correct name of ship
                 spriteBatch.Draw(GameTextures.ShipSelectBox, new Rectangle(555, 230, 90, 90), Color.White);
                 spriteBatch.DrawString(BeatShift.newfont, "Omicron", new Vector2(375, 420), Color.White);
             }
             if ((ShipName)getCurrentItem() == ShipName.Wraith)
             {
-                //if just changed to this ship stop old vid and play new
                 if (shipChanged == true)
                 {
                     shipChanged = false;
-                    player.Stop();
-                    player.Play(GameVideos.wraithVideo);
                 }
-                videoTexture = player.GetTexture();
-                BeatShift.spriteBatch.Draw(videoTexture, screen, Color.White);
+                if (!playVideosThread.IsAlive)
+                {
+                    videoTexture = playerWraith.GetTexture();
+                    BeatShift.spriteBatch.Draw(videoTexture, screen, Color.White);
+                }
                 //draw select box and write correct name of ship
                 spriteBatch.Draw(GameTextures.ShipSelectBox, new Rectangle(685, 230, 90, 90), Color.White);
                 spriteBatch.DrawString(BeatShift.newfont, "Wraith", new Vector2(390, 420), Color.White);
             }
             if ((ShipName)getCurrentItem() == ShipName.Flux)
             {
-                //if just changed to this ship stop old vid and play new
                 if (shipChanged == true)
                 {
                     shipChanged = false;
-                    player.Stop();
-                    player.Play(GameVideos.fluxVideo);
                 }
-                videoTexture = player.GetTexture();
-                BeatShift.spriteBatch.Draw(videoTexture, screen, Color.White);
+                if (!playVideosThread.IsAlive)
+                {
+                    videoTexture = playerFlux.GetTexture();
+                    BeatShift.spriteBatch.Draw(videoTexture, screen, Color.White);
+                }
                 //draw select box and write correct name of ship
                 spriteBatch.Draw(GameTextures.ShipSelectBox, new Rectangle(825, 230, 90, 90), Color.White);
                 spriteBatch.DrawString(BeatShift.newfont, "Flux", new Vector2(410, 420), Color.White);

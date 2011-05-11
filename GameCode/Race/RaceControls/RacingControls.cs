@@ -229,7 +229,7 @@ namespace BeatShift.Input
 
             #endregion
 
-            if (racer.raceTiming.isRacing == true && racer.isRespawning == false)
+            if ((racer.raceTiming.isRacing == true || racer.raceTiming.hasCompletedRace==true) && racer.isRespawning == false)
             {
                 //General Input
                 UpdateLocalFromInput();

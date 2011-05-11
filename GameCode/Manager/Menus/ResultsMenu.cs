@@ -33,7 +33,8 @@ namespace BeatShift.Menus
         public override void DrawSprites(SpriteBatch spriteBatch)
         {
             Texture2D background = GameTextures.MenuBackgroundBlack;
-            spriteBatch.Draw(background, new Rectangle(0, 0, 600, background.Height/2 + 50), Color.White);
+            spriteBatch.Draw(background, new Rectangle(0, 0, 1300, background.Height / 2 + 50), Color.White);
+            spriteBatch.Draw(background, new Rectangle(0, 0, 600, background.Height / 2 + 50), Color.White);
             if (resultsCalc == true)
             {
                 for (int i = 0; i < Race.currentRacers.Count(); i++)

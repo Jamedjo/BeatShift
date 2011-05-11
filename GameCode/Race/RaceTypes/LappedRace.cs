@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
+using BeatShift.Input;
 
 namespace BeatShift
 {
@@ -41,6 +42,7 @@ namespace BeatShift
             racer.raceTiming.isRacing = false;
             racer.raceTiming.hasCompletedRace = true;
             racer.raceTiming.finalRaceTime = finishTime.ElapsedMilliseconds;
+            racer.racingControls.chosenInput = new AiInputManager(racer);
 
             TimeSpan ts = finishTime.Elapsed;
             racer.raceTiming.finalRaceTimeString = racer.raceTiming.convertTimeSpanToString(ts);

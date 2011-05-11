@@ -62,11 +62,11 @@ namespace BeatShift
             //BeatShift.spriteBatch.Draw(GameTextures.BoostBar, new Rectangle(((int)(BeatShift.graphics.GraphicsDevice.Viewport.Width * previousBoost) - BeatShift.graphics.GraphicsDevice.Viewport.Width), BeatShift.graphics.GraphicsDevice.Viewport.Height - h, BeatShift.graphics.GraphicsDevice.Viewport.Width, h), Color.White);
 
 
-            if (racer.raceTiming.hasCompletedRace) { }
-            //{
-            //    DrawMessage("Finished!", 325, vOffset/2);
-            //    DrawMessage("Final Time: " + racer.raceTiming.getFinalTotalTime(), 300, vOffset/2 + 40);
-            //}
+            if (racer.raceTiming.hasCompletedRace && GameLoop.raceComplete != true)
+            {
+                DrawMessage("Finished!", 325, vOffset/2);
+                DrawMessage("Final Time: " + racer.raceTiming.getFinalTotalTime(), 300, vOffset/2 + 40);
+            }
             else
             {
 
