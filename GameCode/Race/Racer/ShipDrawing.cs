@@ -157,7 +157,7 @@ namespace BeatShift
                 engineGlow.Draw();
 
                 //Vector3.Transform(camera.cameraPosition(),Matrix.Invert(worldMatrix));
-                if (isThisTheCamerasShip)
+                if (isThisTheCamerasShip && !parentRacer.raceTiming.hasCompletedRace)
                 {
                     indicator.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
                     if (parentRacer.shipPhysics != null)

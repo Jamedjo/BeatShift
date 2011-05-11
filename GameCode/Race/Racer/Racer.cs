@@ -47,7 +47,7 @@ namespace BeatShift
             racerID = rID;
             raceTiming=new RaceTiming(this);
             shipDrawing = new ShipDrawing(new Func<Matrix>(() => Matrix.Identity), new Func<Vector3>(() => Vector3.Zero), this);
-            beatQueue = new BeatQueue();
+            beatQueue = new BeatQueue(this);
             //setColour(1);//Set to red
 
             constructRaceVariables();
