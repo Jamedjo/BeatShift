@@ -23,7 +23,8 @@ namespace BeatShift
             this.category = category;
 
             //Load the model
-            model = content.Load<Model>("Models/" + name);//Takes a long time for large models. estimate 4 seconds per 1MB fbx.
+            model = content.Load<Model>("Models/Maps/" + name);//Takes a long time for large models. estimate 4 seconds per 1MB fbx.
+            GC.Collect();
 
             //sets scale and position of model from fbx file
             transforms = new Matrix[model.Bones.Count];

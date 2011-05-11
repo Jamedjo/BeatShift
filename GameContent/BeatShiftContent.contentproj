@@ -79,22 +79,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Omicron.fbx">
-      <Name>Omicron</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftAdvancedModelProcessor</Processor>
-    </Compile>
-    <Compile Include="Models\Cube.fbx">
-      <Name>Cube</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftModelProcessor</Processor>
-      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
-    </Compile>
-    <Compile Include="Models\Flux.fbx">
-      <Name>Flux</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftAdvancedModelProcessor</Processor>
-    </Compile>
     <Compile Include="fontfile.tga">
       <Name>fontfile</Name>
       <Importer>TextureImporter</Importer>
@@ -110,19 +94,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>NumberFontProcessor</Processor>
     </Compile>
-    <Compile Include="Models\Skylar.fbx">
-      <Name>Skylar</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftAdvancedModelProcessor</Processor>
-    </Compile>
     <Compile Include="Models\skysphere.fbx">
       <Name>skysphere</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftModelProcessor</Processor>
-      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
-    </Compile>
-    <Compile Include="Models\Sphere.fbx">
-      <Name>Sphere</Name>
       <Importer>FbxImporter</Importer>
       <Processor>BShiftModelProcessor</Processor>
       <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
@@ -132,17 +105,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>FontTextureProcessor</Processor>
     </Compile>
-    <Compile Include="Models\ShipPhysics.fbx">
-      <Name>ShipPhysics</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftModelProcessor</Processor>
-      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
-    </Compile>
-    <Compile Include="Models\Wraith.fbx">
-      <Name>Wraith</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftAdvancedModelProcessor</Processor>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FontA.spritefont">
@@ -150,13 +112,6 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <SubType>Designer</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\SkylarTex2.jpg">
-      <Name>SkylarTex2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -312,25 +267,6 @@
       <Name>BoostBar</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\JumpMap_scenery.fbx">
-      <Name>JumpMap_scenery</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftModelProcessor</Processor>
-      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
-    </Compile>
-    <Compile Include="Models\JumpMap_track.fbx">
-      <Name>JumpMap_track</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftAdvancedModelProcessor</Processor>
-    </Compile>
-    <Compile Include="Models\JumpMap_walls.fbx">
-      <Name>JumpMap_walls</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftModelProcessor</Processor>
-      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -758,6 +694,94 @@
       <Importer>WmvImporter</Importer>
       <Processor>VideoProcessor</Processor>
     </Compile>
+    <Compile Include="Models\Maps\DesertMap_scenery.fbx">
+      <Name>DesertMap_scenery</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>BShiftAdvancedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Maps\DesertMap_track.fbx">
+      <Name>DesertMap_track</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>BShiftAdvancedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Maps\DesertMap_walls.fbx">
+      <Name>DesertMap_walls</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>BShiftModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Ships\Flux.fbx">
+      <Name>Flux</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>BShiftAdvancedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Ships\Omicron.fbx">
+      <Name>Omicron</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>BShiftAdvancedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Ships\Skylar.fbx">
+      <Name>Skylar</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>BShiftAdvancedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Ships\Wraith.fbx">
+      <Name>Wraith</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>BShiftAdvancedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Maps\Sphere.fbx">
+      <Name>Sphere</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>BShiftModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Maps\Cube.fbx">
+      <Name>Cube</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Ships\ShipPhysics.fbx">
+      <Name>ShipPhysics</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>BShiftModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Maps\CityMap_scenery.fbx">
+      <Name>CityMap_scenery</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>BShiftModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Maps\CityMap_track.fbx">
+      <Name>CityMap_track</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>BShiftAdvancedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Maps\CityMap_walls.fbx">
+      <Name>CityMap_walls</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>BShiftModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Maps\SpaceMap_scenery.fbx">
+      <Name>SpaceMap_scenery</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>BShiftModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Maps\SpaceMap_track.fbx">
+      <Name>SpaceMap_track</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>BShiftAdvancedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Maps\SpaceMap_walls.fbx">
+      <Name>SpaceMap_walls</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>BShiftModelProcessor</Processor>
+    </Compile>
+    <None Include="MapPointData\CityMap.bsmp">
+      <Name>CityMap</Name>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MapPointData\SpaceMap.bsmp">
+      <Name>SpaceMap</Name>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Particles\Textures\License.txt">
       <Name>License</Name>
     </None>
@@ -870,18 +894,6 @@
       <Name>DesertMap</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="MapPointData\LoopMap.bsmp">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Name>LoopMap</Name>
-    </None>
-    <None Include="MapPointData\OldHillMap.bsmp">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Name>OldHillMap</Name>
-    </None>
-    <None Include="MapPointData\RingMap.bsmp">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Name>RingMap</Name>
-    </None>
     <Compile Include="Shaders\BShiftShader.fx">
       <Name>BShiftShader</Name>
       <Importer>EffectImporter</Importer>
@@ -897,21 +909,6 @@
       <Importer>XactImporter</Importer>
       <Processor>XactProcessor</Processor>
     </Compile>
-    <Compile Include="Models\DesertMap_scenery.fbx">
-      <Name>DesertMap_scenery</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftAdvancedModelProcessor</Processor>
-    </Compile>
-    <Compile Include="Models\DesertMap_track.fbx">
-      <Name>DesertMap_track</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftAdvancedModelProcessor</Processor>
-    </Compile>
-    <Compile Include="Models\DesertMap_walls.fbx">
-      <Name>DesertMap_walls</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftModelProcessor</Processor>
-    </Compile>
     <Compile Include="Skyboxes\SkyBox.fbx">
       <Name>SkyBox</Name>
       <Importer>FbxImporter</Importer>
@@ -921,68 +918,6 @@
       <Name>skybox2</Name>
       <Importer>XImporter</Importer>
       <Processor>ModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="MapPointData\JumpMap.bsmp">
-      <Name>JumpMap</Name>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\LoopMap_scenery.fbx">
-      <Name>LoopMap_scenery</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftModelProcessor</Processor>
-      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
-    </Compile>
-    <Compile Include="Models\LoopMap_track.fbx">
-      <Name>LoopMap_track</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftAdvancedModelProcessor</Processor>
-    </Compile>
-    <Compile Include="Models\LoopMap_walls.fbx">
-      <Name>LoopMap_walls</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftAdvancedModelProcessor</Processor>
-      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\OldHillMap_scenery.fbx">
-      <Name>OldHillMap_scenery</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftModelProcessor</Processor>
-      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
-    </Compile>
-    <Compile Include="Models\OldHillMap_track.fbx">
-      <Name>OldHillMap_track</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftAdvancedModelProcessor</Processor>
-    </Compile>
-    <Compile Include="Models\OldHillMap_walls.fbx">
-      <Name>OldHillMap_walls</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftModelProcessor</Processor>
-      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\RingMap_scenery.fbx">
-      <Name>RingMap_scenery</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftModelProcessor</Processor>
-    </Compile>
-    <Compile Include="Models\RingMap_track.fbx">
-      <Name>RingMap_track</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftAdvancedModelProcessor</Processor>
-    </Compile>
-    <Compile Include="Models\RingMap_walls.fbx">
-      <Name>RingMap_walls</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftAdvancedModelProcessor</Processor>
-      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
     </Compile>
   </ItemGroup>
   <ItemGroup />

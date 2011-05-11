@@ -16,8 +16,8 @@ namespace BeatShift
 
         public ShipFbx(String modelName)
         {
-            model = BeatShift.contentManager.Load<Model>("Models/" + modelName);
-
+            model = BeatShift.contentManager.Load<Model>("Models/Ships/" + modelName);
+            GC.Collect();
             //var normalmap = BeatShift.contentManager.Load<Texture2D>("Models/skylarnormal.png");
 
             transforms = new Matrix[model.Bones.Count];

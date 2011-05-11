@@ -28,39 +28,25 @@ namespace BeatShift.Menus
         {
             addMenuItem("Desert Map", (Action)(delegate
             {
-                MapManager.mapToLoad = MapName.DesertMap;
+                //MapManager.mapToLoad = MapName.DesertMap;
+
+                //if (isSinglePlayer()) MenuManager.setCurrentMenu(MenuPage.SinglePlayerShipSelect);
+                //else GameLoop.setGameState(GameState.MultiplayerShipSelect);
+            }));
+            addMenuItem("Space Map", (Action)(delegate
+            {
+                MapManager.mapToLoad = MapName.SpaceMap;
 
                 if (isSinglePlayer()) MenuManager.setCurrentMenu(MenuPage.SinglePlayerShipSelect);
                 else GameLoop.setGameState(GameState.MultiplayerShipSelect);
             }));
-            addMenuItem("Jump Map", (Action)(delegate
+            addMenuItem("City Map", (Action)(delegate
             {
-                MapManager.mapToLoad = MapName.JumpMap;
-
-                if (isSinglePlayer()) MenuManager.setCurrentMenu(MenuPage.SinglePlayerShipSelect);
-                else GameLoop.setGameState(GameState.MultiplayerShipSelect);
-            }));
-            addMenuItem("Ring Map", (Action)(delegate
-            {
-                MapManager.mapToLoad = MapName.RingMap;
+                MapManager.mapToLoad = MapName.CityMap;
 
                 if (isSinglePlayer()) MenuManager.setCurrentMenu(MenuPage.SinglePlayerShipSelect);
                 else GameLoop.setGameState(GameState.MultiplayerShipSelect);
 
-            }));
-            addMenuItem("Loop Physics Map", (Action)(delegate
-            {
-                MapManager.mapToLoad = MapName.LoopMap;
-
-                if (isSinglePlayer()) MenuManager.setCurrentMenu(MenuPage.SinglePlayerShipSelect);
-                else GameLoop.setGameState(GameState.MultiplayerShipSelect);
-            }));
-            addMenuItem("Old Hills Map", (Action)(delegate
-            {
-                MapManager.mapToLoad = MapName.OldHillMap;
-
-                if (isSinglePlayer()) MenuManager.setCurrentMenu(MenuPage.SinglePlayerShipSelect);
-                else GameLoop.setGameState(GameState.MultiplayerShipSelect);
             }));
         }
 

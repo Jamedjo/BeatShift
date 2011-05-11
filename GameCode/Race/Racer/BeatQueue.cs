@@ -16,7 +16,7 @@ namespace BeatShift
         const int latencyLeeway = 300;
         const int penalty = 1;
         float latency = 185;
-        int boostBar = 0;
+        double boostBar = 0;
         int myLayer = 0;
         long lastTime = 0;
         private long invinciEndtime = 0;
@@ -48,7 +48,7 @@ namespace BeatShift
             }
         }
 
-        public int GetBoost()
+        public double GetBoost()
         {
             return boostBar;
         }
@@ -203,8 +203,7 @@ namespace BeatShift
         }
 
         public void AddBeat(Beat newBeat)
-        {
-                     
+        {          
             {
                 int duration = 2500;
                 int temp2 = (int)(newBeat.getTimeWithLatency((int)latency) - BeatShift.bgm.songTick());
@@ -257,7 +256,7 @@ namespace BeatShift
 
         public void DrainBoost()
         {
-            boostBar -= 1;
+            boostBar -= 0.5;
             if (boostBar < 0)
                 boostBar = 0;
         }
