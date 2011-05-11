@@ -27,7 +27,7 @@ namespace BeatShift.Input
         int sequenceNumber;
 
         //TODO: sort topspeed variable
-        int topSpeed = 350;
+        float topSpeed = 350.0f;
 
         //Boolean useKeyBoard;//Disable keyboard on xbox so chatpad doesn't work?
 
@@ -95,20 +95,14 @@ namespace BeatShift.Input
                 if( vibrateSequence )
                 {
                     if (vibrateLevelControl < 0.3f)
-                    {
-                        // boost increase
-                        vibrateLevelControl = vibrateLevelControl + 0.05f;
-                    }
+                        vibrateLevelControl = vibrateLevelControl + 0.02f;
                     else
                         vibrateSequence = false ;
                 }
                 else
                 {
                     if (vibrateLevelControl > 0.03f)
-                    {
-                        // boost increase
-                        vibrateLevelControl = vibrateLevelControl - 0.03f;
-                    }
+                        vibrateLevelControl = vibrateLevelControl - 0.02f;
                     else
                     {
                         vibrateLevelControl = 0;
@@ -146,7 +140,7 @@ namespace BeatShift.Input
             // checking for wall collisions
             if (racer.isCollidingWall && !justCollided)
             {
-                vibrateCollisionControl = vibrateCollisionControl + (float)Math.Sqrt(racer.raceTiming.previousSpeed / 300.0f);
+                vibrateCollisionControl = vibrateCollisionControl + (float)Math.Sqrt(racer.raceTiming.previousSpeed / topSpeed);
                 justCollided = true;
             }
             // checking for ship collisions
@@ -181,8 +175,8 @@ namespace BeatShift.Input
             {
                 racer.setBoost(true);
                 justBoost = true;
-                float boostIncrease = 0.05f;
                 racer.shipDrawing.engineGlow.BoostOn();
+                float boostIncrease = 0.01f;
 
                 if (racer.beatQueue.isLevellingUp)
                     Boost(0.1);
@@ -256,7 +250,6 @@ namespace BeatShift.Input
                 //axis*angle*factor*analogueInputFactor
                 //Apply left/right rotation multiplied by analogue steering values
                 //keyboard keys have analogue values of 0f when up and 1f when pressed.
-
 
                 //Only apply rotation if the ship doesn't already have a large rotational force
                 Vector3 a = Vector3.Up;

@@ -120,7 +120,7 @@ namespace BeatShift
             if (boostBar == 100 && result > 0.9m)
                 LevelUp();
             else if ((boostBar < 100) && (result > 0m))
-                boostBar +=(int)(result * 10);
+                boostBar +=(int)(result * 5);
             else if ((boostBar > 0) && (result == 0m))
                 if(time>invinciEndtime)
                     boostBar -= penalty;
@@ -203,8 +203,7 @@ namespace BeatShift
         }
 
         public void AddBeat(Beat newBeat)
-        {
-                     
+        {          
             {
                 int duration = 2500;
                 int temp2 = (int)(newBeat.getTimeWithLatency((int)latency) - BeatShift.bgm.songTick());
