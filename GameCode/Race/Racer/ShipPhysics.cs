@@ -370,7 +370,7 @@ namespace BeatShift
 
                     ////Stop all rotation
                     //physicsBody.AngularVelocity = new Vector3(0, 0, 0);
-
+                    parentRacer.lastCollisionPoint= contact.Position ;
                     //Initiate controller vibration
                     parentRacer.isColliding = true;
 
@@ -646,7 +646,7 @@ namespace BeatShift
                                 //Bounce the ship to the left
                                 //physicsBody.ApplyImpulse(physicsBody.Position, collidedBody.OrientationMatrix.Left * 2000);
                             }
-
+                            r.lastCollisionPoint =  contact.Position;
                             //Initiate controller vibration
                             r.isColliding = true;
 
