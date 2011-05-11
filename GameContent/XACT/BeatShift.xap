@@ -278,8 +278,8 @@ Global Settings
         Reserved = 0;
         Read Only = 0;
         Time = 0;
-        Value = 2.040000;
-        Initial Value = 0.000000;
+        Value = 2.180000;
+        Initial Value = -0.000000;
         Min = 0.000000;
         Max = 10.000000;
     }
@@ -633,23 +633,24 @@ Wave Bank
 
 Wave Bank
 {
-    Name = Map1;
-    Xbox File = Xbox\Map1.xwb;
-    Windows File = Win\Map1.xwb;
+    Name = CityMap;
+    Xbox File = Xbox\CityMap.xwb;
+    Windows File = Win\CityMap.xwb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
-    Streaming = 1;
     Seek Tables = 1;
     Compression Preset Name = Default;
-    Bank Last Revised Low = 1884430636;
-    Bank Last Revised High = 30141799;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
+    Bank Last Revised Low = 4186266676;
+    Bank Last Revised High = 30150669;
 
     Wave
     {
-        Name = Map 1 Level 2;
-        File = ..\Music\Map 1 Level 2.wav;
-        Build Settings Last Modified Low = 1884420636;
-        Build Settings Last Modified High = 30141799;
+        Name = City 2;
+        File = ..\Music\City\CityLayer2.wav;
+        Build Settings Last Modified Low = 4166212080;
+        Build Settings Last Modified High = 30150665;
 
         Cache
         {
@@ -669,10 +670,10 @@ Wave Bank
 
     Wave
     {
-        Name = Map 1 Level 3;
-        File = ..\Music\Map 1 Level 3.wav;
-        Build Settings Last Modified Low = 1884420636;
-        Build Settings Last Modified High = 30141799;
+        Name = City 3;
+        File = ..\Music\City\CityLayer3.wav;
+        Build Settings Last Modified Low = 4236986128;
+        Build Settings Last Modified High = 30150665;
 
         Cache
         {
@@ -692,10 +693,10 @@ Wave Bank
 
     Wave
     {
-        Name = Map 1 Level 4;
-        File = ..\Music\Map 1 Level 4.wav;
-        Build Settings Last Modified Low = 1884420636;
-        Build Settings Last Modified High = 30141799;
+        Name = City 4;
+        File = ..\Music\City\CityLayer4.wav;
+        Build Settings Last Modified Low = 4289749146;
+        Build Settings Last Modified High = 30150665;
 
         Cache
         {
@@ -715,10 +716,10 @@ Wave Bank
 
     Wave
     {
-        Name = Map 1 Level 1;
-        File = ..\Music\Map 1 Level 1.wav;
-        Build Settings Last Modified Low = 1884420636;
-        Build Settings Last Modified High = 30141799;
+        Name = City 1;
+        File = ..\Music\City\CityLayer1.wav;
+        Build Settings Last Modified Low = 4054285678;
+        Build Settings Last Modified High = 30150665;
 
         Cache
         {
@@ -738,10 +739,10 @@ Wave Bank
 
     Wave
     {
-        Name = Map 1 Level 5;
-        File = ..\Music\Map 1 Level 5.wav;
-        Build Settings Last Modified Low = 1884420636;
-        Build Settings Last Modified High = 30141799;
+        Name = City 5;
+        File = ..\Music\City\CityLayer5.wav;
+        Build Settings Last Modified Low = 34124100;
+        Build Settings Last Modified High = 30150666;
 
         Cache
         {
@@ -769,8 +770,8 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Bank Last Revised Low = 4281919382;
-    Bank Last Revised High = 30141192;
+    Bank Last Revised Low = 876240629;
+    Bank Last Revised High = 30150667;
 
     Wave
     {
@@ -815,6 +816,134 @@ Wave Bank
             File Type = 1;
             Last Modified Low = 3628365920;
             Last Modified High = 30147071;
+        }
+    }
+}
+
+Wave Bank
+{
+    Name = DesertMap;
+    Xbox File = Xbox\DesertMap.xwb;
+    Windows File = Win\DesertMap.xwb;
+    Xbox Bank Path Edited = 0;
+    Windows Bank Path Edited = 0;
+    Seek Tables = 1;
+    Compression Preset Name = Default;
+    Bank Last Revised Low = 4209788021;
+    Bank Last Revised High = 30150669;
+
+    Wave
+    {
+        Name = SandLayer3;
+        File = ..\Music\Desert\SandLayer3.wav;
+        Build Settings Last Modified Low = 1996831447;
+        Build Settings Last Modified High = 30150669;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 7526400;
+            Loop Region Offset = 0;
+            Loop Region Length = 7526400;
+            File Type = 1;
+            Last Modified Low = 404823665;
+            Last Modified High = 30150667;
+        }
+    }
+
+    Wave
+    {
+        Name = SandLayer4;
+        File = ..\Music\Desert\SandLayer4.wav;
+        Build Settings Last Modified Low = 1996851448;
+        Build Settings Last Modified High = 30150669;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 7526400;
+            Loop Region Offset = 0;
+            Loop Region Length = 7526400;
+            File Type = 1;
+            Last Modified Low = 460586855;
+            Last Modified High = 30150667;
+        }
+    }
+
+    Wave
+    {
+        Name = SandLayer5;
+        File = ..\Music\Desert\SandLayer5.wav;
+        Build Settings Last Modified Low = 1996851448;
+        Build Settings Last Modified High = 30150669;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 7526400;
+            Loop Region Offset = 0;
+            Loop Region Length = 7526400;
+            File Type = 1;
+            Last Modified Low = 523680463;
+            Last Modified High = 30150667;
+        }
+    }
+
+    Wave
+    {
+        Name = SandLayer1;
+        File = ..\Music\Desert\SandLayer1.wav;
+        Build Settings Last Modified Low = 1996861449;
+        Build Settings Last Modified High = 30150669;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 7526400;
+            Loop Region Offset = 0;
+            Loop Region Length = 7526400;
+            File Type = 1;
+            Last Modified Low = 285876862;
+            Last Modified High = 30150667;
+        }
+    }
+
+    Wave
+    {
+        Name = SandLayer2;
+        File = ..\Music\Desert\SandLayer2.wav;
+        Build Settings Last Modified Low = 1996861449;
+        Build Settings Last Modified High = 30150669;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 7526400;
+            Loop Region Offset = 0;
+            Loop Region Length = 7526400;
+            File Type = 1;
+            Last Modified Low = 345880294;
+            Last Modified High = 30150667;
         }
     }
 }
@@ -1538,9 +1667,9 @@ Sound Bank
 
 Sound Bank
 {
-    Name = Map1;
-    Xbox File = Xbox\Map1.xsb;
-    Windows File = Win\Map1.xsb;
+    Name = CityMap;
+    Xbox File = Xbox\CityMap.xsb;
+    Windows File = Win\CityMap.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
     Header Last Modified High = 0;
@@ -1583,9 +1712,9 @@ Sound Bank
 
                 Wave Entry
                 {
-                    Bank Name = Map1;
+                    Bank Name = CityMap;
                     Bank Index = 3;
-                    Entry Name = Map 1 Level 1;
+                    Entry Name = City 1;
                     Entry Index = 3;
                     Weight = 255;
                     Weight Min = 0;
@@ -1631,9 +1760,9 @@ Sound Bank
 
                 Wave Entry
                 {
-                    Bank Name = Map1;
+                    Bank Name = CityMap;
                     Bank Index = 3;
-                    Entry Name = Map 1 Level 4;
+                    Entry Name = City 4;
                     Entry Index = 2;
                     Weight = 255;
                     Weight Min = 0;
@@ -1679,9 +1808,9 @@ Sound Bank
 
                 Wave Entry
                 {
-                    Bank Name = Map1;
+                    Bank Name = CityMap;
                     Bank Index = 3;
-                    Entry Name = Map 1 Level 3;
+                    Entry Name = City 3;
                     Entry Index = 1;
                     Weight = 255;
                     Weight Min = 0;
@@ -1727,9 +1856,9 @@ Sound Bank
 
                 Wave Entry
                 {
-                    Bank Name = Map1;
+                    Bank Name = CityMap;
                     Bank Index = 3;
-                    Entry Name = Map 1 Level 2;
+                    Entry Name = City 2;
                     Entry Index = 0;
                     Weight = 255;
                     Weight Min = 0;
@@ -1869,9 +1998,9 @@ Sound Bank
 
                 Wave Entry
                 {
-                    Bank Name = Map1;
+                    Bank Name = CityMap;
                     Bank Index = 3;
-                    Entry Name = Map 1 Level 5;
+                    Entry Name = City 5;
                     Entry Index = 4;
                     Weight = 255;
                     Weight Min = 0;
@@ -2599,6 +2728,973 @@ Sound Bank
             Index = 6;
             Weight Min = 0;
             Weight Max = 255;
+        }
+    }
+}
+
+Sound Bank
+{
+    Name = DesertMap;
+    Xbox File = Xbox\DesertMap.xsb;
+    Windows File = Win\DesertMap.xsb;
+    Xbox Bank Path Edited = 0;
+    Windows Bank Path Edited = 0;
+    Header Last Modified High = 0;
+    Header Last Modified Low = 0;
+
+    Sound
+    {
+        Name = SandLayer2;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Music;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = DesertMap;
+                    Bank Index = 5;
+                    Entry Name = SandLayer2;
+                    Entry Index = 4;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = SandLayer1;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Music;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = DesertMap;
+                    Bank Index = 5;
+                    Entry Name = SandLayer1;
+                    Entry Index = 3;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = SandLayer5;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Music;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = DesertMap;
+                    Bank Index = 5;
+                    Entry Name = SandLayer5;
+                    Entry Index = 2;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = SandLayer4;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Music;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = DesertMap;
+                    Bank Index = 5;
+                    Entry Name = SandLayer4;
+                    Entry Index = 1;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = SandLayer3;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Music;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = DesertMap;
+                    Bank Index = 5;
+                    Entry Name = SandLayer3;
+                    Entry Index = 0;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = levelup;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Effects;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = SoundEffects;
+                    Bank Index = 4;
+                    Entry Name = levelup;
+                    Entry Index = 1;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = leveldown;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Effects;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = SoundEffects;
+                    Bank Index = 4;
+                    Entry Name = leveldown;
+                    Entry Index = 0;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Cue
+    {
+        Name = Interactive;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 3;
+            New Variation on Loop = 0;
+
+            Variable Entry
+            {
+                Name = Layer;
+            }
+        }
+
+        Sound Entry
+        {
+            Name = SandLayer2;
+            Index = 0;
+            Variable Min = 1.000000;
+            Variable Max = 1.990000;
+            Linger = 1;
+        }
+
+        Sound Entry
+        {
+            Name = SandLayer3;
+            Index = 4;
+            Variable Min = 2.000000;
+            Variable Max = 2.990000;
+            Linger = 1;
+        }
+
+        Sound Entry
+        {
+            Name = SandLayer4;
+            Index = 3;
+            Variable Min = 3.000000;
+            Variable Max = 3.990000;
+            Linger = 1;
+        }
+
+        Sound Entry
+        {
+            Name = SandLayer1;
+            Index = 1;
+            Variable Min = 0.000000;
+            Variable Max = 0.990000;
+            Linger = 1;
+        }
+
+        Sound Entry
+        {
+            Name = SandLayer5;
+            Index = 2;
+            Variable Min = 4.000000;
+            Variable Max = 4.990000;
+            Linger = 1;
+        }
+
+        Transition Entry
+        {
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 0;
+            Transition Source = 0;
+            Transition Destination = 0;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 0;
+            Transition Source = 0;
+            Transition Destination = 0;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 0;
+            Transition Source = 0;
+            Transition Destination = 0;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 0;
+            Transition Source = 0;
+            Transition Destination = 0;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 0;
+            Transition Source = 0;
+            Transition Destination = 0;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 0;
+            Transition Source = 0;
+            Transition Destination = 0;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 5;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 5;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 6;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 5;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 0;
+            Transition Source = 0;
+            Transition Destination = 0;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 6;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 5;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 6;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 0;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 0;
+            Transition Source = 0;
+            Transition Destination = 0;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 6;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 6;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 6;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 5;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 0;
+            Transition Source = 0;
+            Transition Destination = 0;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 5;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 5;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 5;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 5;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 0;
+            Transition Source = 0;
+            Transition Destination = 0;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 6;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 6;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 6;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 6;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 6;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
         }
     }
 }
