@@ -29,7 +29,7 @@ namespace BeatShift
         private static bool paused = false;
         private static bool pausedForGuide = false;
 
-        private static bool raceComplete = false;
+        public static bool raceComplete = false;
 
         private static bool[] activeControllers = new bool[4];
 

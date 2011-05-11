@@ -79,10 +79,8 @@ namespace BeatShift.Menus
             playerFlux.Play(GameVideos.fluxVideo);
         }
 
-        public override void leavingMenu()
+        public void disposeVideos()
         {
-            Race.Enabled = false;
-            Race.Visible = false;
             playerSkylar.Stop();
             //playerSkylar.Volume.Equals(0);
             playerSkylar.Dispose();
@@ -95,6 +93,14 @@ namespace BeatShift.Menus
             playerFlux.Stop();
             //playerFlux.Volume.Equals(0);
             playerFlux.Dispose();
+        }
+
+        public override void leavingMenu()
+        {
+            Race.Enabled = false;
+            Race.Visible = false;
+            Thread unloadVideos = new Thread(disposeVideos);
+            unloadVideos.Start();
             base.leavingMenu();
         }
 
