@@ -33,15 +33,15 @@ namespace BeatShift.Menus
 
         public override void setupMenuItems()
         {
-            addMenuItem("Resume", (Action)(delegate
+            addMenuItem("RESUME", (Action)(delegate
             {
                 GameLoop.EndPause();
             }));
-            addMenuItem("Main Menu", (Action)(delegate
+            addMenuItem("MAIN MENU", (Action)(delegate
             {
                 GameLoop.setGameStateAndResetPlayers(GameState.Menu);
             }));
-            addMenuItem("Exit", (Action)(delegate
+            addMenuItem("EXIT", (Action)(delegate
             {
                 BeatShift.singleton.Exit();
             }));

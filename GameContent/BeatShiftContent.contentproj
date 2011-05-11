@@ -774,6 +774,11 @@
       <Importer>FbxImporter</Importer>
       <Processor>BShiftModelProcessor</Processor>
     </Compile>
+    <Compile Include="dotsfontfile.tga">
+      <Name>dotsfontfile</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>FontTextureProcessor</Processor>
+    </Compile>
     <None Include="MapPointData\CityMap.bsmp">
       <Name>CityMap</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

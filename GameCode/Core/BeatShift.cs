@@ -180,7 +180,8 @@ namespace BeatShift
             GameVideos.load(Content);
             //MapManager.tempMap.LoadContent(Content);
             font = Content.Load<SpriteFont>("FontA");
-            newfont = Content.Load<SpriteFont>("fontfile");
+            //newfont = Content.Load<SpriteFont>("fontfile");
+            newfont = Content.Load<SpriteFont>("dotsfontfile");
             newfontgreen = Content.Load<SpriteFont>("fontfile-green");
             blueNumbersFont = Content.Load<SpriteFont>("bluenumbersfont");
             buttonsFont = Content.Load<SpriteFont>("xboxControllerSpriteFont");

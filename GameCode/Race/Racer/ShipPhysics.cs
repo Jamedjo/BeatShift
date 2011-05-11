@@ -1160,7 +1160,7 @@ namespace BeatShift
                 float angularSize = Vector3.Dot(a, b);
                 //return -(0.322f * (angularSize) / 3.5f) * 5f * (getForwardSpeed() / maxSpeed);
 
-                parentRacer.raceTiming.previousRoll = Math.Min(0.5f, MathHelper.Lerp(parentRacer.raceTiming.previousRoll, -(0.322f * (angularSize) / 3.5f) * 6f * (getForwardSpeed() / maxSpeed), 0.08f));
+                parentRacer.raceTiming.previousRoll = Math.Min(5f, MathHelper.Lerp(parentRacer.raceTiming.previousRoll, -(0.322f * (angularSize) / 3.5f) * 6f * (getForwardSpeed() / maxSpeed), 0.08f));
                 return parentRacer.raceTiming.previousRoll;
             }
             else

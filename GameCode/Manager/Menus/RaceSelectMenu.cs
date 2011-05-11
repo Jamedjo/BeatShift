@@ -25,25 +25,25 @@ namespace BeatShift.Menus
 
         public override void setupMenuItems()
         {
-            addMenuItem("Lapped Race", (Action)(delegate
+            addMenuItem("LAPPED RACE", (Action)(delegate
             {
                 Race.currentRaceType = new LappedRace(1);
                 Race.resetPlayers();
                 MenuManager.setCurrentMenu(MenuPage.MapSelect);
             }));
-            addMenuItem("Time Trial", (Action)(delegate
+            addMenuItem("TIME TRIAL", (Action)(delegate
             {
                 Race.currentRaceType = new TimeTrialRace();
                 Race.resetPlayers();
                 MenuManager.setCurrentMenu(MenuPage.MapSelect);
             }));
-            addMenuItem("Elimination", (Action)(delegate
+            addMenuItem("ELIMINATION", (Action)(delegate
             {
                 Race.currentRaceType = new EliminationRace(1); //TODO: define how many racers we want in menu
                 Race.resetPlayers();
                 MenuManager.setCurrentMenu(MenuPage.MapSelect);
             }));
-            addMenuItem("Points Frenzy", (Action)(delegate
+            addMenuItem("POINTS FRENZY", (Action)(delegate
             {
                 Race.currentRaceType = new BeatPointsRace(new TimeSpan(0,3,30)); //TODO: define length of race in menu
                 Race.resetPlayers();
