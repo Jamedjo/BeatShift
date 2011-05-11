@@ -137,7 +137,6 @@ namespace BeatShift
                 drawArrowListRays.Clear();
             }
 
-
             if (engineGlow != null)
             {
                 engineGlow.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
@@ -157,20 +156,20 @@ namespace BeatShift
                 }
                 engineGlow.Draw();
 
-                indicator.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
-                if (parentRacer.shipPhysics != null)
-                {
-                    indicator.SetCameraPosition(Vector3.Transform(camera.cameraPosition(), Matrix.Invert(worldMatrix)));
-                }
-                else
-                {
-                    indicator.SetCameraPosition(camera.cameraPosition());
-                }
-                indicator.Draw();
-
                 //Vector3.Transform(camera.cameraPosition(),Matrix.Invert(worldMatrix));
                 if (isThisTheCamerasShip)
                 {
+                    indicator.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
+                    if (parentRacer.shipPhysics != null)
+                    {
+                        indicator.SetCameraPosition(Vector3.Transform(camera.cameraPosition(), Matrix.Invert(worldMatrix)));
+                    }
+                    else
+                    {
+                        indicator.SetCameraPosition(camera.cameraPosition());
+                    }
+                    indicator.Draw();
+
                     parentRacer.beatQueue.visualisation.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
                     if (parentRacer.shipPhysics != null)
                     {
