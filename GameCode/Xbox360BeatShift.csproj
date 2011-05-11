@@ -91,12 +91,9 @@
     <Compile Include="Manager\Maps\CityMap.cs" />
     <Compile Include="Manager\Maps\DesertMap.cs" />
     <Compile Include="Manager\Maps\FbxModel.cs" />
-    <Compile Include="Manager\Maps\JumpMap.cs" />
     <Compile Include="Manager\Maps\Map.cs" />
     <Compile Include="Manager\Maps\MapData.cs" />
     <Compile Include="Manager\Maps\MapManager.cs" />
-    <Compile Include="Manager\Maps\OldHillMap.cs" />
-    <Compile Include="Manager\Maps\RingMap.cs" />
     <Compile Include="Manager\Maps\SpaceMap.cs" />
     <Compile Include="Manager\Menus\LoadingMenu.cs" />
     <Compile Include="Manager\Menus\PauseMenu.cs" />

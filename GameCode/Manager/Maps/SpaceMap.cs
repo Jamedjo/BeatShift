@@ -18,10 +18,10 @@ namespace BeatShift
 
             LoadSkybox("Skyboxes/skybox2", "Skyboxes/j_skybox_upper35");
 
-            modelList.Add(new FbxModel("JumpMap_track", MapContent, MapName.SpaceMap, ModelCategory.Track));
-            modelList.Add(new FbxModel("JumpMap_walls", MapContent, MapName.SpaceMap, ModelCategory.Wall));
-            modelList.Add(new FbxModel("JumpMap_scenery", MapContent, MapName.SpaceMap, ModelCategory.Scenery));
-            mapData = new MapData("JumpMap", 60f, 4f);
+            modelList.Add(new FbxModel("SpaceMap_track", MapContent, MapName.SpaceMap, ModelCategory.Track));
+            modelList.Add(new FbxModel("SpaceMap_walls", MapContent, MapName.SpaceMap, ModelCategory.Wall));
+            modelList.Add(new FbxModel("SpaceMap_scenery", MapContent, MapName.SpaceMap, ModelCategory.Scenery));
+            mapData = new MapData("SpaceMap", 60f, 4f);
 
             mapTrackTexture = BeatShift.contentManager.Load<Texture2D>("Textures/Track2_Diffuse");
             mapTrackAlphaTexture = BeatShift.contentManager.Load<Texture2D>("Textures/Track2_Alpha");

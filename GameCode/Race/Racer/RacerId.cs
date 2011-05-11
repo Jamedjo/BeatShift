@@ -29,7 +29,6 @@ namespace BeatShift
             this.AIName = AIName;
         }
 
-
         public void createNewId()
         {
             PlayerIndex controllingPlayer = PlayerIndex.One;
@@ -42,7 +41,6 @@ namespace BeatShift
                   break;
                }
             }
-
 
             SignedInGamer gamer = Gamer.SignedInGamers[controllingPlayer];
 

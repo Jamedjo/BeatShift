@@ -19,10 +19,10 @@ namespace BeatShift
             LoadSkybox("Skyboxes/skybox2", "Skyboxes/j_skybox_upper35");
 
             //TODO: Update to city
-            modelList.Add(new FbxModel("RingMap_track", MapContent, MapName.CityMap, ModelCategory.Track));
-            modelList.Add(new FbxModel("RingMap_walls", MapContent, MapName.CityMap, ModelCategory.Wall));
-            modelList.Add(new FbxModel("RingMap_scenery", MapContent, MapName.CityMap, ModelCategory.Scenery));
-            mapData = new MapData("RingMap", 60f, 4f);
+            modelList.Add(new FbxModel("CityMap_track", MapContent, MapName.CityMap, ModelCategory.Track));
+            modelList.Add(new FbxModel("CityMap_walls", MapContent, MapName.CityMap, ModelCategory.Wall));
+            modelList.Add(new FbxModel("CityMap_scenery", MapContent, MapName.CityMap, ModelCategory.Scenery));
+            mapData = new MapData("CityMap", 60f, 4f);
 
             mapTrackTexture = BeatShift.contentManager.Load<Texture2D>("Textures/Track2_Diffuse");
             mapTrackAlphaTexture = BeatShift.contentManager.Load<Texture2D>("Textures/Track2_Alpha");

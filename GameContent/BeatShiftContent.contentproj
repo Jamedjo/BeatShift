@@ -709,36 +709,6 @@
       <Importer>FbxImporter</Importer>
       <Processor>BShiftModelProcessor</Processor>
     </Compile>
-    <Compile Include="Models\Maps\JumpMap_scenery.fbx">
-      <Name>JumpMap_scenery</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftModelProcessor</Processor>
-    </Compile>
-    <Compile Include="Models\Maps\JumpMap_track.fbx">
-      <Name>JumpMap_track</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftAdvancedModelProcessor</Processor>
-    </Compile>
-    <Compile Include="Models\Maps\JumpMap_walls.fbx">
-      <Name>JumpMap_walls</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftModelProcessor</Processor>
-    </Compile>
-    <Compile Include="Models\Maps\RingMap_scenery.fbx">
-      <Name>RingMap_scenery</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftModelProcessor</Processor>
-    </Compile>
-    <Compile Include="Models\Maps\RingMap_track.fbx">
-      <Name>RingMap_track</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftAdvancedModelProcessor</Processor>
-    </Compile>
-    <Compile Include="Models\Maps\RingMap_walls.fbx">
-      <Name>RingMap_walls</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>BShiftModelProcessor</Processor>
-    </Compile>
     <Compile Include="Models\Ships\Flux.fbx">
       <Name>Flux</Name>
       <Importer>FbxImporter</Importer>
@@ -774,6 +744,44 @@
       <Importer>FbxImporter</Importer>
       <Processor>BShiftModelProcessor</Processor>
     </Compile>
+    <Compile Include="Models\Maps\CityMap_scenery.fbx">
+      <Name>CityMap_scenery</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>BShiftModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Maps\CityMap_track.fbx">
+      <Name>CityMap_track</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>BShiftAdvancedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Maps\CityMap_walls.fbx">
+      <Name>CityMap_walls</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>BShiftModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Maps\SpaceMap_scenery.fbx">
+      <Name>SpaceMap_scenery</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>BShiftModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Maps\SpaceMap_track.fbx">
+      <Name>SpaceMap_track</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>BShiftAdvancedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Maps\SpaceMap_walls.fbx">
+      <Name>SpaceMap_walls</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>BShiftModelProcessor</Processor>
+    </Compile>
+    <None Include="MapPointData\CityMap.bsmp">
+      <Name>CityMap</Name>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MapPointData\SpaceMap.bsmp">
+      <Name>SpaceMap</Name>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Particles\Textures\License.txt">
       <Name>License</Name>
     </None>
@@ -886,18 +894,6 @@
       <Name>DesertMap</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="MapPointData\LoopMap.bsmp">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Name>LoopMap</Name>
-    </None>
-    <None Include="MapPointData\OldHillMap.bsmp">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Name>OldHillMap</Name>
-    </None>
-    <None Include="MapPointData\RingMap.bsmp">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Name>RingMap</Name>
-    </None>
     <Compile Include="Shaders\BShiftShader.fx">
       <Name>BShiftShader</Name>
       <Importer>EffectImporter</Importer>
@@ -923,12 +919,6 @@
       <Importer>XImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="MapPointData\JumpMap.bsmp">
-      <Name>JumpMap</Name>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
