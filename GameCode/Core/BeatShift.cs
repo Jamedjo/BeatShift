@@ -234,8 +234,6 @@ namespace BeatShift
 
             DebugSystem.Instance.TimeRuler.EndMark("SomeCode");
 
-            if( GameLoop.getCurrentState() == GameState.LocalGame )
-                particleManager.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
             //System.Diagnostics.Debug.WriteLine("Active Particles: " + particleManager.TotalNumberOfActiveParticles + 
             //                                    "\n Drawn Particles: " + particleManager.TotalNumberOfParticlesBeingDrawn);
         }

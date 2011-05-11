@@ -140,9 +140,11 @@ namespace BeatShift
              mpb = 60000.0m/bpm;
              soundBank = new SoundBank(BeatShift.engine, "Content\\XACT\\CityMap.xsb");
              waveBank = new WaveBank(BeatShift.engine, "Content\\XACT\\CityMap.xwb");
-            effectWave = new WaveBank(BeatShift.engine,"Content\\XACT\\SoundEffects.xwb");
+             effectWave = new WaveBank(BeatShift.engine,"Content\\XACT\\SoundEffects.xwb");
              musicCategory = BeatShift.engine.GetCategory("Music");
              track = soundBank.GetCue(currentTrack);
+
+             GC.Collect();
 
              while (!track.IsPrepared)
              {

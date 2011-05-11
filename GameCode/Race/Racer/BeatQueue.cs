@@ -21,12 +21,15 @@ namespace BeatShift
         long lastTime = 0;
         private long invinciEndtime = 0;
         Queue<Beat> beats;
+        Racer parentRacer;
         //BeatVisualisation myBar;
         int maxLayer;
         private int[] averageDists;
+        private int[] levelCoef = { 8, 7, 6, 5, 4 };
         private int averageCounter = 0;
         public BeatRingParticleSystem visualisation;
-        public BeatQueue() {
+        public BeatQueue(Racer racer) {
+            parentRacer = racer;
             beats = new Queue<Beat>();
             //myBar =  HeadsUpDisplay.beatVisualisation;
             maxLayer = BeatShift.bgm.Layers();
@@ -120,9 +123,9 @@ namespace BeatShift
             if (boostBar == 100 && result > 0.9m)
                 LevelUp();
             else if ((boostBar < 100) && (result > 0m))
-                boostBar +=(int)(result * 5);
+                boostBar += (int)(result * levelCoef[myLayer]);
             else if ((boostBar > 0) && (result == 0m))
-                if(time>invinciEndtime)
+                if (time > invinciEndtime)
                     boostBar -= penalty;
 
             if (boostBar > 100)
@@ -163,10 +166,6 @@ namespace BeatShift
                 }
                 latency -= temp / averageLength;
                 latency += tempoffset / averageLength;
-                /*System.Diagnostics.Debug.WriteLine(temp.getTime(latency) + ": Dequeued with ratio " + result + ". BB @:  \n" +
-                                "Distance to next: " + (time - (beats.Peek()).getTime(latency)) + "\n" +
-                                 "Distance to last: " + (time - lastTime));*/
-                //System.Diagnostics.Debug.WriteLine("New Latency: " + latency);
             }
         }
 
@@ -235,24 +234,25 @@ namespace BeatShift
 
         public void Update()
         {
-            if (beats.Count > 0)
+            if (!parentRacer.raceTiming.hasCompletedRace)
             {
-                Beat temp = beats.Peek();
-                if (temp.getTimeWithLatency((int)latency) < (BeatShift.bgm.songTick() - leeway))
+                if (beats.Count > 0)
                 {
-                    lastTime = temp.getTimeWithLatency((int)latency);
-                    beats.Dequeue();
-
-                    //System.Diagnostics.Debug.WriteLine(temp + ": Dequeued because way out");
-                    if (lastTime > invinciEndtime)
+                    Beat temp = beats.Peek();
+                    if (temp.getTimeWithLatency((int)latency) < (BeatShift.bgm.songTick() - leeway))
                     {
+                        lastTime = temp.getTimeWithLatency((int)latency);
+                        beats.Dequeue();
+
+                        //System.Diagnostics.Debug.WriteLine(temp + ": Dequeued because way out");
+                        if (lastTime > invinciEndtime)
+                        {
                             boostBar -= penalty;
+                        }
                     }
                 }
-            }
-            if (boostBar < 0)
-                LevelDown();
-
+                if (boostBar < 0)
+                    LevelDown();
             boostBar = 100;
         }
 

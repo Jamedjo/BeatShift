@@ -27,8 +27,9 @@ namespace BeatShift
         public EngineParticleSystem engineGlow;
         public BeatIndicatorParticleSystem indicator;
         //Physics delegate functions
-        Func<Matrix> getShipDrawOrientationMatrix;
+        public Func<Matrix> getShipDrawOrientationMatrix;
         Func<Vector3> getShipPosition;
+        public CollisionParticleSystem collision;
 
         private Racer parentRacer;
 
@@ -46,6 +47,10 @@ namespace BeatShift
             indicator = new BeatIndicatorParticleSystem(null);
             BeatShift.particleManager.AddParticleSystem(indicator);
             indicator.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
+
+            collision = new CollisionParticleSystem(null);
+            BeatShift.particleManager.AddParticleSystem(collision);
+            collision.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
 
             engineGlow = new EngineParticleSystem(null);
             BeatShift.particleManager.AddParticleSystem(engineGlow);
@@ -140,7 +145,7 @@ namespace BeatShift
             if (engineGlow != null)
             {
                 engineGlow.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
-
+                collision.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
                 //was using camera position (0,0,0) so all particles were facing towards the centre
                 //as particles are one sided this made them invisible
                 //this line faces them towards the ship which works as a quick hack when they originate from the centre/center
@@ -149,15 +154,17 @@ namespace BeatShift
                 if (parentRacer.shipPhysics != null)
                 {
                     engineGlow.SetCameraPosition(Vector3.Transform(camera.cameraPosition(), Matrix.Invert(worldMatrix)));
+                    collision.SetCameraPosition(Vector3.Transform(camera.cameraPosition(), Matrix.Invert(worldMatrix)));
                 }
                 else
                 {
                     engineGlow.SetCameraPosition(camera.cameraPosition());
+                    collision.SetCameraPosition(camera.cameraPosition());
                 }
                 engineGlow.Draw();
-
+                collision.Draw();
                 //Vector3.Transform(camera.cameraPosition(),Matrix.Invert(worldMatrix));
-                if (isThisTheCamerasShip)
+                if (isThisTheCamerasShip && !parentRacer.raceTiming.hasCompletedRace)
                 {
                     indicator.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
                     if (parentRacer.shipPhysics != null)

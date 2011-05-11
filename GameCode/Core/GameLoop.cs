@@ -274,10 +274,8 @@ namespace BeatShift
                     Physics.Update(gameTime);
                 if (MapManager.Enabled)
                     Race.Update(gameTime);
-                if (Race.Visible && !MenuManager.Enabled && BeatShift.emitter != null)
-                {
-                    BeatShift.emitter.Update(gameTime);
-                }
+                if (GameLoop.getCurrentState() == GameState.LocalGame)
+                    BeatShift.particleManager.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
                 // Game should be exited through the menu systems.
                 // Allows the game to return to main menu
                 //if (mainGameinput.actionTapped(InputAction.BackButton))

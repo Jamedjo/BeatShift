@@ -30,9 +30,29 @@ namespace BeatShift
         /// </summary>
         public Boolean isRespawning { get; set; }
 
-        public Boolean isCollidingWall { get; set; }
+        public Vector3 lastCollisionPoint;
 
-        public Boolean isCollidingShip { get; set; }
+        private Boolean mColliding;
+
+
+
+        public Boolean isColliding
+        {
+            get
+            {
+                return mColliding;
+            }
+            set
+            {
+                if (value)
+                {
+                    //shipDrawing.collision.Collision(Vector3.Transform(lastCollisionPoint, Matrix.Invert(shipDrawing.getShipDrawOrientationMatrix())));
+                    shipDrawing.collision.Collision(lastCollisionPoint);
+                }
+                mColliding = value;
+                //return isColliding;   
+            }
+        }
 
         /// <summary>
         /// The point in GameTime when the ship is reactivated after resetting.
@@ -49,7 +69,7 @@ namespace BeatShift
             racerID = rID;
             raceTiming=new RaceTiming(this);
             shipDrawing = new ShipDrawing(new Func<Matrix>(() => Matrix.Identity), new Func<Vector3>(() => Vector3.Zero), this);
-            beatQueue = new BeatQueue();
+            beatQueue = new BeatQueue(this);
             //setColour(1);//Set to red
 
             constructRaceVariables();
