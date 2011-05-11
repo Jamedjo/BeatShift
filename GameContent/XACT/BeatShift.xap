@@ -244,7 +244,7 @@ Global Settings
         Reserved = 1;
         Read Only = 1;
         Time = 0;
-        Value = 0.000000;
+        Value = 1.000000;
         Initial Value = 0.000000;
         Min = 0.000000;
         Max = 1024.000000;
@@ -349,6 +349,12 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = Default;
+    Xbox Bank Last Modified Low = 0;
+    Xbox Bank Last Modified High = 0;
+    PC Bank Last Modified Low = 0;
+    PC Bank Last Modified High = 0;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
     Bank Last Revised Low = 1884410635;
     Bank Last Revised High = 30141799;
 
@@ -635,12 +641,6 @@ Wave Bank
     Streaming = 1;
     Seek Tables = 1;
     Compression Preset Name = Default;
-    Xbox Bank Last Modified Low = 0;
-    Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 0;
-    PC Bank Last Modified High = 0;
-    Header Last Modified Low = 0;
-    Header Last Modified High = 0;
     Bank Last Revised Low = 1884430636;
     Bank Last Revised High = 30141799;
 
@@ -662,8 +662,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 7257600;
             File Type = 1;
-            Last Modified Low = 1698089083;
-            Last Modified High = 30137743;
+            Last Modified Low = 3611494694;
+            Last Modified High = 30147071;
         }
     }
 
@@ -685,8 +685,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 7257600;
             File Type = 1;
-            Last Modified Low = 1593153326;
-            Last Modified High = 30137743;
+            Last Modified Low = 3613634929;
+            Last Modified High = 30147071;
         }
     }
 
@@ -708,8 +708,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 7257600;
             File Type = 1;
-            Last Modified Low = 1653116639;
-            Last Modified High = 30137743;
+            Last Modified Low = 3615545081;
+            Last Modified High = 30147071;
         }
     }
 
@@ -731,8 +731,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 7257600;
             File Type = 1;
-            Last Modified Low = 1757712404;
-            Last Modified High = 30137743;
+            Last Modified Low = 3608584363;
+            Last Modified High = 30147071;
         }
     }
 
@@ -754,8 +754,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 7257600;
             File Type = 1;
-            Last Modified Low = 3086197715;
-            Last Modified High = 30141194;
+            Last Modified Low = 3617605199;
+            Last Modified High = 30147071;
         }
     }
 }
@@ -769,12 +769,6 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Xbox Bank Last Modified Low = 0;
-    Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 0;
-    PC Bank Last Modified High = 0;
-    Header Last Modified Low = 0;
-    Header Last Modified High = 0;
     Bank Last Revised Low = 4281919382;
     Bank Last Revised High = 30141192;
 
@@ -796,8 +790,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 2222654702;
-            Last Modified High = 30141184;
+            Last Modified Low = 3628315917;
+            Last Modified High = 30147071;
         }
     }
 
@@ -819,8 +813,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 2588315617;
-            Last Modified High = 30141184;
+            Last Modified Low = 3628365920;
+            Last Modified High = 30147071;
         }
     }
 }
@@ -832,6 +826,8 @@ Sound Bank
     Windows File = Win\Voiceover.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
+    Header Last Modified High = 0;
+    Header Last Modified Low = 0;
 
     Sound
     {
@@ -1553,7 +1549,7 @@ Sound Bank
     Sound
     {
         Name = Map 1 Level 1;
-        Volume = 600;
+        Volume = -10;
         Pitch = 0;
         Priority = 255;
 
@@ -1601,7 +1597,7 @@ Sound Bank
     Sound
     {
         Name = Map 1 Level 4;
-        Volume = 600;
+        Volume = -10;
         Pitch = 0;
         Priority = 255;
 
@@ -1649,7 +1645,7 @@ Sound Bank
     Sound
     {
         Name = Map 1 Level 3;
-        Volume = 600;
+        Volume = 30;
         Pitch = 0;
         Priority = 255;
 
@@ -1697,7 +1693,7 @@ Sound Bank
     Sound
     {
         Name = Map 1 Level 2;
-        Volume = 600;
+        Volume = 0;
         Pitch = 0;
         Priority = 255;
 
@@ -1839,7 +1835,7 @@ Sound Bank
     Sound
     {
         Name = Map 1 Level 5;
-        Volume = 600;
+        Volume = 0;
         Pitch = 0;
         Priority = 255;
 
