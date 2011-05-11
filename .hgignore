@@ -17,3 +17,4 @@ glob:GameCode/obj
 glob:GameContent/obj
 glob:**.vs10x
 glob:**.cachefile
+glob:desktop.ini
