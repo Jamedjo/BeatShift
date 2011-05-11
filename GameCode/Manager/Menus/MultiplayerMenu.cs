@@ -25,16 +25,16 @@ namespace BeatShift.Menus
 
         public override void setupMenuItems()
         {
-            addMenuItem("Split Screen" , (Action)(delegate
+            addMenuItem("SPLIT SCREEN" , (Action)(delegate
             {
                 MenuManager.setCurrentMenu(MenuPage.RaceSelect);
             }));
-            addMenuItem("Create LIVE session", (Action)(delegate
+            addMenuItem("CREATE LIVE SESSION", (Action)(delegate
             {
                 //BeatShift.networkedGame.startSession(SessionType.Create);
                 //GameLoop.setGameStateAndResetPlayers(GameState.NetworkedGame);
             }));
-            addMenuItem("Join LIVE session", (Action)(delegate
+            addMenuItem("JOIN LIVE SESSION", (Action)(delegate
             {
                 //BeatShift.networkedGame.startSession(SessionType.Join);
                 //GameLoop.setGameStateAndResetPlayers(GameState.NetworkedGame);

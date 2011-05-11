@@ -25,9 +25,9 @@ namespace BeatShift.Menus
             //spriteBatch.Draw(background, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - background.Width / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - background.Height / 2), Color.White);
             spriteBatch.Draw(background, new Rectangle(0,0,BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height), Color.White);
             if (!loadingThread.IsAlive)
-                spriteBatch.DrawString(BeatShift.newfont, "Press A to start the race fool!", new Vector2(390, 620), Color.Lime);
+                spriteBatch.DrawString(BeatShift.newfont, "PRESS A TO START", new Vector2(300, 620), Color.Lime);
             else
-                spriteBatch.DrawString(BeatShift.newfont, "Loading...", new Vector2(390, 620), Color.DarkRed);
+                spriteBatch.DrawString(BeatShift.newfont, "LOADING...", new Vector2(390, 620), Color.DarkRed);
         }
 
         public override void setupMenuItems()
