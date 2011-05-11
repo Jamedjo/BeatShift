@@ -21,12 +21,14 @@ namespace BeatShift
         long lastTime = 0;
         private long invinciEndtime = 0;
         Queue<Beat> beats;
+        Racer parentRacer;
         //BeatVisualisation myBar;
         int maxLayer;
         private int[] averageDists;
         private int averageCounter = 0;
         public BeatRingParticleSystem visualisation;
-        public BeatQueue() {
+        public BeatQueue(Racer racer) {
+            parentRacer = racer;
             beats = new Queue<Beat>();
             //myBar =  HeadsUpDisplay.beatVisualisation;
             maxLayer = BeatShift.bgm.Layers();
@@ -235,23 +237,26 @@ namespace BeatShift
 
         public void Update()
         {
-            if (beats.Count > 0)
+            if (!parentRacer.raceTiming.hasCompletedRace)
             {
-                Beat temp = beats.Peek();
-                if (temp.getTimeWithLatency((int)latency) < (BeatShift.bgm.songTick() - leeway))
+                if (beats.Count > 0)
                 {
-                    lastTime = temp.getTimeWithLatency((int)latency);
-                    beats.Dequeue();
-
-                    //System.Diagnostics.Debug.WriteLine(temp + ": Dequeued because way out");
-                    if (lastTime > invinciEndtime)
+                    Beat temp = beats.Peek();
+                    if (temp.getTimeWithLatency((int)latency) < (BeatShift.bgm.songTick() - leeway))
                     {
+                        lastTime = temp.getTimeWithLatency((int)latency);
+                        beats.Dequeue();
+
+                        //System.Diagnostics.Debug.WriteLine(temp + ": Dequeued because way out");
+                        if (lastTime > invinciEndtime)
+                        {
                             boostBar -= penalty;
+                        }
                     }
                 }
+                if (boostBar < 0)
+                    LevelDown();
             }
-            if (boostBar < 0)
-                LevelDown();
         }
 
         public void DrainBoost()
