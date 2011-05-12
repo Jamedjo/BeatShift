@@ -74,7 +74,7 @@ namespace BeatShift.Menus
         {
             addMenuItem("Next Race", (Action)(delegate
             {
-
+                GameLoop.setGameStateAndResetPlayers(GameState.Menu);
             }));
             addMenuItem("Main Menu", (Action)(delegate
             {

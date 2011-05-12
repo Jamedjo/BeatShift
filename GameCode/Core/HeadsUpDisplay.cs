@@ -44,7 +44,7 @@ namespace BeatShift
                 ////////////////////////
                 ///// FINAL RESULTS ////
                 ////////////////////////
-
+                BeatShift.spriteBatch.Begin();//(SpriteSortMode.Immediate, BlendState.AlphaBlend);
                 DrawMessage("Finished!", 325, vOffset/2);
                 DrawMessage("Final Time: " + racer.raceTiming.getFinalTotalTime(), 300, vOffset/2 + 40);
             }

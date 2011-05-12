@@ -70,15 +70,34 @@ namespace BeatShift
         public void finishLap()
         {
             currentLap++;
+
             if (currentLap == 1 || stopwatch.Elapsed.TotalMilliseconds < fastedLap.TotalMilliseconds)
                 fastedLap = stopwatch.Elapsed;
 
-
             // Penultimate racer destroys the guy in last place on each lap
             int racersStillGoing = Race.currentRacers.Count;
-            if (racersStillGoing-1 == racePosition)
+            int racerToBeEliminated=0;
+            int penultimateRacer=0;
+            
+            var stillRacers = Race.currentRacers.Where((r)=>!r.raceTiming.isLastToBeEliminated).ToList();
+
+            for(int i=0; i <Race.currentRaceType.rankings.Count-1 ;i++)
             {
-                isLastToBeEliminated = true;
+                Racer r = Race.currentRaceType.rankings[i];
+                if (!r.raceTiming.isLastToBeEliminated)
+                {
+                    if (i < Race.currentRaceType.rankings.Count - 2) break;
+                    
+                    penultimateRacer = i;
+                    racerToBeEliminated = i+1;
+
+                }
+            }
+            
+            if ( this == Race.currentRaceType.rankings[penultimateRacer].raceTiming)
+            {
+                Race.currentRaceType.rankings[racerToBeEliminated].raceTiming.isLastToBeEliminated = true;
+                Console.Write("eliminate " + racePosition + 1 + " position");
             }
 
             resetLapTimer();

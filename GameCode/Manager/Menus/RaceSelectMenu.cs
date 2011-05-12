@@ -39,7 +39,7 @@ namespace BeatShift.Menus
             }));
             addMenuItem("ELIMINATION", (Action)(delegate
             {
-                Race.currentRaceType = new EliminationRace(1); //TODO: define how many racers we want in menu
+                Race.currentRaceType = new EliminationRace(10); //TODO: define how many racers we want in menu
                 Race.resetPlayers();
                 MenuManager.setCurrentMenu(MenuPage.MapSelect);
             }));
