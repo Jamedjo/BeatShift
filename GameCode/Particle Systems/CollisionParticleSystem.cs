@@ -31,14 +31,14 @@ namespace DPSF.ParticleSystems
 #if (WINDOWS)
 	[Serializable]
 #endif
-	public class BeatGlowParticleSystem : DefaultTexturedQuadParticleSystem
+	public class CollisionParticleSystem : DefaultTexturedQuadParticleSystem
 	{
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="cGame">Handle to the Game object being used. Pass in null for this 
 		/// parameter if not using a Game object.</param>
-		public BeatGlowParticleSystem(Game cGame) : base(cGame) { }
+		public CollisionParticleSystem(Game cGame) : base(cGame) { }
 
 		//===========================================================
 		// Structures and Variables
@@ -76,11 +76,11 @@ namespace DPSF.ParticleSystems
 			// TODO: Change any Initialization parameters desired and the Name
 			//-----------------------------------------------------------
 			// Initialize the Particle System before doing anything else
-			InitializeTexturedQuadParticleSystem(cGraphicsDevice, cContentManager, 200, 5000,
-                                                UpdateVertexProperties, "Particles/Textures/Spikey001");
+			InitializeTexturedQuadParticleSystem(cGraphicsDevice, cContentManager, 100, 5000, 
+												UpdateVertexProperties, "Particles/Textures/FlowerBurst");
 
 			// Set the Name of the Particle System
-			Name = "Beat Glow Particle System";
+			Name = "Collision Particle System";
 
 			// Finish loading the Particle System in a separate function call, so if
 			// we want to reset the Particle System later we don't need to completely 
@@ -105,34 +105,34 @@ namespace DPSF.ParticleSystems
 			// according to the settings in the InitialProperties object (see further below).
 			// You can also create your own Particle Initialization Functions as well, as shown with
 			// the InitializeParticleProperties function below.
-			ParticleInitializationFunction = InitializeParticleUsingInitialProperties;
-			//ParticleInitializationFunction = InitializeParticleProperties;
+			//ParticleInitializationFunction = InitializeParticleUsingInitialProperties;
+			ParticleInitializationFunction = InitializeParticleProperties;
 
 			// Setup the Initial Properties of the Particles.
 			// These are only applied if using InitializeParticleUsingInitialProperties 
 			// as the Particle Initialization Function.
-			InitialProperties.LifetimeMin = 0.4f;
-			InitialProperties.LifetimeMax = 0.6f;
+			InitialProperties.LifetimeMin = 2.0f;
+			InitialProperties.LifetimeMax = 2.0f;
 			InitialProperties.PositionMin = Vector3.Zero;
 			InitialProperties.PositionMax = Vector3.Zero;
-			InitialProperties.VelocityMin = new Vector3(-10, -10, -10);
-			InitialProperties.VelocityMax = new Vector3(10, 10, 10);
+			InitialProperties.VelocityMin = new Vector3(-50, 50, -50);
+			InitialProperties.VelocityMax = new Vector3(50, 100, 50);
 			InitialProperties.RotationMin = new Vector3(0, 0, 0);
-			InitialProperties.RotationMax = new Vector3(0, 0, 0);
-			InitialProperties.RotationalVelocityMin = new Vector3(0, 0, 0);
-			InitialProperties.RotationalVelocityMax = new Vector3(0, 0, 0);
-			InitialProperties.StartWidthMin = 1;
-			InitialProperties.StartWidthMax = 1;
-			InitialProperties.StartHeightMin = 1;
-			InitialProperties.StartHeightMax = 1;
-			InitialProperties.EndWidthMin = 1;
-			InitialProperties.EndWidthMax = 1;
-			InitialProperties.EndHeightMin = 1;
-			InitialProperties.EndHeightMax = 1;
-			InitialProperties.StartColorMin = Color.White;
+			InitialProperties.RotationMax = new Vector3(0, 0, MathHelper.Pi);
+			InitialProperties.RotationalVelocityMin = new Vector3(0, 0, -MathHelper.Pi);
+			InitialProperties.RotationalVelocityMax = new Vector3(0, 0, MathHelper.Pi);
+			InitialProperties.StartWidthMin = 10;
+			InitialProperties.StartWidthMax = 40;
+			InitialProperties.StartHeightMin = 10;
+			InitialProperties.StartHeightMax = 40;
+			InitialProperties.EndWidthMin = 30;
+			InitialProperties.EndWidthMax = 30;
+			InitialProperties.EndHeightMin = 30;
+			InitialProperties.EndHeightMax = 30;
+			InitialProperties.StartColorMin = Color.Black;
 			InitialProperties.StartColorMax = Color.White;
-			InitialProperties.EndColorMin = Color.Green;
-			InitialProperties.EndColorMax = Color.Green;
+			InitialProperties.EndColorMin = Color.Black;
+			InitialProperties.EndColorMax = Color.White;
 
 			// Remove all Events first so that none are added twice if this function is called again
 			ParticleEvents.RemoveAllEvents();
@@ -143,13 +143,23 @@ namespace DPSF.ParticleSystems
 			ParticleEvents.AddEveryTimeEvent(UpdateParticleRotationUsingRotationalVelocity);
 			ParticleEvents.AddEveryTimeEvent(UpdateParticleWidthAndHeightUsingLerp);
 			ParticleEvents.AddEveryTimeEvent(UpdateParticleColorUsingLerp);
+
+			// This function must be executed after the Color Lerp function as the Color Lerp will overwrite the Color's
+			// Transparency value, so we give this function an Execution Order of 100 to make sure it is executed last.
+			//ParticleEvents.AddEveryTimeEvent(UpdateParticleTransparencyToFadeOutUsingLerp, 100);
 			
 			// Update the particle to face the camera. Do this after updating it's rotation/orientation.
             ParticleEvents.AddEveryTimeEvent(UpdateParticleToFaceTheCamera, 200);
 
+			// Set the Particle System's Emitter to toggle on and off every 0.5 seconds
+			//ParticleSystemEvents.LifetimeData.EndOfLifeOption = CParticleSystemEvents.EParticleSystemEndOfLifeOptions.Repeat;
+			//ParticleSystemEvents.LifetimeData.Lifetime = 1.0f;
+			//ParticleSystemEvents.AddTimedEvent(0.0f, BurstParticles);
+			//ParticleSystemEvents.AddTimedEvent(0.5f, UpdateParticleSystemEmitParticlesAutomaticallyOff);
+
+            Emitter.EmitParticlesAutomatically = false;
 			// Setup the Emitter
 			Emitter.ParticlesPerSecond = 500;
-            Emitter.EmitParticlesAutomatically = false;
 			Emitter.PositionData.Position = new Vector3(0, 0, 0);
 		}
 
@@ -167,27 +177,31 @@ namespace DPSF.ParticleSystems
 			//-----------------------------------------------------------
 
 			// Set the Particle's Lifetime (how long it should exist for)
-			cParticle.Lifetime = 2.0f;
+			cParticle.Lifetime = 0.25f;
 
 			// Set the Particle's initial Position to be wherever the Emitter is
 			cParticle.Position = Emitter.PositionData.Position;
 
 			// Set the Particle's Velocity
-			Vector3 sVelocityMin = new Vector3(-50, 50, -50);
-			Vector3 sVelocityMax = new Vector3(50, 100, 50);
+			Vector3 sVelocityMin = new Vector3(-1.8f, -1.8f, -1.8f);
+			Vector3 sVelocityMax = new Vector3(1.8f, 1.8f, 1.8f);
 			cParticle.Velocity = DPSFHelper.RandomVectorBetweenTwoVectors(sVelocityMin, sVelocityMax);
 
 			// Adjust the Particle's Velocity direction according to the Emitter's Orientation
 			cParticle.Velocity = Vector3.Transform(cParticle.Velocity, Emitter.OrientationData.Orientation);
 
+            sVelocityMin = new Vector3(0, 0, -MathHelper.Pi);
+            sVelocityMax = new Vector3(0, 0, MathHelper.Pi);
+            cParticle.RotationalVelocity = DPSFHelper.RandomVectorBetweenTwoVectors(sVelocityMin, sVelocityMax);
 			// Give the Particle a random Size
 			// Since we have Size Lerp enabled we must also set the Start and End Size
-			cParticle.Width = cParticle.StartWidth = cParticle.EndWidth =
-				cParticle.Height = cParticle.StartHeight = cParticle.EndHeight = RandomNumber.Next(10, 50);
-
+            cParticle.Width = cParticle.StartWidth = cParticle.EndWidth = cParticle.EndHeight =
+				cParticle.Height = cParticle.StartHeight = 0.9f*RandomNumber.NextFloat();
+ 
 			// Give the Particle a random Color
 			// Since we have Color Lerp enabled we must also set the Start and End Color
-			cParticle.Color = cParticle.StartColor = cParticle.EndColor = DPSFHelper.RandomColor();
+            cParticle.Color = cParticle.StartColor = Color.White;
+            cParticle.EndColor = Color.White;
 		}
 
 		//===========================================================
@@ -230,6 +244,11 @@ namespace DPSF.ParticleSystems
 			// Example: SetTexture("TextureAssetName");
 		}
 
+        protected void BurstParticles(float fElapsedTimeInSeconds)
+        {
+            Emitter.BurstParticles = 20;
+        }
+
 		//===========================================================
 		// Other Particle System Functions
 		//===========================================================
@@ -238,11 +257,12 @@ namespace DPSF.ParticleSystems
 		// TODO: Place any other functions here
 		//-----------------------------------------------------------
 
-        public void Glow(Color GlowColor)
+        public void Collision(Vector3 pointOfContact)
         {
-            InitialProperties.EndColorMax = GlowColor;
-            InitialProperties.EndColorMin = GlowColor;
-            Emitter.BurstParticles = RandomNumber.Next(5, 30);
+
+            ; ;
+            Emitter.PositionData.Position = Vector3.Transform(pointOfContact, Matrix.Invert(World));
+            Emitter.BurstParticles = 40;
         }
 	}
 }
