@@ -26,6 +26,7 @@ namespace BeatShift
         public Boolean isVisible = true;
         public EngineParticleSystem engineGlow;
         public BeatIndicatorParticleSystem indicator;
+        public BeatGlowParticleSystem glow;
         //Physics delegate functions
         Func<Matrix> getShipDrawOrientationMatrix;
         Func<Vector3> getShipPosition;
@@ -46,6 +47,10 @@ namespace BeatShift
             indicator = new BeatIndicatorParticleSystem(null);
             BeatShift.particleManager.AddParticleSystem(indicator);
             indicator.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
+
+            glow = new BeatGlowParticleSystem(null);
+            BeatShift.particleManager.AddParticleSystem(glow);
+            glow.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager,null);
 
             engineGlow = new EngineParticleSystem(null);
             BeatShift.particleManager.AddParticleSystem(engineGlow);
@@ -160,27 +165,24 @@ namespace BeatShift
                 if (isThisTheCamerasShip)
                 {
                     indicator.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
+                    parentRacer.beatQueue.visualisation.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
+                    glow.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
                     if (parentRacer.shipPhysics != null)
                     {
                         indicator.SetCameraPosition(Vector3.Transform(camera.cameraPosition(), Matrix.Invert(worldMatrix)));
+                        parentRacer.beatQueue.visualisation.SetCameraPosition(Vector3.Transform(camera.cameraPosition(), Matrix.Invert(worldMatrix)));
+                        glow.SetCameraPosition(Vector3.Transform(camera.cameraPosition(), Matrix.Invert(worldMatrix)));
                     }
                     else
                     {
                         indicator.SetCameraPosition(camera.cameraPosition());
+                        parentRacer.beatQueue.visualisation.SetCameraPosition(camera.cameraPosition());
+                        glow.SetCameraPosition(camera.cameraPosition());
                     }
                     indicator.Draw();
-
-                    parentRacer.beatQueue.visualisation.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
-                    if (parentRacer.shipPhysics != null)
-                    {
-                        parentRacer.beatQueue.visualisation.SetCameraPosition(Vector3.Transform(camera.cameraPosition(), Matrix.Invert(worldMatrix)));
-                    }
-                    else
-                    {
-                        parentRacer.beatQueue.visualisation.SetCameraPosition(camera.cameraPosition());
-                    }
-
                     parentRacer.beatQueue.visualisation.Draw();
+                    glow.Draw();
+
                 }
             }
             //if (Options.DrawCollisionPoints)
