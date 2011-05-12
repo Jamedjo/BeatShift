@@ -39,7 +39,7 @@ namespace BeatShift
             int bleedWidth = (int)(BeatShift.graphics.GraphicsDevice.Viewport.Width * 0.1);
 
 
-            if (racer.raceTiming.hasCompletedRace && GameLoop.raceComplete != true)
+            if (racer.raceTiming.hasCompletedRace && GameLoop.raceComplete != true && Race.currentRaceType.getRaceTypeString().Equals("EliminationRace"))
             {
                 ////////////////////////
                 ///// FINAL RESULTS ////

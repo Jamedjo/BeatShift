@@ -81,23 +81,26 @@ namespace BeatShift
             
             var stillRacers = Race.currentRacers.Where((r)=>!r.raceTiming.isLastToBeEliminated).ToList();
 
-            for(int i=0; i <Race.currentRaceType.rankings.Count-1 ;i++)
+            if (Race.currentRaceType.getRaceTypeString().Equals("EliminationRace"))
             {
-                Racer r = Race.currentRaceType.rankings[i];
-                if (!r.raceTiming.isLastToBeEliminated)
+                for (int i = 0; i < Race.currentRaceType.rankings.Count - 1; i++)
                 {
-                    if (i < Race.currentRaceType.rankings.Count - 2) break;
-                    
-                    penultimateRacer = i;
-                    racerToBeEliminated = i+1;
+                    Racer r = Race.currentRaceType.rankings[i];
+                    if (!r.raceTiming.isLastToBeEliminated)
+                    {
+                        if (i < Race.currentRaceType.rankings.Count - 2) break;
 
+                        penultimateRacer = i;
+                        racerToBeEliminated = i + 1;
+
+                    }
                 }
-            }
-            
-            if ( this == Race.currentRaceType.rankings[penultimateRacer].raceTiming)
-            {
-                Race.currentRaceType.rankings[racerToBeEliminated].raceTiming.isLastToBeEliminated = true;
-                Console.Write("eliminate " + racePosition + 1 + " position");
+
+                if (this == Race.currentRaceType.rankings[penultimateRacer].raceTiming)
+                {
+                    Race.currentRaceType.rankings[racerToBeEliminated].raceTiming.isLastToBeEliminated = true;
+                    Console.Write("eliminate " + racePosition + 1 + " position");
+                }
             }
 
             resetLapTimer();
