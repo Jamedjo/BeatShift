@@ -155,6 +155,7 @@
     <Compile Include="Manager\Menus\ResultsMenu.cs" />
     <Compile Include="Manager\Menus\SplashMenu.cs" />
     <Compile Include="Manager\Particles\BoostSettings.cs" />
+    <Compile Include="Particle Systems\BeatGlowParticleSystem.cs" />
     <Compile Include="Particle Systems\BeatIndicatorParticleSystem.cs" />
     <Compile Include="Particle Systems\BeatRingParticleSystem.cs" />
     <Compile Include="Particle Systems\CollisionParticleSystem.cs" />

@@ -49,6 +49,10 @@ namespace BeatShift
             BeatShift.particleManager.AddParticleSystem(indicator);
             indicator.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
 
+            collision = new CollisionParticleSystem(null);
+            BeatShift.particleManager.AddParticleSystem(collision);
+            collision.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
+
             glow = new BeatGlowParticleSystem(null);
             BeatShift.particleManager.AddParticleSystem(glow);
             glow.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager,null);
@@ -120,7 +124,6 @@ namespace BeatShift
                 }
             }
             
-
             //if (Options.DrawShipBoundingBoxes)
             //{
 

@@ -135,8 +135,8 @@ namespace BeatShift
         {
              tick = new Stopwatch();
              mpb = 60000.0m/bpm;
-             soundBank = new SoundBank(BeatShift.engine, "Content\\XACT\\DesertMap.xsb");
-             waveBank = new WaveBank(BeatShift.engine, "Content\\XACT\\DesertMap.xwb");
+             soundBank = new SoundBank(BeatShift.engine, "Content\\XACT\\CityMap.xsb");
+             waveBank = new WaveBank(BeatShift.engine, "Content\\XACT\\CityMap.xwb");
              effectWave = new WaveBank(BeatShift.engine,"Content\\XACT\\SoundEffects.xwb");
              musicCategory = BeatShift.engine.GetCategory("Music");
              track = soundBank.GetCue(currentTrack);

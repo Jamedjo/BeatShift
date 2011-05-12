@@ -31,7 +31,7 @@ namespace DPSF.ParticleSystems
 #if (WINDOWS)
 	[Serializable]
 #endif
-	class BeatGlowParticleSystem : DefaultTexturedQuadParticleSystem
+	public class BeatGlowParticleSystem : DefaultTexturedQuadParticleSystem
 	{
 		/// <summary>
 		/// Constructor
