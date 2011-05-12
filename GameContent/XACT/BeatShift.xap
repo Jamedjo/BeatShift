@@ -244,7 +244,7 @@ Global Settings
         Reserved = 1;
         Read Only = 1;
         Time = 0;
-        Value = 1.000000;
+        Value = 0.000000;
         Initial Value = 0.000000;
         Min = 0.000000;
         Max = 1024.000000;
@@ -278,8 +278,8 @@ Global Settings
         Reserved = 0;
         Read Only = 0;
         Time = 0;
-        Value = 2.180000;
-        Initial Value = -0.000000;
+        Value = 2.310000;
+        Initial Value = 0.000000;
         Min = 0.000000;
         Max = 10.000000;
     }
@@ -640,10 +640,8 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = Default;
-    Header Last Modified Low = 0;
-    Header Last Modified High = 0;
-    Bank Last Revised Low = 4186266676;
-    Bank Last Revised High = 30150669;
+    Bank Last Revised Low = 485763237;
+    Bank Last Revised High = 30150734;
 
     Wave
     {
@@ -770,8 +768,8 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Bank Last Revised Low = 876240629;
-    Bank Last Revised High = 30150667;
+    Bank Last Revised Low = 491183547;
+    Bank Last Revised High = 30150734;
 
     Wave
     {
@@ -829,6 +827,12 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = Default;
+    Xbox Bank Last Modified Low = 0;
+    Xbox Bank Last Modified High = 0;
+    PC Bank Last Modified Low = 0;
+    PC Bank Last Modified High = 0;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
     Bank Last Revised Low = 4209788021;
     Bank Last Revised High = 30150669;
 
@@ -2265,14 +2269,14 @@ Sound Bank
             Source Marker Max = 0;
             Destination Marker Min = 0;
             Destination Marker Max = 0;
-            Transition Type = 6;
+            Transition Type = 7;
             Transition Source = 0;
             Transition Destination = 1;
 
             Crossfade
             {
-                Fade In = 0;
-                Fade Out = 0;
+                Fade In = 300;
+                Fade Out = 300;
                 Crossfade Type = 0;
             }
         }
@@ -2284,14 +2288,14 @@ Sound Bank
             Source Marker Max = 0;
             Destination Marker Min = 0;
             Destination Marker Max = 0;
-            Transition Type = 6;
+            Transition Type = 7;
             Transition Source = 0;
             Transition Destination = 1;
 
             Crossfade
             {
-                Fade In = 0;
-                Fade Out = 0;
+                Fade In = 300;
+                Fade Out = 300;
                 Crossfade Type = 0;
             }
         }
@@ -2303,14 +2307,14 @@ Sound Bank
             Source Marker Max = 0;
             Destination Marker Min = 0;
             Destination Marker Max = 0;
-            Transition Type = 6;
+            Transition Type = 7;
             Transition Source = 0;
             Transition Destination = 1;
 
             Crossfade
             {
-                Fade In = 0;
-                Fade Out = 0;
+                Fade In = 300;
+                Fade Out = 300;
                 Crossfade Type = 0;
             }
         }
@@ -2322,14 +2326,14 @@ Sound Bank
             Source Marker Max = 0;
             Destination Marker Min = 0;
             Destination Marker Max = 0;
-            Transition Type = 6;
+            Transition Type = 7;
             Transition Source = 0;
             Transition Destination = 1;
 
             Crossfade
             {
-                Fade In = 0;
-                Fade Out = 0;
+                Fade In = 300;
+                Fade Out = 300;
                 Crossfade Type = 0;
             }
         }
@@ -2359,14 +2363,14 @@ Sound Bank
             Source Marker Max = 0;
             Destination Marker Min = 0;
             Destination Marker Max = 0;
-            Transition Type = 6;
+            Transition Type = 7;
             Transition Source = 0;
             Transition Destination = 1;
 
             Crossfade
             {
-                Fade In = 0;
-                Fade Out = 0;
+                Fade In = 300;
+                Fade Out = 300;
                 Crossfade Type = 0;
             }
         }
@@ -2378,14 +2382,14 @@ Sound Bank
             Source Marker Max = 0;
             Destination Marker Min = 0;
             Destination Marker Max = 0;
-            Transition Type = 6;
+            Transition Type = 7;
             Transition Source = 0;
             Transition Destination = 1;
 
             Crossfade
             {
-                Fade In = 0;
-                Fade Out = 0;
+                Fade In = 300;
+                Fade Out = 300;
                 Crossfade Type = 0;
             }
         }
@@ -2397,14 +2401,14 @@ Sound Bank
             Source Marker Max = 0;
             Destination Marker Min = 0;
             Destination Marker Max = 0;
-            Transition Type = 6;
+            Transition Type = 7;
             Transition Source = 0;
             Transition Destination = 1;
 
             Crossfade
             {
-                Fade In = 0;
-                Fade Out = 0;
+                Fade In = 300;
+                Fade Out = 300;
                 Crossfade Type = 0;
             }
         }
@@ -2416,14 +2420,14 @@ Sound Bank
             Source Marker Max = 0;
             Destination Marker Min = 0;
             Destination Marker Max = 0;
-            Transition Type = 6;
+            Transition Type = 7;
             Transition Source = 0;
             Transition Destination = 1;
 
             Crossfade
             {
-                Fade In = 0;
-                Fade Out = 0;
+                Fade In = 300;
+                Fade Out = 300;
                 Crossfade Type = 0;
             }
         }
@@ -2453,14 +2457,14 @@ Sound Bank
             Source Marker Max = 0;
             Destination Marker Min = 0;
             Destination Marker Max = 0;
-            Transition Type = 6;
+            Transition Type = 7;
             Transition Source = 0;
             Transition Destination = 1;
 
             Crossfade
             {
-                Fade In = 0;
-                Fade Out = 0;
+                Fade In = 300;
+                Fade Out = 300;
                 Crossfade Type = 0;
             }
         }
@@ -2472,14 +2476,14 @@ Sound Bank
             Source Marker Max = 0;
             Destination Marker Min = 0;
             Destination Marker Max = 0;
-            Transition Type = 6;
+            Transition Type = 7;
             Transition Source = 0;
             Transition Destination = 1;
 
             Crossfade
             {
-                Fade In = 0;
-                Fade Out = 0;
+                Fade In = 300;
+                Fade Out = 300;
                 Crossfade Type = 0;
             }
         }
@@ -2491,14 +2495,14 @@ Sound Bank
             Source Marker Max = 0;
             Destination Marker Min = 0;
             Destination Marker Max = 0;
-            Transition Type = 6;
+            Transition Type = 7;
             Transition Source = 0;
             Transition Destination = 1;
 
             Crossfade
             {
-                Fade In = 0;
-                Fade Out = 0;
+                Fade In = 300;
+                Fade Out = 300;
                 Crossfade Type = 0;
             }
         }
@@ -2510,14 +2514,14 @@ Sound Bank
             Source Marker Max = 0;
             Destination Marker Min = 0;
             Destination Marker Max = 0;
-            Transition Type = 6;
+            Transition Type = 7;
             Transition Source = 0;
             Transition Destination = 1;
 
             Crossfade
             {
-                Fade In = 0;
-                Fade Out = 0;
+                Fade In = 300;
+                Fade Out = 300;
                 Crossfade Type = 0;
             }
         }
@@ -2547,14 +2551,14 @@ Sound Bank
             Source Marker Max = 0;
             Destination Marker Min = 0;
             Destination Marker Max = 0;
-            Transition Type = 6;
+            Transition Type = 7;
             Transition Source = 0;
             Transition Destination = 1;
 
             Crossfade
             {
-                Fade In = 0;
-                Fade Out = 0;
+                Fade In = 300;
+                Fade Out = 300;
                 Crossfade Type = 0;
             }
         }
@@ -2566,14 +2570,14 @@ Sound Bank
             Source Marker Max = 0;
             Destination Marker Min = 0;
             Destination Marker Max = 0;
-            Transition Type = 6;
+            Transition Type = 7;
             Transition Source = 0;
             Transition Destination = 1;
 
             Crossfade
             {
-                Fade In = 0;
-                Fade Out = 0;
+                Fade In = 300;
+                Fade Out = 300;
                 Crossfade Type = 0;
             }
         }
@@ -2585,14 +2589,14 @@ Sound Bank
             Source Marker Max = 0;
             Destination Marker Min = 0;
             Destination Marker Max = 0;
-            Transition Type = 6;
+            Transition Type = 7;
             Transition Source = 0;
             Transition Destination = 1;
 
             Crossfade
             {
-                Fade In = 0;
-                Fade Out = 0;
+                Fade In = 300;
+                Fade Out = 300;
                 Crossfade Type = 0;
             }
         }
@@ -2604,14 +2608,14 @@ Sound Bank
             Source Marker Max = 0;
             Destination Marker Min = 0;
             Destination Marker Max = 0;
-            Transition Type = 6;
+            Transition Type = 7;
             Transition Source = 0;
             Transition Destination = 1;
 
             Crossfade
             {
-                Fade In = 0;
-                Fade Out = 0;
+                Fade In = 300;
+                Fade Out = 300;
                 Crossfade Type = 0;
             }
         }
@@ -2641,13 +2645,51 @@ Sound Bank
             Source Marker Max = 0;
             Destination Marker Min = 0;
             Destination Marker Max = 0;
-            Transition Type = 6;
+            Transition Type = 7;
             Transition Source = 0;
             Transition Destination = 1;
 
             Crossfade
             {
-                Fade In = 0;
+                Fade In = 300;
+                Fade Out = 300;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 5;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 7;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 300;
+                Fade Out = 300;
+                Crossfade Type = 0;
+            }
+        }
+
+        Transition Entry
+        {
+            Sound Index = 5;
+            Source Marker Min = 0;
+            Source Marker Max = 0;
+            Destination Marker Min = 0;
+            Destination Marker Max = 0;
+            Transition Type = 7;
+            Transition Source = 0;
+            Transition Destination = 1;
+
+            Crossfade
+            {
+                Fade In = 300;
                 Fade Out = 0;
                 Crossfade Type = 0;
             }
@@ -2660,52 +2702,14 @@ Sound Bank
             Source Marker Max = 0;
             Destination Marker Min = 0;
             Destination Marker Max = 0;
-            Transition Type = 6;
+            Transition Type = 7;
             Transition Source = 0;
             Transition Destination = 1;
 
             Crossfade
             {
-                Fade In = 0;
-                Fade Out = 0;
-                Crossfade Type = 0;
-            }
-        }
-
-        Transition Entry
-        {
-            Sound Index = 5;
-            Source Marker Min = 0;
-            Source Marker Max = 0;
-            Destination Marker Min = 0;
-            Destination Marker Max = 0;
-            Transition Type = 6;
-            Transition Source = 0;
-            Transition Destination = 1;
-
-            Crossfade
-            {
-                Fade In = 0;
-                Fade Out = 0;
-                Crossfade Type = 0;
-            }
-        }
-
-        Transition Entry
-        {
-            Sound Index = 5;
-            Source Marker Min = 0;
-            Source Marker Max = 0;
-            Destination Marker Min = 0;
-            Destination Marker Max = 0;
-            Transition Type = 6;
-            Transition Source = 0;
-            Transition Destination = 1;
-
-            Crossfade
-            {
-                Fade In = 0;
-                Fade Out = 0;
+                Fade In = 300;
+                Fade Out = 300;
                 Crossfade Type = 0;
             }
         }
