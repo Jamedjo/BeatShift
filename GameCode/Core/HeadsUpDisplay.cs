@@ -35,7 +35,8 @@ namespace BeatShift
 
             //MainGame.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;//Set display states
 
-
+            int bleedHeight = (int)(BeatShift.graphics.GraphicsDevice.Viewport.Height * 0.1);
+            int bleedWidth = (int)(BeatShift.graphics.GraphicsDevice.Viewport.Width * 0.1);
 
 
             if (racer.raceTiming.hasCompletedRace && GameLoop.raceComplete != true)
@@ -68,11 +69,14 @@ namespace BeatShift
                 double scaledHeighthOrange = (double)BeatShift.graphics.GraphicsDevice.Viewport.Height / (720 / (double)GameTextures.BoostBarLine.Height);
                 //double scaledBoostBarOffset = (double
 
-                int destY_Offset = (BeatShift.graphics.GraphicsDevice.Viewport.Height) - GameTextures.HudBar.Height + (2 * GameTextures.HudBar.Height / 3);
                 int destHeight = (int)scaledHeighthOrange;
                 int destWidth = (int)(scaledWidthOrange * racer.raceTiming.previousBoost);
+                int destY_Offset = (BeatShift.graphics.GraphicsDevice.Viewport.Height) - h - destHeight/2 + (int)(h * 89.0 / 138.0);
+
+
 
                 double leftGap = ((26.0 / 1280.0) * (double)BeatShift.graphics.GraphicsDevice.Viewport.Width);
+
 
                 Rectangle src = new Rectangle(GameTextures.BoostBarLine.Width - srcWidth, 0, srcWidth, GameTextures.BoostBarLine.Height);
                 Rectangle dest = new Rectangle((int)leftGap, destY_Offset, destWidth, GameTextures.BoostBarLine.Height);
@@ -86,8 +90,8 @@ namespace BeatShift
                 ////////////////////////
 
 
-                DrawMessageColour(BeatShift.newfont, "LEVEL", BeatShift.graphics.GraphicsDevice.Viewport.Width - 240, vOffset - 55, 0.19047619f, Color.PapayaWhip);
-                DrawMessageColour(BeatShift.newfont, racer.beatQueue.getLayer().ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 226, vOffset - 44, 0.5f, Color.Goldenrod);
+                DrawMessageColour(BeatShift.volterfont, "LEVEL", BeatShift.graphics.GraphicsDevice.Viewport.Width - 230, vOffset - 53, 0.5f, Color.PapayaWhip);
+                DrawMessageColour(BeatShift.volterfont, racer.beatQueue.getLayer().ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 222, vOffset - 40, 1f, Color.PapayaWhip);
 
 
                 ////////////////////////
@@ -96,8 +100,8 @@ namespace BeatShift
 
                 racer.raceTiming.previousSpeed = MathHelper.Lerp(racer.raceTiming.previousSpeed, (Math.Abs((int)racer.shipPhysics.getForwardSpeed())), 0.05f);
                 racer.raceTiming.speedToDisplay = String.Format("{0:0000}", racer.raceTiming.previousSpeed);
-                DrawMessageColour(BeatShift.newfont, "MPH", BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, vOffset - 58, 0.2857f, Color.DimGray);
-                DrawMessageColour(BeatShift.newfont, racer.raceTiming.speedToDisplay, BeatShift.graphics.GraphicsDevice.Viewport.Width - 180, vOffset - 48, 0.5f, Color.PapayaWhip);
+                DrawMessageColour(BeatShift.volterfont, "MPH", BeatShift.graphics.GraphicsDevice.Viewport.Width - 120, vOffset - 42, 0.5f, Color.DimGray);
+                DrawMessageColour(BeatShift.newfont, racer.raceTiming.speedToDisplay, BeatShift.graphics.GraphicsDevice.Viewport.Width - 180, vOffset - 48, 0.4f, Color.PapayaWhip);
 
                 //////////////////////////////
                 /////// TOP RIGHT BOARD //////
@@ -119,7 +123,7 @@ namespace BeatShift
                 if (Race.currentRaceType.displayCurrentLapOutofTotalLaps)
                 {
                     DrawMessageColour(BeatShift.newfont, (racer.raceTiming.currentLap + 1) + "/" + Race.currentRaceType.maxLaps, BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 33, 0.5f, Color.PapayaWhip);
-                    DrawMessageColour(BeatShift.newfont, "LAPS", BeatShift.graphics.GraphicsDevice.Viewport.Width - 70, 39, 0.3f, Color.DimGray);
+                    DrawMessageColour(BeatShift.volterfont, "LAPS", BeatShift.graphics.GraphicsDevice.Viewport.Width - 74, 39, 1f, Color.DimGray);
                 }
 
                 //////////////////////////////

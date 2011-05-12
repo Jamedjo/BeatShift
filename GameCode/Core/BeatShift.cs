@@ -52,6 +52,7 @@ namespace BeatShift
         public static SpriteBatch spriteBatch { get; protected set; } //should not be public?
         public static SpriteFont font { get; protected set; }
         public static SpriteFont newfont { get; protected set; }
+        public static SpriteFont volterfont { get; protected set; }
         public static SpriteFont newfontgreen { get; protected set; }
         public static SpriteFont buttonsFont { get; protected set; }
         public static SpriteFont blueNumbersFont { get; protected set; }
@@ -182,6 +183,7 @@ namespace BeatShift
             font = Content.Load<SpriteFont>("FontA");
             //newfont = Content.Load<SpriteFont>("fontfile");
             newfont = Content.Load<SpriteFont>("dotsfontfile");
+            volterfont = Content.Load<SpriteFont>("font-volter");
             newfontgreen = Content.Load<SpriteFont>("fontfile-green");
             blueNumbersFont = Content.Load<SpriteFont>("bluenumbersfont");
             buttonsFont = Content.Load<SpriteFont>("xboxControllerSpriteFont");

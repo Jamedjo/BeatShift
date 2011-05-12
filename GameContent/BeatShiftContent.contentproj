@@ -779,6 +779,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>FontTextureProcessor</Processor>
     </Compile>
+    <Compile Include="font-volter.bmp">
+      <Name>font-volter</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>FontTextureProcessor</Processor>
+    </Compile>
     <None Include="MapPointData\CityMap.bsmp">
       <Name>CityMap</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
