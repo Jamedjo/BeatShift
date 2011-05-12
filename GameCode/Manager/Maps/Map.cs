@@ -106,7 +106,7 @@ namespace BeatShift
 
 
             if (currentMapName == MapName.SpaceMap)
-                bshiftEffect.Parameters["ambientColour"].SetValue(Color.Purple.ToVector4());
+                bshiftEffect.Parameters["ambientColour"].SetValue(Color.DodgerBlue.ToVector4());
             else if (currentMapName == MapName.CityMap)
                 bshiftEffect.Parameters["ambientColour"].SetValue(Color.OrangeRed.ToVector4());
             else bshiftEffect.Parameters["ambientColour"].SetValue(Color.White.ToVector4());

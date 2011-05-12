@@ -370,9 +370,9 @@ namespace BeatShift
 
                     ////Stop all rotation
                     //physicsBody.AngularVelocity = new Vector3(0, 0, 0);
-
+                    parentRacer.lastCollisionPoint= contact.Position ;
                     //Initiate controller vibration
-                    parentRacer.isCollidingWall = true;
+                    parentRacer.isColliding = true;
 
                     //Calculate direction to bounce
                     Vector3 v1 = Vector3.Cross(nearestMapPoint.trackUp, contact.Normal);
@@ -646,9 +646,9 @@ namespace BeatShift
                                 //Bounce the ship to the left
                                 //physicsBody.ApplyImpulse(physicsBody.Position, collidedBody.OrientationMatrix.Left * 2000);
                             }
-
+                            r.lastCollisionPoint =  contact.Position;
                             //Initiate controller vibration
-                            r.isCollidingShip = true;
+                            r.isColliding = true;
 
                             //Vector3 relativeVelocity = collidedBody.LinearVelocity - physicsBody.LinearVelocity;
 

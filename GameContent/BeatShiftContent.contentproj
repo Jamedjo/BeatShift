@@ -270,10 +270,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BFF\try.bff">
-      <Name>try</Name>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Compile Include="Videos\splashVideo.wmv">
       <Name>splashVideo</Name>
       <Importer>WmvImporter</Importer>
@@ -779,6 +775,16 @@
       <Importer>TextureImporter</Importer>
       <Processor>FontTextureProcessor</Processor>
     </Compile>
+    <Compile Include="font-volter.bmp">
+      <Name>font-volter</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>FontTextureProcessor</Processor>
+    </Compile>
+    <None Include="BFF\try.bff">
+      <Name>try</Name>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
     <None Include="MapPointData\CityMap.bsmp">
       <Name>CityMap</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

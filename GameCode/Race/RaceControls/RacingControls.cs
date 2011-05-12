@@ -15,16 +15,20 @@ namespace BeatShift.Input
         int tapNo;
         public IInputManager chosenInput;
         Racer racer;
+
+        // Vibration variables
         float vibrateBoostControl = 0.0f;
         float vibrateCollisionControl = 0.0f;
         float vibrateControl = 0.0f;
         float vibrateLevelControl = 0.0f;
         float jumpHeight = 27.5f;
+        float speedOnCollision = 0.0f;
         bool justCollided = false;
         bool justBoost = false;
         bool justJump = false;
         bool vibrateSequence = false;
         int sequenceNumber;
+        int vibrateNumber;
 
         //TODO: sort topspeed variable
         float topSpeed = 350.0f;
@@ -49,8 +53,8 @@ namespace BeatShift.Input
             racer.beatQueue.isLevellingDown = false;
             racer.beatQueue.isLevellingUp = false;
             sequenceNumber = 0;
+            vibrateNumber = 0;
             vibrateSequence = true;
-            
         }
         public RacingControls(Racer myRacer)
             : this(myRacer, new PadInputManager(PlayerIndex.One))
@@ -137,33 +141,36 @@ namespace BeatShift.Input
                 justJump = false;
                 justCollided = true;
             }
+
             // checking for wall collisions
-            if (racer.isCollidingWall && !justCollided)
+            if (racer.isColliding && !justCollided)
             {
-                vibrateCollisionControl = vibrateCollisionControl + (float)Math.Sqrt(racer.raceTiming.previousSpeed / topSpeed);
+                //Console.WriteLine(racer.raceTiming.previousSpeed);
+                speedOnCollision = racer.raceTiming.previousSpeed;
+                vibrateCollisionControl = vibrateCollisionControl + 0.1f;
                 justCollided = true;
+                vibrateNumber = 0;
             }
-            // checking for ship collisions
-            //else if (racer.isCollidingShip && !justCollided)
-            //{
-            //    //TODO: based on speed difference of colliding ships
-            //    float relativeCollisionVel = (racer.raceTiming.previousSpeed - racer.raceTiming.previousSpeedOfCollidedBody);
-            //    System.Diagnostics.Debug.WriteLine( relativeCollisionVel );
-            //    vibrateCollisionControl = vibrateCollisionControl + (relativeCollisionVel);
-            //    justCollided = true;
-            //}
-            // cooldown after collisions
             else if (justCollided)
             {
-                if (vibrateCollisionControl > 0.05f)
-                    vibrateCollisionControl = vibrateCollisionControl - 0.05f;
+                if (speedOnCollision > racer.raceTiming.previousSpeed && vibrateNumber < 25)
+                {
+                    vibrateCollisionControl = vibrateCollisionControl + ((speedOnCollision - racer.raceTiming.previousSpeed) / (topSpeed/2));
+                    speedOnCollision = racer.raceTiming.previousSpeed;
+                }
                 else
                 {
-                    vibrateCollisionControl = 0.0f;
-                    justCollided = false;
-                    racer.isCollidingWall = false;
-                    racer.isCollidingShip = false;
+                    if (vibrateCollisionControl > 0.05f)
+                        vibrateCollisionControl = vibrateCollisionControl - 0.05f;
+                    else
+                    {
+                        //Console.WriteLine(racer.raceTiming.previousSpeed);
+                        vibrateCollisionControl = 0.0f;
+                        justCollided = false;
+                        racer.isColliding = false;
+                    }
                 }
+                vibrateNumber++;
             }
 
             #endregion
@@ -171,7 +178,8 @@ namespace BeatShift.Input
             #region BOOST
 
             // vibrations from boost
-            if (((chosenInput.actionPressed(InputAction.Boost)) || (racer.beatQueue.isLevellingUp)) && (racer.beatQueue.GetBoost() > 0))
+            if (((chosenInput.actionPressed(InputAction.Boost)) || (racer.beatQueue.isLevellingUp)) 
+                && (racer.beatQueue.GetBoost() > 0) && (!racer.raceTiming.hasCompletedRace) && (racer.beatQueue.getLayer() > 0))
             {
                 racer.setBoost(true);
                 justBoost = true;
@@ -280,12 +288,12 @@ namespace BeatShift.Input
 
         public void applyForwardMotionFromAnalogue()
         {
-            racer.shipPhysics.physicsBody.ApplyImpulse(racer.shipPhysics.physicsBody.Position, racer.shipPhysics.physicsBody.OrientationMatrix.Forward * 280 * chosenInput.getActionValue(InputAction.Forwards)); //TODO: should be 280?
+            racer.shipPhysics.physicsBody.ApplyImpulse(racer.shipPhysics.physicsBody.Position, racer.shipPhysics.physicsBody.OrientationMatrix.Forward * 240 * chosenInput.getActionValue(InputAction.Forwards)); //TODO: should be 280?
         }
 
         public void Boost(double accuracy)
         {
-            racer.shipPhysics.physicsBody.ApplyImpulse(racer.shipPhysics.physicsBody.Position, racer.shipPhysics.physicsBody.OrientationMatrix.Forward * 1000 * (float)accuracy);
+            racer.shipPhysics.physicsBody.ApplyImpulse(racer.shipPhysics.physicsBody.Position, racer.shipPhysics.physicsBody.OrientationMatrix.Forward * 1200 * (float)accuracy);
         }
 
         public void AverageMove(double average)
