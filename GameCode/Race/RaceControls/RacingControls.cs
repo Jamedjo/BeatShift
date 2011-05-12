@@ -178,7 +178,8 @@ namespace BeatShift.Input
             #region BOOST
 
             // vibrations from boost
-            if (((chosenInput.actionPressed(InputAction.Boost)) || (racer.beatQueue.isLevellingUp)) && (racer.beatQueue.GetBoost() > 0) && (!racer.raceTiming.hasCompletedRace))
+            if (((chosenInput.actionPressed(InputAction.Boost)) || (racer.beatQueue.isLevellingUp)) 
+                && (racer.beatQueue.GetBoost() > 0) && (!racer.raceTiming.hasCompletedRace) && (racer.beatQueue.getLayer() > 0))
             {
                 racer.setBoost(true);
                 justBoost = true;

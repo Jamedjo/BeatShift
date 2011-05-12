@@ -21,11 +21,8 @@ namespace BeatShift
     /// </summary>
     public class SoundTrack
     {
-        const float leeway = 100.0f;
-        const float warmUp = 5000.0f;
-        int latency = 0;
+        const float warmUp = 1000.0f;
         Boolean shouldPlay = false;
-        Boolean recentBeat = false;
         Stopwatch tick;
         decimal mpb;
         private Boolean loaded = false;
