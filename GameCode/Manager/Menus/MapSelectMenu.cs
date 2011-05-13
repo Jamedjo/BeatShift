@@ -26,20 +26,20 @@ namespace BeatShift.Menus
 
         public override void setupMenuItems()
         {
+
             addMenuItem("SPACE MAP", (Action)(delegate
             {
                 MapManager.mapToLoad = MapName.SpaceMap;
 
-                if (isSinglePlayer()) MenuManager.setCurrentMenu(MenuPage.SinglePlayerShipSelect);
-                else GameLoop.setGameState(GameState.MultiplayerShipSelect);
+                //if (isSinglePlayer()) 
+                //    MenuManager.setCurrentMenu(MenuPage.SinglePlayerShipSelect);
+                //else
+                    GameLoop.setGameState(GameState.MultiplayerShipSelect);
             }));
             addMenuItem("CITY MAP", (Action)(delegate
             {
                 MapManager.mapToLoad = MapName.CityMap;
-
-                if (isSinglePlayer()) MenuManager.setCurrentMenu(MenuPage.SinglePlayerShipSelect);
-                else GameLoop.setGameState(GameState.MultiplayerShipSelect);
-
+                GameLoop.setGameState(GameState.MultiplayerShipSelect);
             }));
             addMenuItem("DESERT MAP", (Action)(delegate
             {
@@ -50,13 +50,13 @@ namespace BeatShift.Menus
             }));
         }
 
-        public bool isSinglePlayer()
-        {
-            if(MenuManager.MenuTrail.Contains(MenuPage.Multiplayer)) return false;
-            else return true;
-            //if (Race.isSinglePlayer) return true;
-            //else if (Race.isMultiplayer) return false;
-            //else throw new Exception("Exception, moving between menus without single/multiplayer defined");
-        }
+        //public bool isSinglePlayer()
+        //{
+        //    if(MenuManager.MenuTrail.Contains(MenuPage.Multiplayer)) return false;
+        //    else return true;
+        //    //if (Race.isSinglePlayer) return true;
+        //    //else if (Race.isMultiplayer) return false;
+        //    //else throw new Exception("Exception, moving between menus without single/multiplayer defined");
+        //}
     }
 }
