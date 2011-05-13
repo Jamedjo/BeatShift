@@ -39,14 +39,28 @@ namespace BeatShift
             int bleedWidth = (int)(BeatShift.graphics.GraphicsDevice.Viewport.Width * 0.1);
 
 
-            if (racer.raceTiming.hasCompletedRace && GameLoop.raceComplete != true)
+            if (racer.raceTiming.hasCompletedRace && GameLoop.raceComplete != true )
             {
                 ////////////////////////
                 ///// FINAL RESULTS ////
                 ////////////////////////
+                if (Race.currentRaceType.getRaceTypeString().Equals("LappedRace"))
+                {
+                    BeatShift.spriteBatch.Begin();//(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+                    DrawMessage("Finished!", 325, vOffset / 2);
+                    DrawMessage("Final Time: " + racer.raceTiming.getFinalTotalTime(), 300, vOffset / 2 + 40);
+                }
+                if (Race.currentRaceType.getRaceTypeString().Equals("EliminationRace"))
+                {
+                    BeatShift.spriteBatch.Begin();
+                    DrawMessage("ELIMINATED!", 325, vOffset / 2);
+                }
+                if (Race.currentRaceType.getRaceTypeString().Equals("TimeTrialRace"))
+                {
+                    BeatShift.spriteBatch.Begin();
+                    DrawMessage("Best lap time: "+racer.raceTiming.getBestLapTime(), 325, vOffset / 2);
+                }
 
-                DrawMessage("Finished!", 325, vOffset/2);
-                DrawMessage("Final Time: " + racer.raceTiming.getFinalTotalTime(), 300, vOffset/2 + 40);
             }
             else
             {
@@ -204,8 +218,8 @@ namespace BeatShift
         public static void DrawMessage(string message, int x, int y)
         {
             //spriteBatch.DrawString("Speed: " + shipSpeed, new Vector2(10, 10), Color.OrangeRed, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
-            BeatShift.spriteBatch.DrawString(BeatShift.font, message, new Vector2(x + 1, y + 1), Color.Black);//,0,new Vector2(0,0),0.5f,null,0f);
-            BeatShift.spriteBatch.DrawString(BeatShift.font, message, new Vector2(x, y), Color.White);
+            BeatShift.spriteBatch.DrawString(BeatShift.newfont, message, new Vector2(x + 1, y + 1), Color.Black);//,0,new Vector2(0,0),0.5f,null,0f);
+            BeatShift.spriteBatch.DrawString(BeatShift.newfont, message, new Vector2(x, y), Color.White);
         }
         public static void DrawMessage(SpriteFont font, string message, int x, int y,float scale)
         {

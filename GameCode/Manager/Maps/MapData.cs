@@ -198,6 +198,7 @@ namespace BeatShift
             trackUp.Normalize();
             roadSurface.Normalize();
             tangent.Normalize();
+            trackUp = Vector3.Cross(roadSurface, tang);
 
             //position is 3 above curve direction, where above is in the direction of track up
             position = pos + Vector3.Transform(new Vector3(0, vOffset, 0), Matrix.CreateWorld(new Vector3(0, 0, 0), tangent, trackUp));

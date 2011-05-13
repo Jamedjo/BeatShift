@@ -28,6 +28,11 @@ namespace BeatShift
             mapTrackAlphaTexture = BeatShift.contentManager.Load<Texture2D>("Textures/Track2_Alpha");
             mapTrackNormalTexture = BeatShift.contentManager.Load<Texture2D>("Textures/Track2_Normal");
 
+            timeTrialRanks[0] = 21000;
+            timeTrialRanks[1] = 24000;
+            timeTrialRanks[2] = 27000;
+            timeTrialRanks[3] = 31000;
+
             Console.WriteLine("...Loaded City map");
         }
 

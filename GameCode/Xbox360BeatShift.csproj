@@ -87,7 +87,6 @@
     <Compile Include="GameDebugTools\Layout.cs" />
     <Compile Include="GameDebugTools\StringBuilderExtensions.cs" />
     <Compile Include="GameDebugTools\TimeRuler.cs" />
-    <Compile Include="Manager\Input\InputManager.cs" />
     <Compile Include="Manager\Maps\CityMap.cs" />
     <Compile Include="Manager\Maps\DesertMap.cs" />
     <Compile Include="Manager\Maps\FbxModel.cs" />
@@ -137,7 +136,6 @@
     <Compile Include="Race\Racer\ShipDrawing.cs" />
     <Compile Include="Race\Racer\ShipFbx.cs" />
     <Compile Include="Race\Racer\ShipPhysics.cs" />
-    <Compile Include="Race\RaceTypes\BeatPointsRace.cs" />
     <Compile Include="Race\RaceTypes\EliminationRace.cs" />
     <Compile Include="Race\RaceTypes\IRaceType.cs" />
     <Compile Include="Race\RaceTypes\LappedRace.cs" />
@@ -248,9 +246,7 @@
       <Private>False</Private>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Input\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--

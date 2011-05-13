@@ -18,7 +18,9 @@ namespace BeatShift
     {
         static GameTime time;
         static SoundBank soundBank;
+        static SoundBank effectSound;
         static WaveBank waveBank;
+        static WaveBank effectBank;
         AudioCategory voiceCategory;
         AudioCategory effectCategory;
 
@@ -65,10 +67,10 @@ namespace BeatShift
 
         public SoundManager()
         {
-            
-            //mwallCollide = soundBank.GetCue("Interactive");
             soundBank = new SoundBank(BeatShift.engine, "Content\\XACT\\Voiceover.xsb");
+            effectSound = new SoundBank(BeatShift.engine, "Content\\XACT\\SoundEffects.xsb");
             waveBank = new WaveBank(BeatShift.engine, "Content\\XACT\\SpeechEffects.xwb");
+            effectBank = new WaveBank(BeatShift.engine, "Content\\XACT\\SoundEffects.xwb");
             voiceCategory = BeatShift.engine.GetCategory("Voice");
             effectCategory = BeatShift.engine.GetCategory("Effects");
             time = new GameTime();       
@@ -107,6 +109,26 @@ namespace BeatShift
             Console.WriteLine("   ...sounds loaded.");
         }
 
+        public static void Collision()
+        {
+            effectSound.PlayCue("Collision");
+        }
+
+        public static void levelUp()
+        {
+            effectSound.PlayCue("levelup");
+        }
+
+        public static void levelDown()
+        {
+            effectSound.PlayCue("leveldown");
+        }
+
+        public static void MissedNote()
+        {
+            effectSound.PlayCue("MissedNote");
+        }
+
         public static void FinalLap()
         {
             soundBank.PlayCue("final_lap");
@@ -114,12 +136,17 @@ namespace BeatShift
 
         public static void LapComplete()
         {
-            soundBank.PlayCue("lap_complete"); 
+            effectSound.PlayCue("LapComplete"); 
         }
 
         public static void RaceStart(int count)
         {
             soundBank.PlayCue("CountDown");                
+        }
+
+        public static Cue getEngineHum()
+        {
+            return effectSound.GetCue("Hum");
         }
 
         public static void RaceComplete()

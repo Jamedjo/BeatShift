@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
+using BeatShift.Input;
 
 namespace BeatShift
 {
@@ -10,7 +11,7 @@ namespace BeatShift
     {
         public TimeTrialRace()
         {
-            maxLaps = 3;
+            maxLaps = 1;
             areLapsRequired = true;
             areRanksRequired = false;
 
@@ -38,9 +39,10 @@ namespace BeatShift
             racer.raceTiming.isRacing = false;
             racer.raceTiming.hasCompletedRace = true;
             racer.raceTiming.finalRaceTime = finishTime.ElapsedMilliseconds;
+            racer.racingControls.chosenInput = new AiInputManager(racer);
 
-            TimeSpan ts = finishTime.Elapsed;
-            racer.raceTiming.finalRaceTimeString = racer.raceTiming.convertTimeSpanToString(ts);
+            String ts = racer.raceTiming.getBestLapTime();
+            racer.raceTiming.finalRaceTimeString = ts ;
         }
 
         public override void startRaceVirtual()
@@ -52,7 +54,7 @@ namespace BeatShift
             }
         }
 
-        public override void finishWholeRace()
+        /*public override void finishWholeRace()
         {
             totalRaceTime.Stop();
 
@@ -60,6 +62,6 @@ namespace BeatShift
             //If faster then insert into record
 
             totalRaceTime.Reset();
-        }
+        }*/
     }
 }

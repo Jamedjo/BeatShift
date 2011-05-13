@@ -35,6 +35,7 @@ namespace BeatShift
         
         public MapName currentMapName;
 
+        public double[] timeTrialRanks = new double[4];
 
         public Texture2D skyboxTexture;
         public Model skyboxModel;
@@ -104,11 +105,11 @@ namespace BeatShift
             Matrix worldInverseTranspose = Matrix.Transpose(Matrix.Invert(worldTransform));
             bshiftEffect.Parameters["wit_Mx"].SetValue(worldInverseTranspose);
 
-
+            
             if (currentMapName == MapName.SpaceMap)
                 bshiftEffect.Parameters["ambientColour"].SetValue(Color.DodgerBlue.ToVector4());
             else if (currentMapName == MapName.CityMap)
-                bshiftEffect.Parameters["ambientColour"].SetValue(Color.OrangeRed.ToVector4());
+                bshiftEffect.Parameters["ambientColour"].SetValue(Color.PapayaWhip.ToVector4());
             else bshiftEffect.Parameters["ambientColour"].SetValue(Color.White.ToVector4());
 
             bshiftEffect.Parameters["ambientIntensity"].SetValue(0.2f);
