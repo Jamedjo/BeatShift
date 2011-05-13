@@ -94,7 +94,7 @@ namespace BeatShift.Input
 
             #region LEVEL CHANGE
 
-            if (racer.beatQueue.isLevellingDown)
+            if (racer.beatQueue.isLevellingDown )
             {
                 if( vibrateSequence )
                 {

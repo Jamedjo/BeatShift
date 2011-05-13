@@ -8,6 +8,7 @@ namespace BeatShift.Menus
 {
     class OptionsMenu : IMenuPage
     {
+        public bool debugOptions = true;
         public OptionsMenu()
         {
             title = "Options";
@@ -26,72 +27,83 @@ namespace BeatShift.Menus
 
         public override void setupMenuItems()
         {
-            addMenuItem("Draw Waypoints: ", (Action) (delegate
-            {
-                Options.DrawWaypoints = !Options.DrawWaypoints;
-            })
-            ,
-            (Func<string>) delegate { return Options.DrawWaypoints.ToString(); }
-            );
-
-            addMenuItem("Draw Track Normals: ", (Action) (delegate
-            {
-                Options.DrawTrackNormals = !Options.DrawTrackNormals;
-            })
-            ,
-            (Func<string>) delegate { return Options.DrawTrackNormals.ToString(); }
-            );
-
-            //addMenuItem("Input Method: ", (Action)(delegate
-            //{
-
-            //})
-            //,
-            //(Func<string>)delegate { return ""; }
-            //);
-
-            //addMenuItem("Beat Offset: ", (Action)(delegate
-            //{
-
-            //})
-            //,
-            //(Func<string>)delegate { return ""; }
-            //);
-
-            addMenuItem("Keyboard as Pad 2: ", (Action) (delegate
-            {
-                Options.UseKeyboardAsPad2 = !Options.UseKeyboardAsPad2;
-                BeatShift.shipSelect.resetInputsAndScreens();
-            })
-            ,
-            (Func<string>) delegate { return Options.UseKeyboardAsPad2.ToString(); }
-            );
-
-            addMenuItem("Add AI: ", (Action) (delegate
+            addMenuItem("Add AI: ", (Action)(delegate
             {
                 Options.AddAItoGame = !Options.AddAItoGame;
             })
             ,
-            (Func<string>) delegate { return Options.AddAItoGame.ToString(); }
+            (Func<string>)delegate { return Options.AddAItoGame.ToString(); }
             );
 
-            addMenuItem("Draw Ship Physics: ", (Action) (delegate
+            if (debugOptions == true)
             {
-                Options.DrawShipBoundingBoxes = !Options.DrawShipBoundingBoxes;
-            })
-            ,
-            (Func<string>) delegate { return Options.DrawShipBoundingBoxes.ToString(); }
-            );
+                addMenuItem("Draw Waypoints: ", (Action)(delegate
+                {
+                    Options.DrawWaypoints = !Options.DrawWaypoints;
+                })
+                ,
+                (Func<string>)delegate { return Options.DrawWaypoints.ToString(); }
+                );
 
-            addMenuItem("Controller Vibration: ", (Action)(delegate
+                addMenuItem("Draw Track Normals: ", (Action)(delegate
+                {
+                    Options.DrawTrackNormals = !Options.DrawTrackNormals;
+                })
+                ,
+                (Func<string>)delegate { return Options.DrawTrackNormals.ToString(); }
+                );
+
+                //addMenuItem("Input Method: ", (Action)(delegate
+                //{
+
+                //})
+                //,
+                //(Func<string>)delegate { return ""; }
+                //);
+
+                //addMenuItem("Beat Offset: ", (Action)(delegate
+                //{
+
+                //})
+                //,
+                //(Func<string>)delegate { return ""; }
+                //);
+
+                addMenuItem("Keyboard as Pad 2: ", (Action)(delegate
+                {
+                    Options.UseKeyboardAsPad2 = !Options.UseKeyboardAsPad2;
+                    BeatShift.shipSelect.resetInputsAndScreens();
+                })
+                ,
+                (Func<string>)delegate { return Options.UseKeyboardAsPad2.ToString(); }
+                );
+
+                addMenuItem("Draw Ship Physics: ", (Action)(delegate
+                {
+                    Options.DrawShipBoundingBoxes = !Options.DrawShipBoundingBoxes;
+                })
+                ,
+                (Func<string>)delegate { return Options.DrawShipBoundingBoxes.ToString(); }
+                );
+
+                addMenuItem("Controller Vibration: ", (Action)(delegate
+                {
+                    Options.ControllerVibration = !Options.ControllerVibration;
+                })
+                ,
+                (Func<string>)delegate { return Options.ControllerVibration.ToString(); }
+                );
+            }
+            else
             {
-                Options.ControllerVibration = !Options.ControllerVibration;
-            })
-            ,
-            (Func<string>)delegate { return Options.ControllerVibration.ToString(); }
-            );
+                Options.DrawWaypoints = false;
+                Options.DrawTrackNormals = false;
+                Options.ControllerVibration = true;
+                Options.DrawShipBoundingBoxes = false;
+                Options.UseKeyboardAsPad2 = false;
+            }
 
-            addMenuItem("Master Volume: ", (Action) (delegate
+            addMenuItem("Master Volume: ", (Action)(delegate
             {
                 if (Options.MasterVolume > 90)
                     Options.MasterVolume = 0;
@@ -101,7 +113,6 @@ namespace BeatShift.Menus
             ,
             (Func<string>)delegate { return Options.MasterVolume.ToString() + "%"; }
             );
-
             addMenuItem("Music Volume: ", (Action)(delegate
             {
                 if (Options.MusicVolume > 90)
@@ -109,9 +120,9 @@ namespace BeatShift.Menus
                 else
                     Options.MusicVolume += 10;
             })
-,
-(Func<string>)delegate { return Options.MusicVolume.ToString() + "%"; }
-);
+            ,
+            (Func<string>)delegate { return Options.MusicVolume.ToString() + "%"; }
+            );
 
             addMenuItem("Voice Volume: ", (Action)(delegate
             {
@@ -120,9 +131,9 @@ namespace BeatShift.Menus
                 else
                     Options.VoiceVolume += 10;
             })
-,
-(Func<string>)delegate { return Options.VoiceVolume.ToString() + "%"; }
-);
+            ,
+            (Func<string>)delegate { return Options.VoiceVolume.ToString() + "%"; }
+            );
 
             addMenuItem("Effect Volume: ", (Action)(delegate
             {
@@ -131,9 +142,9 @@ namespace BeatShift.Menus
                 else
                     Options.SfxVolume += 10;
             })
-,
-(Func<string>)delegate { return Options.SfxVolume.ToString() + "%"; }
-);
+            ,
+            (Func<string>)delegate { return Options.SfxVolume.ToString() + "%"; }
+            );
 
         }
 
