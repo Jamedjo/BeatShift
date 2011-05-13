@@ -37,7 +37,7 @@ namespace BeatShift.Menus
             Texture2D background = GameTextures.MenuBackgroundBlack;
             spriteBatch.Draw(background, new Rectangle(0, 0, 1300, background.Height / 2 + 50), Color.White);
             spriteBatch.Draw(background, new Rectangle(0, 0, 600, background.Height / 2 + 50), Color.White);
-            if (resultsCalc == true)
+            if (resultsCalc == true && Race.currentRaceType.getRaceTypeString().Equals("LappedRace"))
             {
                 for (int i = 0; i < Race.currentRacers.Count(); i++)
                 {
