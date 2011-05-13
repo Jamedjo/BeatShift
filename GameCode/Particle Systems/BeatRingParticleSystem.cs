@@ -1,15 +1,9 @@
 ﻿#region File Description
 //===================================================================
-// BeatRingParticleSystem.cs
+// DefaultTexturedQuadParticleSystemTemplate.cs
 // 
-// This file provides the template for creating a new Textured Quad Particle
-// System from scratch, by creating a very basic Textured Quad Particle System.
-//
-// First, it shows how to create a new Particle class so the user can 
-// create Particles with whatever properties they need their Particles
-// to contain. Next, it shows how to create the Particle Vertex structure, 
-// which is used to draw the particles to the screen. Last, it shows 
-// how to create the Particle System class itself.
+// This file provides the template for creating a new Textued Quad Particle
+// System that inherits from the Default Textured Quad Particle System.
 //
 // The spots that should be modified are marked with TODO statements.
 //
@@ -24,196 +18,28 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
-//using BeatShift;
 #endregion
 
 namespace DPSF.ParticleSystems
 {
 	//-----------------------------------------------------------
-	// TODO: Rename/Refactor the Particle class
-	//-----------------------------------------------------------
-	/// <summary>
-	/// Create a new Particle class that inherits from DPSFParticle
-	/// </summary>
-#if (WINDOWS)
-	[Serializable]
-#endif
-	public class BeatRingParticleSystemParticle : DPSFParticle
-	{
-		//-----------------------------------------------------------
-		// TODO: Add in any properties that you want your Particles to have here.
-		// NOTE: A Quad Particle System requires the Particles to at least
-		// have a Position and Color (unless using a different Shader than DPSFEffects.fx). 
-		// If you want the Particles to have different sizes they must also 
-		// have some property to indicate it, such as Size, Width and Height,
-		// or Vertex 1 - 4's position relative to the Particle's Position. 
-		// If you want them all to be the same size you can specify the size
-		// in the UpdateVertexProperties() function of the Particle System class.
-		//-----------------------------------------------------------
-		public Vector3 Position;        // The Position of the Particle in 3D space
-		public Vector3 Velocity;        // The 3D Velocity of the Particle
-		public Quaternion Orientation;  // The 3D Orientation of the Particle
-		public float Width;             // The Width of the Particle
-		public float Height;            // The Height of the Particle
-		public Color Color;             // The Color of the Particle
-
-		/// <summary>
-		/// Get / Set the Normal (forward) direction of the Particle (i.e. which direction it is facing)
-		/// </summary>
-		public Vector3 Normal
-		{
-			get { return Orientation3D.GetNormalDirection(Orientation); }
-			set { Orientation3D.SetNormalDirection(ref Orientation, value); }
-		}
-
-		/// <summary>
-		/// Get / Set the Up direction of the Particle
-		/// </summary>
-		public Vector3 Up
-		{
-			get { return Orientation3D.GetUpDirection(Orientation); }
-			set { Orientation3D.SetUpDirection(ref Orientation, value); }
-		}
-
-		/// <summary>
-		/// Get / Set the Right direction of the Particle
-		/// </summary>
-		public Vector3 Right
-		{
-			get { return Orientation3D.GetRightDirection(Orientation); }
-			set { Orientation3D.SetRightDirection(ref Orientation, value); }
-		}
-
-		/// <summary>
-		/// Resets the Particles variables to default values
-		/// </summary>
-		public override void Reset()
-		{
-			base.Reset();
-
-			//-----------------------------------------------------------
-			// TODO: Reset your Particle properties to their default values here
-			//-----------------------------------------------------------
-			Position = Vector3.Zero;
-			Velocity = Vector3.Zero;
-			Orientation = Quaternion.Identity;
-			Width = 25;
-			Height = 25;
-			Color = Color.White;
-		}
-
-		/// <summary>
-		/// Deep copy the ParticleToCopy's values into this Particle
-		/// </summary>
-		/// <param name="ParticleToCopy">The Particle whose values should be Copied</param>
-		public override void CopyFrom(DPSFParticle ParticleToCopy)
-		{
-			// Cast the Particle from its base type to its actual type
-			BeatRingParticleSystemParticle cParticleToCopy = (BeatRingParticleSystemParticle)ParticleToCopy;
-			base.CopyFrom(cParticleToCopy);
-
-			//-----------------------------------------------------------
-			// TODO: Copy your Particle properties from the given Particle here
-			//-----------------------------------------------------------
-			Position = cParticleToCopy.Position;
-			Velocity = cParticleToCopy.Velocity;
-			Orientation = cParticleToCopy.Orientation;
-			Width = cParticleToCopy.Width;
-			Height = cParticleToCopy.Height;
-			Color = cParticleToCopy.Color;
-		}
-	}
-
-	//-----------------------------------------------------------
-	// TODO: Rename/Refactor the Particle Vertex struct
-	//-----------------------------------------------------------
-	/// <summary>
-	/// Create a new structure that inherits from IDSPFParticleVertex to hold
-	/// the Particle Vertex properties used to draw the Particle
-	/// </summary>
-#if (WINDOWS)
-	[Serializable]
-#endif
-	public struct BeatRingParticleSystemParticleVertex : IDPSFParticleVertex
-	{
-		//===========================================================
-		// TODO: Add any more Vertex variables needed to draw your Particles here.
-		// Notice how Velocity is not included here, since the Velocity of the
-		// Particle cannot be drawn; only its position can. Other drawable properties
-		// a Particle might have are Color, Size, Rotation or Normal direction, 
-		// Texture coordinates, etc.
-		// NOTE: If you are using your own Shaders (i.e. Effect file) you may
-		// specify whatever properties here that you wish, but if using the
-		// default DPSFEffect.fx file, Quad Vertices must have a
-		// Position, Color, and Texture Coordinates.
-		//===========================================================
-		public Vector3 Position;            // The Position of the Particle in 3D space
-		public Vector2 TextureCoordinate;   // The Texture Coordinates of the Vertex
-		public Color Color;                 // The Color of the Particle
-		// Describe the vertex structure used to display a Particle
-		private static readonly VertexElement[] msVertexElements =
-		{
-			new VertexElement(0, VertexElementFormat.Vector3,
-									VertexElementUsage.Position, 0),
-
-			new VertexElement(12, VertexElementFormat.Vector2,
-									VertexElementUsage.TextureCoordinate, 0),
-
-			new VertexElement(20, VertexElementFormat.Color,
-									VertexElementUsage.Color, 0),
-
-			//-----------------------------------------------------------
-			// TODO: Add the VertexElements describing the Vertex variables you added here
-			//-----------------------------------------------------------
-		};
-
-		//-----------------------------------------------------------
-		// TODO: Change miSizeInBytes to reflect the total size of the msVertexElements
-		// array if any new Vertex Elements were added to it
-		//-----------------------------------------------------------
-		// The size of the vertex structure in bytes
-		private const int miSizeInBytes = 12 + 8 + 4;
-
-		/// <summary>
-		/// An array describing the attributes of each Vertex
-		/// </summary>
-		public VertexElement[] VertexElements
-		{
-			get { return BeatRingParticleSystemParticleVertex.msVertexElements; }
-		}
-
-		/// <summary>
-		/// The Size of one Vertex Element in Bytes
-		/// </summary>
-		public int SizeInBytes
-		{
-			get { return BeatRingParticleSystemParticleVertex.miSizeInBytes; }
-		}
-	}
-
-	//-----------------------------------------------------------
 	// TODO: Rename/Refactor the Particle System class
 	//-----------------------------------------------------------
 	/// <summary>
-	/// Create a new Particle System class that inherits from DPSF using 
-	/// our created Particle class and Particle Vertex structure
+	/// Create a new Particle System class that inherits from a
+	/// Default DPSF Particle System
 	/// </summary>
 #if (WINDOWS)
 	[Serializable]
 #endif
-	public class BeatRingParticleSystem : DPSF<BeatRingParticleSystemParticle, BeatRingParticleSystemParticleVertex>
+	public class BeatRingParticleSystem : DefaultTexturedQuadParticleSystem
 	{
-		
-        /// <summary>
+		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="cGame">Handle to the Game object being used. Pass in null for this 
 		/// parameter if not using a Game object.</param>
-		public BeatRingParticleSystem(Game cGame) : base(cGame) {
-            //defaultColor = Color.AntiqueWhite;
-            //boostColor = Color.DarkOrange;
-            Color = defaultColor;
-        }
+		public BeatRingParticleSystem(Game cGame) : base(cGame) { }
 
 		//===========================================================
 		// Structures and Variables
@@ -222,152 +48,16 @@ namespace DPSF.ParticleSystems
 		//-----------------------------------------------------------
 		// TODO: Place any Particle System properties here
 		//-----------------------------------------------------------
-		Vector3 msCameraPosition = Vector3.Zero;
-        static Color defaultColor = Color.Blue;//Color.AntiqueWhite;
-        static Color FadeEndColor = Color.Red;
-        static Color boostColor = Color.DarkOrange;
-        static float duration = 2f;
-        const int noOfRingParticles = 1;
-        const float startingRadius = 7;
-        float lastElapsed = 0;
-        protected Color Color;
-		/// <summary>
-		/// Get / Set the Position of the Camera.
-		/// NOTE: This should be Set (updated) every frame if Billboarding will be used 
-		/// (i.e. Always have the Particles face the Camera)
-		/// </summary>
-		public Vector3 CameraPosition
-		{
-			get { return msCameraPosition; }
-			set { msCameraPosition = value; }
-		}
+
+        float lastElapsed;
 
 		//===========================================================
-		// Vertex Update and Overridden Particle System Functions
+		// Overridden Particle System Functions
 		//===========================================================
 
-		/// <summary>
-		/// Function to update the Vertex properties according to the Particle properties
-		/// </summary>
-		/// <param name="sVertexBuffer">The array containing the Vertices to be drawn</param>
-		/// <param name="iIndex">The Index in the array where the Particle's Vertex info should be placed</param>
-		/// <param name="Particle">The Particle to copy the information from</param>
-		protected virtual void UpdateVertexProperties(ref BeatRingParticleSystemParticleVertex[] sVertexBuffer, int iIndex, DPSFParticle Particle)
-		{
-			// Cast the Particle to the type it really is
-			BeatRingParticleSystemParticle cParticle = (BeatRingParticleSystemParticle)Particle;
-			
-			//-----------------------------------------------------------
-			// TODO: Copy the Particle's renderable properties to the Vertex Buffer.
-			// NOTE: Because a Quad is made up of 4 Vertices, we must populate
-			// each of the 4 Vertices data in the Vertex Buffer, as well as
-			// specify the Vertex order in the Index Buffer.
-			//-----------------------------------------------------------
-			// Calculate what half of the Quads Width and Height are
-			float fHalfWidth = cParticle.Width / 2.0f;
-			float fHalfHeight = cParticle.Height / 2.0f;
-
-			// Calculate the Positions of the Quads corners around the origin
-			Vector3 sTopLeft = new Vector3(-fHalfWidth, -fHalfHeight, 0);
-			Vector3 sTopRight = new Vector3(fHalfWidth, -fHalfHeight, 0);
-			Vector3 sBottomLeft = new Vector3(-fHalfWidth, fHalfHeight, 0);
-			Vector3 sBottomRight = new Vector3(fHalfWidth, fHalfHeight, 0);
-
-			// Rotate the Quad corners around the origin to make it face the Camera, 
-			// then calculate their final Positions
-			sTopLeft = Vector3.Transform(sTopLeft, cParticle.Orientation) + cParticle.Position;
-			sTopRight = Vector3.Transform(sTopRight, cParticle.Orientation) + cParticle.Position;
-			sBottomLeft = Vector3.Transform(sBottomLeft, cParticle.Orientation) + cParticle.Position;
-			sBottomRight = Vector3.Transform(sBottomRight, cParticle.Orientation) + cParticle.Position;
-
-			// Copy this Particle's renderable Properties to the Vertex Buffer
-			// This is a Quad so we must copy all 4 Vertices over
-			sVertexBuffer[iIndex].Position = sBottomLeft;
-			sVertexBuffer[iIndex].TextureCoordinate = new Vector2(0, 1);
-			sVertexBuffer[iIndex].Color = cParticle.Color;
-
-			sVertexBuffer[iIndex + 1].Position = sTopLeft;
-			sVertexBuffer[iIndex + 1].TextureCoordinate = new Vector2(0, 0);
-			sVertexBuffer[iIndex + 1].Color = cParticle.Color;
-
-			sVertexBuffer[iIndex + 2].Position = sBottomRight;
-			sVertexBuffer[iIndex + 2].TextureCoordinate = new Vector2(1, 1);
-			sVertexBuffer[iIndex + 2].Color = cParticle.Color;
-
-			sVertexBuffer[iIndex + 3].Position = sTopRight;
-			sVertexBuffer[iIndex + 3].TextureCoordinate = new Vector2(1, 0);
-			sVertexBuffer[iIndex + 3].Color = cParticle.Color;
-
-            // Fill in the Index Buffer for the newly added Vertices.
-            // Specify the Vertices in Clockwise order.
-            // It takes 6 Indices to represent a quad (2 triangles = 6 corners).
-            // If we're using the HiDef profile, fill in the regular Index Buffer.
-            if (this.GraphicsDevice.GraphicsProfile == GraphicsProfile.HiDef)
-            {
-                IndexBuffer[IndexBufferIndex++] = iIndex + 1;
-                IndexBuffer[IndexBufferIndex++] = iIndex + 2;
-                IndexBuffer[IndexBufferIndex++] = iIndex;
-                IndexBuffer[IndexBufferIndex++] = iIndex + 1;
-                IndexBuffer[IndexBufferIndex++] = iIndex + 3;
-                IndexBuffer[IndexBufferIndex++] = iIndex + 2;
-            }
-            // Else we're using the Reach profile, so fill the Reach Index Buffer instead.
-            else
-            {
-                IndexBufferReach[IndexBufferIndex++] = (short)(iIndex + 1);
-                IndexBufferReach[IndexBufferIndex++] = (short)(iIndex + 2);
-                IndexBufferReach[IndexBufferIndex++] = (short)(iIndex);
-                IndexBufferReach[IndexBufferIndex++] = (short)(iIndex + 1);
-                IndexBufferReach[IndexBufferIndex++] = (short)(iIndex + 3);
-                IndexBufferReach[IndexBufferIndex++] = (short)(iIndex + 2);
-            }
-		}
-
-		/// <summary>
-		/// Function to setup the Render Properties (i.e. BlendState, DepthStencilState, RasterizerState, and SamplerState)
-		/// which will be applied to the Graphics Device before drawing the Particle System's Particles.
-		/// <para>This function is called when initializing the particle system.</para>
-		/// </summary>
-		protected override void InitializeRenderProperties()
-		{
-			this.RenderProperties.DepthStencilState.DepthBufferEnable = true;
-			this.RenderProperties.DepthStencilState.DepthBufferWriteEnable = false;
-		}
-
-		/// <summary>
-		/// Function to set the Shaders global variables before drawing
-		/// </summary>
-		protected override void SetEffectParameters()
-		{
-			//-----------------------------------------------------------
-			// TODO: Set any global Shader variables required before drawing
-			//-----------------------------------------------------------
-            DPSFDefaultEffect effect = this.Effect as DPSFDefaultEffect;
-            if (effect == null)
-            {
-                return;
-            }
-
-            // Specify the World, View, and Projection Matrices
-            effect.World = this.World;
-            effect.View = this.View;
-            effect.Projection = this.Projection;
-
-			// Set the Texture to use for the Particles
-            effect.Texture = this.Texture;
-
-			// Blend the Particle's Color evenly with the Texture's Color
-            effect.ColorBlendAmount = 0.5f;
-		}
-
-        /// <summary>
-        /// Sets the camera position, so that the particles know how to make themselves face the camera if needed.
-        /// </summary>
-        /// <param name="cameraPosition">The camera position.</param>
-        public override void SetCameraPosition(Vector3 cameraPosition)
-        {
-            this.CameraPosition = cameraPosition;
-        }
+		//-----------------------------------------------------------
+		// TODO: Place any overridden Particle System functions here
+		//-----------------------------------------------------------
 
 		//===========================================================
 		// Initialization Functions
@@ -386,11 +76,14 @@ namespace DPSF.ParticleSystems
 		public override void AutoInitialize(GraphicsDevice cGraphicsDevice, ContentManager cContentManager, SpriteBatch cSpriteBatch)
 		{
 			//-----------------------------------------------------------
-			// TODO: Change any Initialization parameters desired
+			// TODO: Change any Initialization parameters desired and the Name
 			//-----------------------------------------------------------
 			// Initialize the Particle System before doing anything else
-			InitializeTexturedQuadParticleSystem(cGraphicsDevice, cContentManager, noOfRingParticles*20, noOfRingParticles*100,
-                                                    UpdateVertexProperties, "Particles/textures/ring002");
+			InitializeTexturedQuadParticleSystem(cGraphicsDevice, cContentManager, 20, 100, 
+												UpdateVertexProperties, "Particles/textures/ring003");
+
+			// Set the Name of the Particle System
+			Name = "Beat Visualisation System";
 
 			// Finish loading the Particle System in a separate function call, so if
 			// we want to reset the Particle System later we don't need to completely 
@@ -409,69 +102,104 @@ namespace DPSF.ParticleSystems
 			// provided to show you how to setup a simple particle system.
 			//-----------------------------------------------------------
 
-			// Set the Function to use to Initialize new Particles
-			ParticleInitializationFunction = InitializeParticleProperties;
+			// Set the Function to use to Initialize new Particles.
+			// The Default Templates include a Particle Initialization Function called
+			// InitializeParticleUsingInitialProperties, which initializes new Particles
+			// according to the settings in the InitialProperties object (see further below).
+			// You can also create your own Particle Initialization Functions as well, as shown with
+			// the InitializeParticleProperties function below.
+			ParticleInitializationFunction = InitializeParticleUsingInitialProperties;
+			//ParticleInitializationFunction = InitializeParticleProperties;
+
+			// Setup the Initial Properties of the Particles.
+			// These are only applied if using InitializeParticleUsingInitialProperties 
+			// as the Particle Initialization Function.
+			InitialProperties.LifetimeMin = 2.0f;
+			InitialProperties.LifetimeMax = 2.0f;
+			InitialProperties.PositionMin = Vector3.Zero;
+			InitialProperties.PositionMax = Vector3.Zero;
+			InitialProperties.VelocityMin = new Vector3(0, 0, 10);
+			InitialProperties.VelocityMax = new Vector3(0, 0, 10);
+            InitialProperties.RotationMin = Vector3.Zero;
+            InitialProperties.RotationMax = Vector3.Zero;
+            InitialProperties.RotationalVelocityMin = Vector3.Zero;
+            InitialProperties.RotationalVelocityMax = Vector3.Zero;
+			InitialProperties.StartWidthMin = 7;
+			InitialProperties.StartWidthMax = 7;
+			InitialProperties.StartHeightMin = 7;
+			InitialProperties.StartHeightMax = 7;
+			InitialProperties.EndWidthMin = 7;
+			InitialProperties.EndWidthMax = 7;
+			InitialProperties.EndHeightMin = 7;
+			InitialProperties.EndHeightMax = 7;
+			InitialProperties.StartColorMin = Color.Green;
+			InitialProperties.StartColorMax = Color.Green;
+
 
 			// Remove all Events first so that none are added twice if this function is called again
 			ParticleEvents.RemoveAllEvents();
 			ParticleSystemEvents.RemoveAllEvents();
 
-			// Make the Particles move according to their Velocity, and orient them to face the Camera
+			// Allow the Particle's Position, Rotation, Width and Height, Color, Transparency, and Orientation to be updated each frame
 			ParticleEvents.AddEveryTimeEvent(UpdateParticlePositionUsingVelocity);
-			ParticleEvents.AddEveryTimeEvent(UpdateParticleToFaceTheCamera, 1000);
-            ParticleEvents.AddEveryTimeEvent(UpdateParticleColor);
+			//ParticleEvents.AddEveryTimeEvent(UpdateParticleRotationUsingRotationalVelocity);
+			//ParticleEvents.AddEveryTimeEvent(UpdateParticleWidthAndHeightUsingLerp);
+			//ParticleEvents.AddEveryTimeEvent(UpdateParticleColorUsingLerp);
+
+			// This function must be executed after the Color Lerp function as the Color Lerp will overwrite the Color's
+			// Transparency value, so we give this function an Execution Order of 100 to make sure it is executed last.
+			//ParticleEvents.AddEveryTimeEvent(UpdateParticleTransparencyToFadeOutUsingLerp, 100);
+			
+			// Update the particle to face the camera. Do this after updating it's rotation/orientation.
+            ParticleEvents.AddEveryTimeEvent(UpdateParticleToFaceTheCamera, 200);
+
 			// Set the Particle System's Emitter to toggle on and off every 0.5 seconds
 			//ParticleSystemEvents.LifetimeData.EndOfLifeOption = CParticleSystemEvents.EParticleSystemEndOfLifeOptions.Repeat;
 			//ParticleSystemEvents.LifetimeData.Lifetime = 1.0f;
 			//ParticleSystemEvents.AddTimedEvent(0.0f, UpdateParticleSystemEmitParticlesAutomaticallyOn);
 			//ParticleSystemEvents.AddTimedEvent(0.5f, UpdateParticleSystemEmitParticlesAutomaticallyOff);
-            
+
 			// Setup the Emitter
+			Emitter.ParticlesPerSecond = 50;
+			Emitter.PositionData.Position = new Vector3(0, 5, -20f);
             Emitter.EmitParticlesAutomatically = false;
-			Emitter.ParticlesPerSecond = 500;
-			Emitter.PositionData.Position = new Vector3(0, 0, -20f);
-            //RemoveAllParticles();
 		}
 
 		/// <summary>
-		/// Function to Initialize a new Particle's properties
+		/// Example of how to create a Particle Initialization Function
 		/// </summary>
 		/// <param name="cParticle">The Particle to be Initialized</param>
-		public void InitializeParticleProperties(BeatRingParticleSystemParticle cParticle)
+		public void InitializeParticleProperties(DefaultTexturedQuadParticle cParticle)
 		{
 			//-----------------------------------------------------------
 			// TODO: Initialize all of the Particle's properties here.
-			// In addition to initializing the Particle properties you added, you
-			// must also initialize the Lifetime property that is inherited from DPSFParticle
+			// If you plan on simply using the default InitializeParticleUsingInitialProperties
+			// Particle Initialization Function (see the LoadParticleSystem() function above), 
+			// then you may delete this function all together.
 			//-----------------------------------------------------------
-            cParticle.Lifetime = duration;
-            //cParticle.ElapsedTime = elapsedAmount;
-            Quaternion cBackup = Emitter.OrientationData.Orientation;
-            Emitter.OrientationData.Orientation = Quaternion.Identity;
-            //InitializeParticleUsingInitialProperties(cParticle);
-            Emitter.OrientationData.Orientation = cBackup;
 
-            //cParticle.Position = DPSFHelper.PointOnSphere(MathHelper.PiOver2, RandomNumber.Between(0, MathHelper.TwoPi), startingRadius);
-            cParticle.Position = new Vector3(0,0,0);
-            cParticle.Position += Emitter.PositionData.Position;
+			// Set the Particle's Lifetime (how long it should exist for)
+			cParticle.Lifetime = 2.0f;
 
 			// Set the Particle's initial Position to be wherever the Emitter is
-			//cParticle.Position = Emitter.PositionData.Position;
+			cParticle.Position = Emitter.PositionData.Position;
 
 			// Set the Particle's Velocity
-			Vector3 sVelocityMin = new Vector3(0, 0, 10);
-			Vector3 sVelocityMax = new Vector3(0, 0, 10);
+			Vector3 sVelocityMin = new Vector3(-50, 50, -50);
+			Vector3 sVelocityMax = new Vector3(50, 100, 50);
 			cParticle.Velocity = DPSFHelper.RandomVectorBetweenTwoVectors(sVelocityMin, sVelocityMax);
 
 			// Adjust the Particle's Velocity direction according to the Emitter's Orientation
 			cParticle.Velocity = Vector3.Transform(cParticle.Velocity, Emitter.OrientationData.Orientation);
 
 			// Give the Particle a random Size
-			cParticle.Width = startingRadius;
-            cParticle.Height = startingRadius;
-            
+			// Since we have Size Lerp enabled we must also set the Start and End Size
+			cParticle.Width = cParticle.StartWidth = cParticle.EndWidth =
+				cParticle.Height = cParticle.StartHeight = cParticle.EndHeight = RandomNumber.Next(10, 50);
+
 			// Give the Particle a random Color
-            cParticle.Color = Color;// DPSFHelper.RandomColor();
+			// Since we have Color Lerp enabled we must also set the Start and End Color
+			cParticle.Color = cParticle.StartColor = cParticle.EndColor = DPSFHelper.RandomColor();
 		}
 
 		//===========================================================
@@ -484,41 +212,14 @@ namespace DPSF.ParticleSystems
 		//-----------------------------------------------------------
 
 		/// <summary>
-		/// Update a Particle's Position according to its Velocity
+		/// Example of how to create a Particle Event Function
 		/// </summary>
 		/// <param name="cParticle">The Particle to update</param>
 		/// <param name="fElapsedTimeInSeconds">How long it has been since the last update</param>
-		protected void UpdateParticlePositionUsingVelocity(BeatRingParticleSystemParticle cParticle, float fElapsedTimeInSeconds)
+		protected void UpdateParticleFunctionExample(DefaultTexturedQuadParticle cParticle, float fElapsedTimeInSeconds)
 		{
-			// Update the Particle's Position according to its Velocity
-			cParticle.Position += cParticle.Velocity * fElapsedTimeInSeconds;
-		}
-
-        /// <summary>
-        /// Update a Particle's Color according to its Color Changer
-        /// </summary>
-        /// <param name="cParticle">The Particle to update</param>
-        /// <param name="fElapsedTimeInSeconds">How long it has been since the last update</param>
-        protected void UpdateParticleColor(BeatRingParticleSystemParticle cParticle, float fElapsedTimeInSeconds)
-        {
-           // cParticle.Color = new Color((cParticle.NormalizedElapsedTime*(FadeEndColor.ToVector3()-Color.ToVector3())) + Color.ToVector3());
-            
-           // System.Diagnostics.Debug.WriteLine("LOLADSFADS");
-        }
-
-		/// <summary>
-		/// Turns the Particle into a Billboard Particle (i.e. The Particle always faces the Camera).
-		/// NOTE: This Update function should be called after all other Update functions to ensure that 
-		/// the Particle is orientated correctly.
-		/// NOTE: Update the Particle System's Camera Position every frame to ensure that this works correctly.
-		/// NOTE: Only Roll Rotations (i.e. around the Z axis) will be visible when this is used.
-		/// </summary>
-		/// <param name="cParticle">The Particle to update</param>
-		/// <param name="fElapsedTimeInSeconds">How long it has been since the last update</param>
-		protected void UpdateParticleToFaceTheCamera(BeatRingParticleSystemParticle cParticle, float fElapsedTimeInSeconds)
-		{
-			// Make the Particle face the Camera
-			cParticle.Normal = CameraPosition - cParticle.Position;
+			// Place code to update the Particle here
+			// Example: cParticle.Position += cParticle.Velocity * fElapsedTimeInSeconds;
 		}
 
 		//===========================================================
@@ -531,21 +232,14 @@ namespace DPSF.ParticleSystems
 		//-----------------------------------------------------------
 
 		/// <summary>
-		/// Sets the Emitter to Emit Particles Automatically
+		/// Example of how to create a Particle System Event Function
 		/// </summary>
 		/// <param name="fElapsedTimeInSeconds">How long it has been since the last update</param>
-		protected void UpdateParticleSystemEmitParticlesAutomaticallyOn(float fElapsedTimeInSeconds)
+		protected void UpdateParticleSystemFunctionExample(float fElapsedTimeInSeconds)
 		{
-			Emitter.EmitParticlesAutomatically = true;
-		}
-
-		/// <summary>
-		/// Sets the Emitter to not Emit Particles Automatically
-		/// </summary>
-		/// <param name="fElapsedTimeInSeconds">How long it has been since the last update</param>
-		protected void UpdateParticleSystemEmitParticlesAutomaticallyOff(float fElapsedTimeInSeconds)
-		{
-			Emitter.EmitParticlesAutomatically = false;
+			// Place code to update the Particle System here
+			// Example: Emitter.EmitParticles = true;
+			// Example: SetTexture("TextureAssetName");
 		}
 
 		//===========================================================
@@ -566,7 +260,7 @@ namespace DPSF.ParticleSystems
             this.RemoveAllParticles();
         }
 
-        public void addBeat(Buttons noteType,float duration, float elapsedAmount)
+        public void addBeat(Buttons noteType, float duration, float elapsedAmount)
         {
 
             lastElapsed = elapsedAmount;
@@ -574,27 +268,35 @@ namespace DPSF.ParticleSystems
             {
 
                 case Buttons.A:
-                    Color = Color.Green;
+                    InitialProperties.StartColorMin = Color.Green;
+                    InitialProperties.StartColorMax = Color.Green;
+                    InitialProperties.RotationMin = new Vector3(0,0,3*MathHelper.PiOver4);
+                    InitialProperties.RotationMax = new Vector3(0, 0, 3*MathHelper.PiOver4);
                     break;
                 case Buttons.B:
-                    Color = Color.Red;
+                    InitialProperties.StartColorMin = Color.Red;
+                    InitialProperties.StartColorMax = Color.Red;
+                    InitialProperties.RotationMin = new Vector3(0,0,MathHelper.PiOver4);
+                    InitialProperties.RotationMax = new Vector3(0, 0, MathHelper.PiOver4);
                     break;
                 case Buttons.X:
-                    Color = Color.Blue;
+                    InitialProperties.StartColorMin = Color.Blue;
+                    InitialProperties.StartColorMax = Color.Blue;
+                    InitialProperties.RotationMin = new Vector3(0,0,5*MathHelper.PiOver4);
+                    InitialProperties.RotationMax = new Vector3(0, 0, 5*MathHelper.PiOver4);
                     break;
                 case Buttons.Y:
-                    Color = Color.Yellow;
+                    InitialProperties.StartColorMin = Color.Yellow;
+                    InitialProperties.StartColorMax = Color.Yellow;
+                    InitialProperties.RotationMin = new Vector3(0,0,7*MathHelper.PiOver4);
+                    InitialProperties.RotationMax = new Vector3(0, 0, 7*MathHelper.PiOver4);
                     break;
                 default:
-                    Color = Color.Purple;
+                    InitialProperties.StartColorMin = Color.Purple;
+                    InitialProperties.StartColorMax = Color.Purple;
                     break;
             }
-            AddParticles(noOfRingParticles);
-            
-
-           // cParticle.Velocity = new Vector3(RandomNumber.Next(0, 30), RandomNumber.Next(10, 30), RandomNumber.Next(-20, 10));
-           // }
+            AddParticles(1);
         }
-
 	}
 }
