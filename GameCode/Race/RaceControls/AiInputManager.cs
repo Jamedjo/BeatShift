@@ -26,15 +26,15 @@ namespace BeatShift.Input
         ///  Set to false and the player retakes control
         /// </summary>
         public const Boolean testAI = false;
-        public const int numberOfAI = 3;
+        public const int numberOfAI = 2;
 
         private float randInaccuracy;
-        private GameTime lastRandChange;
-        private Random randGen;
+        private TimeSpan lastRandChange;
         private GamePadState currentState;
         private GamePadState lastState;
         private Racer parent;
         private Box aheadBox;
+        private float lastTurn = 0f;
 
         private Beat? nextBeatToPress = null;
 
@@ -56,7 +56,7 @@ namespace BeatShift.Input
             aheadBox.CollisionInformation.Events.PairTouched += boxCollide;
             aheadBox.CollisionInformation.Events.InitialCollisionDetected += boxinitialCollide;
 
-            randGen = new Random();
+            lastRandChange = TimeSpan.Zero;
         }
 
         Boolean IInputManager.actionPressed(InputAction action)
@@ -136,18 +136,13 @@ namespace BeatShift.Input
             //            System.Diagnostics.Debug.WriteLine("{0} {1}", (c.Contact.Position - ship.ShipPosition).Length(), c.Contact.Normal);
             //        }
             //    }
-            if (lastRandChange != null)
+            if (gameTime.TotalGameTime.Subtract(lastRandChange).Seconds >= 1)
             {
-                if (gameTime.TotalGameTime.Subtract(lastRandChange.TotalGameTime).Seconds == 1)
-                {
-                    lastRandChange = gameTime;
-                    randInaccuracy = (float) SimpleRNG.GetNormal(0, 2.0 / 9.0);
-                }
-            }
-            else
-            {
-                lastRandChange = gameTime;
-                randInaccuracy = (float)SimpleRNG.GetNormal(0, 2.0 / 9.0);
+                lastRandChange = gameTime.TotalGameTime;
+                randInaccuracy = (float)SimpleRNG.GetNormal(0, 1.0 / 6.0);
+#if WINDOWS
+                System.Diagnostics.Debug.WriteLine("{0:0.0000}", randInaccuracy);
+#endif
             }
 
             aheadBox.Position = parent.shipPhysics.ShipPosition + parent.shipPhysics.ShipOrientationMatrix.Forward * 0;
@@ -204,7 +199,6 @@ namespace BeatShift.Input
                 nextBeatToPress = null;
             }
             
-
             // Initially no buttons.
             return b;
         }
@@ -219,10 +213,14 @@ namespace BeatShift.Input
         /// </returns>
         private float setTurn()
         {
-            float aWalls = avoidWalls();
+            //float aWalls = avoidWalls();
             float fTrack = futureTrack();
             float nWalls = newWalls();
-            return 0.0f * aWalls + 0.6f * fTrack + 0.3f * nWalls + randInaccuracy;
+            lastTurn = (lastTurn + /*0.0f * aWalls +*/ 0.6f * fTrack + 0.3f * nWalls + randInaccuracy) / 2f;
+#if WINDOWS
+            System.Diagnostics.Debug.WriteLine("{0:0.000} {1:0.000} {2:0.000} {3:0.000} {4:0.000}", lastTurn, aWalls, fTrack, nWalls, randInaccuracy);
+#endif
+            return lastTurn;
         }
 
         private void boxinitialCollide<EntityCollidable>(EntityCollidable sender, Collidable info, CollidablePairHandler pair)
@@ -316,7 +314,10 @@ namespace BeatShift.Input
 
             t = distance / (rayLength - shipWidth);
 
-            return t * Math.Sign(direction);
+
+            float retVal = t * Math.Sign(direction);
+
+            return float.IsNaN(retVal) ? 0f : retVal;
         }
 
 
