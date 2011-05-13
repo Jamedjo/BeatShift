@@ -190,7 +190,6 @@
     <Compile Include="Race\Racer\RacerStatistics.cs" />
     <Compile Include="Race\Racer\RaceTiming.cs" />
     <Compile Include="Manager\Input\InputManager.cs" />
-    <Compile Include="Race\RaceTypes\BeatPointsRace.cs" />
     <Compile Include="Race\RaceTypes\EliminationRace.cs" />
     <Compile Include="Race\RaceTypes\IRaceType.cs" />
     <Compile Include="Race\RaceTypes\LappedRace.cs" />

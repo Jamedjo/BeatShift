@@ -229,11 +229,29 @@ namespace BeatShift
             // False if race not commenced
             result = result || actualRaceBegun == false;
 
+            int countEliminated = 0;
+
             // False if at least one ship is still going
-            foreach (Racer racer in Race.currentRacers)
+            if (Race.currentRaceType.getRaceTypeString().Equals("EliminationRace"))
             {
-                result = result || racer.raceTiming.isRacing;
+                foreach (Racer racer in Race.currentRacers)
+                {
+                    if (racer.raceTiming.isLastToBeEliminated == true)
+                        countEliminated++;
+                }
+                if (countEliminated == Race.currentRacers.Count - 1)
+                    return true;
+                else
+                    return false;
             }
+            else
+            {
+                foreach (Racer racer in Race.currentRacers)
+                {
+                    result = result || racer.raceTiming.isRacing;
+                }
+            }
+
             return !result;
         }
 

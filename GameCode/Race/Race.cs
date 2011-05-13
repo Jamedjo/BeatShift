@@ -96,11 +96,14 @@ namespace BeatShift
         {
             //Add AI racers
             initializeAiNames();
-            for (int i = 0; i < numberOfAiRacers; i++)
+            if (!currentRaceType.getRaceTypeString().Equals("TimeTrialRace"))
             {
-                Racer r = new Racer(new RacerId(pickAiName(i)), currentRacers.Count, RacerType.AI);
-                currentRacers.Add(r);
-                r.insertShipOnMap(RacerType.AI);
+                for (int i = 0; i < numberOfAiRacers; i++)
+                {
+                    Racer r = new Racer(new RacerId(pickAiName(i)), currentRacers.Count, RacerType.AI);
+                    currentRacers.Add(r);
+                    r.insertShipOnMap(RacerType.AI);
+                }
             }
             //setupViewports();
         }
@@ -178,7 +181,7 @@ namespace BeatShift
         /// </summary>
         public static void initializeAiNames()
         {
-            AInames = new string[10];
+            AInames = new string[6];
             AInames[0] = "Simba";
             AInames[1] = "Scar";
             AInames[2] = "Mufasa";

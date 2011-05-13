@@ -18,7 +18,7 @@ namespace BeatShift
 
         //Time related
         public Stopwatch stopwatch;
-        public TimeSpan fastedLap;
+        public TimeSpan fastestLap;
         public int currentLap;
         public int racePosition;
         public long finalRaceTime;
@@ -58,7 +58,7 @@ namespace BeatShift
             hasCompletedRace = false;
             isLastToBeEliminated = false;
             stopwatch = new Stopwatch();
-            fastedLap = new TimeSpan(0);
+            fastestLap = new TimeSpan(0);
         }
 
         public void Update()
@@ -70,15 +70,38 @@ namespace BeatShift
         public void finishLap()
         {
             currentLap++;
-            if (currentLap == 1 || stopwatch.Elapsed.TotalMilliseconds < fastedLap.TotalMilliseconds)
-                fastedLap = stopwatch.Elapsed;
 
+            if (currentLap == 1 || stopwatch.Elapsed.TotalMilliseconds < fastestLap.TotalMilliseconds)
+                fastestLap = stopwatch.Elapsed;
+            
 
-            // Penultimate racer destroys the guy in last place on each lap
-            int racersStillGoing = Race.currentRacers.Count;
-            if (racersStillGoing-1 == racePosition)
+            if (Race.currentRaceType.getRaceTypeString().Equals("EliminationRace"))
             {
-                isLastToBeEliminated = true;
+                // Penultimate racer destroys the guy in last place on each lap
+                int racersStillGoing = Race.currentRacers.Count;
+                int racerToBeEliminated = 0;
+                int penultimateRacer = 0;
+
+                var stillRacers = Race.currentRacers.Where((r) => !r.raceTiming.isLastToBeEliminated).ToList();
+
+                for (int i = 0; i < Race.currentRaceType.rankings.Count - 1; i++)
+                {
+                    Racer r = Race.currentRaceType.rankings[i];
+                    if (!r.raceTiming.isLastToBeEliminated)
+                    {
+                        if (i < Race.currentRaceType.rankings.Count - 2) break;
+
+                        penultimateRacer = i;
+                        racerToBeEliminated = i + 1;
+
+                    }
+                }
+
+                if (this == Race.currentRaceType.rankings[penultimateRacer].raceTiming)
+                {
+                    Race.currentRaceType.rankings[racerToBeEliminated].raceTiming.isLastToBeEliminated = true;
+                    Console.Write("eliminate " + racePosition + 1 + " position");
+                }
             }
 
             resetLapTimer();
@@ -101,7 +124,7 @@ namespace BeatShift
 
         public string getBestLapTime()
         {
-            return convertTimeSpanToString(fastedLap);
+            return convertTimeSpanToString(fastestLap);
         }
 
         public string getFinalTotalTime()

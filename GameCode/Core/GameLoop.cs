@@ -101,7 +101,7 @@ namespace BeatShift
                 {
                     BeginPause(true);
                     pauseMenu.enteringMenu();
-                    MenuManager.anyInput.Update(gameTime);//Call update an extra time to flush button press which caused menu to show
+                    MenuManager.anyInput.Update(gameTime);
                 }
                 else
                 {
@@ -148,6 +148,7 @@ namespace BeatShift
             BeginPause(true);
             raceComplete = true;
             resultsMenu.enteringMenu();
+            MenuManager.anyInput.Update(gameTime);
         }
 
         //Input manager for exiting game

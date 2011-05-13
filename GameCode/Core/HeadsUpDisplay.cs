@@ -39,14 +39,28 @@ namespace BeatShift
             int bleedWidth = (int)(BeatShift.graphics.GraphicsDevice.Viewport.Width * 0.1);
 
 
-            if (racer.raceTiming.hasCompletedRace && GameLoop.raceComplete != true)
+            if (racer.raceTiming.hasCompletedRace && GameLoop.raceComplete != true )
             {
                 ////////////////////////
                 ///// FINAL RESULTS ////
                 ////////////////////////
+                if (Race.currentRaceType.getRaceTypeString().Equals("LappedRace"))
+                {
+                    BeatShift.spriteBatch.Begin();//(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+                    DrawMessage("Finished!", 325, vOffset / 2);
+                    DrawMessage("Final Time: " + racer.raceTiming.getFinalTotalTime(), 300, vOffset / 2 + 40);
+                }
+                if (Race.currentRaceType.getRaceTypeString().Equals("EliminationRace"))
+                {
+                    BeatShift.spriteBatch.Begin();
+                    DrawMessage("ELIMINATED!", 325, vOffset / 2);
+                }
+                if (Race.currentRaceType.getRaceTypeString().Equals("TimeTrialRace"))
+                {
+                    BeatShift.spriteBatch.Begin();
+                    DrawMessage("Best lap time: "+racer.raceTiming.getBestLapTime(), 325, vOffset / 2);
+                }
 
-                DrawMessage("Finished!", 325, vOffset/2);
-                DrawMessage("Final Time: " + racer.raceTiming.getFinalTotalTime(), 300, vOffset/2 + 40);
             }
             else
             {

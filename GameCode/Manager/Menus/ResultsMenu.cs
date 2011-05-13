@@ -15,6 +15,8 @@ namespace BeatShift.Menus
         string[] players;
         bool resultsCalc = false;
 
+        Racer eliminationWinner;
+
         public ResultsMenu()
         {
             title = "Race Results";
@@ -52,15 +54,47 @@ namespace BeatShift.Menus
                         BeatShift.spriteBatch.DrawString(BeatShift.newfont, "5th    " + results[3] + "  " + players[4], new Vector2(500, 150 + offset * 4), Color.Gainsboro);
                 }
             }
+            else if (Race.currentRaceType.getRaceTypeString().Equals("EliminationRace"))
+            {
+                BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Survivor:  " + eliminationWinner.racerID.ToString(), new Vector2(500, 400), Color.Goldenrod);
+            }
+            else if (Race.currentRaceType.getRaceTypeString().Equals("TimeTrialRace"))
+            {
+                int offset = 70;
+                for (int i = 0; i < Race.currentRacers.Count(); i++)
+                {
+                    if (Race.currentRacers[i].raceTiming.fastestLap.TotalMilliseconds < MapManager.currentMap.timeTrialRanks[0])
+                        BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Best lap: " + Race.currentRacers[i].raceTiming.getBestLapTime() +" " + Race.currentRacers[i].racerID.ToString(), new Vector2(500, 150 + offset * i), Color.Aqua);
+                    else if (Race.currentRacers[i].raceTiming.fastestLap.TotalMilliseconds < MapManager.currentMap.timeTrialRanks[1])
+                        BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Best lap: " + Race.currentRacers[i].raceTiming.getBestLapTime() + " " + Race.currentRacers[i].racerID.ToString(), new Vector2(500, 150 + offset * i), Color.Goldenrod);
+                    else if (Race.currentRacers[i].raceTiming.fastestLap.TotalMilliseconds < MapManager.currentMap.timeTrialRanks[2])
+                        BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Best lap: " + Race.currentRacers[i].raceTiming.getBestLapTime() + " " + Race.currentRacers[i].racerID.ToString(), new Vector2(500, 150 + offset * i), Color.White);
+                    else if (Race.currentRacers[i].raceTiming.fastestLap.TotalMilliseconds < MapManager.currentMap.timeTrialRanks[3])
+                        BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Best lap: " + Race.currentRacers[i].raceTiming.getBestLapTime() + " " + Race.currentRacers[i].racerID.ToString(), new Vector2(500, 150 + offset * i), Color.SaddleBrown);
+                    else
+                        BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Unranked " + Race.currentRacers[i].racerID.ToString(), new Vector2(500, 150 + offset * i), Color.Gainsboro);
+                }
+            }
         }
 
         private void calculateResults()
         {
             results = new string[Race.currentRacers.Count()];
 
-            results = Race.currentRacers.OrderByDescending(r => r.raceTiming.finalRaceTime).Reverse().Select(r => r.raceTiming.getFinalTotalTime()).ToArray();
-            players = Race.currentRacers.OrderByDescending(r => r.raceTiming.finalRaceTime).Reverse().Select(r => r.racerID.ToString()).ToArray();
-            resultsCalc = true;
+            if (Race.currentRaceType.getRaceTypeString().Equals("LappedRace"))
+            {
+                results = Race.currentRacers.OrderByDescending(r => r.raceTiming.finalRaceTime).Reverse().Select(r => r.raceTiming.getFinalTotalTime()).ToArray();
+                players = Race.currentRacers.OrderByDescending(r => r.raceTiming.finalRaceTime).Reverse().Select(r => r.racerID.ToString()).ToArray();
+                resultsCalc = true;
+            }
+            else if ( Race.currentRaceType.getRaceTypeString().Equals("EliminationRace") )
+            {
+                foreach (Racer racer in Race.currentRacers)
+                {
+                    if (racer.raceTiming.isLastToBeEliminated == false)
+                        eliminationWinner = racer;
+                }
+            }
         }
 
         public override void enteringMenu()
@@ -74,7 +108,7 @@ namespace BeatShift.Menus
         {
             addMenuItem("Next Race", (Action)(delegate
             {
-
+                GameLoop.setGameStateAndResetPlayers(GameState.Menu);
             }));
             addMenuItem("Main Menu", (Action)(delegate
             {
