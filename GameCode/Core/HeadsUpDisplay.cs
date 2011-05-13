@@ -52,8 +52,13 @@ namespace BeatShift
                 }
                 if (Race.currentRaceType.getRaceTypeString().Equals("EliminationRace"))
                 {
-                    BeatShift.spriteBatch.Begin();//(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+                    BeatShift.spriteBatch.Begin();
                     DrawMessage("ELIMINATED!", 325, vOffset / 2);
+                }
+                if (Race.currentRaceType.getRaceTypeString().Equals("TimeTrialRace"))
+                {
+                    BeatShift.spriteBatch.Begin();
+                    DrawMessage("Best lap time: "+racer.raceTiming.getBestLapTime(), 325, vOffset / 2);
                 }
 
             }

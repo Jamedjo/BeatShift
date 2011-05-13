@@ -57,7 +57,14 @@ namespace BeatShift.Menus
             else if (Race.currentRaceType.getRaceTypeString().Equals("EliminationRace"))
             {
                 BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Survivor:  " + eliminationWinner.racerID.ToString(), new Vector2(500, 400), Color.Goldenrod);
-
+            }
+            else if (Race.currentRaceType.getRaceTypeString().Equals("TimeTrialRace"))
+            {
+                int offset = 70;
+                for (int i = 0; i < Race.currentRacers.Count(); i++)
+                {
+                    BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Best lap: " + Race.currentRacers[i].raceTiming.getBestLapTime() + " " + Race.currentRacers[i].racerID.ToString(), new Vector2(500, 150 + offset * i), Color.White);
+                }
             }
         }
 
