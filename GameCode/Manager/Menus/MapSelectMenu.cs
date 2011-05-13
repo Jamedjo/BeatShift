@@ -26,13 +26,6 @@ namespace BeatShift.Menus
 
         public override void setupMenuItems()
         {
-            addMenuItem("DESERT MAP", (Action)(delegate
-            {
-                //MapManager.mapToLoad = MapName.DesertMap;
-
-                //if (isSinglePlayer()) MenuManager.setCurrentMenu(MenuPage.SinglePlayerShipSelect);
-                //else GameLoop.setGameState(GameState.MultiplayerShipSelect);
-            }));
             addMenuItem("SPACE MAP", (Action)(delegate
             {
                 MapManager.mapToLoad = MapName.SpaceMap;
@@ -47,6 +40,13 @@ namespace BeatShift.Menus
                 if (isSinglePlayer()) MenuManager.setCurrentMenu(MenuPage.SinglePlayerShipSelect);
                 else GameLoop.setGameState(GameState.MultiplayerShipSelect);
 
+            }));
+            addMenuItem("DESERT MAP", (Action)(delegate
+            {
+                //MapManager.mapToLoad = MapName.DesertMap;
+
+                //if (isSinglePlayer()) MenuManager.setCurrentMenu(MenuPage.SinglePlayerShipSelect);
+                //else GameLoop.setGameState(GameState.MultiplayerShipSelect);
             }));
         }
 

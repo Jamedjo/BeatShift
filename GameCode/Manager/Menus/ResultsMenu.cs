@@ -37,7 +37,7 @@ namespace BeatShift.Menus
             Texture2D background = GameTextures.MenuBackgroundBlack;
             spriteBatch.Draw(background, new Rectangle(0, 0, 1300, background.Height / 2 + 50), Color.White);
             spriteBatch.Draw(background, new Rectangle(0, 0, 600, background.Height / 2 + 50), Color.White);
-            if (resultsCalc == true)
+            if (resultsCalc == true && Race.currentRaceType.getRaceTypeString().Equals("LappedRace"))
             {
                 for (int i = 0; i < Race.currentRacers.Count(); i++)
                 {
@@ -56,7 +56,7 @@ namespace BeatShift.Menus
             }
             else if (Race.currentRaceType.getRaceTypeString().Equals("EliminationRace"))
             {
-                BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Survivor:  " + eliminationWinner.racerID.ToString(), new Vector2(500, 400), Color.Goldenrod);
+                BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Survivor:  " + eliminationWinner.racerID.ToString(), new Vector2(500, 300), Color.Goldenrod);
             }
             else if (Race.currentRaceType.getRaceTypeString().Equals("TimeTrialRace"))
             {
@@ -64,13 +64,13 @@ namespace BeatShift.Menus
                 for (int i = 0; i < Race.currentRacers.Count(); i++)
                 {
                     if (Race.currentRacers[i].raceTiming.fastestLap.TotalMilliseconds < MapManager.currentMap.timeTrialRanks[0])
-                        BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Best lap: " + Race.currentRacers[i].raceTiming.getBestLapTime() +" " + Race.currentRacers[i].racerID.ToString(), new Vector2(500, 150 + offset * i), Color.Aqua);
+                        BeatShift.spriteBatch.DrawString(BeatShift.newfont, Race.currentRacers[i].racerID.ToString() + " " + Race.currentRacers[i].raceTiming.getBestLapTime(), new Vector2(500, 150 + offset * i), Color.Aqua);
                     else if (Race.currentRacers[i].raceTiming.fastestLap.TotalMilliseconds < MapManager.currentMap.timeTrialRanks[1])
-                        BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Best lap: " + Race.currentRacers[i].raceTiming.getBestLapTime() + " " + Race.currentRacers[i].racerID.ToString(), new Vector2(500, 150 + offset * i), Color.Goldenrod);
+                        BeatShift.spriteBatch.DrawString(BeatShift.newfont, Race.currentRacers[i].racerID.ToString() + " " + Race.currentRacers[i].raceTiming.getBestLapTime(), new Vector2(500, 150 + offset * i), Color.Goldenrod);
                     else if (Race.currentRacers[i].raceTiming.fastestLap.TotalMilliseconds < MapManager.currentMap.timeTrialRanks[2])
-                        BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Best lap: " + Race.currentRacers[i].raceTiming.getBestLapTime() + " " + Race.currentRacers[i].racerID.ToString(), new Vector2(500, 150 + offset * i), Color.White);
+                        BeatShift.spriteBatch.DrawString(BeatShift.newfont, Race.currentRacers[i].racerID.ToString() + " " + Race.currentRacers[i].raceTiming.getBestLapTime(), new Vector2(500, 150 + offset * i), Color.White);
                     else if (Race.currentRacers[i].raceTiming.fastestLap.TotalMilliseconds < MapManager.currentMap.timeTrialRanks[3])
-                        BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Best lap: " + Race.currentRacers[i].raceTiming.getBestLapTime() + " " + Race.currentRacers[i].racerID.ToString(), new Vector2(500, 150 + offset * i), Color.SaddleBrown);
+                        BeatShift.spriteBatch.DrawString(BeatShift.newfont, Race.currentRacers[i].racerID.ToString() + " " + Race.currentRacers[i].raceTiming.getBestLapTime(), new Vector2(500, 150 + offset * i), Color.SaddleBrown);
                     else
                         BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Unranked " + Race.currentRacers[i].racerID.ToString(), new Vector2(500, 150 + offset * i), Color.Gainsboro);
                 }

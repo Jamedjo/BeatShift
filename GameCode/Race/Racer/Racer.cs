@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using BeatShift.Input;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 
 namespace BeatShift
 {
@@ -19,6 +21,7 @@ namespace BeatShift
         public RacerId racerID  { get;  set; }
         public RacerType racerType { get; private set; }
         public BeatQueue beatQueue;
+        public Cue Hum;
 
         // General game related variables
         const float updatePeriod = 50; //update movement 20 times a second (1000/50=20)
@@ -71,7 +74,8 @@ namespace BeatShift
             shipDrawing = new ShipDrawing(new Func<Matrix>(() => Matrix.Identity), new Func<Vector3>(() => Vector3.Zero), this);
             beatQueue = new BeatQueue(this);
             //setColour(1);//Set to red
-
+            Hum = SoundManager.getEngineHum();
+            //Hum.Play();
             constructRaceVariables();
 
             if (racerType == RacerType.AI)
@@ -145,7 +149,16 @@ namespace BeatShift
             beatQueue.Update();
             //clear debug arrow list
             shipDrawing.drawArrowListRays.Clear();
-
+            float temp;
+            if (shipPhysics.ShipSpeed > 300)
+            {
+                temp = 5;
+            }
+            else
+            {
+                temp = shipPhysics.ShipSpeed * 5 / 300;
+            }
+            Hum.SetVariable("EngineSpeed",temp);
             //if playerType==PlayerType.Remote then return.
 
             //Only update ? times per second- based on updatePeriod.

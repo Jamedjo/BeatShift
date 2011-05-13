@@ -12,7 +12,7 @@ namespace BeatShift
     public class BeatQueue
     {
         // Music latency
-        float latency = 55;
+        float latency = 0;
 
         double boostBar = 0;
         int myLayer = 0;
@@ -98,8 +98,10 @@ namespace BeatShift
                 boostBar += ((double)result * layerBonus[myLayer]);
             else if ((boostBar > 0) && (result == 0m))
                 if (time > invinciEndtime)
+                {
                     boostBar -= layerPenalty[myLayer];
-
+                    SoundManager.MissedNote();
+                }
             if (boostBar > 100)
                 boostBar = 100;
             else if (boostBar < 0)
@@ -179,7 +181,10 @@ namespace BeatShift
 
                         //System.Diagnostics.Debug.WriteLine(temp + ": Dequeued because way out");
                         if (lastTime > invinciEndtime)
+                        {
                             boostBar -= layerPenalty[myLayer];
+                            SoundManager.MissedNote();
+                        }
                     }
                 }
                 if (boostBar < 0)

@@ -11,7 +11,7 @@ namespace BeatShift
     {
         public TimeTrialRace()
         {
-            maxLaps = 2;
+            maxLaps = 1;
             areLapsRequired = true;
             areRanksRequired = false;
 
