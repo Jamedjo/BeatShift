@@ -30,7 +30,6 @@ namespace BeatShift.Input
 
         private float randInaccuracy;
         private TimeSpan lastRandChange;
-        private Random randGen;
         private GamePadState currentState;
         private GamePadState lastState;
         private Racer parent;
@@ -56,8 +55,6 @@ namespace BeatShift.Input
 
             aheadBox.CollisionInformation.Events.PairTouched += boxCollide;
             aheadBox.CollisionInformation.Events.InitialCollisionDetected += boxinitialCollide;
-
-            randGen = new Random();
 
             lastRandChange = TimeSpan.Zero;
         }
@@ -142,7 +139,7 @@ namespace BeatShift.Input
             if (gameTime.TotalGameTime.Subtract(lastRandChange).Seconds >= 1)
             {
                 lastRandChange = gameTime.TotalGameTime;
-                randInaccuracy = (float) SimpleRNG.GetNormal(0, 2.0 / 9.0);
+                randInaccuracy = (float) SimpleRNG.GetNormal(0, 1.0 / 6.0);
                 System.Diagnostics.Debug.WriteLine("{0:0.0000}", randInaccuracy);
             }
 
@@ -219,6 +216,9 @@ namespace BeatShift.Input
             float fTrack = futureTrack();
             float nWalls = newWalls();
             lastTurn = (lastTurn + 0.0f * aWalls + 0.6f * fTrack + 0.3f * nWalls + randInaccuracy) / 2f;
+
+            System.Diagnostics.Debug.WriteLine("{0:0.000} {1:0.000} {2:0.000} {3:0.000} {4:0.000}", lastTurn, aWalls, fTrack, nWalls, randInaccuracy);
+
             return lastTurn;
         }
 
