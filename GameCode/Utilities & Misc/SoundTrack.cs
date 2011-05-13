@@ -32,11 +32,11 @@ namespace BeatShift
         int songLength;
         SoundBank soundBank;
         WaveBank waveBank;
-        WaveBank effectWave;
+        //WaveBank effectWave;
         AudioCategory musicCategory;
         Cue track;
         private int currentLayer = 0;
-        string currentTrack = "Interactive";
+        string currentTrack = "City";
 
 
         public void LoadBFF(StreamReader file) {
@@ -118,6 +118,7 @@ namespace BeatShift
             if (currentLayer < originalBeats.Length - 1)
             {
                 currentLayer++;
+                SoundManager.levelUp();
                 BeatShift.engine.SetGlobalVariable("Layer", (currentLayer + 0.1f));
             }
         }
@@ -127,19 +128,37 @@ namespace BeatShift
             if (currentLayer > 0)
             {
                 currentLayer--;
+                SoundManager.levelDown();
                 BeatShift.engine.SetGlobalVariable("Layer", currentLayer);
             }
+        }
+
+        public void loadTrack(string trackName) {
+            waveBank = new WaveBank(BeatShift.engine, "Content\\XACT\\" + trackName +"Map.xwb");
+
+            if (track!=null&&!track.IsStopped)
+            {
+                track.Stop(AudioStopOptions.Immediate);
+            }
+            try
+            {
+                track.Dispose();
+            }
+            catch (NullReferenceException e)
+            {
+            }
+            track = soundBank.GetCue(trackName);
+
+
         }
 
         public SoundTrack(int bpm)           
         {
              tick = new Stopwatch();
              mpb = 60000.0m/bpm;
-             soundBank = new SoundBank(BeatShift.engine, "Content\\XACT\\CityMap.xsb");
-             waveBank = new WaveBank(BeatShift.engine, "Content\\XACT\\CityMap.xwb");
-             effectWave = new WaveBank(BeatShift.engine,"Content\\XACT\\SoundEffects.xwb");
+             soundBank = new SoundBank(BeatShift.engine, "Content\\XACT\\MusicTracks.xsb");
              musicCategory = BeatShift.engine.GetCategory("Music");
-             track = soundBank.GetCue(currentTrack);
+             loadTrack("City");
 
              GC.Collect();
 
