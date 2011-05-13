@@ -35,6 +35,7 @@ namespace BeatShift
         
         public MapName currentMapName;
 
+        public double[] timeTrialRanks = new double[4];
 
         public Texture2D skyboxTexture;
         public Model skyboxModel;

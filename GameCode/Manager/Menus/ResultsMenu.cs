@@ -63,7 +63,16 @@ namespace BeatShift.Menus
                 int offset = 70;
                 for (int i = 0; i < Race.currentRacers.Count(); i++)
                 {
-                    BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Best lap: " + Race.currentRacers[i].raceTiming.getBestLapTime() + " " + Race.currentRacers[i].racerID.ToString(), new Vector2(500, 150 + offset * i), Color.White);
+                    if (Race.currentRacers[i].raceTiming.fastestLap.TotalMilliseconds < MapManager.currentMap.timeTrialRanks[0])
+                        BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Best lap: " + Race.currentRacers[i].raceTiming.getBestLapTime() +" " + Race.currentRacers[i].racerID.ToString(), new Vector2(500, 150 + offset * i), Color.Aqua);
+                    else if (Race.currentRacers[i].raceTiming.fastestLap.TotalMilliseconds < MapManager.currentMap.timeTrialRanks[1])
+                        BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Best lap: " + Race.currentRacers[i].raceTiming.getBestLapTime() + " " + Race.currentRacers[i].racerID.ToString(), new Vector2(500, 150 + offset * i), Color.Goldenrod);
+                    else if (Race.currentRacers[i].raceTiming.fastestLap.TotalMilliseconds < MapManager.currentMap.timeTrialRanks[2])
+                        BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Best lap: " + Race.currentRacers[i].raceTiming.getBestLapTime() + " " + Race.currentRacers[i].racerID.ToString(), new Vector2(500, 150 + offset * i), Color.White);
+                    else if (Race.currentRacers[i].raceTiming.fastestLap.TotalMilliseconds < MapManager.currentMap.timeTrialRanks[3])
+                        BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Best lap: " + Race.currentRacers[i].raceTiming.getBestLapTime() + " " + Race.currentRacers[i].racerID.ToString(), new Vector2(500, 150 + offset * i), Color.SaddleBrown);
+                    else
+                        BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Unranked " + Race.currentRacers[i].racerID.ToString(), new Vector2(500, 150 + offset * i), Color.Gainsboro);
                 }
             }
         }

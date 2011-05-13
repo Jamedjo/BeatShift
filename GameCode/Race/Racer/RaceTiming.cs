@@ -18,7 +18,7 @@ namespace BeatShift
 
         //Time related
         public Stopwatch stopwatch;
-        public TimeSpan fastedLap;
+        public TimeSpan fastestLap;
         public int currentLap;
         public int racePosition;
         public long finalRaceTime;
@@ -58,7 +58,7 @@ namespace BeatShift
             hasCompletedRace = false;
             isLastToBeEliminated = false;
             stopwatch = new Stopwatch();
-            fastedLap = new TimeSpan(0);
+            fastestLap = new TimeSpan(0);
         }
 
         public void Update()
@@ -71,8 +71,8 @@ namespace BeatShift
         {
             currentLap++;
 
-            if (currentLap == 1 || stopwatch.Elapsed.TotalMilliseconds < fastedLap.TotalMilliseconds)
-                fastedLap = stopwatch.Elapsed;
+            if (currentLap == 1 || stopwatch.Elapsed.TotalMilliseconds < fastestLap.TotalMilliseconds)
+                fastestLap = stopwatch.Elapsed;
             
 
             if (Race.currentRaceType.getRaceTypeString().Equals("EliminationRace"))
@@ -124,7 +124,7 @@ namespace BeatShift
 
         public string getBestLapTime()
         {
-            return convertTimeSpanToString(fastedLap);
+            return convertTimeSpanToString(fastestLap);
         }
 
         public string getFinalTotalTime()

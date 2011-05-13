@@ -54,7 +54,7 @@ namespace BeatShift
             }
         }
 
-        public override void finishWholeRace()
+        /*public override void finishWholeRace()
         {
             totalRaceTime.Stop();
 
@@ -62,6 +62,6 @@ namespace BeatShift
             //If faster then insert into record
 
             totalRaceTime.Reset();
-        }
+        }*/
     }
 }
