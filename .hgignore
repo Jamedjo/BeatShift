@@ -18,3 +18,4 @@ glob:GameContent/obj
 glob:**.vs10x
 glob:**.cachefile
 glob:desktop.ini
+glob:GameCode/bin/Xbox 360/Release/*
