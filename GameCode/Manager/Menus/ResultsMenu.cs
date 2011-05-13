@@ -15,7 +15,7 @@ namespace BeatShift.Menus
         string[] players;
         bool resultsCalc = false;
 
-        int eliminationWinner;
+        Racer eliminationWinner;
 
         public ResultsMenu()
         {
@@ -54,6 +54,11 @@ namespace BeatShift.Menus
                         BeatShift.spriteBatch.DrawString(BeatShift.newfont, "5th    " + results[3] + "  " + players[4], new Vector2(500, 150 + offset * 4), Color.Gainsboro);
                 }
             }
+            else if (Race.currentRaceType.getRaceTypeString().Equals("EliminationRace"))
+            {
+                BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Survivor:  " + eliminationWinner.racerID.ToString(), new Vector2(500, 400), Color.Goldenrod);
+
+            }
         }
 
         private void calculateResults()
@@ -68,7 +73,11 @@ namespace BeatShift.Menus
             }
             else if ( Race.currentRaceType.getRaceTypeString().Equals("EliminationRace") )
             {
-                
+                foreach (Racer racer in Race.currentRacers)
+                {
+                    if (racer.raceTiming.isLastToBeEliminated == false)
+                        eliminationWinner = racer;
+                }
             }
         }
 

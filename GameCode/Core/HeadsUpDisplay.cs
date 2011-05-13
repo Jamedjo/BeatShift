@@ -53,7 +53,7 @@ namespace BeatShift
                 if (Race.currentRaceType.getRaceTypeString().Equals("EliminationRace"))
                 {
                     BeatShift.spriteBatch.Begin();//(SpriteSortMode.Immediate, BlendState.AlphaBlend);
-                    DrawMessage("ELIMINATED! Do it again but better", 325, vOffset / 2);
+                    DrawMessage("ELIMINATED!", 325, vOffset / 2);
                 }
 
             }
