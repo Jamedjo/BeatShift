@@ -15,6 +15,8 @@ namespace BeatShift.Menus
         string[] players;
         bool resultsCalc = false;
 
+        int eliminationWinner;
+
         public ResultsMenu()
         {
             title = "Race Results";
@@ -58,9 +60,16 @@ namespace BeatShift.Menus
         {
             results = new string[Race.currentRacers.Count()];
 
-            results = Race.currentRacers.OrderByDescending(r => r.raceTiming.finalRaceTime).Reverse().Select(r => r.raceTiming.getFinalTotalTime()).ToArray();
-            players = Race.currentRacers.OrderByDescending(r => r.raceTiming.finalRaceTime).Reverse().Select(r => r.racerID.ToString()).ToArray();
-            resultsCalc = true;
+            if (Race.currentRaceType.getRaceTypeString().Equals("LappedRace"))
+            {
+                results = Race.currentRacers.OrderByDescending(r => r.raceTiming.finalRaceTime).Reverse().Select(r => r.raceTiming.getFinalTotalTime()).ToArray();
+                players = Race.currentRacers.OrderByDescending(r => r.raceTiming.finalRaceTime).Reverse().Select(r => r.racerID.ToString()).ToArray();
+                resultsCalc = true;
+            }
+            else if ( Race.currentRaceType.getRaceTypeString().Equals("EliminationRace") )
+            {
+                
+            }
         }
 
         public override void enteringMenu()
