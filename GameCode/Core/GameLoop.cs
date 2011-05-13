@@ -148,6 +148,7 @@ namespace BeatShift
             BeginPause(true);
             raceComplete = true;
             resultsMenu.enteringMenu();
+            MenuManager.anyInput.Update(gameTime);
         }
 
         //Input manager for exiting game
