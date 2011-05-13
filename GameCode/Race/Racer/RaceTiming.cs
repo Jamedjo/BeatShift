@@ -89,7 +89,7 @@ namespace BeatShift
                     Racer r = Race.currentRaceType.rankings[i];
                     if (!r.raceTiming.isLastToBeEliminated)
                     {
-                        if (i < Race.currentRaceType.rankings.Count - 2) break;
+                        if (i > Race.currentRaceType.rankings.Count - 2) break;
 
                         penultimateRacer = i;
                         racerToBeEliminated = i + 1;
