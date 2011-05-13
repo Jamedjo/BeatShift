@@ -60,6 +60,11 @@ namespace BeatShift.Menus
             GC.Collect();
         }
 
+        public override void respondToMenuBack()
+        {
+
+        }
+
         public override void enteringMenu()
         {
             base.enteringMenu();
