@@ -259,7 +259,7 @@ namespace BeatShift
             {
                 if (ssarea[i].isActive)// is player ISACTIVE (by pressing a) do:
                 {
-                    BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Press start to begin Race", new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width /2, BeatShift.graphics.GraphicsDevice.Viewport.Height /2), Color.Black);
+                    BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Press start to begin Race", new Vector2(300, 300), Color.Black);
                     // draw name of ship above ship
                     // draw verticle hue bar next to ship
                     // draw arrows either side of ship
