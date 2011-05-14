@@ -23,7 +23,7 @@ namespace BeatShift
         static WaveBank effectBank;
         AudioCategory voiceCategory;
         AudioCategory effectCategory;
-
+        public static string trackToLoad;
         public static event VolumechangeHandler Music;
         public static event VolumechangeHandler Voice;
         public static event VolumechangeHandler Effect;
