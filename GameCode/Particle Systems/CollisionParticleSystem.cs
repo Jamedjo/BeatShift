@@ -140,8 +140,8 @@ namespace DPSF.ParticleSystems
 
 			// Allow the Particle's Position, Rotation, Width and Height, Color, Transparency, and Orientation to be updated each frame
 			ParticleEvents.AddEveryTimeEvent(UpdateParticlePositionUsingVelocity);
-			ParticleEvents.AddEveryTimeEvent(UpdateParticleRotationUsingRotationalVelocity);
-			ParticleEvents.AddEveryTimeEvent(UpdateParticleWidthAndHeightUsingLerp);
+			//ParticleEvents.AddEveryTimeEvent(UpdateParticleRotationUsingRotationalVelocity);
+			//ParticleEvents.AddEveryTimeEvent(UpdateParticleWidthAndHeightUsingLerp);
 			ParticleEvents.AddEveryTimeEvent(UpdateParticleColorUsingLerp);
 
 			// This function must be executed after the Color Lerp function as the Color Lerp will overwrite the Color's

@@ -89,7 +89,8 @@ namespace BeatShift
 
         public void Load()
         {
-            beatQueue.Load();
+            if( racerType != RacerType.AI )
+                beatQueue.Load();
             shipDrawing.LoadParticles();
         }
 

@@ -100,7 +100,7 @@ namespace BeatShift
                 if (time > invinciEndtime)
                 {
                     boostBar -= layerPenalty[myLayer];
-                    SoundManager.MissedNote();
+                    //SoundManager.MissedNote();
                 }
             if (boostBar > 100)
                 boostBar = 100;
@@ -183,7 +183,7 @@ namespace BeatShift
                         if (lastTime > invinciEndtime)
                         {
                             boostBar -= layerPenalty[myLayer];
-                            SoundManager.MissedNote();
+                           // SoundManager.MissedNote();
                         }
                     }
                 }
