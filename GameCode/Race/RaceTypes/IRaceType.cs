@@ -38,6 +38,7 @@ namespace BeatShift
         public int maxLaps                 { get; protected set; }
         public Stopwatch totalRaceTime      { get; protected set; }
         public List<ResetColumn> resettingShips { get; set; }
+        List<ResetColumn> newList;
 
         // Rank variables
         public bool areRanksRequired        { get; protected set; }
@@ -62,6 +63,8 @@ namespace BeatShift
         public Stopwatch endRaceTimer { get; protected set; }
         public static bool raceOver          { get; protected set; }
 
+        List<ResetColumn> newList = new List<ResetColumn>();
+
         public IRaceType()
         {
             resettingShips = new List<ResetColumn>();
@@ -72,6 +75,7 @@ namespace BeatShift
             endRaceTimer = new Stopwatch();
             countdownState = GameTextures.CountdownReady;
             countDownRunning = false;
+            newList = new List<ResetColumn>();
 
             totalRaceTime = new Stopwatch();
             updatePeriod = 400;
@@ -208,14 +212,15 @@ namespace BeatShift
 
         public void clearOutResettingShips()
         {
-            foreach (ResetColumn rc in Race.currentRaceType.resettingShips.ToList())
+            newList.Clear();
+            foreach (ResetColumn rc in Race.currentRaceType.resettingShips)
             {
-                if (this.totalRaceTime.ElapsedMilliseconds - rc.timeFromReset > 2000f)
+                if (!(this.totalRaceTime.ElapsedMilliseconds - rc.timeFromReset > 2000f))
                 {
-                    Race.currentRaceType.resettingShips.Remove(rc);
+                    newList.Add(rc);
                 }
             }
-
+            Race.currentRaceType.resettingShips = newList;
         }
 
 

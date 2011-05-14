@@ -159,7 +159,7 @@ namespace BeatShift.Cameras
         {
             if (stage == CameraStage.Racing)
             {
-                cameraID = ++cameraID % cameraList.Count();
+                cameraID = ++cameraID % cameraList.Count;
                 currentCamera = cameraList[cameraID];
             }
         }
