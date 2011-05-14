@@ -62,6 +62,11 @@ namespace BeatShift
             else ssarea[1] = new SplitScreenArea(new PadInputManager(PlayerIndex.Two));
             ssarea[2] = new SplitScreenArea(new PadInputManager(PlayerIndex.Three));
             ssarea[3] = new SplitScreenArea(new PadInputManager(PlayerIndex.Four));
+
+            //ssarea[0] = new SplitScreenArea(new KeyInputManager());
+            //ssarea[1] = new SplitScreenArea(new KeyInputManager());
+            //ssarea[2] = new SplitScreenArea(new KeyInputManager());
+            //ssarea[3] = new SplitScreenArea(new KeyInputManager());
         }
 
         public void enteringState()
