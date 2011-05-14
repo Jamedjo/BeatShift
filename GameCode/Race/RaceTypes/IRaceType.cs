@@ -63,7 +63,7 @@ namespace BeatShift
         public Stopwatch endRaceTimer { get; protected set; }
         public static bool raceOver          { get; protected set; }
 
-        List<ResetColumn> newList = new List<ResetColumn>();
+        //List<ResetColumn> newList = new List<ResetColumn>();
 
         public IRaceType()
         {
