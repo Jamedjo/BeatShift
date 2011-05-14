@@ -150,7 +150,7 @@ namespace BeatShift
             beatQueue.Update();
             //clear debug arrow list
             shipDrawing.drawArrowListRays.Clear();
-            float temp;
+           /* float temp;
             if (shipPhysics.ShipSpeed > 300)
             {
                 temp = 5;
@@ -158,8 +158,8 @@ namespace BeatShift
             else
             {
                 temp = shipPhysics.ShipSpeed * 5 / 300;
-            }
-            Hum.SetVariable("EngineSpeed",temp);
+            }*/
+            //Hum.SetVariable("EngineSpeed",temp);
             //if playerType==PlayerType.Remote then return.
 
             //Only update ? times per second- based on updatePeriod.
