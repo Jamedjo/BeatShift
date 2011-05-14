@@ -110,8 +110,8 @@ namespace BeatShift
                 ////////////////////////
                 /////// SPEED //////////
                 ////////////////////////
-
                 racer.raceTiming.previousSpeed = MathHelper.Lerp(racer.raceTiming.previousSpeed, (Math.Abs((int)racer.shipPhysics.getForwardSpeed())), 0.05f);
+                racer.raceTiming.previousSpeed = 0;
                 racer.raceTiming.speedToDisplay = String.Format("{0:0000}", racer.raceTiming.previousSpeed);
                 DrawMessageColour(BeatShift.volterfont, "MPH", BeatShift.graphics.GraphicsDevice.Viewport.Width - 120, vOffset - 42, 0.5f, Color.DimGray);
                 DrawMessageColour(BeatShift.newfont, racer.raceTiming.speedToDisplay, BeatShift.graphics.GraphicsDevice.Viewport.Width - 180, vOffset - 48, 0.4f, Color.PapayaWhip);

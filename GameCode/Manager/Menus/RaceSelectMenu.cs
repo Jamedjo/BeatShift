@@ -27,7 +27,7 @@ namespace BeatShift.Menus
         {
             addMenuItem("LAPPED RACE", (Action)(delegate
             {
-                Race.currentRaceType = new LappedRace(1);
+                Race.currentRaceType = new LappedRace(3);
                 Race.resetPlayers();
                 //MenuManager.setCurrentMenu(MenuPage.MapSelect);
                 MenuManager.setCurrentMenu(MenuPage.NumberAI);

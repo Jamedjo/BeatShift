@@ -36,6 +36,8 @@ namespace BeatShift.Input
         private Box aheadBox;
         private float lastTurn = 0f;
 
+        Ray AiRay = new Ray();
+
         private Beat? nextBeatToPress = null;
 
         /// <summary>
@@ -218,7 +220,7 @@ namespace BeatShift.Input
             float nWalls = newWalls();
             lastTurn = (lastTurn + /*0.0f * aWalls +*/ 0.6f * fTrack + 0.3f * nWalls + randInaccuracy) / 2f;
 #if WINDOWS
-            System.Diagnostics.Debug.WriteLine("{0:0.000} {1:0.000} {2:0.000} {3:0.000} {4:0.000}", lastTurn, nWalls, fTrack, nWalls, randInaccuracy);
+            //System.Diagnostics.Debug.WriteLine("{0:0.000} {1:0.000} {2:0.000} {3:0.000} {4:0.000}", lastTurn, aWalls, fTrack, nWalls, randInaccuracy);
 #endif
             return lastTurn;
         }
@@ -305,7 +307,9 @@ namespace BeatShift.Input
             float shipWidth = 3f;
             float rayLength = shipWidth + parent.shipPhysics.ShipSpeed / 8;
 
-            Physics.currentTrackWall.RayCast(new Ray(rayOrigin, testVector), rayLength, out result);
+            AiRay.Position = rayOrigin;
+            AiRay.Direction = testVector;
+            Physics.currentTrackWall.RayCast(AiRay, rayLength, out result);
 
             float distance = result.T < shipWidth ? rayLength - shipWidth : rayLength - result.T;
 
