@@ -79,8 +79,10 @@ namespace BeatShift.Menus
             {
                 BeatShift.spriteBatch.Begin();
                 BeatShift.spriteBatch.Draw(videoTexture, screen, Color.White);
-                BeatShift.spriteBatch.End();
             }
+
+            BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Please press start", new Vector2(350, 300), Color.White);
+            BeatShift.spriteBatch.End();
 
         }
 
