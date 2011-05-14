@@ -269,21 +269,24 @@ namespace BeatShift.Input
                 //if (new Random().Next(60) == 0) Console.WriteLine(angularSize);
 
                 // CAUTION: We change reverse direction once we're reversing more than 35f. Plays better when hitting walls head on but weird.
-                if (Vector3.Dot(racer.shipPhysics.physicsBody.LinearVelocity, racer.shipPhysics.physicsBody.WorldTransform.Backward) > 35f)
+                float backwardsComponent = Vector3.Dot(racer.shipPhysics.physicsBody.LinearVelocity, racer.shipPhysics.physicsBody.WorldTransform.Backward);
+                if (backwardsComponent > 20f)
                     reversingMultiplier = -1;
 
-                if (angularSize < 3.5f)
+                if (!(backwardsComponent < 20f && backwardsComponent > 0f))
                 {
-                    Vector3 leftVector = racer.shipPhysics.physicsBody.OrientationMatrix.Up * reversingMultiplier * 75f * (1 + (Math.Abs(angularSize) * 0.12f)) * chosenInput.getActionValue(InputAction.Left);
-                    Physics.ApplyAngularImpulse(ref leftVector, ref racer.shipPhysics.physicsBody);
-                }
+                    if (angularSize < 3.5f)
+                    {
+                        Vector3 leftVector = racer.shipPhysics.physicsBody.OrientationMatrix.Up * reversingMultiplier * 75f * (1 + (Math.Abs(angularSize) * 0.12f)) * chosenInput.getActionValue(InputAction.Left);
+                        Physics.ApplyAngularImpulse(ref leftVector, ref racer.shipPhysics.physicsBody);
+                    }
 
-                if (angularSize > -3.5f)
-                {
-                    Vector3 rightVector = racer.shipPhysics.physicsBody.OrientationMatrix.Up * reversingMultiplier * -75f * (1 + (Math.Abs(angularSize) * 0.12f)) * chosenInput.getActionValue(InputAction.Right);
-                    Physics.ApplyAngularImpulse(ref rightVector, ref racer.shipPhysics.physicsBody);
+                    if (angularSize > -3.5f)
+                    {
+                        Vector3 rightVector = racer.shipPhysics.physicsBody.OrientationMatrix.Up * reversingMultiplier * -75f * (1 + (Math.Abs(angularSize) * 0.12f)) * chosenInput.getActionValue(InputAction.Right);
+                        Physics.ApplyAngularImpulse(ref rightVector, ref racer.shipPhysics.physicsBody);
+                    }
                 }
-            //}
         }
 
         public void applyForwardMotionFromAnalogue()
