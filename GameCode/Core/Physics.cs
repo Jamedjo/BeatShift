@@ -106,12 +106,12 @@ namespace BeatShift
             space = new Space();
 
             //Give the space some threads to work with.
-#if XBOX360
+#if XBOX
             //Note that not all four available hardware threads are used.
             //Currently, BEPUphysics will allocate an equal amount of work to each thread.
             //If two threads are put on one core, it will bottleneck the engine and run significantly slower than using 3 hardware threads.
-            space.ThreadManager.AddThread(delegate(object information) { Thread.CurrentThread.SetProcessorAffinity(new int[] { 3 }); }, null);
-            space.ThreadManager.AddThread(delegate(object information) { Thread.CurrentThread.SetProcessorAffinity(new int[] { 4 }); }, null);
+            //space.ThreadManager.AddThread(delegate(object information) { Thread.CurrentThread.SetProcessorAffinity(new int[] { 1 }); }, null);
+            //space.ThreadManager.AddThread(delegate(object information) { Thread.CurrentThread.SetProcessorAffinity(new int[] { 3 }); }, null);
             space.ThreadManager.AddThread(delegate(object information) { Thread.CurrentThread.SetProcessorAffinity(new int[] { 5 }); }, null);
 
 #else
