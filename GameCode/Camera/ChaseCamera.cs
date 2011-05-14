@@ -61,18 +61,18 @@ namespace BeatShift.Cameras
 
             // Cast a ray from 'behind' (relative to the ray) to ensure camera stays above the
             // ground. Move CamPosition if needed.
-            float minFloorDistance = 1.5f;
-            Vector3 adjustPositionDirection = Vector3.Normalize(Vector3.Cross((CameraTarget - CamPosition), Matrix.CreateFromQuaternion(getOrientation()).Left));
+            //float minFloorDistance = 1.5f;
+            //Vector3 adjustPositionDirection = Vector3.Normalize(Vector3.Cross((CameraTarget - CamPosition), Matrix.CreateFromQuaternion(getOrientation()).Left));
 
-            RayHit outRay;
-            Physics.currentTrackFloor.RayCast(new Ray(CamPosition - (minFloorDistance * adjustPositionDirection), adjustPositionDirection), 20f, out outRay);
+            //RayHit outRay;
+            //Physics.currentTrackFloor.RayCast(new Ray(CamPosition - (minFloorDistance * adjustPositionDirection), adjustPositionDirection), 20f, out outRay);
 
-            CamPosition += outRay.T * adjustPositionDirection;
+            //CamPosition += outRay.T * adjustPositionDirection;
 
-#if WINDOWS
-            if (outRay.T != 0)
-                System.Diagnostics.Debug.WriteLine(outRay.T);
-#endif
+//#if WINDOWS
+//            if (outRay.T != 0)
+//                System.Diagnostics.Debug.WriteLine(outRay.T);
+//#endif
 
             View = Matrix.CreateLookAt(CamPosition, CameraTarget, camLastUp);
 

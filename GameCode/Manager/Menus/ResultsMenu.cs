@@ -39,7 +39,7 @@ namespace BeatShift.Menus
             spriteBatch.Draw(background, new Rectangle(0, 0, 600, background.Height / 2 + 50), Color.White);
             if (resultsCalc == true && Race.currentRaceType.getRaceTypeString().Equals("LappedRace"))
             {
-                for (int i = 0; i < Race.currentRacers.Count(); i++)
+                for (int i = 0; i < Race.currentRacers.Count; i++)
                 {
                     int offset = 70;
                     if ( i == 0 )
@@ -61,7 +61,7 @@ namespace BeatShift.Menus
             else if (Race.currentRaceType.getRaceTypeString().Equals("TimeTrialRace"))
             {
                 int offset = 70;
-                for (int i = 0; i < Race.currentRacers.Count(); i++)
+                for (int i = 0; i < Race.currentRacers.Count; i++)
                 {
                     if (Race.currentRacers[i].raceTiming.fastestLap.TotalMilliseconds < MapManager.currentMap.timeTrialRanks[0])
                         BeatShift.spriteBatch.DrawString(BeatShift.newfont, Race.currentRacers[i].racerID.ToString() + " " + Race.currentRacers[i].raceTiming.getBestLapTime(), new Vector2(500, 150 + offset * i), Color.Aqua);
@@ -79,7 +79,7 @@ namespace BeatShift.Menus
 
         private void calculateResults()
         {
-            results = new string[Race.currentRacers.Count()];
+            results = new string[Race.currentRacers.Count];
 
             if (Race.currentRaceType.getRaceTypeString().Equals("LappedRace"))
             {

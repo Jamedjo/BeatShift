@@ -113,6 +113,7 @@ namespace BeatShift
             return mapPoints[previousIndex(previousIndex(previousIndex(previousIndex(nextIndex))))];
         }
 
+        MapPoint[] testPoint = new MapPoint[4];//, testPoint1, testPoint2, testPoint3;
         /// <summary>
         /// Algorithm to find the nearest map point to a position given knowledge about its previous position to limit the search.
         /// </summary>
@@ -128,7 +129,10 @@ namespace BeatShift
             MapPoint nearest = lastNearestPoint;
             float distance = distanceToMapPoint(position,lastNearestPoint);
             float tempDistance;
-            MapPoint[] testPoint = { nextPoint(lastNearestPoint), nextPoint(nextPoint(lastNearestPoint)), previousPoint(lastNearestPoint), previousPoint(previousPoint(lastNearestPoint)) };
+            testPoint[0] = nextPoint(lastNearestPoint);
+            testPoint[1] = nextPoint(testPoint[0]);
+            testPoint[2] = previousPoint(lastNearestPoint);
+            testPoint[3] = previousPoint(testPoint[2]);
 
             for (int i = 0; i < testPoint.Length; i++)
             {
