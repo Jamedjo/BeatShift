@@ -49,6 +49,15 @@ namespace BeatShift
         Vector3 frontOff;
         float previousDirty = 1;
 
+        Ray theRay = new Ray();
+        Vector3 rayCastDirection;
+
+        Vector3 rayColour = Color.AntiqueWhite.ToVector3();
+        Vector3[] cSRAAI_rayTruePos = new Vector3[rayCount];
+        Vector3[] cSRAAI_offsetRayPos = new Vector3[rayCount];
+        Vector3[] cSRAAI_impulseVector = new Vector3[rayCount];
+        Boolean[] cSRAAI_results = new Boolean[rayCount];
+
         private Quaternion previousOrientation;
 
         public Quaternion ShipOrientationQuaternion
@@ -96,7 +105,7 @@ namespace BeatShift
         public bool wrongWay = false;
 
         //Temporary AI
-        int AiSpeed = 216;
+        int AiSpeed = 235;
 
         public ShipPhysics(Racer parent)
         {
@@ -867,13 +876,6 @@ namespace BeatShift
 
         }
 
-
-        Vector3 rayColour = Color.AntiqueWhite.ToVector3();
-        Vector3[] cSRAAI_rayTruePos = new Vector3[rayCount];
-        Vector3[] cSRAAI_offsetRayPos = new Vector3[rayCount];
-        Vector3[] cSRAAI_impulseVector = new Vector3[rayCount];
-        Boolean[] cSRAAI_results = new Boolean[rayCount];
-
         /// <summary>
         /// Casts rays in given list (the stabilizers) and only applies impulses if they all hit the track
         /// Does this by calling
@@ -1013,10 +1015,6 @@ namespace BeatShift
 
         }
 
-
-
-        Ray theRay = new Ray();
-        Vector3 rayCastDirection;
         public Boolean castSingleRay(Vector3 positionOffset, float stickLength, float power, out float timeOfImpact, out Vector3 rayTruePos, out Vector3 offsetRayPos, out Vector3 impulseVector)
         {
             //Vector3 rayCastDirection = Matrix.Identity.Down;//Always raycast in gravity direction.
