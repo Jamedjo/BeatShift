@@ -76,7 +76,7 @@ namespace DPSF.ParticleSystems
 			// TODO: Change any Initialization parameters desired and the Name
 			//-----------------------------------------------------------
 			// Initialize the Particle System before doing anything else
-			InitializeTexturedQuadParticleSystem(cGraphicsDevice, cContentManager, 100, 5000, 
+			InitializeTexturedQuadParticleSystem(cGraphicsDevice, cContentManager, 240, 5000, 
 												UpdateVertexProperties, "Particles/Textures/FlowerBurst");
 
 			// Set the Name of the Particle System
@@ -262,7 +262,7 @@ namespace DPSF.ParticleSystems
 
             ; ;
             Emitter.PositionData.Position = Vector3.Transform(pointOfContact, Matrix.Invert(World));
-            Emitter.BurstParticles = 40;
+            Emitter.BurstParticles = 60;
         }
 	}
 }

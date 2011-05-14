@@ -43,12 +43,6 @@ namespace BeatShift.Input
         Ray rightInnerRay = new Ray();
         Ray testRay = new Ray();
 
-        MapPoint lastPoint;
-        MapPoint nextPoint;
-        RayHit result;
-        Buttons b = new Buttons();
-        GamePadDPad dpad = new GamePadDPad();
-
         private Beat? nextBeatToPress = null;
 
         /// <summary>
@@ -185,6 +179,7 @@ namespace BeatShift.Input
             {
                 triggers = new GamePadTriggers(-acceleration, 0f);
             }
+            GamePadDPad dpad = new GamePadDPad();
 
             lastState = currentState;
             currentState = new GamePadState(sticks, triggers, buttons, dpad);
@@ -199,6 +194,8 @@ namespace BeatShift.Input
         /// </returns>
         private Buttons setButtons()
         {
+            Buttons b = new Buttons();
+
             if (nextBeatToPress == null)
             {
                 nextBeatToPress = parent.beatQueue.nextBeat();
@@ -311,6 +308,8 @@ namespace BeatShift.Input
             float shipWidth = 3f;
             float rayLength = shipWidth + parent.shipPhysics.ShipSpeed / 8;
 
+            RayHit result;
+
             AiRay.Position = rayOrigin;
             AiRay.Direction = testVector;
             Physics.currentTrackWall.RayCast(AiRay, rayLength, out result);
@@ -349,6 +348,8 @@ namespace BeatShift.Input
 
             float rayLength = 50f;
             Vector3 rayOrigin = parent.shipPhysics.ShipPosition - shipOrientation.Up * 2;
+
+            RayHit result;
 
             leftOuterRay.Position = rayOrigin;
             leftOuterRay.Direction = leftOuterVector;
@@ -476,8 +477,8 @@ namespace BeatShift.Input
             float t;
 
             Matrix shipOrientation = parent.shipPhysics.ShipOrientationMatrix;
-            lastPoint = parent.shipPhysics.nearestMapPoint;
-            nextPoint = parent.shipPhysics.mapData.mapPoints[(parent.shipPhysics.nearestMapPoint.getIndex() + 2) % parent.shipPhysics.mapData.mapPoints.Count];
+            MapPoint lastPoint = parent.shipPhysics.nearestMapPoint;
+            MapPoint nextPoint = parent.shipPhysics.mapData.mapPoints[(parent.shipPhysics.nearestMapPoint.getIndex() + 2) % parent.shipPhysics.mapData.mapPoints.Count];
 
             // partially take current orientation into account, but not too much
             Vector3 guessUp = (shipOrientation.Up + nextPoint.trackUp * 9) / 10;
@@ -517,6 +518,8 @@ namespace BeatShift.Input
             Vector3 rayOrigin = parent.shipPhysics.ShipPosition;
 
             float rayLength = 120f;
+
+            RayHit result;
 
             testRay.Position = rayOrigin;
             testRay.Direction = testVector;
