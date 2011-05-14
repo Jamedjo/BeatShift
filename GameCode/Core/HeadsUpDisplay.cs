@@ -105,7 +105,7 @@ namespace BeatShift
 
 
                 DrawMessageColour(BeatShift.volterfont, "LEVEL", BeatShift.graphics.GraphicsDevice.Viewport.Width - 230, vOffset - 53, 0.5f, Color.PapayaWhip);
-                DrawMessageColour(BeatShift.volterfont, racer.beatQueue.getLayer().ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 222, vOffset - 40, 1f, Color.PapayaWhip);
+                DrawMessageColour(BeatShift.volterfont, (racer.beatQueue.getLayer()+1).ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 222, vOffset - 40, 1f, Color.PapayaWhip);
 
 
                 ////////////////////////

@@ -25,8 +25,8 @@ namespace BeatShift.Input
         /// <summary>
         ///  Set to false and the player retakes control
         /// </summary>
-        public const Boolean testAI = true;
-        public const int numberOfAI = 0;
+        public const Boolean testAI = false;
+        public const int numberOfAI = 2;
 
         private float randInaccuracy;
         private TimeSpan lastRandChange;
@@ -139,8 +139,10 @@ namespace BeatShift.Input
             if (gameTime.TotalGameTime.Subtract(lastRandChange).Seconds >= 1)
             {
                 lastRandChange = gameTime.TotalGameTime;
-                randInaccuracy = (float) SimpleRNG.GetNormal(0, 1.0 / 6.0);
+                randInaccuracy = (float)SimpleRNG.GetNormal(0, 1.0 / 6.0);
+#if WINDOWS
                 System.Diagnostics.Debug.WriteLine("{0:0.0000}", randInaccuracy);
+#endif
             }
 
             aheadBox.Position = parent.shipPhysics.ShipPosition + parent.shipPhysics.ShipOrientationMatrix.Forward * 0;
@@ -197,7 +199,6 @@ namespace BeatShift.Input
                 nextBeatToPress = null;
             }
             
-
             // Initially no buttons.
             return b;
         }
@@ -212,13 +213,13 @@ namespace BeatShift.Input
         /// </returns>
         private float setTurn()
         {
-            float aWalls = avoidWalls();
+            //float aWalls = avoidWalls();
             float fTrack = futureTrack();
             float nWalls = newWalls();
-            lastTurn = (lastTurn + 0.0f * aWalls + 0.6f * fTrack + 0.3f * nWalls + randInaccuracy) / 2f;
-
-            System.Diagnostics.Debug.WriteLine("{0:0.000} {1:0.000} {2:0.000} {3:0.000} {4:0.000}", lastTurn, aWalls, fTrack, nWalls, randInaccuracy);
-
+            lastTurn = (lastTurn + /*0.0f * aWalls +*/ 0.6f * fTrack + 0.3f * nWalls + randInaccuracy) / 2f;
+#if WINDOWS
+            System.Diagnostics.Debug.WriteLine("{0:0.000} {1:0.000} {2:0.000} {3:0.000} {4:0.000}", lastTurn, fTrack, nWalls, randInaccuracy);
+#endif
             return lastTurn;
         }
 
@@ -312,6 +313,7 @@ namespace BeatShift.Input
                 distance = 0;
 
             t = distance / (rayLength - shipWidth);
+
 
             float retVal = t * Math.Sign(direction);
 

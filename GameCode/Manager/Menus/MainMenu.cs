@@ -17,25 +17,20 @@ namespace BeatShift.Menus
 
         public override void setupMenuItems()
         {
-            addMenuItem("START SINGLEPLAYER", (Action)(delegate{
+            addMenuItem("RACE", (Action)(delegate{
                 MenuManager.setCurrentMenu(MenuPage.RaceSelect);
-#if XBOX
-                Race.getFullListOfRacerIDsFromSignedInPeople();
-                if (Race.racerIDs != null && Race.racerIDs.Count() == 0)
-                    Guide.ShowSignIn(1, false);
-#endif
             }));
-            addMenuItem("START CO-OP RACE", (Action)(delegate
-            {
+            //addMenuItem("START CO-OP RACE", (Action)(delegate
+            //{
                 //GameLoop.setGameStateAndResetPlayers(GameState.LocalGame); //TODO: this sucks
                 //Race.humanRacers[0].racingControls.chosenInput = new CoOpInputManager(new PadInputManager(PlayerIndex.One), new PadInputManager(PlayerIndex.Two));
                 //Race.humanRacers[0].constructRandomShip(324);
                 //BeatShift.bgm.play();
-            }));
-            addMenuItem("START MULTIPLAYER", (Action)(delegate
-            {
-                MenuManager.setCurrentMenu(MenuPage.Multiplayer);
-            }));
+            //}));
+            //addMenuItem("START MULTIPLAYER", (Action)(delegate
+            //{
+            //    MenuManager.setCurrentMenu(MenuPage.Multiplayer);
+            //}));
             addMenuItem("OPTIONS", (Action)(delegate
             {
                 MenuManager.setCurrentMenu(MenuPage.Options);
