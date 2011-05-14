@@ -158,13 +158,13 @@ namespace BeatShift
                     humanRacers[0].localCamera.Viewport = Viewports.fullViewport;
                     break;
                 case 2:
-                    humanRacers[0].localCamera.Viewport = Viewports.topViewport;
-                    humanRacers[1].localCamera.Viewport = Viewports.bottomViewport;
+                    humanRacers[0].localCamera.Viewport = Viewports.leftViewPort;
+                    humanRacers[1].localCamera.Viewport = Viewports.rightViewPort;
                     break;
                 case 3:
-                    humanRacers[0].localCamera.Viewport = Viewports.topViewport;
-                    humanRacers[1].localCamera.Viewport = Viewports.bottomLeftViewport;
-                    humanRacers[2].localCamera.Viewport = Viewports.bottomRightViewport;
+                    humanRacers[0].localCamera.Viewport = Viewports.leftViewPort;
+                    humanRacers[1].localCamera.Viewport = Viewports.topRightViewport;
+                    humanRacers[2].localCamera.Viewport = Viewports.topLeftViewport;
                     break;
                 case 4:
                     humanRacers[0].localCamera.Viewport = Viewports.topLeftViewport;

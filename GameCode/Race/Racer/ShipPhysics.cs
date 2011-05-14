@@ -973,7 +973,7 @@ namespace BeatShift
             }
 
 
-            previousDirty = MathHelper.Lerp(previousDirty, dirtyMultiplier, 0.005f);
+            previousDirty = MathHelper.Lerp(previousDirty, dirtyMultiplier, 0.00125f);
 
             Console.WriteLine(previousDirty);
 
@@ -987,9 +987,7 @@ namespace BeatShift
             if (result)
             {
                 physicsBody.ApplyImpulse(physicsBody.Position, impulseVector);
-
                 physicsBody.ApplyImpulse(rayTruePos, physicsBody.OrientationMatrix.Up * Math.Max(0, Math.Min(6, previousDirty)));
-
 
                 //parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = offsetRayPos, dir = rayCastDirection, col = Color.Red.ToVector3() });
                 //parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = rayTruePos, dir = impulseVector, col = Color.AntiqueWhite.ToVector3() });
