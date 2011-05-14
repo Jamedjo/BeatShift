@@ -134,6 +134,10 @@ namespace BeatShift
         }
 
         public void loadTrack(string trackName) {
+            System.IO.Stream stream = TitleContainer.OpenStream(BeatShift.contentManager.RootDirectory + "/BFF/"+trackName+".bff");
+            LoadBFF(new StreamReader(stream));
+            stream.Dispose();
+            
             waveBank = new WaveBank(BeatShift.engine, "Content\\XACT\\" + trackName +"Map.xwb");
 
             if (track!=null&&!track.IsStopped)
@@ -149,6 +153,9 @@ namespace BeatShift
             }
             track = soundBank.GetCue(trackName);
 
+            tick.Reset();
+
+            GC.Collect();
 
         }
 
@@ -160,7 +167,7 @@ namespace BeatShift
              musicCategory = BeatShift.engine.GetCategory("Music");
              loadTrack("City");
 
-             GC.Collect();
+
 
              while (!track.IsPrepared)
              {
@@ -180,8 +187,7 @@ namespace BeatShift
 
         public void LoadContent(ContentManager content, string track)
         {
-            System.IO.Stream stream = TitleContainer.OpenStream(BeatShift.contentManager.RootDirectory + "/BFF/try.bff");
-            LoadBFF(new StreamReader(stream));
+
         }
 
         /// <summary>

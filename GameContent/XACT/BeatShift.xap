@@ -278,7 +278,7 @@ Global Settings
         Reserved = 0;
         Read Only = 0;
         Time = 0;
-        Value = 0.000000;
+        Value = 2.240000;
         Initial Value = 0.000000;
         Min = 0.000000;
         Max = 10.000000;
@@ -928,12 +928,6 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = Default;
-    Xbox Bank Last Modified Low = 0;
-    Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 0;
-    PC Bank Last Modified High = 0;
-    Header Last Modified Low = 0;
-    Header Last Modified High = 0;
     Bank Last Revised Low = 4108028343;
     Bank Last Revised High = 30151027;
 
@@ -1062,14 +1056,8 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Xbox Bank Last Modified Low = 0;
-    Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 0;
-    PC Bank Last Modified High = 0;
-    Header Last Modified Low = 0;
-    Header Last Modified High = 0;
-    Bank Last Revised Low = 422689709;
-    Bank Last Revised High = 30151044;
+    Bank Last Revised Low = 2351503164;
+    Bank Last Revised High = 30151226;
 
     Wave
     {
@@ -1096,10 +1084,10 @@ Wave Bank
 
     Wave
     {
-        Name = levelup;
-        File = ..\SoundEffects\Boost.wav;
-        Build Settings Last Modified Low = 1356020765;
-        Build Settings Last Modified High = 30151021;
+        Name = QuickBoost;
+        File = ..\SoundEffects\Quick Boost.wav;
+        Build Settings Last Modified Low = 1979291874;
+        Build Settings Last Modified High = 30151226;
 
         Cache
         {
@@ -1107,13 +1095,13 @@ Wave Bank
             Channels = 2;
             Sampling Rate = 44100;
             Bits Per Sample = 1;
-            Play Region Offset = 112;
-            Play Region Length = 1230276;
+            Play Region Offset = 44;
+            Play Region Length = 574032;
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 2664183296;
-            Last Modified High = 30150874;
+            Last Modified Low = 2910662400;
+            Last Modified High = 30151225;
         }
     }
 
@@ -1380,12 +1368,6 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = Default;
-    Xbox Bank Last Modified Low = 0;
-    Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 0;
-    PC Bank Last Modified High = 0;
-    Header Last Modified Low = 0;
-    Header Last Modified High = 0;
     Bank Last Revised Low = 402226383;
     Bank Last Revised High = 30151027;
 
@@ -1501,6 +1483,134 @@ Wave Bank
             File Type = 1;
             Last Modified Low = 345880294;
             Last Modified High = 30150667;
+        }
+    }
+}
+
+Wave Bank
+{
+    Name = SpaceMap;
+    Xbox File = Xbox\SpaceMap.xwb;
+    Windows File = Win\SpaceMap.xwb;
+    Xbox Bank Path Edited = 0;
+    Windows Bank Path Edited = 0;
+    Seek Tables = 1;
+    Compression Preset Name = <none>;
+    Bank Last Revised Low = 899531409;
+    Bank Last Revised High = 30151213;
+
+    Wave
+    {
+        Name = BeatShift Space Level 2;
+        File = ..\Music\Space\BeatShift Space Level 2.wav;
+        Build Settings Last Modified Low = 3142101314;
+        Build Settings Last Modified High = 30151212;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 4704000;
+            Loop Region Offset = 0;
+            Loop Region Length = 4704000;
+            File Type = 1;
+            Last Modified Low = 4090755574;
+            Last Modified High = 30151212;
+        }
+    }
+
+    Wave
+    {
+        Name = BeatShift Space Level 3;
+        File = ..\Music\Space\BeatShift Space Level 3.wav;
+        Build Settings Last Modified Low = 3142111315;
+        Build Settings Last Modified High = 30151212;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 4704000;
+            Loop Region Offset = 0;
+            Loop Region Length = 4704000;
+            File Type = 1;
+            Last Modified Low = 4052623393;
+            Last Modified High = 30151212;
+        }
+    }
+
+    Wave
+    {
+        Name = BeatShift Space Level 4;
+        File = ..\Music\Space\BeatShift Space Level 4.wav;
+        Build Settings Last Modified Low = 3142111315;
+        Build Settings Last Modified High = 30151212;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 4704000;
+            Loop Region Offset = 0;
+            Loop Region Length = 4704000;
+            File Type = 1;
+            Last Modified Low = 4018091418;
+            Last Modified High = 30151212;
+        }
+    }
+
+    Wave
+    {
+        Name = BeatShift Space Level 5;
+        File = ..\Music\Space\BeatShift Space Level 5.wav;
+        Build Settings Last Modified Low = 3142121315;
+        Build Settings Last Modified High = 30151212;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 4704000;
+            Loop Region Offset = 0;
+            Loop Region Length = 4704000;
+            File Type = 1;
+            Last Modified Low = 3984859517;
+            Last Modified High = 30151212;
+        }
+    }
+
+    Wave
+    {
+        Name = BeatShift Space Level 1;
+        File = ..\Music\Space\BeatShift Space Level 1.wav;
+        Build Settings Last Modified Low = 3142131316;
+        Build Settings Last Modified High = 30151212;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 4704000;
+            Loop Region Offset = 0;
+            Loop Region Length = 4704000;
+            File Type = 1;
+            Last Modified Low = 4126127597;
+            Last Modified High = 30151212;
         }
     }
 }
@@ -2162,15 +2272,13 @@ Sound Bank
     Windows File = Win\MusicTracks.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
-    Header Last Modified High = 0;
-    Header Last Modified Low = 0;
 
     Sound
     {
         Name = SandSound;
         Volume = -1200;
         Pitch = 0;
-        Priority = 203;
+        Priority = 213;
 
         Category Entry
         {
@@ -2393,7 +2501,7 @@ Sound Bank
         Name = CitySound;
         Volume = -1200;
         Pitch = 0;
-        Priority = 255;
+        Priority = 213;
 
         Category Entry
         {
@@ -2415,10 +2523,10 @@ Sound Bank
                 Loop Count = 255;
                 Break Loop = 0;
                 Use Speaker Position = 0;
-                Use Center Speaker = 1;
-                New Speaker Position On Loop = 1;
-                Speaker Position Angle = 0.000000;
-                Speaker Position Arc = 0.000000;
+                Use Center Speaker = 0;
+                New Speaker Position On Loop = 0;
+                Speaker Position Angle = 180.000000;
+                Speaker Position Arc = 284.000000;
 
                 Event Header
                 {
@@ -2456,6 +2564,188 @@ Sound Bank
                 Loop Count = 255;
                 Break Loop = 0;
                 Use Speaker Position = 0;
+                Use Center Speaker = 0;
+                New Speaker Position On Loop = 0;
+                Speaker Position Angle = 180.000000;
+                Speaker Position Arc = 284.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = CityMap;
+                    Bank Index = 3;
+                    Entry Name = City 2;
+                    Entry Index = 0;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = LayerChange;
+                RPC Curve Name = 2::d79346f0-4e7a-47c5-936d-af24bd84b9e3;
+            }
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 0;
+                New Speaker Position On Loop = 0;
+                Speaker Position Angle = 180.000000;
+                Speaker Position Arc = 284.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = CityMap;
+                    Bank Index = 3;
+                    Entry Name = City 3;
+                    Entry Index = 1;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = LayerChange;
+                RPC Curve Name = 3::e79c583f-081e-4757-ad98-c021dcfed094;
+            }
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 0;
+                New Speaker Position On Loop = 0;
+                Speaker Position Angle = 180.000000;
+                Speaker Position Arc = 284.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = CityMap;
+                    Bank Index = 3;
+                    Entry Name = City 4;
+                    Entry Index = 2;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = LayerChange;
+                RPC Curve Name = 4::b530487b-a155-4982-80c8-31927db99a15;
+            }
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 0;
+                New Speaker Position On Loop = 0;
+                Speaker Position Angle = 180.000000;
+                Speaker Position Arc = 284.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = CityMap;
+                    Bank Index = 3;
+                    Entry Name = City 5;
+                    Entry Index = 4;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = LayerChange;
+                RPC Curve Name = 5::f8bcc439-438e-4c3b-958a-3fbe44b7579b;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = SpaceSound;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 213;
+
+        Category Entry
+        {
+            Name = Music;
+        }
+
+        RPC Entry
+        {
+            RPC Name = LayerChange;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
                 Use Center Speaker = 1;
                 New Speaker Position On Loop = 1;
                 Speaker Position Angle = 0.000000;
@@ -2471,9 +2761,50 @@ Sound Bank
 
                 Wave Entry
                 {
-                    Bank Name = CityMap;
-                    Bank Index = 3;
-                    Entry Name = City 2;
+                    Bank Name = SpaceMap;
+                    Bank Index = 6;
+                    Entry Name = BeatShift Space Level 1;
+                    Entry Index = 4;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = LayerChange;
+                RPC Curve Name = 1::42fd823c-dfb3-42c9-963b-c3ab27a05c60;
+            }
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = SpaceMap;
+                    Bank Index = 6;
+                    Entry Name = BeatShift Space Level 2;
                     Entry Index = 0;
                     Weight = 255;
                     Weight Min = 0;
@@ -2512,9 +2843,9 @@ Sound Bank
 
                 Wave Entry
                 {
-                    Bank Name = CityMap;
-                    Bank Index = 3;
-                    Entry Name = City 3;
+                    Bank Name = SpaceMap;
+                    Bank Index = 6;
+                    Entry Name = BeatShift Space Level 3;
                     Entry Index = 1;
                     Weight = 255;
                     Weight Min = 0;
@@ -2553,9 +2884,9 @@ Sound Bank
 
                 Wave Entry
                 {
-                    Bank Name = CityMap;
-                    Bank Index = 3;
-                    Entry Name = City 4;
+                    Bank Name = SpaceMap;
+                    Bank Index = 6;
+                    Entry Name = BeatShift Space Level 4;
                     Entry Index = 2;
                     Weight = 255;
                     Weight Min = 0;
@@ -2594,10 +2925,10 @@ Sound Bank
 
                 Wave Entry
                 {
-                    Bank Name = CityMap;
-                    Bank Index = 3;
-                    Entry Name = City 5;
-                    Entry Index = 4;
+                    Bank Name = SpaceMap;
+                    Bank Index = 6;
+                    Entry Name = BeatShift Space Level 5;
+                    Entry Index = 3;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -2646,6 +2977,26 @@ Sound Bank
         {
             Name = CitySound;
             Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = Space;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = SpaceSound;
+            Index = 2;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -2987,7 +3338,7 @@ Sound Bank
                 {
                     Bank Name = SoundEffects;
                     Bank Index = 4;
-                    Entry Name = levelup;
+                    Entry Name = QuickBoost;
                     Entry Index = 1;
                     Weight = 255;
                     Weight Min = 0;

@@ -19,3 +19,19 @@ glob:**.vs10x
 glob:**.cachefile
 glob:desktop.ini
 glob:GameCode/bin/Xbox 360/Release/*
+glob:BeatManager/space midis/Space Level 1 MIDI.mid
+glob:BeatManager/space midis/Space Level 2 MIDI.mid
+glob:BeatManager/space midis/Space Level 4 MIDI.mid
+glob:BeatManager/space midis/Space Level 3.mid
+glob:BeatManager/space midis/Space Level 5 MIDI.mid
+glob:GameContent/Music/Space/BeatShift Space Level 1.wav
+glob:GameContent/Music/Space/BeatShift Space Level 3.wav
+glob:GameContent/Music/Space/BeatShift Space Level 4.wav
+glob:GameContent/Music/Space/BeatShift Space Level 5.wav
+glob:GameContent/Music/Space/BeatShift Space Level 2.wav
+glob:BeatManager/space midis/Midicsv.exe
+glob:BeatManager/space midis/button2.btn
+glob:BeatManager/space midis/button1.btn
+glob:BeatManager/space midis/button4.btn
+glob:BeatManager/space midis/button3.btn
+glob:BeatManager/space midis/button5.btn

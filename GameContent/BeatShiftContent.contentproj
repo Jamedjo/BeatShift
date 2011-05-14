@@ -745,6 +745,18 @@
       <Importer>TextureImporter</Importer>
       <Processor>FontTextureProcessor</Processor>
     </Compile>
+    <None Include="BFF\City.bff">
+      <Name>City</Name>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="BFF\Desert.bff">
+      <Name>Desert</Name>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="BFF\Space.bff">
+      <Name>Space</Name>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="BFF\try.bff">
       <Name>try</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

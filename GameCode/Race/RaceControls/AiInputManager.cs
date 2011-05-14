@@ -26,7 +26,7 @@ namespace BeatShift.Input
         ///  Set to false and the player retakes control
         /// </summary>
         public const Boolean testAI = false;
-        public const int numberOfAI = 2;
+        public static int numberOfAI = 2;
 
         private float randInaccuracy;
         private TimeSpan lastRandChange;
@@ -218,7 +218,7 @@ namespace BeatShift.Input
             float nWalls = newWalls();
             lastTurn = (lastTurn + /*0.0f * aWalls +*/ 0.6f * fTrack + 0.3f * nWalls + randInaccuracy) / 2f;
 #if WINDOWS
-            System.Diagnostics.Debug.WriteLine("{0:0.000} {1:0.000} {2:0.000} {3:0.000} {4:0.000}", lastTurn, aWalls, fTrack, nWalls, randInaccuracy);
+            System.Diagnostics.Debug.WriteLine("{0:0.000} {1:0.000} {2:0.000} {3:0.000} {4:0.000}", lastTurn, nWalls, fTrack, nWalls, randInaccuracy);
 #endif
             return lastTurn;
         }
