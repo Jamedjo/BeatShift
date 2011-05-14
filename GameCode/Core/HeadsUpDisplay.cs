@@ -135,7 +135,10 @@ namespace BeatShift
 
                 if (Race.currentRaceType.displayCurrentLapOutofTotalLaps)
                 {
-                    DrawMessageColour(BeatShift.newfont, (racer.raceTiming.currentLap + 1) + "/" + Race.currentRaceType.maxLaps, BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 33, 0.5f, Color.PapayaWhip);
+                    if (racer.raceTiming.isRacing == true)
+                        DrawMessageColour(BeatShift.newfont, (racer.raceTiming.currentLap + 1) + "/" + Race.currentRaceType.maxLaps, BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 33, 0.5f, Color.PapayaWhip);
+                    else
+                        DrawMessageColour(BeatShift.newfont, (racer.raceTiming.currentLap) + "/" + Race.currentRaceType.maxLaps, BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 33, 0.5f, Color.PapayaWhip);
                     DrawMessageColour(BeatShift.volterfont, "LAPS", BeatShift.graphics.GraphicsDevice.Viewport.Width - 74, 39, 1f, Color.DimGray);
                 }
 
