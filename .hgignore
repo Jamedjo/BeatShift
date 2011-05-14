@@ -29,3 +29,9 @@ glob:GameContent/Music/Space/BeatShift Space Level 3.wav
 glob:GameContent/Music/Space/BeatShift Space Level 4.wav
 glob:GameContent/Music/Space/BeatShift Space Level 5.wav
 glob:GameContent/Music/Space/BeatShift Space Level 2.wav
+glob:BeatManager/space midis/Midicsv.exe
+glob:BeatManager/space midis/button2.btn
+glob:BeatManager/space midis/button1.btn
+glob:BeatManager/space midis/button4.btn
+glob:BeatManager/space midis/button3.btn
+glob:BeatManager/space midis/button5.btn
