@@ -43,28 +43,11 @@ namespace BeatShift.Input
         Ray rightInnerRay = new Ray();
         Ray testRay = new Ray();
 
-        RayHit result;
-
-        Matrix shipOrientation;
-
         MapPoint lastPoint;
         MapPoint nextPoint;
-
-        Vector2 leftThumbStick;
-        Vector2 rightThumbStick;
-
-        Vector3 guessUp;
-        Vector3 relativeTrackHeading;
-        Vector3 relativeShipHeading;
-        Vector3 relativeShipRight;
-        Vector3 testVector;
-        Vector3 rayOrigin;
-
-        Buttons pressedButtons;
+        RayHit result;
         Buttons b = new Buttons();
         GamePadDPad dpad = new GamePadDPad();
-
-        float acceleration;
 
         private Beat? nextBeatToPress = null;
 
@@ -178,8 +161,12 @@ namespace BeatShift.Input
             aheadBox.Position = parent.shipPhysics.ShipPosition + parent.shipPhysics.ShipOrientationMatrix.Forward * 0;
             aheadBox.Orientation = parent.shipPhysics.ShipOrientationQuaternion;
 
-            leftThumbStick = Vector2.Zero;
-            rightThumbStick = Vector2.Zero;
+            Vector2 leftThumbStick = Vector2.Zero;
+            Vector2 rightThumbStick = Vector2.Zero;
+
+            Buttons pressedButtons;
+
+            float acceleration;
 
             pressedButtons = setButtons();
 
@@ -201,6 +188,7 @@ namespace BeatShift.Input
 
             lastState = currentState;
             currentState = new GamePadState(sticks, triggers, buttons, dpad);
+            
         }
 
         /// <summary>
@@ -300,25 +288,25 @@ namespace BeatShift.Input
                 return 0f;
             }
 
-            shipOrientation = parent.shipPhysics.ShipOrientationMatrix;
+            Matrix shipOrientation = parent.shipPhysics.ShipOrientationMatrix;
 
             if (float.IsNaN(shipOrientation.Forward.X))
                 return 0;
 
-            lastPoint = parent.shipPhysics.nearestMapPoint;
-            nextPoint = parent.shipPhysics.mapData.mapPoints[(lastPoint.getIndex() + 1) % parent.shipPhysics.mapData.mapPoints.Count];
+            MapPoint lastPoint = parent.shipPhysics.nearestMapPoint;
+            MapPoint nextPoint = parent.shipPhysics.mapData.mapPoints[(lastPoint.getIndex() + 1) % parent.shipPhysics.mapData.mapPoints.Count];
 
             // partially take current orientation into account, but not too much
-            guessUp = (shipOrientation.Up + nextPoint.trackUp * 9) / 10;
+            Vector3 guessUp = (shipOrientation.Up + nextPoint.trackUp * 9) / 10;
 
-            relativeTrackHeading = Vector3.Normalize(Vector3.Cross(nextPoint.tangent, guessUp));
-            relativeShipRight = Vector3.Normalize(Vector3.Cross(lastPoint.roadSurface, guessUp));
+            Vector3 relativeTrackHeading = Vector3.Normalize(Vector3.Cross(nextPoint.tangent, guessUp));
+            Vector3 relativeShipRight = Vector3.Normalize(Vector3.Cross(lastPoint.roadSurface, guessUp));
 
             float direction = Vector3.Dot(relativeTrackHeading, relativeShipRight);
 
-            testVector = parent.shipPhysics.nearestMapPoint.roadSurface * -1 * Math.Sign(direction);
+            Vector3 testVector = parent.shipPhysics.nearestMapPoint.roadSurface * -1 * Math.Sign(direction);
 
-            rayOrigin = parent.shipPhysics.ShipPosition;
+            Vector3 rayOrigin = parent.shipPhysics.ShipPosition;
 
             float shipWidth = 3f;
             float rayLength = shipWidth + parent.shipPhysics.ShipSpeed / 8;
@@ -334,12 +322,13 @@ namespace BeatShift.Input
 
             t = distance / (rayLength - shipWidth);
 
+
             float retVal = t * Math.Sign(direction);
 
             return float.IsNaN(retVal) ? 0f : retVal;
         }
 
-        //TODO: Optimise if function is used
+
         /// <summary>
         /// A turning system which solely tries to avoid hitting walls. Uses raycasting to
         /// determine wall distances.
@@ -357,8 +346,6 @@ namespace BeatShift.Input
             Vector3 leftInnerVector = Vector3.Transform(shipOrientation.Forward, Matrix.CreateFromAxisAngle(parent.shipPhysics.ShipTrackUp, MathHelper.Pi / 6));
             Vector3 rightOuterVector = Vector3.Transform(shipOrientation.Forward, Matrix.CreateFromAxisAngle(parent.shipPhysics.ShipTrackUp, -1 * MathHelper.Pi / 3));
             Vector3 rightInnerVector = Vector3.Transform(shipOrientation.Forward, Matrix.CreateFromAxisAngle(parent.shipPhysics.ShipTrackUp, -1 * MathHelper.Pi / 6));
-
-            RayHit result;
 
             float rayLength = 50f;
             Vector3 rayOrigin = parent.shipPhysics.ShipPosition - shipOrientation.Up * 2;
@@ -488,16 +475,16 @@ namespace BeatShift.Input
         {
             float t;
 
-            shipOrientation = parent.shipPhysics.ShipOrientationMatrix;
+            Matrix shipOrientation = parent.shipPhysics.ShipOrientationMatrix;
             lastPoint = parent.shipPhysics.nearestMapPoint;
             nextPoint = parent.shipPhysics.mapData.mapPoints[(parent.shipPhysics.nearestMapPoint.getIndex() + 2) % parent.shipPhysics.mapData.mapPoints.Count];
 
             // partially take current orientation into account, but not too much
-            guessUp = (shipOrientation.Up + nextPoint.trackUp * 9) / 10;
+            Vector3 guessUp = (shipOrientation.Up + nextPoint.trackUp * 9) / 10;
 
-            relativeTrackHeading = Vector3.Normalize(Vector3.Cross(nextPoint.tangent, guessUp));
-            relativeShipHeading = Vector3.Normalize(Vector3.Cross(shipOrientation.Forward, guessUp));
-            relativeShipRight = Vector3.Normalize(Vector3.Cross(shipOrientation.Right, guessUp));
+            Vector3 relativeTrackHeading = Vector3.Normalize(Vector3.Cross(nextPoint.tangent, guessUp));
+            Vector3 relativeShipHeading = Vector3.Normalize(Vector3.Cross(shipOrientation.Forward, guessUp));
+            Vector3 relativeShipRight = Vector3.Normalize(Vector3.Cross(shipOrientation.Right, guessUp));
 
             float dotProduct = Vector3.Dot(relativeTrackHeading, relativeShipHeading);
             float direction = Vector3.Dot(relativeTrackHeading, relativeShipRight);
@@ -518,17 +505,16 @@ namespace BeatShift.Input
         /// decceleration). The value describes the value of the appropriate trigger on the AI's
         /// virtual controller.
         /// </returns>
-        
         private float setAcceleration()
         {
             // Initially, just throw it round.
             // Half speed so it's easy to follow.
             float a;
-            
-            shipOrientation = parent.shipPhysics.ShipOrientationMatrix;
 
-            testVector = shipOrientation.Forward;
-            rayOrigin = parent.shipPhysics.ShipPosition;
+            Matrix shipOrientation = parent.shipPhysics.ShipOrientationMatrix;
+
+            Vector3 testVector = shipOrientation.Forward;
+            Vector3 rayOrigin = parent.shipPhysics.ShipPosition;
 
             float rayLength = 120f;
 

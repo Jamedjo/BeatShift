@@ -50,7 +50,7 @@ namespace BeatShift
         float previousDirty = 1;
 
         Ray theRay = new Ray();
-        Vector3 rayCastDirection;
+        Ray offsetRay = new Ray();
 
         Vector3 rayColour = Color.AntiqueWhite.ToVector3();
         Vector3[] cSRAAI_rayTruePos = new Vector3[rayCount];
@@ -105,7 +105,7 @@ namespace BeatShift
         public bool wrongWay = false;
 
         //Temporary AI
-        int AiSpeed = 235;
+        int AiSpeed = 250;
 
         public ShipPhysics(Racer parent)
         {
@@ -872,8 +872,6 @@ namespace BeatShift
                 }
 
             }
-
-
         }
 
         /// <summary>
@@ -948,7 +946,6 @@ namespace BeatShift
         void castSingleRayAndApplyImpulseCorrection(float stickLength, float power)
         {
             Vector3 rayTruePos;
-            Vector3 offsetRayPos;
             Vector3 impulseVector;
             float timeOfImpact;
             Vector3 positionOffset = frontOff;
@@ -973,9 +970,10 @@ namespace BeatShift
 
 
             rayTruePos = physicsBody.Position + Vector3.Transform(positionOffset, physicsBody.Orientation);
-            offsetRayPos = rayTruePos + verticalOffset;
-
-            result = Physics.currentTrackFloor.RayCast(new Ray(offsetRayPos, rayCastDirection), stickLength, out rayHit); //make stick length speed dependent
+            offsetRay.Position = rayTruePos + verticalOffset;
+            offsetRay.Direction = rayCastDirection;
+         
+            result = Physics.currentTrackFloor.RayCast(offsetRay, stickLength, out rayHit); //make stick length speed dependent
             timeOfImpact = rayHit.T;
             float offsetTimeOfImpact = timeOfImpact - vOffset;//Calculate ray from verticle centre of ship, not offset position.
             float dirtyMultiplier=1;
@@ -1019,7 +1017,7 @@ namespace BeatShift
         {
             //Vector3 rayCastDirection = Matrix.Identity.Down;//Always raycast in gravity direction.
             //Vector3 rayCastDirection = ship.OrientationMatrix.Down;//Raycast down from ship
-            rayCastDirection = -nearestMapPoint.trackUp;//Raycast in opposite direction to trackUp.
+            Vector3 rayCastDirection = -nearestMapPoint.trackUp;//Raycast in opposite direction to trackUp.
             Boolean result;
             RayHit rayHit;
             impulseVector = Vector3.Zero;
