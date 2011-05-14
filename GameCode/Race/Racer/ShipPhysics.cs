@@ -991,7 +991,7 @@ namespace BeatShift
 
             previousDirty = MathHelper.Lerp(previousDirty, dirtyMultiplier, 0.005f);
 
-            Console.WriteLine(previousDirty);
+            //Console.WriteLine(previousDirty);
 
             if (result)
             {

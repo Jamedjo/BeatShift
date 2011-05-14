@@ -215,7 +215,6 @@ namespace BeatShift
                     Race.currentRaceType.resettingShips.Remove(rc);
                 }
             }
-
         }
 
 
