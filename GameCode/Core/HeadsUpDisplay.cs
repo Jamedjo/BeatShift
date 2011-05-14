@@ -14,11 +14,10 @@ namespace BeatShift
         public static String[] Ranks = { "TH", "ST", "ND", "RD", "TH", "TH", "TH", "TH", "TH", "TH", "TH" }; //increase for more players
         public static int updatePeriod = 92;
         
-        public static BeatVisualisation beatVisualisation = new BeatVisualisation(new Vector2(-60,450), new Vector2(400,450), 0.5f);
 
         public static void Update(GameTime gameTime)
         {
-            beatVisualisation.Update(gameTime);
+            
         }
 
         /// <summary>
@@ -212,7 +211,7 @@ namespace BeatShift
             }
             BeatShift.spriteBatch.End();
 
-            beatVisualisation.Draw(camera,racer.shipPhysics);
+            
         }
 
         public static void DrawMessage(string message, int x, int y)

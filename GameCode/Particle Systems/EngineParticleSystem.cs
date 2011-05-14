@@ -492,14 +492,67 @@ namespace DPSF.ParticleSystems
         {
             if (cParticle.boostParticle)
             {
-                cParticle.Color = new Color((cParticle.NormalizedElapsedTime * (boostFadeEnd.ToVector3() - boostColor.ToVector3())) + boostColor.ToVector3());
+                int r = (int)(cParticle.NormalizedElapsedTime * (boostFadeEnd.R-boostColor.R)) + boostColor.R;
+                if (r>255) {
+                    r=255;
+                } else if(r<0) {
+                    r = 0;
+                }
+                cParticle.Color.R = (byte)r;
+                int g = (int)(cParticle.NormalizedElapsedTime * (boostFadeEnd.G - boostColor.G)) + boostColor.G;
+                if (g > 255)
+                {
+                    g = 255;
+                }
+                else if (g < 0)
+                {
+                    g = 0;
+                }
+                cParticle.Color.G = (byte)g;
+                int b = (int)(cParticle.NormalizedElapsedTime * (boostFadeEnd.B - boostColor.B)) + boostColor.B;
+                if (b > 255)
+                {
+                    b = 255;
+                }
+                else if (b < 0)
+                {
+                    b = 0;
+                }
+                cParticle.Color.B = (byte)b;
             }
             else
             {
-                Color temp = new Color((cParticle.NormalizedElapsedTime * (defaultEnd.ToVector3() - defaultColor.ToVector3())) + defaultColor.ToVector3()); ;
-                cParticle.Color = temp;
+                int r = (int)(cParticle.NormalizedElapsedTime * (defaultEnd.R - defaultColor.R)) + defaultColor.R;
+                if (r > 255)
+                {
+                    r = 255;
+                }
+                else if (r < 0)
+                {
+                    r = 0;
+                }
+                cParticle.Color.R = (byte)r;
+                float g = (cParticle.NormalizedElapsedTime * (defaultEnd.G - defaultColor.G)) + defaultColor.G;
+                if (g > 255)
+                {
+                    g = 255;
+                }
+                else if (g < 0)
+                {
+                    g = 0;
+                }
+                cParticle.Color.G = (byte)g;
+                float b = (cParticle.NormalizedElapsedTime * (defaultEnd.B - defaultColor.B)) + defaultColor.B;
+                if (b > 255)
+                {
+                    b = 255;
+                }
+                else if (b < 0)
+                {
+                    b = 0;
+                }
+                cParticle.Color.B = (byte)b;
             }
-           // System.Diagnostics.Debug.WriteLine("LOLADSFADS");
         }
 
 		/// <summary>
