@@ -134,6 +134,7 @@ namespace BeatShift
         }
 
         public void loadTrack(string trackName) {
+            currentTrack = trackName;
             System.IO.Stream stream = TitleContainer.OpenStream(BeatShift.contentManager.RootDirectory + "/BFF/"+trackName+".bff");
             LoadBFF(new StreamReader(stream));
             stream.Dispose();
@@ -200,8 +201,8 @@ namespace BeatShift
             currentLayer=0;
             BeatShift.engine.SetGlobalVariable("Layer", (currentLayer + 0.1f));
             track.Stop(AudioStopOptions.Immediate);
-            track.Dispose();
             track = soundBank.GetCue(currentTrack);
+            GC.Collect();
             shouldPlay = false;
         }
 
