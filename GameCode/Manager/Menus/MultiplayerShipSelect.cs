@@ -86,7 +86,7 @@ namespace BeatShift
                     if (shipsList[i] == ship)
                         pos = i;
                 //change ship to one to the right
-                if (pos != shipsList.Count() - 1)
+                if (pos != shipsList.Count - 1)
                     Race.humanRacers[player].shipName = shipsList[pos + 1];
             }
         }
