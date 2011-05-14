@@ -25,7 +25,6 @@ namespace BeatShift
         public List<D_Arrow> drawArrowListPermanent = new List<D_Arrow>();
         public Boolean isVisible = true;
         public EngineParticleSystem engineGlow;
-        public BeatIndicatorParticleSystem indicator;
         public BeatGlowParticleSystem glow;
         //Physics delegate functions
         public Func<Matrix> getShipDrawOrientationMatrix;
@@ -45,10 +44,6 @@ namespace BeatShift
 
         public void LoadParticles()
         {
-            indicator = new BeatIndicatorParticleSystem(null);
-            BeatShift.particleManager.AddParticleSystem(indicator);
-            indicator.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
-
             collision = new CollisionParticleSystem(null);
             BeatShift.particleManager.AddParticleSystem(collision);
             collision.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
@@ -62,13 +57,13 @@ namespace BeatShift
             engineGlow.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
 
             if (currentShip == ShipName.Skylar)
-                engineGlow.SetPosition(new Vector3(0, 0.5f, 4.5f));
+                engineGlow.SetOffset(new Vector3(0, 0.5f, 4.5f));
             else if (currentShip == ShipName.Omicron)
-                engineGlow.SetPosition(new Vector3(0, 0.3f, 5.0f));
+                engineGlow.SetOffset(new Vector3(0, 0.3f, 5.0f));
             else if (currentShip == ShipName.Wraith)
-                engineGlow.SetPosition(new Vector3(0, 0.25f, 4.5f));
+                engineGlow.SetOffset(new Vector3(0, 0.25f, 4.5f));
             else if (currentShip == ShipName.Flux)
-                engineGlow.SetPosition(new Vector3(0, 0.7f, 6.25f));
+                engineGlow.SetOffset(new Vector3(0, 0.7f, 6.25f));
         }
 
         public void setPositionFunctions(Func<Matrix> getOrientationMatrix, Func<Vector3> getPosition)
@@ -148,7 +143,7 @@ namespace BeatShift
 
             if (engineGlow != null)
             {
-                engineGlow.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
+                engineGlow.SetWorldViewProjectionMatrices(Matrix.Identity, viewMatrix, projectionMatrix);
                 collision.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
                 //was using camera position (0,0,0) so all particles were facing towards the centre
                 //as particles are one sided this made them invisible
@@ -157,7 +152,7 @@ namespace BeatShift
                 //Vector3 temp = camera.cameraPosition();
                 if (parentRacer.shipPhysics != null)
                 {
-                    engineGlow.SetCameraPosition(Vector3.Transform(camera.cameraPosition(), Matrix.Invert(worldMatrix)));
+                    engineGlow.SetCameraPosition(camera.cameraPosition());
                     collision.SetCameraPosition(Vector3.Transform(camera.cameraPosition(), Matrix.Invert(worldMatrix)));
                 }
                 else
@@ -170,22 +165,24 @@ namespace BeatShift
                 //Vector3.Transform(camera.cameraPosition(),Matrix.Invert(worldMatrix));
                 if (isThisTheCamerasShip && !parentRacer.raceTiming.hasCompletedRace)
                 {
-                    indicator.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
-                    parentRacer.beatQueue.visualisation.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
+                    parentRacer.beatQueue.beatGlow.SetWorldViewProjectionMatrices(Matrix.Identity, viewMatrix, projectionMatrix);
+                    parentRacer.beatQueue.visualisation.SetWorldViewProjectionMatrices(Matrix.Identity, viewMatrix, projectionMatrix);
                     glow.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
                     if (parentRacer.shipPhysics != null)
                     {
-                        indicator.SetCameraPosition(Vector3.Transform(camera.cameraPosition(), Matrix.Invert(worldMatrix)));
-                        parentRacer.beatQueue.visualisation.SetCameraPosition(Vector3.Transform(camera.cameraPosition(), Matrix.Invert(worldMatrix)));
+                        parentRacer.beatQueue.beatGlow.SetCameraPosition(Vector3.Transform(camera.cameraPosition(), Matrix.Invert(worldMatrix)));
+                        //parentRacer.beatQueue.visualisation.SetCameraPosition(Vector3.Transform(camera.cameraPosition(), Matrix.Invert(worldMatrix)));
                         glow.SetCameraPosition(Vector3.Transform(camera.cameraPosition(), Matrix.Invert(worldMatrix)));
+
+                        parentRacer.beatQueue.visualisation.SetCameraPosition(camera.cameraPosition());
                     }
                     else
                     {
-                        indicator.SetCameraPosition(camera.cameraPosition());
+                        parentRacer.beatQueue.beatGlow.SetCameraPosition(camera.cameraPosition());
                         parentRacer.beatQueue.visualisation.SetCameraPosition(camera.cameraPosition());
                         glow.SetCameraPosition(camera.cameraPosition());
                     }
-                    indicator.Draw();
+                    parentRacer.beatQueue.beatGlow.Draw();
                     parentRacer.beatQueue.visualisation.Draw();
                     glow.Draw();
 
