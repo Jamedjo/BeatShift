@@ -201,8 +201,8 @@ namespace BeatShift
             // Finishes the racer if required
             if (raceTiming.isRacing) raceTiming.Update();
 
-            shipDrawing.engineGlow.setSpeed(raceTiming.previousSpeed);
-
+            shipDrawing.engineGlow.setVelocity(shipPhysics.physicsBody.LinearVelocity);
+            shipDrawing.engineGlow.SetPosition(shipPhysics.ShipPosition);
             OtherUpdate(gameTime);
         }
 

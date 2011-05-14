@@ -235,20 +235,18 @@ namespace BeatShift
                     track.Play();
                 }
             }
-            catch (InvalidOperationException e)
+            catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message);
-                track.Stop(AudioStopOptions.Immediate);
-                track.Dispose();
+                //System.Diagnostics.Debug.WriteLine(e.Message);
+                if (track.IsPlaying)
+                {
+                    track.Stop(AudioStopOptions.Immediate);
+                }
                 track = soundBank.GetCue(currentTrack);
                 while (track.IsPreparing)
                 {
                 }
                 track.Play();
-            }
-            
-            while(!track.IsPlaying) {
-                System.Diagnostics.Debug.WriteLine("Not yet playing");
             }
             tick.Start();
             shouldPlay = true;
