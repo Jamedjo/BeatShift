@@ -765,7 +765,7 @@ namespace BeatShift
             // Cast stabilisation sticks
             bool stabilizersHit = castStabalizerRaysAndApplyImpulses(stabalizerStickLength, 0.77f);
 
-            castSingleRayAndApplyImpulseCorrection(60, 120f);
+            castSingleRayAndApplyImpulseCorrection(20, 120f * (ShipSpeed/80));
             // Ifne or all of the stabilizers missed the track, or were too short
             if (!stabilizersHit || overturned)
             {
