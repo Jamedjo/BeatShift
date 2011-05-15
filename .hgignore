@@ -43,3 +43,4 @@ glob:GameCode/Particle Systems/BeatRingParticleSystemorig.cs
 glob:GameContent/particles/Textures/Ring004.xcf
 glob:BeatManager/BBF generator/BBF generator/obj/x86/Debug/DesignTimeResolveAssemblyReferences.cache
 glob:BeatManager/BBF generator/BBF generator/obj/x86/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+glob:GameCode/Particle Systems/CollisionParticleSystemold.cs

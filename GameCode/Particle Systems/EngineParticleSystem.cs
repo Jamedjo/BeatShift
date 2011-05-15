@@ -87,11 +87,9 @@ namespace DPSF.ParticleSystems
         protected Color boostFadeEnd = Color.AntiqueWhite;
         private float lifeTime;
         private float maxLifeTime = 0.6f;
-        private const int particleRate = 35;
+        private const int particleRate = 300;
         protected Vector3 offSet;
         protected Vector3 velocity;
-        Vector3 sVelocityMin;
-        Vector3 sVelocityMax;
         int type;
         //===========================================================
         // Overridden Particle System Functions
@@ -121,7 +119,7 @@ namespace DPSF.ParticleSystems
             // TODO: Change any Initialization parameters desired and the Name
             //-----------------------------------------------------------
             // Initialize the Particle System before doing anything else
-            InitializeSpriteParticleSystem(cGraphicsDevice, cContentManager, particleRate * 6, particleRate * 30, "Particles/Textures/Particle004");
+            InitializeSpriteParticleSystem(cGraphicsDevice, cContentManager, particleRate * 2, particleRate * 100, "Particles/Textures/Particle004");
 
             // Set the Name of the Particle System
             Name = "EngineParticleSystem";
@@ -155,12 +153,12 @@ namespace DPSF.ParticleSystems
             // Setup the Initial Properties of the Particles.
             // These are only applied if using InitializeParticleUsingInitialProperties 
             // as the Particle Initialization Function.
-            InitialProperties.LifetimeMin = 0.1f;
-            InitialProperties.LifetimeMax = 0.3f;
+            InitialProperties.LifetimeMin = 0.04f;
+            InitialProperties.LifetimeMax = 0.9f;
             InitialProperties.PositionMin = Vector3.Zero;
             InitialProperties.PositionMax = Vector3.Zero;
-            InitialProperties.VelocityMin = new Vector3(-1, -1, -1);
-            InitialProperties.VelocityMax = new Vector3(1, 1, 1);
+            InitialProperties.VelocityMin = new Vector3(-0.05f, -0.05f, 0);
+            InitialProperties.VelocityMax = new Vector3(0.05f, 0.05f, 1);
             InitialProperties.RotationMin = 0.0f;
             InitialProperties.RotationMax = 0.0f;
             InitialProperties.RotationalVelocityMin = 0.0f;
@@ -190,7 +188,7 @@ namespace DPSF.ParticleSystems
 
             // This function must be executed after the Color Lerp function as the Color Lerp will overwrite the Color's
             // Transparency value, so we give this function an Execution Order of 100 to make sure it is executed last.
-            //ParticleEvents.AddEveryTimeEvent(UpdateParticleTransparencyToFadeOutUsingLerp, 100);
+            ParticleEvents.AddEveryTimeEvent(UpdateParticleTransparencyToFadeOutUsingLerp, 100);
 
             // Set the Particle System's Emitter to toggle on and off every 0.5 seconds
             //ParticleSystemEvents.LifetimeData.EndOfLifeOption = CParticleSystemEvents.EParticleSystemEndOfLifeOptions.Repeat;
@@ -199,7 +197,7 @@ namespace DPSF.ParticleSystems
             //ParticleSystemEvents.AddTimedEvent(0.5f, UpdateParticleSystemEmitParticlesAutomaticallyOff);
 
             // Setup the Emitter
-            Emitter.ParticlesPerSecond = 100;
+            Emitter.ParticlesPerSecond = particleRate;
             Emitter.PositionData.Position = new Vector3(0, 0, 0);
         }
 
@@ -209,8 +207,16 @@ namespace DPSF.ParticleSystems
         /// <param name="cParticle">The Particle to be Initialized</param>
         public void InitializeParticleProperties(DefaultSprite3DBillboardParticle cParticle)
         {
+            Quaternion cBackup = Emitter.OrientationData.Orientation;
+            Emitter.OrientationData.Orientation = Quaternion.Identity;
             InitializeParticleUsingInitialProperties(cParticle);
-            cParticle.Position+=offSet;
+            Emitter.OrientationData.Orientation = cBackup;
+
+            cParticle.Position =offSet;
+            cParticle.Position = Vector3.Transform(cParticle.Position, Emitter.OrientationData.Orientation);
+            cParticle.Position += Emitter.PositionData.Position;
+
+            cParticle.Velocity = Vector3.Transform(cParticle.Velocity, Emitter.OrientationData.Orientation);
             switch (type)
             {
                 case 0:
@@ -286,9 +292,12 @@ namespace DPSF.ParticleSystems
             offSet = newOffset;
         }
 
-        public void SetPosition(Vector3 newPosition)
+
+
+        public void SetPosition(Vector3 newPosition, Quaternion orientation)
         {
             Emitter.PositionData.Position = newPosition;
+            Emitter.OrientationData.Orientation = orientation;
         }
 
         public void boostType(int newtype)

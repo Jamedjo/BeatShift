@@ -225,7 +225,7 @@ namespace DPSF.ParticleSystems
             cParticle.Position.X = 0;
             cParticle.Position.Y = 12 * (1.0f-cParticle.NormalizedElapsedTime);
             cParticle.Position.Z = 0;
-
+            cParticle.Position = Vector3.Transform(cParticle.Position, Emitter.OrientationData.Orientation);
             cParticle.Position += Emitter.PositionData.Position;
 
         }
@@ -257,9 +257,10 @@ namespace DPSF.ParticleSystems
         //-----------------------------------------------------------
         // TODO: Place any other functions here
         //-----------------------------------------------------------
-        public void SetPosition(Vector3 position)
+        public void SetPosition(Vector3 position, Quaternion orientation)
         {
             Emitter.PositionData.Position = position;
+            Emitter.OrientationData.Orientation = orientation;
         }
         
         public void Clear()
