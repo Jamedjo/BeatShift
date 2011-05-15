@@ -190,7 +190,7 @@ namespace BeatShift
             if (visualisation != null)
             {
 
-                visualisation.SetPosition(parentRacer.shipPhysics.ShipPosition);
+                visualisation.SetPosition(parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.DrawOrientation);
             }
             if (!parentRacer.raceTiming.hasCompletedRace)
             {

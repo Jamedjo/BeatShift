@@ -32,6 +32,7 @@ namespace BeatShift
         public ConvexHullShape convexHull;     
         public Vector3 ShipPosition { get { return physicsBody.Position; /*shipHull.CenterPosition;*/ } set { physicsBody.Position = value; /*shipHull.CenterPosition = value;*/ } }
         public Matrix DrawOrientationMatrix { get { var rQ = Quaternion.CreateFromAxisAngle(Vector3.Forward, getRoll()); var oldQ = physicsBody.Orientation; var mulQ = oldQ * rQ; return Matrix.CreateFromQuaternion(mulQ); } }
+        public Quaternion DrawOrientation { get { var rQ = Quaternion.CreateFromAxisAngle(Vector3.Forward, getRoll()); var oldQ = physicsBody.Orientation; return oldQ * rQ;  } }
         public float ShipSpeed { get { return getForwardSpeed(); } }
         public float radiusForGrip = 100;
         Vector3[] stabilizerRaycastList;

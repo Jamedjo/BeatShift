@@ -278,7 +278,7 @@ Global Settings
         Reserved = 0;
         Read Only = 0;
         Time = 0;
-        Value = 3.140000;
+        Value = 11.000000;
         Initial Value = 0.000000;
         Min = 0.000000;
         Max = 11.000000;
@@ -454,14 +454,14 @@ Global Settings
             RPC Point
             {
                 X = 6.000000;
-                Y = -282.352936;
+                Y = -200.000000;
                 Curve = 0;
             }
 
             RPC Point
             {
                 X = 7.965517;
-                Y = -317.647064;
+                Y = -200.000000;
                 Curve = 0;
             }
 
@@ -482,7 +482,7 @@ Global Settings
             RPC Point
             {
                 X = 9.022167;
-                Y = -705.882385;
+                Y = -400.000000;
                 Curve = 0;
             }
         }
@@ -537,15 +537,15 @@ Global Settings
 
             RPC Point
             {
-                X = 6.014778;
-                Y = -282.352936;
+                X = 6.000000;
+                Y = -200.000000;
                 Curve = 0;
             }
 
             RPC Point
             {
-                X = 6.881773;
-                Y = -247.058823;
+                X = 6.990000;
+                Y = -200.000000;
                 Curve = 0;
             }
 
@@ -565,22 +565,22 @@ Global Settings
 
             RPC Point
             {
-                X = 8.019705;
-                Y = -247.058823;
+                X = 8.000000;
+                Y = -200.000000;
                 Curve = 0;
             }
 
             RPC Point
             {
-                X = 8.913794;
-                Y = -247.058823;
+                X = 8.990000;
+                Y = -200.000000;
                 Curve = 0;
             }
 
             RPC Point
             {
-                X = 8.967980;
-                Y = -705.882385;
+                X = 9.000000;
+                Y = -400.000000;
                 Curve = 0;
             }
         }
@@ -636,21 +636,21 @@ Global Settings
             RPC Point
             {
                 X = 6.990148;
-                Y = -352.941193;
+                Y = -200.000000;
                 Curve = 0;
             }
 
             RPC Point
             {
                 X = 8.967980;
-                Y = -352.941193;
+                Y = -200.000000;
                 Curve = 0;
             }
 
             RPC Point
             {
                 X = 9.022167;
-                Y = -705.882385;
+                Y = -400.000000;
                 Curve = 0;
             }
         }
@@ -1458,12 +1458,6 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = Default;
-    Xbox Bank Last Modified Low = 0;
-    Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 0;
-    PC Bank Last Modified High = 0;
-    Header Last Modified Low = 0;
-    Header Last Modified High = 0;
     Bank Last Revised Low = 541822072;
     Bank Last Revised High = 30151259;
 
@@ -1592,12 +1586,6 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Xbox Bank Last Modified Low = 0;
-    Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 0;
-    PC Bank Last Modified High = 0;
-    Header Last Modified Low = 0;
-    Header Last Modified High = 0;
     Bank Last Revised Low = 1767852197;
     Bank Last Revised High = 30151259;
 

@@ -144,7 +144,7 @@ namespace BeatShift
             if (engineGlow != null)
             {
                 engineGlow.SetWorldViewProjectionMatrices(Matrix.Identity, viewMatrix, projectionMatrix);
-                collision.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
+                collision.SetWorldViewProjectionMatrices(Matrix.Identity, viewMatrix, projectionMatrix);
                 //was using camera position (0,0,0) so all particles were facing towards the centre
                 //as particles are one sided this made them invisible
                 //this line faces them towards the ship which works as a quick hack when they originate from the centre/center
@@ -153,7 +153,7 @@ namespace BeatShift
                 if (parentRacer.shipPhysics != null)
                 {
                     engineGlow.SetCameraPosition(camera.cameraPosition());
-                    collision.SetCameraPosition(Vector3.Transform(camera.cameraPosition(), Matrix.Invert(worldMatrix)));
+                    collision.SetCameraPosition(camera.cameraPosition());
                 }
                 else
                 {
