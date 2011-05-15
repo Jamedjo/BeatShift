@@ -95,7 +95,6 @@
     <Compile Include="Manager\Maps\MapManager.cs" />
     <Compile Include="Manager\Maps\SpaceMap.cs" />
     <Compile Include="Manager\Menus\LoadingMenu.cs" />
-    <Compile Include="Manager\Menus\NumberAIMenu.cs" />
     <Compile Include="Manager\Menus\PauseMenu.cs" />
     <Compile Include="Manager\Menus\ResultsMenu.cs" />
     <Compile Include="Particle Systems\BeatGlowParticleSystem.cs" />

@@ -26,7 +26,7 @@ namespace BeatShift.Input
         ///  Set to false and the player retakes control
         /// </summary>
         public const Boolean testAI = false;
-        public static int numberOfAI = 2;
+        public const int numberOfAI = 2;
 
         private float randInaccuracy;
         private TimeSpan lastRandChange;
@@ -37,6 +37,11 @@ namespace BeatShift.Input
         private float lastTurn = 0f;
 
         Ray AiRay = new Ray();
+        Ray leftOuterRay = new Ray();
+        Ray leftInnerRay = new Ray();
+        Ray rightOuterRay = new Ray();
+        Ray rightInnerRay = new Ray();
+        Ray testRay = new Ray();
 
         private Beat? nextBeatToPress = null;
 
@@ -296,16 +301,14 @@ namespace BeatShift.Input
 
             float direction = Vector3.Dot(relativeTrackHeading, relativeShipRight);
 
-            
-
             Vector3 testVector = parent.shipPhysics.nearestMapPoint.roadSurface * -1 * Math.Sign(direction);
-
-            RayHit result;
 
             Vector3 rayOrigin = parent.shipPhysics.ShipPosition;
 
             float shipWidth = 3f;
             float rayLength = shipWidth + parent.shipPhysics.ShipSpeed / 8;
+
+            RayHit result;
 
             AiRay.Position = rayOrigin;
             AiRay.Direction = testVector;
@@ -336,7 +339,6 @@ namespace BeatShift.Input
         {
             float t = 0;
 
-            
             Matrix shipOrientation = parent.shipPhysics.ShipOrientationMatrix;
 
             Vector3 leftOuterVector = Vector3.Transform(shipOrientation.Forward, Matrix.CreateFromAxisAngle(parent.shipPhysics.ShipTrackUp, MathHelper.Pi / 3));
@@ -344,21 +346,29 @@ namespace BeatShift.Input
             Vector3 rightOuterVector = Vector3.Transform(shipOrientation.Forward, Matrix.CreateFromAxisAngle(parent.shipPhysics.ShipTrackUp, -1 * MathHelper.Pi / 3));
             Vector3 rightInnerVector = Vector3.Transform(shipOrientation.Forward, Matrix.CreateFromAxisAngle(parent.shipPhysics.ShipTrackUp, -1 * MathHelper.Pi / 6));
 
-            RayHit result;
-
             float rayLength = 50f;
             Vector3 rayOrigin = parent.shipPhysics.ShipPosition - shipOrientation.Up * 2;
 
-            Physics.currentTrackWall.RayCast(new Ray(rayOrigin, leftOuterVector), rayLength, out result);
+            RayHit result;
+
+            leftOuterRay.Position = rayOrigin;
+            leftOuterRay.Direction = leftOuterVector;
+            Physics.currentTrackWall.RayCast(leftOuterRay, rayLength, out result);
             float leftOuter = result.T;
 
-            Physics.currentTrackWall.RayCast(new Ray(rayOrigin, leftInnerVector), rayLength, out result);
+            leftInnerRay.Position = rayOrigin;
+            leftInnerRay.Direction = leftInnerVector;
+            Physics.currentTrackWall.RayCast(leftInnerRay, rayLength, out result);
             float leftInner = result.T;
 
-            Physics.currentTrackWall.RayCast(new Ray(rayOrigin, rightOuterVector), rayLength, out result);
+            rightOuterRay.Position = rayOrigin;
+            rightOuterRay.Direction = rightOuterVector;
+            Physics.currentTrackWall.RayCast(rightOuterRay, rayLength, out result);
             float rightOuter = result.T;
 
-            Physics.currentTrackWall.RayCast(new Ray(rayOrigin, rightInnerVector), rayLength, out result);
+            rightInnerRay.Position = rayOrigin;
+            rightInnerRay.Direction = rightInnerVector;
+            Physics.currentTrackWall.RayCast(rightInnerRay, rayLength, out result);
             float rightInner = result.T;
 
             float leftM = 0;
@@ -507,15 +517,17 @@ namespace BeatShift.Input
             Vector3 testVector = shipOrientation.Forward;
             Vector3 rayOrigin = parent.shipPhysics.ShipPosition;
 
-            RayHit result;
-
             float rayLength = 120f;
 
-            Physics.currentTrackWall.RayCast(new Ray(rayOrigin, testVector), rayLength, out result);
+            RayHit result;
+
+            testRay.Position = rayOrigin;
+            testRay.Direction = testVector;
+            Physics.currentTrackWall.RayCast(testRay, rayLength, out result);
 
             float distance = result.T == 0 ?  0 : rayLength - result.T;
 
-            Physics.currentTrackFloor.RayCast(new Ray(rayOrigin, testVector), rayLength, out result);
+            Physics.currentTrackFloor.RayCast(testRay, rayLength, out result);
             if (distance < result.T)
             {
                 a = 1f;
