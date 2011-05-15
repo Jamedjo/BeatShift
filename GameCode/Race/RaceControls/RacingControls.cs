@@ -230,7 +230,7 @@ namespace BeatShift.Input
                 vibrateControl = 1.0f;
 
             //check pad is being used and vibration option is set to true
-            if (chosenInput.GetType() == typeof(PadInputManager) && (Options.ControllerVibration == true))
+            if (chosenInput.GetType() == typeof(PadInputManager) && (Options.ControllerVibration == true) && (racer.raceTiming.isRacing == true))
                 GamePad.SetVibration(((PadInputManager)chosenInput).getPlayerIndex(), vibrateControl, vibrateControl);
 
             #endregion
