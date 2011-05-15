@@ -183,7 +183,7 @@ namespace BeatShift.Input
             {
                 racer.setBoost(true);
                 justBoost = true;
-                racer.shipDrawing.engineGlow.BoostOn();
+                racer.shipDrawing.engineGlow.boostType(1);
                 float boostIncrease = 0.01f;
 
                 if (racer.beatQueue.isLevellingUp)
@@ -208,7 +208,7 @@ namespace BeatShift.Input
             else if (justBoost)
             {
                 racer.setBoost(false);
-                racer.shipDrawing.engineGlow.BoostOff();
+                racer.shipDrawing.engineGlow.boostType(0);
 
                 // boost decay
                 if (vibrateBoostControl > 0.015f)

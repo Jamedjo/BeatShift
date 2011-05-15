@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using BeatShift.Utilities___Misc;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework;
 using DPSF;
 using DPSF.ParticleSystems;
 
@@ -23,11 +24,15 @@ namespace BeatShift
         Queue<Beat> beats;
         Racer parentRacer;
         public BeatRingParticleSystem visualisation;
-
+        public BeatGlowParticleSystem beatGlow;
         // Variables to tweak difficulties on layers
         private double[] layerBonus = { 15, 10, 6, 4, 1 };
         private double[] layerPenalty = { 0.25, 0.375, 0.5, 0.75, 1.5 };
         private float[] layerLeeway = { 125.0f, 120.0f, 115.0f, 105.0f, 95.0f };
+        private Color missColor = Color.Black;
+        private Color hitColor = Color.FloralWhite;
+        private Color levelupColor = Color.Fuchsia;
+        private Color leveldownColor = Color.SaddleBrown;
 
         public BeatQueue(Racer racer)
         {
@@ -57,6 +62,10 @@ namespace BeatShift
             visualisation = new BeatRingParticleSystem(null);
             BeatShift.particleManager.AddParticleSystem(visualisation);
             visualisation.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
+
+            beatGlow = new BeatGlowParticleSystem(null);
+            BeatShift.particleManager.AddParticleSystem(beatGlow);
+            beatGlow.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
         }
 
         public void BeatTap(Buttons button)
@@ -91,17 +100,24 @@ namespace BeatShift
                                                     // "Distance to last: " + (time - lastTime));
                     }
                 }
-            
-            if (boostBar == 100 && result > 0.9m)
-                LevelUp();
-            else if ((boostBar < 100) && (result > 0m))
-                boostBar += ((double)result * layerBonus[myLayer]);
-            else if ((boostBar > 0) && (result == 0m))
-                if (time > invinciEndtime)
+
+                if (boostBar == 100 && result > 0.8m)
                 {
-                    boostBar -= layerPenalty[myLayer];
-                    //SoundManager.MissedNote();
+                    LevelUp();
+                    beatGlow.Glow(hitColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
                 }
+                else if ((result > 0m))
+                {
+                    boostBar += ((double)result * layerBonus[myLayer]);
+                    beatGlow.Glow(hitColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
+                }
+                else if ((boostBar > 0) && (result == 0m))
+                    if (time > invinciEndtime)
+                    {
+                        boostBar -= layerPenalty[myLayer];
+                        beatGlow.Glow(missColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
+                        //SoundManager.MissedNote();
+                    }
             if (boostBar > 100)
                 boostBar = 100;
             else if (boostBar < 0)
@@ -114,10 +130,11 @@ namespace BeatShift
             {
                 invinciEndtime = BeatShift.bgm.songTick() + 3000;
                 myLayer--;
-                BeatShift.bgm.MusicDown();
+                BeatShift.bgm.MusicDown(myLayer);
                 boostBar = 50;
                 visualisation.Clear();
                 beats.Clear();
+                beatGlow.Glow(leveldownColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
                 isLevellingDown = true;
             }
             else
@@ -130,10 +147,11 @@ namespace BeatShift
             {
                 invinciEndtime = BeatShift.bgm.songTick() + 3000;
                 myLayer++;
-                BeatShift.bgm.MusicUp();
+                BeatShift.bgm.MusicUp(myLayer);
                 boostBar = 20;
                 visualisation.Clear();
                 beats.Clear();
+                beatGlow.Glow(levelupColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
                 isLevellingUp = true;
             }
         }
@@ -169,6 +187,11 @@ namespace BeatShift
 
         public void Update()
         {
+            if (visualisation != null)
+            {
+
+                visualisation.SetPosition(parentRacer.shipPhysics.ShipPosition);
+            }
             if (!parentRacer.raceTiming.hasCompletedRace)
             {
                 if (beats.Count > 0)
@@ -183,6 +206,7 @@ namespace BeatShift
                         if (lastTime > invinciEndtime)
                         {
                             boostBar -= layerPenalty[myLayer];
+                            beatGlow.Glow(missColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
                            // SoundManager.MissedNote();
                         }
                     }

@@ -113,24 +113,192 @@ namespace BeatShift
         }
 
 
-        public void MusicUp()
+        public void MusicUp(int newLevel)
         {
-            if (currentLayer < originalBeats.Length - 1)
+            SoundManager.levelDown();
+            if (newLevel < 2)
             {
-                currentLayer++;
-                SoundManager.levelUp();
-                BeatShift.engine.SetGlobalVariable("Layer", (currentLayer + 0.1f));
+                int highest = newLevel;
+                foreach (Racer racer in Race.humanRacers)
+                {
+                    if (racer.beatQueue.getLayer() >= 2)
+                    {
+                        highest = racer.beatQueue.getLayer();
+                        break;
+                    }
+                    else if (racer.beatQueue.getLayer() > highest)
+                    {
+                        highest = racer.beatQueue.getLayer();
+                    }
+                }
+                if (newLevel == highest)
+                {
+                    currentLayer = newLevel;
+                }
+                //BeatShift.engine.SetGlobalVariable("Layer", (currentLayer + 0.1f));
             }
+            else
+            {
+                bool is3 = (newLevel == 2) ? true : false;
+                bool is4 = (newLevel == 3) ? true : false;
+                bool is5 = (newLevel == 4) ? true : false;
+                int result=0;
+                foreach (Racer racer in Race.humanRacers)
+                {
+                    switch(racer.beatQueue.getLayer()) {
+                        case 2:
+                            is3 = true;
+                            break;
+                        case 3:
+                            is4 = true;
+                            break;
+                        case 4:
+                            is5 = true;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                
+                result += is3 ? 100 : 0;
+                result += is4 ? 10 : 0;
+                result += is5 ? 1 : 0;
+                switch (result)
+                {
+                    case 1:
+                        currentLayer = 4;
+                        break;
+                    case 10:
+                        currentLayer = 3;
+                        break;
+                    case 100:
+                        currentLayer = 2;
+                        break;
+                    case 11:
+                        currentLayer = 6;
+                        break;
+                    case 101:
+                        currentLayer = 7;
+                        break;
+                    case 110:
+                        currentLayer = 8;
+                        break;
+                    case 111:
+                        currentLayer = 9;
+                        break;
+                    default:
+                        currentLayer = 10;
+                        break;
+                }
+
+
+            }
+            BeatShift.engine.SetGlobalVariable("Layer", (currentLayer + 0.1f));
         }
 
-        public void MusicDown()
+        public void MusicDown(int newLevel)
         {
-            if (currentLayer > 0)
+            SoundManager.levelUp();
+            if (newLevel < 1)
             {
-                currentLayer--;
-                SoundManager.levelDown();
-                BeatShift.engine.SetGlobalVariable("Layer", currentLayer);
+                int highest = newLevel;
+                foreach (Racer racer in Race.humanRacers)
+                {
+                    if (racer.beatQueue.getLayer() >= 1)
+                    {
+                        highest = racer.beatQueue.getLayer();
+                        break;
+                    }
+                }
+                if (newLevel == highest)
+                {
+                    currentLayer = newLevel;
+                }
             }
+            else
+            {
+                bool is2 = (newLevel == 1) ? true : false;
+                bool is3 = (newLevel == 2) ? true : false;
+                bool is4 = (newLevel == 3) ? true : false;
+                bool is5 = (newLevel == 4) ? true : false;
+                int result = 0;
+                foreach (Racer racer in Race.humanRacers)
+                {
+                    switch (racer.beatQueue.getLayer())
+                    {
+                        case 1:
+                            is3 = true;
+                            break;
+                        case 2:
+                            is3 = true;
+                            break;
+                        case 3:
+                            is4 = true;
+                            break;
+                        case 4:
+                            is5 = true;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                result += is2 ? 1000 : 0;
+                result += is3 ? 100 : 0;
+                result += is4 ? 10 : 0;
+                result += is5 ? 1 : 0;
+                switch (result)
+                {
+                    case 1:
+                        currentLayer = 4;
+                        break;
+                    case 10:
+                        currentLayer = 3;
+                        break;
+                    case 100:
+                        currentLayer = 2;
+                        break;
+                    case 11:
+                        currentLayer = 6;
+                        break;
+                    case 101:
+                        currentLayer = 7;
+                        break;
+                    case 110:
+                        currentLayer = 8;
+                        break;
+                    case 111:
+                        currentLayer = 9;
+                        break;
+                    case 1001:
+                        currentLayer = 4;
+                        break;
+                    case 1010:
+                        currentLayer = 3;
+                        break;
+                    case 1100:
+                        currentLayer = 2;
+                        break;
+                    case 1011:
+                        currentLayer = 6;
+                        break;
+                    case 1101:
+                        currentLayer = 7;
+                        break;
+                    case 1110:
+                        currentLayer = 8;
+                        break;
+                    case 1111:
+                        currentLayer = 9;
+                        break;
+                    case 1000:
+                        currentLayer = 1;
+                        break;
+                    default:
+                        currentLayer = 10;
+                        break;
+                }
+            }
+            BeatShift.engine.SetGlobalVariable("Layer", (currentLayer + 0.1f));
         }
 
         public void loadTrack(string trackName) {
@@ -235,20 +403,18 @@ namespace BeatShift
                     track.Play();
                 }
             }
-            catch (InvalidOperationException e)
+            catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message);
-                track.Stop(AudioStopOptions.Immediate);
-                track.Dispose();
+                //System.Diagnostics.Debug.WriteLine(e.Message);
+                if (track.IsPlaying)
+                {
+                    track.Stop(AudioStopOptions.Immediate);
+                }
                 track = soundBank.GetCue(currentTrack);
                 while (track.IsPreparing)
                 {
                 }
                 track.Play();
-            }
-            
-            while(!track.IsPlaying) {
-                System.Diagnostics.Debug.WriteLine("Not yet playing");
             }
             tick.Start();
             shouldPlay = true;
