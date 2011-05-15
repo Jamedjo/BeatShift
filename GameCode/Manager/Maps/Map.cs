@@ -110,7 +110,8 @@ namespace BeatShift
                 bshiftEffect.Parameters["ambientColour"].SetValue(Color.DodgerBlue.ToVector4());
             else if (currentMapName == MapName.CityMap)
                 bshiftEffect.Parameters["ambientColour"].SetValue(Color.PapayaWhip.ToVector4());
-            else bshiftEffect.Parameters["ambientColour"].SetValue(Color.White.ToVector4());
+            else if (currentMapName == MapName.DesertMap)
+                bshiftEffect.Parameters["ambientColour"].SetValue(Color.PapayaWhip.ToVector4());
 
             bshiftEffect.Parameters["ambientIntensity"].SetValue(0.2f);
         }
