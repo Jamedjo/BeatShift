@@ -149,18 +149,18 @@ namespace DPSF.ParticleSystems
             // according to the settings in the InitialProperties object (see further below).
             // You can also create your own Particle Initialization Functions as well, as shown with
             // the InitializeParticleProperties function below.
-            ParticleInitializationFunction = InitializeParticleUsingInitialProperties;
-            //ParticleInitializationFunction = InitializeParticleProperties;
+            //ParticleInitializationFunction = InitializeParticleUsingInitialProperties;
+            ParticleInitializationFunction = InitializeParticleProperties;
 
             // Setup the Initial Properties of the Particles.
             // These are only applied if using InitializeParticleUsingInitialProperties 
             // as the Particle Initialization Function.
             InitialProperties.LifetimeMin = 0.1f;
-            InitialProperties.LifetimeMax = 0.5f;
+            InitialProperties.LifetimeMax = 0.3f;
             InitialProperties.PositionMin = Vector3.Zero;
             InitialProperties.PositionMax = Vector3.Zero;
-            InitialProperties.VelocityMin = new Vector3(-1, -1, 5);
-            InitialProperties.VelocityMax = new Vector3(1, 1, 10);
+            InitialProperties.VelocityMin = new Vector3(-1, -1, -1);
+            InitialProperties.VelocityMax = new Vector3(1, 1, 1);
             InitialProperties.RotationMin = 0.0f;
             InitialProperties.RotationMax = 0.0f;
             InitialProperties.RotationalVelocityMin = 0.0f;
@@ -207,13 +207,10 @@ namespace DPSF.ParticleSystems
         /// Example of how to create a Particle Initialization Function
         /// </summary>
         /// <param name="cParticle">The Particle to be Initialized</param>
-        public void InitializeParticleProperties(EngineSpriteParticle cParticle)
+        public void InitializeParticleProperties(DefaultSprite3DBillboardParticle cParticle)
         {
             InitializeParticleUsingInitialProperties(cParticle);
-            sVelocityMin = velocity*0.9f;
-			sVelocityMax = velocity;
             cParticle.Position+=offSet;
-			cParticle.Velocity = DPSFHelper.RandomVectorBetweenTwoVectors(sVelocityMin, sVelocityMax);
             switch (type)
             {
                 case 0:
