@@ -13,16 +13,16 @@ namespace BeatShift.Menus
     {
         public PauseMenu()
         {
-            title = "Paused";
+            title = "GAME PAUSED";
         }
 
         public override void DrawSprites(SpriteBatch spriteBatch)
         {
-            Texture2D background = GameTextures.CountdownReady;
-            Texture2D backgroundBlack = GameTextures.MenuBackgroundBlack;
-            spriteBatch.Draw(GameTextures.MenuBackgroundBlack, new Rectangle(0, 0, BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height), Color.White);
-            spriteBatch.Draw(background, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - background.Width / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - background.Height / 2), Color.White);
-
+            //Texture2D background = GameTextures.CountdownReady;
+            //Texture2D backgroundBlack = GameTextures.MenuBackgroundBlack;
+            //spriteBatch.Draw(GameTextures.MenuBackgroundBlack, new Rectangle(0, 0, BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height), Color.White);
+            //spriteBatch.Draw(background, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - background.Width / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - background.Height / 2), Color.White);
+            spriteBatch.Draw(GameTextures.MenuBackgroundBlackRed, new Rectangle(0, 0, BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height), slightlyTransparent);
         }
 
         public override void enteringMenu()
@@ -45,6 +45,20 @@ namespace BeatShift.Menus
             {
                 BeatShift.singleton.Exit();
             }));
+
+        }
+
+        public override void overrideMenuPositions()
+        {
+            //Set title position
+            //DrawTitleFromTextCentre = true;
+            DrawMenuItemsFromTextCentre = true;
+            //TitlePos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, 75);
+            //TitleStartPos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, -100);
+
+            //Set position of menu items
+            //MenuPos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, 220);
+            //Offset = new Vector2(0, 80);//additional vertical spaceing.
 
         }
 

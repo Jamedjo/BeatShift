@@ -10,13 +10,18 @@ namespace BeatShift
 {
     public static class GameTextures
     {
+        public static Texture2D Logo;
+
         public static Texture2D MenuBackgroundBlue;
         public static Texture2D MenuBackgroundBlack;
+        public static Texture2D MenuBackgroundBlackRed;
         public static Texture2D CountdownReady;
         public static Texture2D Countdown3;
         public static Texture2D Countdown2;
         public static Texture2D Countdown1;
         public static Texture2D CountdownGo;
+        public static Texture2D LoadingBefore;
+        public static Texture2D LoadingAfter;
 
         public static Texture2D HudBar;
         public static Texture2D HudBarSmall;
@@ -45,13 +50,18 @@ namespace BeatShift
         {
 
             Console.Write("Loading game textures... ");
+            Logo = c.Load<Texture2D>("Images/logo");
+
             MenuBackgroundBlue = c.Load<Texture2D>("Images/blue_background");
             MenuBackgroundBlack = c.Load<Texture2D>("Images/black_background");
+            MenuBackgroundBlackRed = c.Load<Texture2D>("Images/black_red_background");
             CountdownReady = c.Load<Texture2D>("Images/ready");
             Countdown3 = c.Load<Texture2D>("Images/3");
             Countdown2 = c.Load<Texture2D>("Images/2");
             Countdown1 = c.Load<Texture2D>("Images/1");
             CountdownGo = c.Load<Texture2D>("Images/go");
+            LoadingBefore = c.Load<Texture2D>("Images/loading-after");
+            LoadingAfter = c.Load<Texture2D>("Images/loading-before");
 
             TopRightBoard = c.Load<Texture2D>("HUD/topright_v3");
             TopRightBoardSmall = c.Load<Texture2D>("HUD/reduced_top_right");
