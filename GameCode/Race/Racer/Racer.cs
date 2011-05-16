@@ -205,6 +205,9 @@ namespace BeatShift
 
             shipDrawing.engineGlow.setVelocity(shipPhysics.physicsBody.LinearVelocity);
             shipDrawing.engineGlow.SetPosition(shipPhysics.ShipPosition,shipPhysics.DrawOrientation);
+
+            racerPoints.Update(GameTime gameTime);
+
             OtherUpdate(gameTime);
         }
 

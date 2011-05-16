@@ -304,6 +304,7 @@ namespace BeatShift
                     //TODO: shift into 
                 }
                 nextWaypoint = mapData.nextPoint(currentProgressWaypoint);
+                parentRacer.racerPoints.newWaypointHit();
             }
 
             //Check for collision with wrongway waypoint (3 previous)
