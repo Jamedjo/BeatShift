@@ -60,11 +60,11 @@ namespace BeatShift
         public void Load()
         {
             visualisation = new BeatRingParticleSystem(null);
-            BeatShift.particleManager.AddParticleSystem(visualisation);
+            parentRacer.privateSystems.AddParticleSystem(visualisation);
             visualisation.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
 
             beatGlow = new BeatGlowParticleSystem(null);
-            BeatShift.particleManager.AddParticleSystem(beatGlow);
+            parentRacer.privateSystems.AddParticleSystem(beatGlow);
             beatGlow.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
         }
 

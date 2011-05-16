@@ -131,7 +131,14 @@ namespace BeatShift
                 ////////////////////////
                 /////// SPEED //////////
                 ////////////////////////
-                racer.raceTiming.previousSpeed = MathHelper.Lerp(racer.raceTiming.previousSpeed, (Math.Abs((int)racer.shipPhysics.getForwardSpeed())), 0.05f);
+                try
+                {
+                    racer.raceTiming.previousSpeed = MathHelper.Lerp(racer.raceTiming.previousSpeed, (Math.Abs((int)racer.shipPhysics.getForwardSpeed())), 0.05f);
+                }
+                catch (OverflowException e)
+                {
+                    racer.raceTiming.previousSpeed = 0;
+                }
                 racer.raceTiming.speedToDisplay = String.Format("{0:0000}", racer.raceTiming.previousSpeed);
                 if (BeatShift.graphics.GraphicsDevice.Viewport.Width > 700)
                 {
@@ -310,7 +317,7 @@ namespace BeatShift
             public static void DrawSplitBarsThreePlayer()
             {
                 //BeatShift.spriteBatch.Begin();
-                BeatShift.spriteBatch.Draw(GameTextures.HorizontalSplit, new Rectangle(0, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - GameTextures.HorizontalSplit.Height / 2, BeatShift.graphics.GraphicsDevice.Viewport.Width, GameTextures.HorizontalSplit.Height), Color.White);
+                BeatShift.spriteBatch.Draw(GameTextures.HorizontalSplit, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - GameTextures.HorizontalSplit.Height / 2, BeatShift.graphics.GraphicsDevice.Viewport.Width/2, GameTextures.HorizontalSplit.Height), Color.White);
                 BeatShift.spriteBatch.Draw(GameTextures.VerticalSplit, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.VerticalSplit.Width / 2, 0, GameTextures.VerticalSplit.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height), Color.White);
             }
 

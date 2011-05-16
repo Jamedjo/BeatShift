@@ -10,18 +10,20 @@ namespace BeatShift.Menus
     {
         public MapSelectMenu()
         {
-            title = "Select Map";
+            title = "SELECT MAP";
         }
 
         public override void overrideMenuPositions()
         {
+            //DrawTitleFromTextCentre = true;
             DrawMenuItemsFromTextCentre = true;
-            DrawTitleFromTextCentre = true;
-            TitlePos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, 75);
-            MenuPos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, 220);
-            TitleStartPos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, -100);
+            //DrawMenuItemsFromTextCentre = true;
+            //DrawTitleFromTextCentre = true;
+            //TitlePos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, 75);
+            //MenuPos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, 220);
+            //TitleStartPos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, -100);
             //UseTextWidthAsOffset = true;
-            Offset = new Vector2(0, 40);//additional vertical spaceing.
+            //Offset = new Vector2(0, 40);//additional vertical spaceing.
         }
 
         public override void setupMenuItems()
