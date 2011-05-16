@@ -50,7 +50,7 @@ namespace BeatShift
                 if (value)
                 {
                     //shipDrawing.collision.Collision(Vector3.Transform(lastCollisionPoint, Matrix.Invert(shipDrawing.getShipDrawOrientationMatrix())));
-                    shipDrawing.collision.Collision(lastCollisionPoint);
+                    shipDrawing.collision.Collision(lastCollisionPoint,shipPhysics.DrawOrientation,shipPhysics.physicsBody.LinearVelocity);
                 }
                 mColliding = value;
                 //return isColliding;   
@@ -112,7 +112,14 @@ namespace BeatShift
         public void setupRacingControls(IInputManager inputM)
         {
             // AI control tests
-            racingControls = new RacingControls(this, inputM);
+            if (AiInputManager.testAI)
+            {
+                racingControls = new RacingControls(this, new AiInputManager(this));
+            }
+            else
+            {
+                racingControls = new RacingControls(this, inputM);
+            }
             //racingControls = new RacingControls(this, new AiInputManager(this));
         }
         private void setupRacingControls()
@@ -202,7 +209,7 @@ namespace BeatShift
             if (raceTiming.isRacing) raceTiming.Update();
 
             shipDrawing.engineGlow.setVelocity(shipPhysics.physicsBody.LinearVelocity);
-            shipDrawing.engineGlow.SetPosition(shipPhysics.ShipPosition);
+            shipDrawing.engineGlow.SetPosition(shipPhysics.ShipPosition,shipPhysics.DrawOrientation);
             OtherUpdate(gameTime);
         }
 

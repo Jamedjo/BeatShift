@@ -44,8 +44,9 @@ namespace BeatShift.Menus
             }));
             addMenuItem("DESERT MAP", (Action)(delegate
             {
-                //MapManager.mapToLoad = MapName.DesertMap;
-                SoundManager.trackToLoad = "Desert";
+                MapManager.mapToLoad = MapName.DesertMap;
+                SoundManager.trackToLoad = "City";
+                GameLoop.setGameState(GameState.MultiplayerShipSelect);
                 //if (isSinglePlayer()) MenuManager.setCurrentMenu(MenuPage.SinglePlayerShipSelect);
                 //else GameLoop.setGameState(GameState.MultiplayerShipSelect);
             }));

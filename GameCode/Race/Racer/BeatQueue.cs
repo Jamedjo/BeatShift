@@ -130,7 +130,7 @@ namespace BeatShift
             {
                 invinciEndtime = BeatShift.bgm.songTick() + 3000;
                 myLayer--;
-                BeatShift.bgm.MusicDown();
+                BeatShift.bgm.MusicDown(myLayer);
                 boostBar = 50;
                 visualisation.Clear();
                 beats.Clear();
@@ -147,7 +147,7 @@ namespace BeatShift
             {
                 invinciEndtime = BeatShift.bgm.songTick() + 3000;
                 myLayer++;
-                BeatShift.bgm.MusicUp();
+                BeatShift.bgm.MusicUp(myLayer);
                 boostBar = 20;
                 visualisation.Clear();
                 beats.Clear();
@@ -190,7 +190,7 @@ namespace BeatShift
             if (visualisation != null)
             {
 
-                visualisation.SetPosition(parentRacer.shipPhysics.ShipPosition);
+                visualisation.SetPosition(parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.DrawOrientation);
             }
             if (!parentRacer.raceTiming.hasCompletedRace)
             {
