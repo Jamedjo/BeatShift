@@ -131,7 +131,14 @@ namespace BeatShift
                 ////////////////////////
                 /////// SPEED //////////
                 ////////////////////////
-                racer.raceTiming.previousSpeed = MathHelper.Lerp(racer.raceTiming.previousSpeed, (Math.Abs((int)racer.shipPhysics.getForwardSpeed())), 0.05f);
+                try
+                {
+                    racer.raceTiming.previousSpeed = MathHelper.Lerp(racer.raceTiming.previousSpeed, (Math.Abs((int)racer.shipPhysics.getForwardSpeed())), 0.05f);
+                }
+                catch (OverflowException e)
+                {
+                    racer.raceTiming.previousSpeed = 0;
+                }
                 racer.raceTiming.speedToDisplay = String.Format("{0:0000}", racer.raceTiming.previousSpeed);
                 if (BeatShift.graphics.GraphicsDevice.Viewport.Width > 700)
                 {
