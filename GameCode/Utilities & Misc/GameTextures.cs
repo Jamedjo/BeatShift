@@ -11,6 +11,7 @@ namespace BeatShift
     public static class GameTextures
     {
         public static Texture2D Logo;
+        public static Texture2D Start;
 
         public static Texture2D MenuBackgroundBlue;
         public static Texture2D MenuBackgroundBlack;
@@ -51,6 +52,7 @@ namespace BeatShift
 
             Console.Write("Loading game textures... ");
             Logo = c.Load<Texture2D>("Images/logo");
+            Start = c.Load<Texture2D>("Images/pressstart");
 
             MenuBackgroundBlue = c.Load<Texture2D>("Images/blue_background");
             MenuBackgroundBlack = c.Load<Texture2D>("Images/black_background");

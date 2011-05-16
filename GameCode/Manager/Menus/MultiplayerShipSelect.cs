@@ -182,7 +182,7 @@ namespace BeatShift
         {
             //make sure physics loads
             //while (MapManager.currentMap.physicsLoadingThread.IsAlive) { }
-
+            Race.isPrimed = false;
             //set input managers
             for (int k = 0; k < 4; k++)
             {
@@ -264,7 +264,8 @@ namespace BeatShift
             {
                 if (ssarea[i].isActive)// is player ISACTIVE (by pressing a) do:
                 {
-                    BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Press start to begin Race", new Vector2(300, 300), Color.Black);
+                    Race.isPrimed = true;
+                    //BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Press start to begin Race", new Vector2(300, 300), Color.Black);
                     // draw name of ship above ship
                     // draw verticle hue bar next to ship
                     // draw arrows either side of ship

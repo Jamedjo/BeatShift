@@ -27,6 +27,8 @@ namespace BeatShift
         public static List<CameraWrapper> localCameras { get { return humanRacers.Select(hr => hr.localCamera).ToList(); } }
 
         public static List<RacerId> racerIDs = new List<RacerId>();
+        public static bool isPrimed = false;
+
 
         public static string[] AInames;
 
@@ -106,6 +108,8 @@ namespace BeatShift
             else if (humanRacers.Count == 4)
             {
                 HeadsUpDisplay.DrawSplitBarsFourPlayer();
+                if (Race.isPrimed)
+                    BeatShift.spriteBatch.Draw(GameTextures.Start, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.Start.Width / 2, 0), Color.White);
             }
             BeatShift.spriteBatch.End();
         }
@@ -236,5 +240,6 @@ namespace BeatShift
         {
             currentRacers = new List<Racer>();
         }
+
     }
 }
