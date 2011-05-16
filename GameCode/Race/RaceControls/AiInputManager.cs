@@ -26,7 +26,7 @@ namespace BeatShift.Input
         ///  Set to false and the player retakes control
         /// </summary>
         public const Boolean testAI = true;
-        public static int numberOfAI = 2;
+        public const int numberOfAI = 2;
 
         private GamePadState currentState;
         private GamePadState lastState;
@@ -34,6 +34,11 @@ namespace BeatShift.Input
         private float lastTurn = 0f;
 
         Ray AiRay = new Ray();
+        Ray leftOuterRay = new Ray();
+        Ray leftInnerRay = new Ray();
+        Ray rightOuterRay = new Ray();
+        Ray rightInnerRay = new Ray();
+        Ray testRay = new Ray();
 
         private Beat? nextBeatToPress = null;
 
@@ -245,16 +250,14 @@ namespace BeatShift.Input
 
             float direction = Vector3.Dot(relativeTrackHeading, relativeShipRight);
 
-            
-
             Vector3 testVector = parent.shipPhysics.nearestMapPoint.roadSurface * -1 * Math.Sign(direction);
-
-            RayHit result;
 
             Vector3 rayOrigin = parent.shipPhysics.ShipPosition;
 
             float shipWidth = 3f;
             float rayLength = shipWidth + parent.shipPhysics.ShipSpeed / 8;
+
+            RayHit result;
 
             AiRay.Position = rayOrigin;
             AiRay.Direction = testVector;
@@ -273,6 +276,16 @@ namespace BeatShift.Input
             return float.IsNaN(retVal) ? 0f : retVal;
         }
 
+
+            leftOuterRay.Position = rayOrigin;
+            leftOuterRay.Direction = leftOuterVector;
+            Physics.currentTrackWall.RayCast(leftOuterRay, rayLength, out result);
+            leftInnerRay.Direction = leftInnerVector;
+            Physics.currentTrackWall.RayCast(leftInnerRay, rayLength, out result);
+            rightOuterRay.Direction = rightOuterVector;
+            Physics.currentTrackWall.RayCast(rightOuterRay, rayLength, out result);
+            rightInnerRay.Direction = rightInnerVector;
+            Physics.currentTrackWall.RayCast(rightInnerRay, rayLength, out result);
         /// <summary>
         /// A very simplistic turning system. Has no notion of avoiding crashes.
         /// </summary>
@@ -367,15 +380,17 @@ namespace BeatShift.Input
             Vector3 testVector = shipOrientation.Forward;
             Vector3 rayOrigin = parent.shipPhysics.ShipPosition;
 
-            RayHit result;
-
             float rayLength = 120f;
 
-            Physics.currentTrackWall.RayCast(new Ray(rayOrigin, testVector), rayLength, out result);
+            RayHit result;
+
+            testRay.Position = rayOrigin;
+            testRay.Direction = testVector;
+            Physics.currentTrackWall.RayCast(testRay, rayLength, out result);
 
             float distance = result.T == 0 ?  0 : rayLength - result.T;
 
-            Physics.currentTrackFloor.RayCast(new Ray(rayOrigin, testVector), rayLength, out result);
+            Physics.currentTrackFloor.RayCast(testRay, rayLength, out result);
             if (distance > result.T)
             {
                 a = 1f;
