@@ -12,7 +12,7 @@ using System.Diagnostics;
 using System.Collections;
 using BeatShift.Menus;
 using BeatShift.Cameras;
-
+using ParallelTasks;
 
 namespace BeatShift
 {
@@ -41,14 +41,20 @@ namespace BeatShift
             {
                 // If the race has started update everything
                 currentRaceType.Update(gameTime);
-                foreach (Racer racer in currentRacers)
+                Parallel.ForEach(currentRacers, racer =>
+                {
                     racer.Update(gameTime);
+                }
+                );
             }
             else
             {
                 // Only update the camera if the race has not started yet
-                foreach (RacerHuman racer in humanRacers)
+                Parallel.ForEach(humanRacers, racer =>
+                {
                     racer.localCamera.Update(gameTime);
+                }
+                );
             }
         }
 
