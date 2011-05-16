@@ -96,12 +96,19 @@ namespace BeatShift.Input
 
             if (racer.beatQueue.isLevellingDown )
             {
-                if( vibrateSequence )
+                //while (sequenceNumber < Math.PI * 1000)
+                //{
+                //    vibrateLevelControl = (float)Math.Sin(sequenceNumber / 1000);
+                //    if (vibrateLevelControl < 0)
+                //        vibrateLevelControl = -vibrateLevelControl;
+                //    sequenceNumber++;
+                //}
+                if (vibrateSequence)
                 {
                     if (vibrateLevelControl < 0.3f)
                         vibrateLevelControl = vibrateLevelControl + 0.02f;
                     else
-                        vibrateSequence = false ;
+                        vibrateSequence = false;
                 }
                 else
                 {
@@ -110,7 +117,7 @@ namespace BeatShift.Input
                     else
                     {
                         vibrateLevelControl = 0;
-                        vibrateSequence = true ;
+                        vibrateSequence = true;
                         sequenceNumber++;
                     }
                 }
@@ -230,7 +237,7 @@ namespace BeatShift.Input
                 vibrateControl = 1.0f;
 
             //check pad is being used and vibration option is set to true
-            if (chosenInput.GetType() == typeof(PadInputManager) && (Options.ControllerVibration == true) && (racer.raceTiming.isRacing == true))
+            if (chosenInput.GetType() == typeof(PadInputManager) && (Options.ControllerVibration) && (!racer.raceTiming.hasCompletedRace))
                 GamePad.SetVibration(((PadInputManager)chosenInput).getPlayerIndex(), vibrateControl, vibrateControl);
 
             #endregion
@@ -303,55 +310,6 @@ namespace BeatShift.Input
         {
             racer.shipPhysics.physicsBody.ApplyImpulse(racer.shipPhysics.physicsBody.Position, racer.shipPhysics.physicsBody.OrientationMatrix.Forward * 70 * (float)average);
         }
-
-        /*void AverageControl()
-        {
-            //if (currentPadState.IsConnected)
-            {
-                if (chosenInput.actionTapped(InputAction.Forwards))
-                {
-                    //lastTaps[tapNo++] = BeatShift.bgm.beatTime();
-                    tapNo = tapNo % 4;
-                }
-            }
-
-            decimal average = 0;
-            for(int i = 0; i<4; i++)
-            {
-                int t = i-tapNo;
-                if (t>=0) {
-                    t=t%4;
-                } else if (t< 0) {
-                    t=4+t;
-                }
-                average += lastTaps[i]*tapWeights[t];
-            }
-
-                if (lastTaps[(tapNo+3)%4] > 0)
-                {
-                    lastTaps[(tapNo + 3) % 4] = lastTaps[(tapNo + 3) % 4] - decelfact;
-                }
-                else if (lastTaps[(tapNo + 2) % 4] > 0)
-                {
-                    lastTaps[(tapNo + 2) % 4] = lastTaps[(tapNo + 2) % 4] - decelfact;
-                }
-                else if (lastTaps[(tapNo + 1) % 4] > 0)
-                {
-                    lastTaps[(tapNo + 1) % 4] = lastTaps[(tapNo + 1) % 4] - decelfact;
-                }
-                else if (lastTaps[tapNo] > 0)
-                {
-                    lastTaps[tapNo] = lastTaps[tapNo] - decelfact;
-                }
-                for (int i = 0; i < 4; i++)
-                {
-                    if (lastTaps[i] < 0)
-                    {
-                        lastTaps[i] = 0;
-                    }
-                }
-            AverageMove((double)average);
-        }*/
         
         public decimal getLastPress()
         {
@@ -367,8 +325,6 @@ namespace BeatShift.Input
         {
             applyForwardMotionFromAnalogue();
                 
-            // Increase vibration if the player is tapping the A button.
-            // Subtract vibration otherwise, even if the player holds down A
             if (chosenInput.actionTapped(InputAction.Green))
             {
                 racer.beatQueue.BeatTap(Buttons.A);
@@ -382,12 +338,6 @@ namespace BeatShift.Input
             {
                 racer.beatQueue.BeatTap(Buttons.Y);
             }
-
-            //if (chosenInput.actionTapped(InputAction.Boost))//Should be actionPressed&notAlreadyBoosting
-            //{
-            //    //Create particle boost.
-            //    BeatShift.emitter = new ParticleEmitter((Func<Matrix>)delegate { return Race.humanRacers[0].shipPhysics.ShipOrientationMatrix /*+ Vector3.Transform(new Vector3(0f, -1f, -2f), Race.humanRacers[0].shipPhysics.ShipOrientationMatrix)*/; }, BeatShift.settingsb, BeatShift.pEffect);
-            //}
         }
     }
 }
