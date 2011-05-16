@@ -25,15 +25,12 @@ namespace BeatShift.Input
         /// <summary>
         ///  Set to false and the player retakes control
         /// </summary>
-        public const Boolean testAI = false;
+        public const Boolean testAI = true;
         public static int numberOfAI = 2;
 
-        private float randInaccuracy;
-        private TimeSpan lastRandChange;
         private GamePadState currentState;
         private GamePadState lastState;
         private Racer parent;
-        // private Box aheadBox;
         private float lastTurn = 0f;
 
         Ray AiRay = new Ray();
@@ -50,8 +47,6 @@ namespace BeatShift.Input
         {
             lastState = currentState = new GamePadState();
             this.parent = parent;
-            
-            lastRandChange = TimeSpan.Zero;
         }
 
         Boolean IInputManager.actionPressed(InputAction action)
@@ -131,15 +126,7 @@ namespace BeatShift.Input
             //            System.Diagnostics.Debug.WriteLine("{0} {1}", (c.Contact.Position - ship.ShipPosition).Length(), c.Contact.Normal);
             //        }
             //    }
-            if (gameTime.TotalGameTime.Subtract(lastRandChange).Seconds >= 1)
-            {
-                lastRandChange = gameTime.TotalGameTime;
-                randInaccuracy = (float)SimpleRNG.GetNormal(0, 1.0 / 6.0);
-#if WINDOWS
-                System.Diagnostics.Debug.WriteLine("{0:0.0000}", randInaccuracy);
-#endif
-            }
-            
+                        
             Vector2 leftThumbStick = Vector2.Zero;
             Vector2 rightThumbStick = Vector2.Zero;
 
@@ -205,13 +192,31 @@ namespace BeatShift.Input
         /// </returns>
         private float setTurn()
         {
+            float randInaccuracy = randTurn();
+
             float fTrack = futureTrack();
             float nWalls = newWalls();
-            lastTurn = (lastTurn + 0.6f * fTrack + 0.3f * nWalls + randInaccuracy) / 2f;
-#if WINDOWS
-            //System.Diagnostics.Debug.WriteLine("{0:0.000} {1:0.000} {2:0.000} {3:0.000} {4:0.000}", lastTurn, aWalls, fTrack, nWalls, randInaccuracy);
-#endif
-            return lastTurn;
+
+            return 0.0f * fTrack + 0.0f * nWalls + 0.0f * randInaccuracy + avoidWalls();
+        }
+
+
+        private float currentRotation = 0f;
+        /// <summary>
+        /// Set the random turn component of the AI.
+        /// </summary>
+        private float randTurn()
+        {
+            float offset = 2.0f;
+            float radius = 1.0f;
+            float maxRotation = MathHelper.Pi / 7.0f;
+
+            currentRotation += (float) (SimpleRNG.GetUniform() * 2 - 1) * maxRotation;
+
+            float width = (float) Math.Sin(currentRotation) * radius;
+            float extra = (float) Math.Cos(currentRotation) * radius;
+
+            return (float) Math.Tanh(width / (offset + extra));
         }
 
 
@@ -278,9 +283,11 @@ namespace BeatShift.Input
         {
             float t;
 
+            int offset = 5;
+
             Matrix shipOrientation = parent.shipPhysics.ShipOrientationMatrix;
             MapPoint lastPoint = parent.shipPhysics.nearestMapPoint;
-            MapPoint nextPoint = parent.shipPhysics.mapData.mapPoints[(parent.shipPhysics.nearestMapPoint.getIndex() + 2) % parent.shipPhysics.mapData.mapPoints.Count];
+            MapPoint nextPoint = parent.shipPhysics.mapData.mapPoints[(parent.shipPhysics.nearestMapPoint.getIndex() + offset) % parent.shipPhysics.mapData.mapPoints.Count];
 
             // partially take current orientation into account, but not too much
             Vector3 guessUp = (shipOrientation.Up + nextPoint.trackUp * 9) / 10;
@@ -294,8 +301,49 @@ namespace BeatShift.Input
 
             //t = (float)Math.Sin(Math.Acos(dotProduct));
             t = (float) (Math.Acos(dotProduct)  / (Math.PI / 2));
-            if ((!(t < 0)) && (!(t > 0)) && (t != 0)) return 0; //Need to check for NaN, could have coded this better.
-            return (float) (Math.Sqrt(t) * Math.Sign(direction));
+            return float.IsNaN(t) ? 0f : (float)(Math.Sqrt(t) * Math.Sign(direction));
+        }
+
+        private float avoidWallsRayLength = 50f;
+        private float avoidWalls()
+        {
+            AiRay.Direction = parent.shipPhysics.ShipOrientationMatrix.Forward;
+            AiRay.Position = parent.shipPhysics.ShipPosition;
+
+            RayHit result;
+
+            Physics.currentTrackWall.RayCast(AiRay, 40f, out result);
+
+            if (result.T != 0)
+            {
+                float wallAngle = Vector3.Dot(Vector3.Normalize(result.Normal), parent.shipPhysics.ShipOrientationMatrix.Left);
+                
+                if (wallAngle > 0)
+                {
+                    return -1 * turnWalls(wallAngle, result.T);
+                }
+                else
+                {
+                    return turnWalls(wallAngle, result.T);
+                }
+            }
+
+            return 0;
+            AiRay.Direction = (parent.shipPhysics.ShipOrientationMatrix.Forward + parent.shipPhysics.ShipOrientationMatrix.Right * 2) / 3;
+
+            Physics.currentTrackWall.RayCast(AiRay, 20f, out result);
+            
+
+
+            
+        }
+
+        private float turnWalls(float wallAngle, float wallDistance)
+        {
+            System.Diagnostics.Debug.WriteLine(wallAngle);
+            float angVal = (float)Math.Sqrt(Math.Sin(Math.Cosh(wallAngle)));
+            float disVal = 1 / wallDistance;
+            return Math.Min(1.0f, angVal + disVal);
         }
 
         /// <summary>
@@ -328,7 +376,7 @@ namespace BeatShift.Input
             float distance = result.T == 0 ?  0 : rayLength - result.T;
 
             Physics.currentTrackFloor.RayCast(new Ray(rayOrigin, testVector), rayLength, out result);
-            if (distance < result.T)
+            if (distance > result.T)
             {
                 a = 1f;
             }
