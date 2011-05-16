@@ -664,6 +664,7 @@
       <Name>DesertMap_track</Name>
       <Importer>FbxImporter</Importer>
       <Processor>BShiftAdvancedModelProcessor</Processor>
+      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
     </Compile>
     <Compile Include="Models\Maps\DesertMap_walls.fbx">
       <Name>DesertMap_walls</Name>
