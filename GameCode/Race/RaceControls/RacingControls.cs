@@ -20,14 +20,15 @@ namespace BeatShift.Input
         float vibrateBoostControl = 0.0f;
         float vibrateCollisionControl = 0.0f;
         float vibrateControl = 0.0f;
-        float vibrateLevelControl = 0.0f;
+        float vibrateLevelControlRight = 0.0f;
+        float vibrateLevelControlLeft = 0.0f;
         float jumpHeight = 27.5f;
         float speedOnCollision = 0.0f;
         bool justCollided = false;
         bool justBoost = false;
         bool justJump = false;
         bool vibrateSequence = false;
-        int sequenceNumber;
+        double sequenceNumber;
         int vibrateNumber;
 
         //TODO: sort topspeed variable
@@ -96,36 +97,45 @@ namespace BeatShift.Input
 
             if (racer.beatQueue.isLevellingDown )
             {
-                //while (sequenceNumber < Math.PI * 1000)
-                //{
-                //    vibrateLevelControl = (float)Math.Sin(sequenceNumber / 1000);
-                //    if (vibrateLevelControl < 0)
-                //        vibrateLevelControl = -vibrateLevelControl;
-                //    sequenceNumber++;
-                //}
-                if (vibrateSequence)
+                if (sequenceNumber < Math.PI * 40)
                 {
-                    if (vibrateLevelControl < 0.3f)
-                        vibrateLevelControl = vibrateLevelControl + 0.02f;
-                    else
-                        vibrateSequence = false;
+                    vibrateLevelControlRight = 0.4f*(float)Math.Sin(sequenceNumber / 20);
+                    if (vibrateLevelControlRight < 0)
+                    {
+                        vibrateLevelControlLeft = -vibrateLevelControlRight;
+                        vibrateLevelControlRight = 0;
+                    }
+                    //Console.WriteLine( Math.Sin(sequenceNumber / 20) );
+                    sequenceNumber++;
                 }
                 else
-                {
-                    if (vibrateLevelControl > 0.03f)
-                        vibrateLevelControl = vibrateLevelControl - 0.02f;
-                    else
-                    {
-                        vibrateLevelControl = 0;
-                        vibrateSequence = true;
-                        sequenceNumber++;
-                    }
-                }
-                if (sequenceNumber == 2)
                 {
                     racer.beatQueue.isLevellingDown = false;
                     sequenceNumber = 0;
                 }
+                //if (vibrateSequence)
+                //{
+                //    if (vibrateLevelControl < 0.3f)
+                //        vibrateLevelControl = vibrateLevelControl + 0.02f;
+                //    else
+                //        vibrateSequence = false;
+                //}
+                //else
+                //{
+                //    if (vibrateLevelControl > 0.03f)
+                //        vibrateLevelControl = vibrateLevelControl - 0.02f;
+                //    else
+                //    {
+                //        vibrateLevelControl = 0;
+                //        vibrateSequence = true;
+                //        sequenceNumber++;
+                //    }
+                //}
+                //if (sequenceNumber == 2)
+                //{
+                //    racer.beatQueue.isLevellingDown = false;
+                //    sequenceNumber = 0;
+                //}
             }
 
             #endregion
@@ -232,13 +242,13 @@ namespace BeatShift.Input
             #region CALCULATIONS
 
             // check vibration values are capped at 1.0
-            vibrateControl = vibrateCollisionControl + vibrateBoostControl + vibrateLevelControl;
+            vibrateControl = vibrateCollisionControl + vibrateBoostControl;
             if (vibrateControl > 1.0f)
                 vibrateControl = 1.0f;
 
             //check pad is being used and vibration option is set to true
             if (chosenInput.GetType() == typeof(PadInputManager) && (Options.ControllerVibration) && (!racer.raceTiming.hasCompletedRace))
-                GamePad.SetVibration(((PadInputManager)chosenInput).getPlayerIndex(), vibrateControl, vibrateControl);
+                GamePad.SetVibration(((PadInputManager)chosenInput).getPlayerIndex(), vibrateControl+vibrateLevelControlLeft, vibrateControl+vibrateLevelControlRight);
 
             #endregion
 
