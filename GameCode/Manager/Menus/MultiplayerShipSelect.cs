@@ -58,9 +58,9 @@ namespace BeatShift
         public void resetInputsAndScreens()
         {
             ssarea[0] = new SplitScreenArea(new PadInputManager(PlayerIndex.One));
-            if (Options.UseKeyboardAsPad2) ssarea[1] = new SplitScreenArea(new KeyInputManager());
-            else ssarea[1] = new SplitScreenArea(new PadInputManager(PlayerIndex.Two));
-            ssarea[2] = new SplitScreenArea(new PadInputManager(PlayerIndex.Three));
+            ssarea[1] = new SplitScreenArea(new PadInputManager(PlayerIndex.Two));
+            if (Options.UseKeyboardAsPad2) ssarea[2] = new SplitScreenArea(new KeyInputManager());
+            else ssarea[2] = new SplitScreenArea(new PadInputManager(PlayerIndex.Three));
             ssarea[3] = new SplitScreenArea(new PadInputManager(PlayerIndex.Four));
 
             //ssarea[0] = new SplitScreenArea(new KeyInputManager());

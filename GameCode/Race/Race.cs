@@ -70,17 +70,42 @@ namespace BeatShift
                         allRacer.shipDrawing.Draw(gameTime, h_racer.localCamera, (allRacer == (Racer)h_racer));
                     }
                 }
+            }
+
+            
+
+            foreach (RacerHuman h_racer in humanRacers)
+            {
 
                 //if(Physics.Visible)
                 //    Physics.Draw(gameTime);
+                //BeatShift.graphics.GraphicsDevice.Viewport = h_racer.localCamera.Viewport;
+                BeatShift.spriteBatch.Begin();
                 HeadsUpDisplay.DrawHUD(h_racer.localCamera, h_racer, gameTime);
+                BeatShift.spriteBatch.End();
             }
 
-            if (humanRacers.Count == 4)
-                HeadsUpDisplay.DrawSplitBars();
+            BeatShift.spriteBatch.Begin();
+
+            BeatShift.singleton.GraphicsDevice.Viewport = Viewports.fullViewport;
+
+            if (humanRacers.Count == 2)
+            {
+                HeadsUpDisplay.DrawSplitBarsTwoPlayer();
+            }
+            else if (humanRacers.Count == 3)
+            {
+                HeadsUpDisplay.DrawSplitBarsThreePlayer();
+            }
+            else if (humanRacers.Count == 4)
+            {
+                HeadsUpDisplay.DrawSplitBarsFourPlayer();
+            }
+            BeatShift.spriteBatch.End();
         }
 
-        public static string randomString(int length)
+
+        static string randomString(int length)
         {
             string tempString = Guid.NewGuid().ToString().ToLower();
             tempString = tempString.Replace("-", "");
@@ -158,12 +183,12 @@ namespace BeatShift
                     humanRacers[0].localCamera.Viewport = Viewports.fullViewport;
                     break;
                 case 2:
-                    humanRacers[0].localCamera.Viewport = Viewports.topViewport;
-                    humanRacers[1].localCamera.Viewport = Viewports.bottomViewport;
+                    humanRacers[0].localCamera.Viewport = Viewports.leftViewPort;
+                    humanRacers[1].localCamera.Viewport = Viewports.rightViewPort;
                     break;
                 case 3:
-                    humanRacers[0].localCamera.Viewport = Viewports.topViewport;
-                    humanRacers[1].localCamera.Viewport = Viewports.bottomLeftViewport;
+                    humanRacers[0].localCamera.Viewport = Viewports.leftViewPort;
+                    humanRacers[1].localCamera.Viewport = Viewports.topRightViewport;
                     humanRacers[2].localCamera.Viewport = Viewports.bottomRightViewport;
                     break;
                 case 4:

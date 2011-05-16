@@ -766,7 +766,7 @@ namespace BeatShift
             // Cast stabilisation sticks
             bool stabilizersHit = castStabalizerRaysAndApplyImpulses(stabalizerStickLength, 0.77f);
 
-            castSingleRayAndApplyImpulseCorrection(60, 120f);
+            castSingleRayAndApplyImpulseCorrection(20, 120f * (ShipSpeed/80));
             // Ifne or all of the stabilizers missed the track, or were too short
             if (!stabilizersHit || overturned)
             {
@@ -916,8 +916,8 @@ namespace BeatShift
                 for (int i = 0; i < rayCount; i++)
                 {
                     physicsBody.ApplyImpulse(cSRAAI_rayTruePos[i], cSRAAI_impulseVector[i]);
-                    //parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = offsetRayPos, dir = rayCastDirection, col = Color.Red.ToVector3() });
-                    //parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = rayTruePos[i], dir = impulseVector[i], col = Color.AntiqueWhite.ToVector3() });
+                    parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = cSRAAI_offsetRayPos[i], dir = rayCastDirection, col = Color.Red.ToVector3() });
+                    parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = cSRAAI_rayTruePos[i], dir = cSRAAI_impulseVector[i], col = Color.AntiqueWhite.ToVector3() });
                 }
             }
             return allRaysHit;
@@ -990,7 +990,7 @@ namespace BeatShift
             }
 
 
-            previousDirty = MathHelper.Lerp(previousDirty, dirtyMultiplier, 0.005f);
+            previousDirty = MathHelper.Lerp(previousDirty, dirtyMultiplier, 0.00125f);
 
             //Console.WriteLine(previousDirty);
 
@@ -1004,9 +1004,7 @@ namespace BeatShift
             if (result)
             {
                 physicsBody.ApplyImpulse(physicsBody.Position, impulseVector);
-
                 physicsBody.ApplyImpulse(rayTruePos, physicsBody.OrientationMatrix.Up * Math.Max(0, Math.Min(6, previousDirty)));
-
 
                 //parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = offsetRayPos, dir = rayCastDirection, col = Color.Red.ToVector3() });
                 //parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = rayTruePos, dir = impulseVector, col = Color.AntiqueWhite.ToVector3() });

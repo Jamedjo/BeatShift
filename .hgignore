@@ -35,10 +35,10 @@ glob:BeatManager/space midis/button1.btn
 glob:BeatManager/space midis/button4.btn
 glob:BeatManager/space midis/button3.btn
 glob:BeatManager/space midis/button5.btn
-glob:GameContent/particles/Textures/Ring006.xcf
-glob:GameCode/Particle Systems/EngineParticleSystemold.cs
-glob:GameCode/Particle Systems/BeatGlowParticleSystemold.cs
-glob:GameCode/Particle Systems/BeatRingParticleSystem - Copy.cs
+glob:GameContent/Models/Maps/old/CityMap_scenery.fbx
+glob:GameContent/Models/Maps/old/CityMap_walls.fbx
+glob:GameContent/Models/Maps/old/CityMap_track.fbx
+glob:GameContent/MapPointData/CityMapold.bsmp
 glob:GameCode/Particle Systems/BeatRingParticleSystemorig.cs
 glob:GameContent/particles/Textures/Ring004.xcf
 glob:BeatManager/BBF generator/BBF generator/obj/x86/Debug/DesignTimeResolveAssemblyReferences.cache
