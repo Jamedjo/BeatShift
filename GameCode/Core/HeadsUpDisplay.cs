@@ -13,7 +13,6 @@ namespace BeatShift
     {
         public static String[] Ranks = { "TH", "ST", "ND", "RD", "TH", "TH", "TH", "TH", "TH", "TH", "TH" }; //increase for more players
         public static int updatePeriod = 92;
-        
 
         public static void Update(GameTime gameTime)
         {
@@ -45,31 +44,52 @@ namespace BeatShift
                 ////////////////////////
                 if (Race.currentRaceType.getRaceTypeString().Equals("LappedRace"))
                 {
-                    BeatShift.spriteBatch.Begin();//(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+                    //BeatShift.spriteBatch.Begin();//(SpriteSortMode.Immediate, BlendState.AlphaBlend);
                     DrawMessage("Finished!", 325, vOffset / 2);
                     DrawMessage("Final Time: " + racer.raceTiming.getFinalTotalTime(), 300, vOffset / 2 + 40);
                 }
                 if (Race.currentRaceType.getRaceTypeString().Equals("EliminationRace"))
                 {
-                    BeatShift.spriteBatch.Begin();
+                    //BeatShift.spriteBatch.Begin();
                     DrawMessage("ELIMINATED!", 325, vOffset / 2);
                 }
                 if (Race.currentRaceType.getRaceTypeString().Equals("TimeTrialRace"))
                 {
-                    BeatShift.spriteBatch.Begin();
+                    //BeatShift.spriteBatch.Begin();
                     DrawMessage("Best lap time: "+racer.raceTiming.getBestLapTime(), 325, vOffset / 2);
                 }
 
             }
             else
             {
+
+                //if (Race.humanRacers.Count == 2)
+                //{
+                //    HeadsUpDisplay.DrawSplitBarsTwoPlayer();
+                //}
+                //else if (Race.humanRacers.Count == 3)
+                //{
+                //    HeadsUpDisplay.DrawSplitBarsThreePlayer();
+                //}
+                //else if (Race.humanRacers.Count == 4)
+                //{
+                //    HeadsUpDisplay.DrawSplitBarsFourPlayer();
+                //}
+
+
                 /////////////////////
                 ///// HUD BAR ///////
                 /////////////////////
-                BeatShift.spriteBatch.Begin();//(SpriteSortMode.Immediate, BlendState.AlphaBlend);
                 int h = BeatShift.graphics.GraphicsDevice.Viewport.Width / (GameTextures.HudBar.Width / GameTextures.HudBar.Height);
-                BeatShift.spriteBatch.Draw(GameTextures.HudBar, new Rectangle(0, BeatShift.graphics.GraphicsDevice.Viewport.Height - h, BeatShift.graphics.GraphicsDevice.Viewport.Width, h), Color.White);
 
+                if (BeatShift.graphics.GraphicsDevice.Viewport.Width > 700)
+                {
+                    BeatShift.spriteBatch.Draw(GameTextures.HudBar, new Rectangle(0, BeatShift.graphics.GraphicsDevice.Viewport.Height - GameTextures.HudBar.Height, GameTextures.HudBar.Width, GameTextures.HudBar.Height), Color.White);
+                }
+                else
+                {
+                    BeatShift.spriteBatch.Draw(GameTextures.HudBarSmall, new Rectangle(0, BeatShift.graphics.GraphicsDevice.Viewport.Height - GameTextures.HudBarSmall.Height, GameTextures.HudBarSmall.Width, GameTextures.HudBarSmall.Height), Color.White);
+                }
                 ////////////////////////////
                 ///// ORANGE BOOST BAR /////
                 ////////////////////////////
@@ -77,43 +97,52 @@ namespace BeatShift
                 racer.raceTiming.previousBoost = MathHelper.Lerp(racer.raceTiming.previousBoost, (float)racer.racingControls.getBoostValue() / 100, 0.05f);
                 racer.raceTiming.previousLapProgress = MathHelper.Lerp(racer.raceTiming.previousLapProgress, (float)racer.shipPhysics.getLapPercentage() / 100, 0.05f);
 
-                int srcWidth = (int)(GameTextures.BoostBarLine.Width * racer.raceTiming.previousBoost);
-                double scaledWidthOrange = (double)BeatShift.graphics.GraphicsDevice.Viewport.Width / (1280 / (double)GameTextures.BoostBarLine.Width);
-                double scaledHeighthOrange = (double)BeatShift.graphics.GraphicsDevice.Viewport.Height / (720 / (double)GameTextures.BoostBarLine.Height);
-                //double scaledBoostBarOffset = (double
-
-                int destHeight = (int)scaledHeighthOrange;
-                int destWidth = (int)(scaledWidthOrange * racer.raceTiming.previousBoost);
-                int destY_Offset = (BeatShift.graphics.GraphicsDevice.Viewport.Height) - h - destHeight/2 + (int)(h * 89.0 / 138.0);
-
-
-
-                double leftGap = ((26.0 / 1280.0) * (double)BeatShift.graphics.GraphicsDevice.Viewport.Width);
-
-
-                Rectangle src = new Rectangle(GameTextures.BoostBarLine.Width - srcWidth, 0, srcWidth, GameTextures.BoostBarLine.Height);
-                Rectangle dest = new Rectangle((int)leftGap, destY_Offset, destWidth, GameTextures.BoostBarLine.Height);
-                BeatShift.spriteBatch.Draw(GameTextures.BoostBarLine, dest, src, Color.White);
-
-                //BeatShift.spriteBatch.Draw(GameTextures.BoostBar, new Rectangle(((int)(BeatShift.graphics.GraphicsDevice.Viewport.Width * racer.raceTiming.previousLapProgress) - BeatShift.graphics.GraphicsDevice.Viewport.Width), (BeatShift.graphics.GraphicsDevice.Viewport.Height - h) - 12, BeatShift.graphics.GraphicsDevice.Viewport.Width, h), Color.Yellow);
-                //BeatShift.spriteBatch.Draw(GameTextures.BoostBar, new Rectangle(((int)(BeatShift.graphics.GraphicsDevice.Viewport.Width * previousBoost) - BeatShift.graphics.GraphicsDevice.Viewport.Width), BeatShift.graphics.GraphicsDevice.Viewport.Height - h, BeatShift.graphics.GraphicsDevice.Viewport.Width, h), Color.White);
+                var chosenLine = (BeatShift.graphics.GraphicsDevice.Viewport.Width > 700)? GameTextures.BoostBarLine : GameTextures.BoostBarLineSmall;
+                int srcWidth = (int)((chosenLine.Width) * racer.raceTiming.previousBoost);
+                
+                if (BeatShift.graphics.GraphicsDevice.Viewport.Width > 700)
+                {
+                    Rectangle orange_src2 = new Rectangle(chosenLine.Width - srcWidth, 0, chosenLine.Width, chosenLine.Height);
+                    Rectangle orange_dest = new Rectangle(36, BeatShift.graphics.GraphicsDevice.Viewport.Height - chosenLine.Height, chosenLine.Width, chosenLine.Height);
+                    BeatShift.spriteBatch.Draw(chosenLine, orange_dest, orange_src2, Color.White);
+                }
+                else
+                {
+                    Rectangle orange_src2 = new Rectangle(chosenLine.Width - srcWidth, 0, chosenLine.Width, chosenLine.Height);
+                    Rectangle orange_dest = new Rectangle(21, BeatShift.graphics.GraphicsDevice.Viewport.Height - chosenLine.Height, chosenLine.Width, chosenLine.Height);
+                    BeatShift.spriteBatch.Draw(chosenLine, orange_dest, orange_src2, Color.White);
+                }
 
                 ////////////////////////
                 /////// LEVEL //////////
                 ////////////////////////
 
-
-                DrawMessageColour(BeatShift.volterfont, "LEVEL", BeatShift.graphics.GraphicsDevice.Viewport.Width - 230, vOffset - 53, 0.5f, Color.PapayaWhip);
-                DrawMessageColour(BeatShift.volterfont, (racer.beatQueue.getLayer()+1).ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 222, vOffset - 40, 1f, Color.PapayaWhip);
-
+                if (BeatShift.graphics.GraphicsDevice.Viewport.Width > 700)
+                {
+                    DrawMessageColour(BeatShift.volterfont, "LEVEL", BeatShift.graphics.GraphicsDevice.Viewport.Width - 240, vOffset - 53, 0.5f, Color.PapayaWhip);
+                    DrawMessageColour(BeatShift.volterfont, (racer.beatQueue.getLayer() + 1).ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 230, vOffset - 35, 1f, Color.PapayaWhip);
+                }
+                else
+                {
+                    DrawMessageColour(BeatShift.volterfont, "LEVEL", BeatShift.graphics.GraphicsDevice.Viewport.Width - 143, vOffset - 12, 0.4f, Color.PapayaWhip);
+                    DrawMessageColour(BeatShift.volterfont, (racer.beatQueue.getLayer() + 1).ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 136, vOffset - 3, 0.8f, Color.PapayaWhip);
+                }
 
                 ////////////////////////
                 /////// SPEED //////////
                 ////////////////////////
                 racer.raceTiming.previousSpeed = MathHelper.Lerp(racer.raceTiming.previousSpeed, (Math.Abs((int)racer.shipPhysics.getForwardSpeed())), 0.05f);
                 racer.raceTiming.speedToDisplay = String.Format("{0:0000}", racer.raceTiming.previousSpeed);
-                DrawMessageColour(BeatShift.volterfont, "MPH", BeatShift.graphics.GraphicsDevice.Viewport.Width - 120, vOffset - 42, 0.5f, Color.DimGray);
-                DrawMessageColour(BeatShift.newfont, racer.raceTiming.speedToDisplay, BeatShift.graphics.GraphicsDevice.Viewport.Width - 180, vOffset - 48, 0.4f, Color.PapayaWhip);
+                if (BeatShift.graphics.GraphicsDevice.Viewport.Width > 700)
+                {
+                    DrawMessageColour(BeatShift.volterfont, "MPH", BeatShift.graphics.GraphicsDevice.Viewport.Width - 126, vOffset - 42, 0.5f, Color.Black);
+                    DrawMessageColour(BeatShift.newfont, racer.raceTiming.speedToDisplay, BeatShift.graphics.GraphicsDevice.Viewport.Width - 185, vOffset - 48, 0.4f, Color.Black);
+                }
+                else
+                {
+                    DrawMessageColour(BeatShift.volterfont, "MPH", BeatShift.graphics.GraphicsDevice.Viewport.Width - 75, vOffset - 14, 0.5f, Color.Black);
+                    DrawMessageColour(BeatShift.newfont, racer.raceTiming.speedToDisplay, BeatShift.graphics.GraphicsDevice.Viewport.Width - 110, vOffset - 8, 0.4f, Color.Black);
+                }
 
                 //////////////////////////////
                 /////// TOP RIGHT BOARD //////
@@ -125,20 +154,38 @@ namespace BeatShift
                 int newBoardWidth = (int)(GameTextures.TopRightBoard.Width * scaleFactorWidth);
                 int newBoardHeight = (int)(GameTextures.TopRightBoard.Height * scaleFactorHeight);
 
-                Rectangle d = new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width - newBoardWidth, 0, newBoardWidth, newBoardHeight);
-                BeatShift.spriteBatch.Draw(GameTextures.TopRightBoard, d, Color.White);
-
+                if (BeatShift.graphics.GraphicsDevice.Viewport.Width > 700)
+                {
+                    Rectangle d = new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width - GameTextures.TopRightBoard.Width, 0, GameTextures.TopRightBoard.Width, GameTextures.TopRightBoard.Height);
+                    BeatShift.spriteBatch.Draw(GameTextures.TopRightBoard, d, Color.White);
+                }
+                else
+                {
+                    Rectangle d = new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width - GameTextures.TopRightBoardSmall.Width, 0, GameTextures.TopRightBoardSmall.Width, GameTextures.TopRightBoardSmall.Height);
+                    BeatShift.spriteBatch.Draw(GameTextures.TopRightBoardSmall, d, Color.White);
+                }
                 //////////////////////////////
                 ////////// TOTAL LAPS ////////
                 //////////////////////////////
 
                 if (Race.currentRaceType.displayCurrentLapOutofTotalLaps)
                 {
-                    if (racer.raceTiming.isRacing == true)
-                        DrawMessageColour(BeatShift.newfont, (racer.raceTiming.currentLap + 1) + "/" + Race.currentRaceType.maxLaps, BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 33, 0.5f, Color.PapayaWhip);
+                    if (BeatShift.graphics.GraphicsDevice.Viewport.Width > 700)
+                    {
+                        if (racer.raceTiming.isRacing == true)
+                            DrawMessageColour(BeatShift.newfont, (racer.raceTiming.currentLap + 1) + "/" + Race.currentRaceType.maxLaps, BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 33, 0.5f, Color.PapayaWhip);
+                        else
+                            DrawMessageColour(BeatShift.newfont, (racer.raceTiming.currentLap) + "/" + Race.currentRaceType.maxLaps, BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 33, 0.5f, Color.PapayaWhip);
+                        DrawMessageColour(BeatShift.volterfont, "LAPS", BeatShift.graphics.GraphicsDevice.Viewport.Width - 74, 39, 1f, Color.DimGray);
+                    }
                     else
-                        DrawMessageColour(BeatShift.newfont, (racer.raceTiming.currentLap) + "/" + Race.currentRaceType.maxLaps, BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 33, 0.5f, Color.PapayaWhip);
-                    DrawMessageColour(BeatShift.volterfont, "LAPS", BeatShift.graphics.GraphicsDevice.Viewport.Width - 74, 39, 1f, Color.DimGray);
+                    {
+                        if (racer.raceTiming.isRacing == true)
+                            DrawMessageColour(BeatShift.volterfont, (racer.raceTiming.currentLap + 1) + "/" + Race.currentRaceType.maxLaps, BeatShift.graphics.GraphicsDevice.Viewport.Width - 82, 25, 0.5f, Color.PapayaWhip);
+                        else
+                            DrawMessageColour(BeatShift.volterfont, (racer.raceTiming.currentLap) + "/" + Race.currentRaceType.maxLaps, BeatShift.graphics.GraphicsDevice.Viewport.Width - 82, 25, 0.5f, Color.PapayaWhip);
+                        DrawMessageColour(BeatShift.volterfont, "LAPS", BeatShift.graphics.GraphicsDevice.Viewport.Width - 54, 25, 0.5f, Color.PapayaWhip);
+                    }
                 }
 
                 //////////////////////////////
@@ -147,7 +194,14 @@ namespace BeatShift
 
                 if (Race.currentRaceType.displayCurrentLapTime)
                 {
-                    DrawMessageColour(BeatShift.newfont, racer.raceTiming.getCurrentLapTime(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 70, 0.4f, Color.DimGray);
+                    if (BeatShift.graphics.GraphicsDevice.Viewport.Width > 700)
+                    {
+                        DrawMessageColour(BeatShift.newfont, racer.raceTiming.getCurrentLapTime(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 70, 0.4f, Color.PapayaWhip);
+                    }
+                    else
+                    {
+                        DrawMessageColour(BeatShift.newfont, racer.raceTiming.getCurrentLapTime(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 36, 0.4f, Color.PapayaWhip);
+                    }
                 }
 
                 //////////////////////////////
@@ -156,7 +210,10 @@ namespace BeatShift
 
                 if (Race.currentRaceType.displayCurrentBestLap)
                 {
-                    DrawMessageColour(BeatShift.newfont, racer.raceTiming.getBestLapTime(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 95, 0.4f, Color.Goldenrod);
+                    if (BeatShift.graphics.GraphicsDevice.Viewport.Width > 700)
+                    {
+                        DrawMessageColour(BeatShift.newfont, racer.raceTiming.getBestLapTime(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 95, 0.4f, Color.Goldenrod);
+                    }
                 }
 
                 //////////////////////////
@@ -165,11 +222,25 @@ namespace BeatShift
 
                 if (Race.currentRaceType.displayCurrentRank && racer.raceTiming.currentRanking == 0)
                 {
-                    DrawMessageColour(BeatShift.newfont, "-", BeatShift.graphics.GraphicsDevice.Viewport.Width - 190, 22, 0.75f, Color.PapayaWhip);
+                    if (BeatShift.graphics.GraphicsDevice.Viewport.Width > 700)
+                    {
+                        DrawMessageColour(BeatShift.newfont, "-", BeatShift.graphics.GraphicsDevice.Viewport.Width - 190, 22, 0.75f, Color.PapayaWhip);
+                    }
+                    else
+                    {
+                        DrawMessageColour(BeatShift.newfont, "-", BeatShift.graphics.GraphicsDevice.Viewport.Width - 187, 22, 0.75f, Color.PapayaWhip);
+                    }
                 }
                 else if (Race.currentRaceType.displayCurrentRank)
                 {
-                    DrawMessageColour(BeatShift.newfont, racer.raceTiming.currentRanking.ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 190, 22, 0.75f, Color.PapayaWhip);
+                    if (BeatShift.graphics.GraphicsDevice.Viewport.Width > 700)
+                    {
+                        DrawMessageColour(BeatShift.newfont, racer.raceTiming.currentRanking.ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 190, 22, 0.75f, Color.PapayaWhip);
+                    }
+                    else
+                    {
+                        DrawMessageColour(BeatShift.newfont, racer.raceTiming.currentRanking.ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 187, 22, 0.75f, Color.PapayaWhip);
+                    }
                     //DrawMessage(BeatShift.newfont, calculateRankSuffix(racer.raceTiming.currentRanking), BeatShift.graphics.GraphicsDevice.Viewport.Width - 178 + extraSuffixOffset(racer.raceTiming.currentRanking), 26, 0.25f);
                 }
 
@@ -211,9 +282,7 @@ namespace BeatShift
                 //DrawNewMessage(" !\"#$%'()*+,-./0123456789:;<=>?@ABCDEFGHIJ", 0, 30);
                 //DrawNewMessage("KLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrrstuvwxyz{|}~", 0, 90);
             }
-            BeatShift.spriteBatch.End();
-
-            
+           
         }
 
         public static void DrawMessage(string message, int x, int y)
@@ -232,13 +301,34 @@ namespace BeatShift
             BeatShift.spriteBatch.DrawString(font, message, new Vector2(x, y), col, 0f, Vector2.Zero, scale, SpriteEffects.None, 1); ;
         }
 
+            public static void DrawSplitBarsTwoPlayer()
+            {
+                //BeatShift.spriteBatch.Begin();
+                BeatShift.spriteBatch.Draw(GameTextures.VerticalSplit, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.VerticalSplit.Width / 2, 0, GameTextures.VerticalSplit.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height), Color.White);
+            }
+
+            public static void DrawSplitBarsThreePlayer()
+            {
+                //BeatShift.spriteBatch.Begin();
+                BeatShift.spriteBatch.Draw(GameTextures.HorizontalSplit, new Rectangle(0, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - GameTextures.HorizontalSplit.Height / 2, BeatShift.graphics.GraphicsDevice.Viewport.Width, GameTextures.HorizontalSplit.Height), Color.White);
+                BeatShift.spriteBatch.Draw(GameTextures.VerticalSplit, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.VerticalSplit.Width / 2, 0, GameTextures.VerticalSplit.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height), Color.White);
+            }
+
+            public static void DrawSplitBarsFourPlayer()
+            {
+                //BeatShift.spriteBatch.Begin();
+                BeatShift.spriteBatch.Draw(GameTextures.HorizontalSplit, new Rectangle(0, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - GameTextures.HorizontalSplit.Height / 2, BeatShift.graphics.GraphicsDevice.Viewport.Width, GameTextures.HorizontalSplit.Height), Color.White);
+                BeatShift.spriteBatch.Draw(GameTextures.VerticalSplit, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.VerticalSplit.Width / 2, 0, GameTextures.VerticalSplit.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height), Color.White);
+                BeatShift.spriteBatch.Draw(GameTextures.Crest, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.Crest.Width / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - GameTextures.Crest.Height / 2, GameTextures.Crest.Width, GameTextures.Crest.Height), Color.White);
+            }
+
         public static void DrawSplitBars()
         {
             BeatShift.graphics.GraphicsDevice.Viewport = Viewports.fullViewport;
             BeatShift.spriteBatch.Begin();
             BeatShift.spriteBatch.Draw(GameTextures.HorizontalSplit, new Rectangle(0, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - GameTextures.HorizontalSplit.Height / 2, BeatShift.graphics.GraphicsDevice.Viewport.Width, GameTextures.HorizontalSplit.Height), Color.White);
             BeatShift.spriteBatch.Draw(GameTextures.VerticalSplit, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.VerticalSplit.Width / 2, 0, GameTextures.VerticalSplit.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height), Color.White);
-
+            BeatShift.spriteBatch.Draw(GameTextures.Crest, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.Crest.Width / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - GameTextures.Crest.Height / 2, GameTextures.Crest.Width, GameTextures.Crest.Height), Color.White);
             BeatShift.spriteBatch.End();
         }
 

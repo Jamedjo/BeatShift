@@ -915,8 +915,8 @@ namespace BeatShift
                 for (int i = 0; i < rayCount; i++)
                 {
                     physicsBody.ApplyImpulse(cSRAAI_rayTruePos[i], cSRAAI_impulseVector[i]);
-                    //parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = offsetRayPos, dir = rayCastDirection, col = Color.Red.ToVector3() });
-                    //parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = rayTruePos[i], dir = impulseVector[i], col = Color.AntiqueWhite.ToVector3() });
+                    parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = cSRAAI_offsetRayPos[i], dir = rayCastDirection, col = Color.Red.ToVector3() });
+                    parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = cSRAAI_rayTruePos[i], dir = cSRAAI_impulseVector[i], col = Color.AntiqueWhite.ToVector3() });
                 }
             }
             return allRaysHit;

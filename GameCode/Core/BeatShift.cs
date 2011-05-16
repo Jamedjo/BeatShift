@@ -88,10 +88,10 @@ namespace BeatShift
         {
             singleton = this;
             graphics = new GraphicsDeviceManager(this);
-#if XBOX
+//#if XBOX
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 720;
-#endif
+//#endif
             // TODO: uncomment the above at your peril, performance profiling needed
             particleManager = new ParticleSystemManager();
             Content.RootDirectory = "Content";
