@@ -50,6 +50,15 @@ namespace BeatShift
         Vector3 frontOff;
         float previousDirty = 1;
 
+        Ray theRay = new Ray();
+        Ray offsetRay = new Ray();
+
+        Vector3 rayColour = Color.AntiqueWhite.ToVector3();
+        Vector3[] cSRAAI_rayTruePos = new Vector3[rayCount];
+        Vector3[] cSRAAI_offsetRayPos = new Vector3[rayCount];
+        Vector3[] cSRAAI_impulseVector = new Vector3[rayCount];
+        Boolean[] cSRAAI_results = new Boolean[rayCount];
+
         private Quaternion previousOrientation;
 
         public Quaternion ShipOrientationQuaternion
@@ -97,7 +106,7 @@ namespace BeatShift
         public bool wrongWay = false;
 
         //Temporary AI
-        int AiSpeed = 216;
+        int AiSpeed = 250;
 
         public ShipPhysics(Racer parent)
         {
@@ -864,16 +873,7 @@ namespace BeatShift
                 }
 
             }
-
-
         }
-
-
-        Vector3 rayColour = Color.AntiqueWhite.ToVector3();
-        Vector3[] cSRAAI_rayTruePos = new Vector3[rayCount];
-        Vector3[] cSRAAI_offsetRayPos = new Vector3[rayCount];
-        Vector3[] cSRAAI_impulseVector = new Vector3[rayCount];
-        Boolean[] cSRAAI_results = new Boolean[rayCount];
 
         /// <summary>
         /// Casts rays in given list (the stabilizers) and only applies impulses if they all hit the track
@@ -910,14 +910,13 @@ namespace BeatShift
                 }
             }
 
-            
             if (allRaysHit)
             {
                 for (int i = 0; i < rayCount; i++)
                 {
                     physicsBody.ApplyImpulse(cSRAAI_rayTruePos[i], cSRAAI_impulseVector[i]);
-                    parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = cSRAAI_offsetRayPos[i], dir = rayCastDirection, col = Color.Red.ToVector3() });
-                    parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = cSRAAI_rayTruePos[i], dir = cSRAAI_impulseVector[i], col = Color.AntiqueWhite.ToVector3() });
+                    //parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = cSRAAI_offsetRayPos[i], dir = rayCastDirection, col = Color.Red.ToVector3() });
+                    //parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = cSRAAI_rayTruePos[i], dir = cSRAAI_impulseVector[i], col = Color.AntiqueWhite.ToVector3() });
                 }
             }
             return allRaysHit;
@@ -947,7 +946,6 @@ namespace BeatShift
         void castSingleRayAndApplyImpulseCorrection(float stickLength, float power)
         {
             Vector3 rayTruePos;
-            Vector3 offsetRayPos;
             Vector3 impulseVector;
             float timeOfImpact;
             Vector3 positionOffset = frontOff;
@@ -972,9 +970,10 @@ namespace BeatShift
 
 
             rayTruePos = physicsBody.Position + Vector3.Transform(positionOffset, physicsBody.Orientation);
-            offsetRayPos = rayTruePos + verticalOffset;
-
-            result = Physics.currentTrackFloor.RayCast(new Ray(offsetRayPos, rayCastDirection), stickLength, out rayHit); //make stick length speed dependent
+            offsetRay.Position = rayTruePos + verticalOffset;
+            offsetRay.Direction = rayCastDirection;
+         
+            result = Physics.currentTrackFloor.RayCast(offsetRay, stickLength, out rayHit); //make stick length speed dependent
             timeOfImpact = rayHit.T;
             float offsetTimeOfImpact = timeOfImpact - vOffset;//Calculate ray from verticle centre of ship, not offset position.
             float dirtyMultiplier=1;
@@ -1012,15 +1011,11 @@ namespace BeatShift
 
         }
 
-
-
-        Ray theRay = new Ray();
-        Vector3 rayCastDirection;
         public Boolean castSingleRay(Vector3 positionOffset, float stickLength, float power, out float timeOfImpact, out Vector3 rayTruePos, out Vector3 offsetRayPos, out Vector3 impulseVector)
         {
             //Vector3 rayCastDirection = Matrix.Identity.Down;//Always raycast in gravity direction.
             //Vector3 rayCastDirection = ship.OrientationMatrix.Down;//Raycast down from ship
-            rayCastDirection = -nearestMapPoint.trackUp;//Raycast in opposite direction to trackUp.
+            Vector3 rayCastDirection = -nearestMapPoint.trackUp;//Raycast in opposite direction to trackUp.
             Boolean result;
             RayHit rayHit;
             impulseVector = Vector3.Zero;
