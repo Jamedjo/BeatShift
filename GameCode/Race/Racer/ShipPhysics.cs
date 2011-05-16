@@ -238,7 +238,7 @@ namespace BeatShift
             int row = shipNumber / 3;
 
             Vector3 startPoint = mapData.getStartPoint().position;//Start above the road not in the middle of it.//TODO:make sure this is not passed by reference
-            startPoint += Vector3.Transform(new Vector3(col * 9.5f, 0, row * 14f), Matrix.CreateWorld(Vector3.Zero, mapData.nextPoint(currentProgressWaypoint).position - startPoint, currentProgressWaypoint.trackUp));//Offset each new ships position by 5
+            startPoint += Vector3.Transform(new Vector3(col * 14f, 0, row * 16f), Matrix.CreateWorld(Vector3.Zero, mapData.nextPoint(currentProgressWaypoint).position - startPoint, currentProgressWaypoint.trackUp));//Offset each new ships position by 5
 
             return startPoint;
         }
