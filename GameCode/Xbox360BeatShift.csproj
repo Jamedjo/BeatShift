@@ -231,6 +231,9 @@
     <Reference Include="mscorlib">
       <Private>False</Private>
     </Reference>
+    <Reference Include="ParallelTasks">
+      <HintPath>..\lib\ParallelTasks\Xbox 360\Debug\ParallelTasks.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
