@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using BeatShift.Input;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
-
+using DPSF;
 namespace BeatShift
 {
     public class Racer
@@ -22,7 +22,8 @@ namespace BeatShift
         public RacerType racerType { get; private set; }
         public BeatQueue beatQueue;
         public Cue Hum;
-
+        public ParticleSystemManager globalSystems;
+        public ParticleSystemManager privateSystems;
         // General game related variables
         const float updatePeriod = 50; //update movement 20 times a second (1000/50=20)
         float lastUpdatedTimer = 0;
@@ -73,6 +74,8 @@ namespace BeatShift
             raceTiming=new RaceTiming(this);
             shipDrawing = new ShipDrawing(new Func<Matrix>(() => Matrix.Identity), new Func<Vector3>(() => Vector3.Zero), this);
             beatQueue = new BeatQueue(this);
+            privateSystems = new ParticleSystemManager();
+            globalSystems = new ParticleSystemManager();
             //setColour(1);//Set to red
             Hum = SoundManager.getEngineHum();
             //Hum.Play();
@@ -210,6 +213,8 @@ namespace BeatShift
 
             shipDrawing.engineGlow.setVelocity(shipPhysics.physicsBody.LinearVelocity);
             shipDrawing.engineGlow.SetPosition(shipPhysics.ShipPosition,shipPhysics.DrawOrientation);
+            globalSystems.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
+            privateSystems.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
             OtherUpdate(gameTime);
         }
 
