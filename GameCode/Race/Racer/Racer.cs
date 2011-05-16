@@ -112,7 +112,14 @@ namespace BeatShift
         public void setupRacingControls(IInputManager inputM)
         {
             // AI control tests
-            racingControls = new RacingControls(this, inputM);
+            if (AiInputManager.testAI)
+            {
+                racingControls = new RacingControls(this, new AiInputManager(this));
+            }
+            else
+            {
+                racingControls = new RacingControls(this, inputM);
+            }
             //racingControls = new RacingControls(this, new AiInputManager(this));
         }
         private void setupRacingControls()
