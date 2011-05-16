@@ -33,7 +33,7 @@ namespace BeatShift.Input
         private GamePadState currentState;
         private GamePadState lastState;
         private Racer parent;
-        private Box aheadBox;
+        // private Box aheadBox;
         private float lastTurn = 0f;
 
         Ray AiRay = new Ray();
@@ -55,14 +55,7 @@ namespace BeatShift.Input
         {
             lastState = currentState = new GamePadState();
             this.parent = parent;
-
-            // WHY WILL THIS NOT PRODUCE COLLISIONS
-            aheadBox = new Box(parent.shipPhysics.ShipPosition + parent.shipPhysics.ShipOrientationMatrix.Forward * 00, 500, 500, 500, 0.01f);
-            aheadBox.Orientation = parent.shipPhysics.ShipOrientationQuaternion;
-
-            aheadBox.CollisionInformation.Events.PairTouched += boxCollide;
-            aheadBox.CollisionInformation.Events.InitialCollisionDetected += boxinitialCollide;
-
+            
             lastRandChange = TimeSpan.Zero;
         }
 
@@ -151,10 +144,7 @@ namespace BeatShift.Input
                 System.Diagnostics.Debug.WriteLine("{0:0.0000}", randInaccuracy);
 #endif
             }
-
-            aheadBox.Position = parent.shipPhysics.ShipPosition + parent.shipPhysics.ShipOrientationMatrix.Forward * 0;
-            aheadBox.Orientation = parent.shipPhysics.ShipOrientationQuaternion;
-
+            
             Vector2 leftThumbStick = Vector2.Zero;
             Vector2 rightThumbStick = Vector2.Zero;
 
@@ -220,61 +210,15 @@ namespace BeatShift.Input
         /// </returns>
         private float setTurn()
         {
-            //float aWalls = avoidWalls();
             float fTrack = futureTrack();
             float nWalls = newWalls();
-            lastTurn = (lastTurn + /*0.0f * aWalls +*/ 0.6f * fTrack + 0.3f * nWalls + randInaccuracy) / 2f;
+            lastTurn = (lastTurn + 0.6f * fTrack + 0.3f * nWalls + randInaccuracy) / 2f;
 #if WINDOWS
             //System.Diagnostics.Debug.WriteLine("{0:0.000} {1:0.000} {2:0.000} {3:0.000} {4:0.000}", lastTurn, aWalls, fTrack, nWalls, randInaccuracy);
 #endif
             return lastTurn;
         }
 
-        private void boxinitialCollide<EntityCollidable>(EntityCollidable sender, Collidable info, CollidablePairHandler pair)
-        {
-            Collidable candidate = (pair.BroadPhaseOverlap.EntryA == aheadBox.CollisionInformation ? pair.BroadPhaseOverlap.EntryB : pair.BroadPhaseOverlap.EntryA) as Collidable;
-            Contact c;
-
-            if (candidate.Equals(Physics.currentTrackWall))
-            {
-                foreach (ContactInformation contactInformation in pair.Contacts)
-                {
-                    c = contactInformation.Contact;
-#if WINDOWS
-                    System.Diagnostics.Debug.WriteLine("{0} {1}", (c.Position - parent.shipPhysics.ShipPosition).Length(), c.Normal);
-#endif
-                }
-            }
-            else
-            {
-#if WINDOWS
-                System.Diagnostics.Debug.WriteLine("{0}", candidate.Shape);
-#endif
-            }
-        }
-
-        private void boxCollide<EntityCollidable>(EntityCollidable sender, Collidable other, CollidablePairHandler pair)
-        {
-            Collidable candidate = (pair.BroadPhaseOverlap.EntryA == aheadBox.CollisionInformation ? pair.BroadPhaseOverlap.EntryB : pair.BroadPhaseOverlap.EntryA) as Collidable;
-            Contact c;
-
-            if (candidate.Equals(Physics.currentTrackWall))
-            {
-                foreach (ContactInformation contactInformation in pair.Contacts)
-                {
-                    c = contactInformation.Contact;
-#if WINDOWS
-                    System.Diagnostics.Debug.WriteLine("{0} {1}", (c.Position - parent.shipPhysics.ShipPosition).Length(), c.Normal);
-#endif
-                }
-            }
-            else
-            {
-#if WINDOWS
-                System.Diagnostics.Debug.WriteLine("{0}", candidate.Shape);
-#endif
-            }
-        }
 
         private float newWalls()
         {
@@ -328,144 +272,15 @@ namespace BeatShift.Input
         }
 
 
-        /// <summary>
-        /// A turning system which solely tries to avoid hitting walls. Uses raycasting to
-        /// determine wall distances.
-        /// </summary>
-        /// <returns>
-        /// A turning value.
-        /// </returns>
-        private float avoidWalls()
-        {
-            float t = 0;
-
-            Matrix shipOrientation = parent.shipPhysics.ShipOrientationMatrix;
-
-            Vector3 leftOuterVector = Vector3.Transform(shipOrientation.Forward, Matrix.CreateFromAxisAngle(parent.shipPhysics.ShipTrackUp, MathHelper.Pi / 3));
-            Vector3 leftInnerVector = Vector3.Transform(shipOrientation.Forward, Matrix.CreateFromAxisAngle(parent.shipPhysics.ShipTrackUp, MathHelper.Pi / 6));
-            Vector3 rightOuterVector = Vector3.Transform(shipOrientation.Forward, Matrix.CreateFromAxisAngle(parent.shipPhysics.ShipTrackUp, -1 * MathHelper.Pi / 3));
-            Vector3 rightInnerVector = Vector3.Transform(shipOrientation.Forward, Matrix.CreateFromAxisAngle(parent.shipPhysics.ShipTrackUp, -1 * MathHelper.Pi / 6));
-
-            float rayLength = 50f;
-            Vector3 rayOrigin = parent.shipPhysics.ShipPosition - shipOrientation.Up * 2;
-
-            RayHit result;
-
             leftOuterRay.Position = rayOrigin;
             leftOuterRay.Direction = leftOuterVector;
             Physics.currentTrackWall.RayCast(leftOuterRay, rayLength, out result);
-            float leftOuter = result.T;
-
-            leftInnerRay.Position = rayOrigin;
             leftInnerRay.Direction = leftInnerVector;
             Physics.currentTrackWall.RayCast(leftInnerRay, rayLength, out result);
-            float leftInner = result.T;
-
-            rightOuterRay.Position = rayOrigin;
             rightOuterRay.Direction = rightOuterVector;
             Physics.currentTrackWall.RayCast(rightOuterRay, rayLength, out result);
-            float rightOuter = result.T;
-
-            rightInnerRay.Position = rayOrigin;
             rightInnerRay.Direction = rightInnerVector;
             Physics.currentTrackWall.RayCast(rightInnerRay, rayLength, out result);
-            float rightInner = result.T;
-
-            float leftM = 0;
-            float leftC = 0;
-            float rightM = 0;
-            float rightC = 0;
-
-            float ellipticElongation = 2f;
-            
-            float angleOfImpactL;
-            float angleOfImpactR;
-            float ellipticDistanceL;
-            float ellipticDistanceR;
-            float scaledImpactDistanceL = float.MaxValue;
-            float scaledImpactDistanceR = float.MaxValue;
-
-            if (leftOuter != 0 && leftInner != 0)
-            {
-                float loX = (float)Math.Cos(Math.PI / 6) * leftOuter;
-                float loY = (float)Math.Sin(Math.PI / 6) * leftOuter;
-
-                float liX = (float)Math.Cos(Math.PI / 3) * leftInner;
-                float liY = (float)Math.Sin(Math.PI / 3) * leftInner;
-
-                float m = (liY - loY) / (liX - loX);
-                leftC = loY - (m * (loX - 4));
-                leftM = -m;
-                if (leftM < 0)
-                {
-                    leftM = float.MaxValue;
-                    leftC = float.PositiveInfinity;
-                }
-                else
-                {
-                    angleOfImpactL = (float)Math.Atan(1 / leftM);
-                    ellipticDistanceL = (float)(ellipticElongation / (ellipticElongation * Math.Cos(angleOfImpactL) + Math.Sin(angleOfImpactL)));
-                    scaledImpactDistanceL = ellipticDistanceL * leftC;
-                }
-            }
-            else
-            {
-                leftM = float.MaxValue;
-                leftC = float.PositiveInfinity;
-            }
-
-            if (rightOuter != 0 && rightInner != 0)
-            {
-                float roX = (float)Math.Cos(Math.PI / 6) * rightOuter;
-                float roY = (float)Math.Sin(Math.PI / 6) * rightOuter;
-
-                float riX = (float)Math.Cos(Math.PI / 3) * rightInner;
-                float riY = (float)Math.Sin(Math.PI / 3) * rightInner;
-
-                float m = (riY - roY) / (riX - roX);
-                rightC = roY - (m * (roX + 4));
-                rightM = -m;
-                if (rightM < 0)
-                {
-                    rightM = float.MaxValue;
-                    rightC = float.PositiveInfinity;
-                }
-                else
-                {
-                    angleOfImpactR = (float) Math.Atan(1 / rightM);
-                    ellipticDistanceR = (float) (ellipticElongation / (ellipticElongation * Math.Cos(angleOfImpactR) + Math.Sin(angleOfImpactR)));
-                    scaledImpactDistanceR = ellipticDistanceR * rightC;
-                }
-            }
-            else
-            {
-                rightM = float.MaxValue;
-                rightC = float.PositiveInfinity;
-            }
-
-            
-            float maxDistance = 150f;
-
-            if (scaledImpactDistanceL < scaledImpactDistanceR)
-            {
-                if (scaledImpactDistanceL < maxDistance)
-                {
-                    t = (maxDistance - scaledImpactDistanceL) / maxDistance;
-                }
-                //System.Diagnostics.Debug.WriteLine("l {0:000.0000}", scaledImpactDistanceL);
-            }
-            else
-            {
-                if (scaledImpactDistanceR < maxDistance)
-                {
-                    t = -(maxDistance - scaledImpactDistanceR) / maxDistance;
-                }
-                //System.Diagnostics.Debug.WriteLine("r {0:000.0000}", scaledImpactDistanceR);
-            }
-
-            return t;
-        }
-
         /// <summary>
         /// A very simplistic turning system. Has no notion of avoiding crashes.
         /// </summary>

@@ -664,6 +664,7 @@
       <Name>DesertMap_track</Name>
       <Importer>FbxImporter</Importer>
       <Processor>BShiftAdvancedModelProcessor</Processor>
+      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
     </Compile>
     <Compile Include="Models\Maps\DesertMap_walls.fbx">
       <Name>DesertMap_walls</Name>
@@ -729,11 +730,13 @@
       <Name>SpaceMap_track</Name>
       <Importer>FbxImporter</Importer>
       <Processor>BShiftAdvancedModelProcessor</Processor>
+      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
     </Compile>
     <Compile Include="Models\Maps\SpaceMap_walls.fbx">
       <Name>SpaceMap_walls</Name>
       <Importer>FbxImporter</Importer>
       <Processor>BShiftModelProcessor</Processor>
+      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
     </Compile>
     <Compile Include="dotsfontfile.tga">
       <Name>dotsfontfile</Name>
