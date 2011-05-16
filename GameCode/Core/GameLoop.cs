@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 using BeatShift.Input;
 using Microsoft.Xna.Framework.GamerServices;
 using BeatShift.Utilities___Misc;
-
+using ParallelTasks;
 namespace BeatShift
 {
     /// <summary>
@@ -240,9 +240,10 @@ namespace BeatShift
         public static void Update(GameTime gameTime)
         {
             // Check to see if the user has paused or unpaused
+            Task music = Parallel.Start(BeatShift.bgm.Update);
             if(currentState == GameState.LocalGame || currentState == GameState.NetworkedGame)
                 checkPauseKey(gameTime);
-
+            
             checkPauseGuide();
 
 #if XBOX
@@ -256,6 +257,14 @@ namespace BeatShift
             mainGameinput.Update(gameTime);
             if (!paused)
             {
+                Task particles;
+                if (GameLoop.getCurrentState() == GameState.LocalGame)
+                {
+                    //IWork pudate = new IWork();
+                    particles = Parallel.Start(()=>BeatShift.particleManager.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds));
+                    //BeatShift.particleManager.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
+                }
+                
                 //Update all managed timers.
                 RunningTimer.Update(gameTime);
 
@@ -275,8 +284,6 @@ namespace BeatShift
                     Physics.Update(gameTime);
                 if (MapManager.Enabled)
                     Race.Update(gameTime);
-                if (GameLoop.getCurrentState() == GameState.LocalGame)
-                    BeatShift.particleManager.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
                 // Game should be exited through the menu systems.
                 // Allows the game to return to main menu
                 //if (mainGameinput.actionTapped(InputAction.BackButton))
@@ -306,7 +313,7 @@ namespace BeatShift
             //        BeatShift.graphics.ToggleFullScreen();
             //    }
 #endif
-            BeatShift.bgm.Update();
+            music.Wait();
         }
 
         public static void Draw(GameTime gameTime)
