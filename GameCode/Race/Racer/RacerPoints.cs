@@ -12,6 +12,7 @@ namespace BeatShift
         private int waypointsHitSinceLastCalculation = 0;
         private int framesWithBoostSinceLastCalculation = 0;
         private double levelFramesSinceLastCalculation = 0;
+        private int framesTotalSinceCalc = 0;
         private double lastCalculateTime=0;
 
 
@@ -22,14 +23,19 @@ namespace BeatShift
 
         public void Update(GameTime gameTime, bool isBoosting, int level)
         {
+            framesWithBoostSinceLastCalculation++;
             if(isBoosting) framesWithBoostSinceLastCalculation++;
-            levelFramesSinceLastCalculation += level*level;
+            levelFramesSinceLastCalculation += (level+1);
+            framesTotalSinceCalc++;
 
             if (gameTime.TotalGameTime.TotalMilliseconds - lastCalculateTime > 500)
             {
                 //Do calculation
                 double waySpeed = (1 + 3 * waypointsHitSinceLastCalculation) * 0.8;
-
+                var calc = (levelFramesSinceLastCalculation / framesTotalSinceCalc) * (framesWithBoostSinceLastCalculation / framesTotalSinceCalc) * ((waypointsHitSinceLastCalculation + 1) * waypointsHitSinceLastCalculation);
+                points += calc;
+                Console.WriteLine("levels:" + levelFramesSinceLastCalculation + ", boost:" + framesWithBoostSinceLastCalculation + ", wayspeed:" + waypointsHitSinceLastCalculation);
+                Console.WriteLine("newPoints:" + calc + ", totalPoints:" + points);
 
                 //points += result of calulation
                 //send message to animationHUD to display points gained (and multiplier)
@@ -37,14 +43,15 @@ namespace BeatShift
                 levelFramesSinceLastCalculation = 0;
                 framesWithBoostSinceLastCalculation = 0;
                 waypointsHitSinceLastCalculation = 0;
+                framesTotalSinceCalc=0;
                 lastCalculateTime = BeatShift.singleton.currentTime.TotalGameTime.TotalMilliseconds;
             }
 
         }
 
-        public double getPoints()
+        public int getPoints()
         {
-            return points;
+            return (int)points;
         }
 
     }

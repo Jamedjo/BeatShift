@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 using BeatShift.Input;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
-using BeatShift.Race.Racer;
 
 namespace BeatShift
 {
@@ -22,8 +21,9 @@ namespace BeatShift
         public RacerId racerID  { get;  set; }
         public RacerType racerType { get; private set; }
         public BeatQueue beatQueue;
-        public RacerPoints racerPoints;
+        public RacerPoints racerPoints = new RacerPoints();
         public Cue Hum;
+        private bool isBoosting = false;
 
         // General game related variables
         const float updatePeriod = 50; //update movement 20 times a second (1000/50=20)
@@ -202,11 +202,12 @@ namespace BeatShift
 
             // Finishes the racer if required
             if (raceTiming.isRacing) raceTiming.Update();
-
+            
             shipDrawing.engineGlow.setVelocity(shipPhysics.physicsBody.LinearVelocity);
             shipDrawing.engineGlow.SetPosition(shipPhysics.ShipPosition,shipPhysics.DrawOrientation);
 
-            racerPoints.Update(GameTime gameTime);
+            int lvl = (beatQueue == null) ? 0 : beatQueue.getLayer();
+            racerPoints.Update(gameTime, isBoosting, lvl);
 
             OtherUpdate(gameTime);
         }
@@ -216,7 +217,9 @@ namespace BeatShift
             //Additional update code for child classes
         }
 
-        public virtual void setBoost(Boolean boosting) {}
+        public virtual void setBoost(Boolean boosting) {
+            isBoosting = boosting;
+        }
 
     }
 
