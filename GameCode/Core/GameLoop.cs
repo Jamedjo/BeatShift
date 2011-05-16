@@ -258,6 +258,7 @@ namespace BeatShift
             if (!paused)
             {
                 Task particles;
+                Boolean raceUpdated = false;
                 if (GameLoop.getCurrentState() == GameState.LocalGame)
                 {
                     //IWork pudate = new IWork();
@@ -273,6 +274,7 @@ namespace BeatShift
                 if (Race.Enabled)
                 {
                     Race.Update(gameTime);
+                    raceUpdated = true;
                     HeadsUpDisplay.Update(gameTime);
                 }
                 //if (MapManager.Enabled)
@@ -282,7 +284,7 @@ namespace BeatShift
                 //if (networkedGame.Enabled) networkedGame.Update(gameTime);
                 if (Physics.Enabled)
                     Physics.Update(gameTime);
-                if (MapManager.Enabled)
+                if (MapManager.Enabled&&!raceUpdated)
                     Race.Update(gameTime);
                 // Game should be exited through the menu systems.
                 // Allows the game to return to main menu
