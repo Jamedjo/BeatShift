@@ -46,6 +46,13 @@ namespace BeatShift.Menus
                 //MenuManager.setCurrentMenu(MenuPage.MapSelect);
                 MenuManager.setCurrentMenu(MenuPage.NumberAI);
             }));
+            addMenuItem("POINTS FRENZY", (Action)(delegate
+            {
+                Race.currentRaceType = new PointsRace(3);
+                Race.resetPlayers();
+                //MenuManager.setCurrentMenu(MenuPage.MapSelect);
+                MenuManager.setCurrentMenu(MenuPage.NumberAI);
+            }));
 
         }
 

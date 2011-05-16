@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using BeatShift.Input;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
+using BeatShift.Race.Racer;
 
 namespace BeatShift
 {
@@ -21,6 +22,7 @@ namespace BeatShift
         public RacerId racerID  { get;  set; }
         public RacerType racerType { get; private set; }
         public BeatQueue beatQueue;
+        public RacerPoints racerPoints;
         public Cue Hum;
 
         // General game related variables
