@@ -25,7 +25,7 @@ namespace BeatShift.Input
         /// <summary>
         ///  Set to false and the player retakes control
         /// </summary>
-        public const Boolean testAI = true;
+        public const Boolean testAI = false;
         public const int numberOfAI = 2;
 
         private GamePadState currentState;
@@ -34,10 +34,6 @@ namespace BeatShift.Input
         private float lastTurn = 0f;
 
         Ray AiRay = new Ray();
-        Ray leftOuterRay = new Ray();
-        Ray leftInnerRay = new Ray();
-        Ray rightOuterRay = new Ray();
-        Ray rightInnerRay = new Ray();
         Ray testRay = new Ray();
 
         private Beat? nextBeatToPress = null;
@@ -270,22 +266,11 @@ namespace BeatShift.Input
 
             t = distance / (rayLength - shipWidth);
 
-
             float retVal = t * Math.Sign(direction);
 
             return float.IsNaN(retVal) ? 0f : retVal;
         }
 
-
-            leftOuterRay.Position = rayOrigin;
-            leftOuterRay.Direction = leftOuterVector;
-            Physics.currentTrackWall.RayCast(leftOuterRay, rayLength, out result);
-            leftInnerRay.Direction = leftInnerVector;
-            Physics.currentTrackWall.RayCast(leftInnerRay, rayLength, out result);
-            rightOuterRay.Direction = rightOuterVector;
-            Physics.currentTrackWall.RayCast(rightOuterRay, rayLength, out result);
-            rightInnerRay.Direction = rightInnerVector;
-            Physics.currentTrackWall.RayCast(rightInnerRay, rayLength, out result);
         /// <summary>
         /// A very simplistic turning system. Has no notion of avoiding crashes.
         /// </summary>
@@ -344,11 +329,7 @@ namespace BeatShift.Input
             return 0;
             AiRay.Direction = (parent.shipPhysics.ShipOrientationMatrix.Forward + parent.shipPhysics.ShipOrientationMatrix.Right * 2) / 3;
 
-            Physics.currentTrackWall.RayCast(AiRay, 20f, out result);
-            
-
-
-            
+            Physics.currentTrackWall.RayCast(AiRay, 20f, out result);  
         }
 
         private float turnWalls(float wallAngle, float wallDistance)
