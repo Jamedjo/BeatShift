@@ -69,10 +69,12 @@ namespace BeatShift.Cameras
                 return vv;
             }
         }
-        
+
+        public static float baseFieldOfView = MathHelper.PiOver4;
+
         protected Quaternion camRotation = Quaternion.Identity;
         protected Vector3 camLastUp = Vector3.Up;
-        protected float fieldOfView = MathHelper.PiOver4;
+        protected float fieldOfView = baseFieldOfView;
 
         /// <summary>
         /// This must be shared between all camera instances for each player, or things will not
