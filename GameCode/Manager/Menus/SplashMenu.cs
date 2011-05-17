@@ -88,20 +88,11 @@ namespace BeatShift.Menus
             BeatShift.spriteBatch.Draw(GameTextures.MenuBackgroundBlue, screen, Color.White);
 
             if (counter < 300)
-            {
                 BeatShift.spriteBatch.Draw(GameTextures.CityRender, screen, Color.White);
-                Console.WriteLine(counter);
-            }
             else if (counter < 600)
-            {
                 BeatShift.spriteBatch.Draw(GameTextures.DesertRender, screen, Color.White);
-                Console.WriteLine(counter);
-            }
             else if (counter < 900)
-            {
                 BeatShift.spriteBatch.Draw(GameTextures.SpaceRender, screen, Color.White);
-                Console.WriteLine(counter);
-            }
             else
                 counter = 0;
 
