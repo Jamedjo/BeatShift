@@ -17,7 +17,7 @@ using ParallelTasks;
 namespace BeatShift
 {
     public enum MapName { None, All, CityMap, SpaceMap, DesertMap }
-    public enum ModelCategory { Scenery, Wall, Track } //In draw order
+    public enum ModelCategory { Scenery, Wall, Track, InvisibleWall } //In draw order
 
     public abstract class Map
     {
@@ -160,6 +160,7 @@ namespace BeatShift
 
         void drawModel(FbxModel modelObject, GameTime gameTime, CameraWrapper camera)
         {
+            if (modelObject.category == ModelCategory.InvisibleWall) return;
             RasterizerState cull = BeatShift.graphics.GraphicsDevice.RasterizerState;
             if (modelObject.category == ModelCategory.Track)
             {

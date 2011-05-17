@@ -21,6 +21,7 @@ namespace BeatShift
             //TODO: Update to city
             modelList.Add(new FbxModel("CityMap_track", MapContent, MapName.CityMap, ModelCategory.Track));
             modelList.Add(new FbxModel("CityMap_walls", MapContent, MapName.CityMap, ModelCategory.Wall));
+            modelList.Add(new FbxModel("CityMap_invisiblewalls", MapContent, MapName.CityMap, ModelCategory.InvisibleWall));
             modelList.Add(new FbxModel("CityMap_scenery", MapContent, MapName.CityMap, ModelCategory.Scenery));
             mapData = new MapData("CityMap", 60f, 4f);
 

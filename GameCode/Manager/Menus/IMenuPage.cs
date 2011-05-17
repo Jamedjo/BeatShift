@@ -179,6 +179,8 @@ namespace BeatShift.Menus
             BeatShift.spriteBatch.Begin();
             BeatShift.spriteBatch.Draw(GameTextures.Logo, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.Logo.Width/2, -10), Color.White);
 
+            //BeatShift.spriteBatch.Draw(GameTextures.MenuBackgroundBlue, viewArea, Color.White);
+
             DrawSprites(BeatShift.spriteBatch);            Vector2 titleOrigin=Vector2.Zero;
             if (DrawTitleFromTextCentre) titleOrigin = BeatShift.newfontgreen.MeasureString(title) / 2;
             BeatShift.spriteBatch.DrawString(BeatShift.newfont, title, Vector2.Lerp(TitleStartPos, TitlePos, animateInLerp), Color.White * animateInLerp,0,titleOrigin,0.5f,SpriteEffects.None,1);

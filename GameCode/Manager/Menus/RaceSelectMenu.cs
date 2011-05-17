@@ -43,6 +43,12 @@ namespace BeatShift.Menus
                 Race.resetPlayers();
                 MenuManager.setCurrentMenu(MenuPage.MapSelect);
             }));
+            addMenuItem("POINTS FRENZY", (Action)(delegate
+            {
+                Race.currentRaceType = new PointsRace(3);
+                Race.resetPlayers();
+                //MenuManager.setCurrentMenu(MenuPage.MapSelect);
+            }));
 
         }
 
