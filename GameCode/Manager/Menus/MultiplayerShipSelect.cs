@@ -188,12 +188,23 @@ namespace BeatShift
             for (int k = 0; k < 4; k++)
             {
                 Race.humanRacers[k].setupRacingControls(ssarea[k].input);
+
+                
             }
+
 
             Race.getFullListOfRacerIDsFromSignedInPeople();
 
             //If controller was not plugged-in/selected remove that player
             Race.removeNonVisibleRacers();
+
+            if (Race.currentRacers.Count > 1)
+            {
+                foreach (RacerHuman r in Race.humanRacers)
+                {
+                    r.localCamera.setFOV(MathHelper.PiOver2);
+                }
+            }
 
             GameLoop.setGameState(GameState.Menu);
             MenuManager.setCurrentMenu(MenuPage.Loading);
