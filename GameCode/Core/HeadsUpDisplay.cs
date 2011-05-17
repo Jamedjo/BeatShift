@@ -269,9 +269,19 @@ namespace BeatShift
                     }
 
                     /////////////////////////////
-                    ////// RESETTING SIGN ///////
+                    ////// WRONG WAY SIGN ///////
                     /////////////////////////////
 
+                    if (racer.shipPhysics.wrongWay == true)
+                    {
+                        int newWarningWidth = (int)(GameTextures.WrongWaySign.Width * scaleFactorWidth);
+                        int newWarningHeight = (int)(GameTextures.WrongWaySign.Height * scaleFactorHeight);
+                        BeatShift.spriteBatch.Draw(GameTextures.WrongWaySign, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - newWarningWidth / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - newWarningHeight / 2, newWarningWidth, newWarningHeight), Color.White);
+                    }
+
+                    /////////////////////////////
+                    ////// RESETTING SIGN ///////
+                    /////////////////////////////
 
                     if (racer.isRespawning && racer.shipPhysics.millisecsLeftTillReset < 2000)
                     {
@@ -279,7 +289,6 @@ namespace BeatShift
                         int newWarningHeight = (int)(GameTextures.ResettingSign.Height * scaleFactorHeight);
                         BeatShift.spriteBatch.Draw(GameTextures.ResettingSign, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - newWarningWidth / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - newWarningHeight / 2, newWarningWidth, newWarningHeight), Color.White);
                     }
-
 
                     /////////////////////////////
                     ////// COUNTDOWN SIGN ///////
