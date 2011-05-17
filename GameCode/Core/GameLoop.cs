@@ -240,7 +240,8 @@ namespace BeatShift
         public static void Update(GameTime gameTime)
         {
             // Check to see if the user has paused or unpaused
-            Task music = Parallel.Start(BeatShift.bgm.Update);
+            BeatShift.bgm.Update();
+           // Task music = Parallel.Start();
             if(currentState == GameState.LocalGame || currentState == GameState.NetworkedGame)
                 checkPauseKey(gameTime);
             
@@ -315,7 +316,7 @@ namespace BeatShift
             //        BeatShift.graphics.ToggleFullScreen();
             //    }
 #endif
-            music.Wait();
+            //music.Wait();
         }
 
         public static void Draw(GameTime gameTime)

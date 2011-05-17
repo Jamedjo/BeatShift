@@ -141,6 +141,7 @@ namespace BeatShift
                 visualisation.Clear();
                 beats.Clear();
                 beatGlow.Glow(leveldownColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
+                parentRacer.shipDrawing.engineGlow.setLayer(myLayer);
                 isLevellingDown = true;
             }
             else
@@ -158,6 +159,7 @@ namespace BeatShift
                 visualisation.Clear();
                 beats.Clear();
                 beatGlow.Glow(levelupColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
+                parentRacer.shipDrawing.engineGlow.setLayer(myLayer);
                 isLevellingUp = true;
             }
         }
