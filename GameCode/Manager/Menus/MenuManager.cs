@@ -119,7 +119,7 @@ namespace BeatShift.Menus
         }
 
         public static void Draw(GameTime gameTime){
-            if (currentPage.ToString().Equals("SplashScreen") || currentPage.ToString().Equals("Multiplayer") )
+            if (currentPage.ToString().Equals("PauseMenu") || currentPage.ToString().Equals("ResultsMenu") )
             {
                 Rectangle viewArea = new Rectangle(0, 0, BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height);
                 BeatShift.spriteBatch.Begin();
