@@ -21,7 +21,7 @@ namespace BeatShift
         public RacerId racerID  { get;  set; }
         public RacerType racerType { get; private set; }
         public BeatQueue beatQueue;
-        public RacerPoints racerPoints = new RacerPoints();
+        public RacerPoints racerPoints { get; private set; }
         public Cue Hum;
         private bool isBoosting = false;
 
@@ -75,6 +75,7 @@ namespace BeatShift
             raceTiming=new RaceTiming(this);
             shipDrawing = new ShipDrawing(new Func<Matrix>(() => Matrix.Identity), new Func<Vector3>(() => Vector3.Zero), this);
             beatQueue = new BeatQueue(this);
+            racerPoints = new RacerPoints();
             //setColour(1);//Set to red
             Hum = SoundManager.getEngineHum();
             //Hum.Play();

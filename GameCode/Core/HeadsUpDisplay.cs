@@ -158,6 +158,15 @@ namespace BeatShift
                 if (Race.currentRaceType.displayCurrentBestLap)
                 {
                     DrawMessageColour(BeatShift.newfont, racer.raceTiming.getBestLapTime(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 95, 0.4f, Color.Goldenrod);
+                }                
+                
+                //////////////////////////////
+                //////// TOTAL POINTS ////////
+                //////////////////////////////
+
+                if (Race.currentRaceType.displayTotalPoints)
+                {
+                    DrawMessageColour(BeatShift.newfont, racer.racerPoints.getPoints().ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 195, 0.4f, Color.Goldenrod);
                 }
 
                 //////////////////////////

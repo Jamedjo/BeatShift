@@ -18,10 +18,11 @@ namespace BeatShift
             areRanksRequired = true;
 
             displayCurrentLapOutofTotalLaps = true;
-            displayCurrentBestLap = true;
-            displayCurrentLapTime = true;
+            displayCurrentBestLap = false;
+            displayCurrentLapTime = false;
             displayCurrentRank = true;
             displayMinimap = true;
+            displayTotalPoints = true;
         }
 
         public override bool hasTheRacerFinished(int laps, int points, int level, bool last, Stopwatch stopwatch)
