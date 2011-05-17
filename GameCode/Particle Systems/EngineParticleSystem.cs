@@ -84,8 +84,8 @@ namespace DPSF.ParticleSystems
         int layer=0;
         protected Color[] defaultColor = { Color.Red, Color.Orange, Color.Gold, Color.DarkBlue, Color.White };//Color.AntiqueWhite;
         protected Color[] defaultEnd = {Color.Yellow,Color.Red,Color.Orange,Color.OrangeRed,Color.Blue};
-        protected Color[] boostColor = { Color.Lime, Color.Lime, Color.Lime, Color.Lime, Color.Lime};
-        protected Color[] boostFadeEnd = { Color.AntiqueWhite, Color.AntiqueWhite, Color.AntiqueWhite, Color.AntiqueWhite, Color.AntiqueWhite};
+        protected Color[] boostColor = { Color.Lime, Color.DeepSkyBlue, Color.Lime, Color.Crimson, Color.Black};
+        protected Color[] boostFadeEnd = { Color.AntiqueWhite, Color.LightSeaGreen, Color.Blue, Color.AntiqueWhite, Color.Red};
         private float lifeTime;
         private float maxLifeTime = 0.6f;
         private const int particleRate = 300;

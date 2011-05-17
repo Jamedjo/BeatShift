@@ -48,6 +48,10 @@ namespace BeatShift
                     racer.Update(gameTime);
                 }
                 );
+                /*foreach (Racer racer in currentRacers)
+                {
+                    racer.Update(gameTime);
+                }*/
             }
             else
             {
@@ -135,8 +139,9 @@ namespace BeatShift
             {
                 for (int i = 0; i < numberOfAiRacers; i++)
                 {
-                    Racer r = new Racer(new RacerId(pickAiName(i)), currentRacers.Count, RacerType.AI);
+                    Racer r = new Racer(new RacerId(pickAiName(i)), currentRacers.Count+1, RacerType.AI);
                     currentRacers.Add(r);
+                    r.insertShipOnMap(RacerType.AI);
                 }
             }
             //setupViewports();
