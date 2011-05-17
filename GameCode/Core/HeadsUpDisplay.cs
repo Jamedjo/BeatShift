@@ -37,7 +37,7 @@ namespace BeatShift
             int bleedWidth = (int)(BeatShift.graphics.GraphicsDevice.Viewport.Width * 0.1);
 
 
-            if (racer.raceTiming.hasCompletedRace && GameLoop.raceComplete != true )
+            if (racer.raceTiming.hasCompletedRace && GameLoop.raceComplete != true)
             {
                 ////////////////////////
                 ///// FINAL RESULTS ////
@@ -56,25 +56,23 @@ namespace BeatShift
                 if (Race.currentRaceType.getRaceTypeString().Equals("TimeTrialRace"))
                 {
                     //BeatShift.spriteBatch.Begin();
-                    DrawMessage("Best lap time: "+racer.raceTiming.getBestLapTime(), 325, vOffset / 2);
+                    DrawMessage("Best lap time: " + racer.raceTiming.getBestLapTime(), 325, vOffset / 2);
                 }
 
             }
             else
             {
 
-                //if (Race.humanRacers.Count == 2)
-                //{
-                //    HeadsUpDisplay.DrawSplitBarsTwoPlayer();
-                //}
-                //else if (Race.humanRacers.Count == 3)
-                //{
-                //    HeadsUpDisplay.DrawSplitBarsThreePlayer();
-                //}
-                //else if (Race.humanRacers.Count == 4)
-                //{
-                //    HeadsUpDisplay.DrawSplitBarsFourPlayer();
-                //}
+
+
+                //////////////////////////////
+                //////// TOTAL POINTS ////////
+                //////////////////////////////
+
+                if (Race.currentRaceType.displayTotalPoints)
+                {
+                    DrawMessageColour(BeatShift.newfont, racer.racerPoints.getPoints().ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 195, 0.4f, Color.Goldenrod);
+                }
 
 
                 /////////////////////
@@ -97,9 +95,9 @@ namespace BeatShift
                 racer.raceTiming.previousBoost = MathHelper.Lerp(racer.raceTiming.previousBoost, (float)racer.racingControls.getBoostValue() / 100, 0.05f);
                 racer.raceTiming.previousLapProgress = MathHelper.Lerp(racer.raceTiming.previousLapProgress, (float)racer.shipPhysics.getLapPercentage() / 100, 0.05f);
 
-                var chosenLine = (BeatShift.graphics.GraphicsDevice.Viewport.Width > 700)? GameTextures.BoostBarLine : GameTextures.BoostBarLineSmall;
+                var chosenLine = (BeatShift.graphics.GraphicsDevice.Viewport.Width > 700) ? GameTextures.BoostBarLine : GameTextures.BoostBarLineSmall;
                 int srcWidth = (int)((chosenLine.Width) * racer.raceTiming.previousBoost);
-                
+
                 if (BeatShift.graphics.GraphicsDevice.Viewport.Width > 700)
                 {
                     Rectangle orange_src2 = new Rectangle(chosenLine.Width - srcWidth, 0, chosenLine.Width, chosenLine.Height);
@@ -221,83 +219,65 @@ namespace BeatShift
                     {
                         DrawMessageColour(BeatShift.newfont, racer.raceTiming.getBestLapTime(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 95, 0.4f, Color.Goldenrod);
                     }
-                
-                //////////////////////////////
-                //////// TOTAL POINTS ////////
-                //////////////////////////////
 
-                if (Race.currentRaceType.displayTotalPoints)
-                {
-                    DrawMessageColour(BeatShift.newfont, racer.racerPoints.getPoints().ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 195, 0.4f, Color.Goldenrod);
-                }
+                    //////////////////////////
+                    ////////// RANK //////////
+                    //////////////////////////
 
-                //////////////////////////
-                ////////// RANK //////////
-                //////////////////////////
-
-                if (Race.currentRaceType.displayCurrentRank && racer.raceTiming.currentRanking == 0)
-                {
-                    if (BeatShift.graphics.GraphicsDevice.Viewport.Width > 700)
+                    if (Race.currentRaceType.displayCurrentRank && racer.raceTiming.currentRanking == 0)
                     {
-                        DrawMessageColour(BeatShift.newfont, "-", BeatShift.graphics.GraphicsDevice.Viewport.Width - 190, 22, 0.75f, Color.PapayaWhip);
+                        if (BeatShift.graphics.GraphicsDevice.Viewport.Width > 700)
+                        {
+                            DrawMessageColour(BeatShift.newfont, "-", BeatShift.graphics.GraphicsDevice.Viewport.Width - 190, 22, 0.75f, Color.PapayaWhip);
+                        }
+                        else
+                        {
+                            DrawMessageColour(BeatShift.newfont, "-", BeatShift.graphics.GraphicsDevice.Viewport.Width - 187, 22, 0.75f, Color.PapayaWhip);
+                        }
                     }
-                    else
+                    else if (Race.currentRaceType.displayCurrentRank)
                     {
-                        DrawMessageColour(BeatShift.newfont, "-", BeatShift.graphics.GraphicsDevice.Viewport.Width - 187, 22, 0.75f, Color.PapayaWhip);
+                        if (BeatShift.graphics.GraphicsDevice.Viewport.Width > 700)
+                        {
+                            DrawMessageColour(BeatShift.newfont, racer.raceTiming.currentRanking.ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 190, 22, 0.75f, Color.PapayaWhip);
+                        }
+                        else
+                        {
+                            DrawMessageColour(BeatShift.newfont, racer.raceTiming.currentRanking.ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 187, 22, 0.75f, Color.PapayaWhip);
+                        }
+                        //DrawMessage(BeatShift.newfont, calculateRankSuffix(racer.raceTiming.currentRanking), BeatShift.graphics.GraphicsDevice.Viewport.Width - 178 + extraSuffixOffset(racer.raceTiming.currentRanking), 26, 0.25f);
                     }
-                }
-                else if (Race.currentRaceType.displayCurrentRank)
-                {
-                    if (BeatShift.graphics.GraphicsDevice.Viewport.Width > 700)
+
+                    /////////////////////////////
+                    ////// RESETTING SIGN ///////
+                    /////////////////////////////
+
+
+                    if (racer.isRespawning && racer.shipPhysics.millisecsLeftTillReset < 2000)
                     {
-                        DrawMessageColour(BeatShift.newfont, racer.raceTiming.currentRanking.ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 190, 22, 0.75f, Color.PapayaWhip);
+                        int newWarningWidth = (int)(GameTextures.ResettingSign.Width * scaleFactorWidth);
+                        int newWarningHeight = (int)(GameTextures.ResettingSign.Height * scaleFactorHeight);
+                        BeatShift.spriteBatch.Draw(GameTextures.ResettingSign, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - newWarningWidth / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - newWarningHeight / 2, newWarningWidth, newWarningHeight), Color.White);
                     }
-                    else
-                    {
-                        DrawMessageColour(BeatShift.newfont, racer.raceTiming.currentRanking.ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 187, 22, 0.75f, Color.PapayaWhip);
-                    }
-                    //DrawMessage(BeatShift.newfont, calculateRankSuffix(racer.raceTiming.currentRanking), BeatShift.graphics.GraphicsDevice.Viewport.Width - 178 + extraSuffixOffset(racer.raceTiming.currentRanking), 26, 0.25f);
-                }
 
-                /////////////////////////////
-                ////// RESETTING SIGN ///////
-                /////////////////////////////
 
-                
-                if (racer.isRespawning && racer.shipPhysics.millisecsLeftTillReset < 2000)
-                {
-                    int newWarningWidth = (int)(GameTextures.ResettingSign.Width * scaleFactorWidth);
-                    int newWarningHeight = (int)(GameTextures.ResettingSign.Height * scaleFactorHeight);
-                    BeatShift.spriteBatch.Draw(GameTextures.ResettingSign, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - newWarningWidth / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - newWarningHeight / 2, newWarningWidth, newWarningHeight), Color.White);
-                }
+                    /////////////////////////////
+                    ////// COUNTDOWN SIGN ///////
+                    /////////////////////////////
 
-                /////////////////////////////
-                ////// WRONG WAY SIGN ///////
-                /////////////////////////////
+                    if (Race.currentRaceType.countDownRunning)
+                        BeatShift.spriteBatch.Draw(Race.currentRaceType.countdownState, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - Race.currentRaceType.countdownState.Width / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - Race.currentRaceType.countdownState.Height / 2), Color.White);
 
-                if (racer.shipPhysics.wrongWay == true)
-                {
-                    int newWarningWidth = (int)(GameTextures.WrongWaySign.Width * scaleFactorWidth);
-                    int newWarningHeight = (int)(GameTextures.WrongWaySign.Height * scaleFactorHeight);
-                    BeatShift.spriteBatch.Draw(GameTextures.WrongWaySign, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - newWarningWidth / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - newWarningHeight / 2, newWarningWidth, newWarningHeight), Color.White);
+                    // Other info
+                    //DrawMessage("Progress: " + racer.getLapPercentage() + "%", 10, vOffset + 26);
+                    //DrawMessage("Accuracy: " + racer.racingControls.getLastPress(), 10, vOffset - 30);
+                    //DrawMessage("Dist from trac: " + racer.shipPhysics.shipRayToTrackTime, 10, vOffset - 30);
+                    //DrawNewMessage(" !\"#$%'()*+,-./0123456789:;<=>?@ABCDEFGHIJ", 0, 30);
+                    //DrawNewMessage("KLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrrstuvwxyz{|}~", 0, 90);
                 }
 
 
-                /////////////////////////////
-                ////// COUNTDOWN SIGN ///////
-                /////////////////////////////
-
-                if (Race.currentRaceType.countDownRunning)
-                    BeatShift.spriteBatch.Draw(Race.currentRaceType.countdownState, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - Race.currentRaceType.countdownState.Width / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - Race.currentRaceType.countdownState.Height / 2), Color.White);
-
-                // Other info
-                //DrawMessage("Progress: " + racer.getLapPercentage() + "%", 10, vOffset + 26);
-                //DrawMessage("Accuracy: " + racer.racingControls.getLastPress(), 10, vOffset - 30);
-                //DrawMessage("Dist from trac: " + racer.shipPhysics.shipRayToTrackTime, 10, vOffset - 30);
-                //DrawNewMessage(" !\"#$%'()*+,-./0123456789:;<=>?@ABCDEFGHIJ", 0, 30);
-                //DrawNewMessage("KLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrrstuvwxyz{|}~", 0, 90);
             }
-           
         }
 
         public static void DrawMessage(string message, int x, int y)

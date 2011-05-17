@@ -161,6 +161,7 @@ namespace BeatShift
 
         void drawModel(FbxModel modelObject, GameTime gameTime, CameraWrapper camera)
         {
+            if (modelObject.category == ModelCategory.InvisibleWall) return;
             RasterizerState cull = BeatShift.graphics.GraphicsDevice.RasterizerState;
             if (modelObject.category == ModelCategory.Track && currentMapName != MapName.CityMap)
             {
