@@ -26,7 +26,7 @@ namespace BeatShift.Input
         ///  Set to false and the player retakes control
         /// </summary>
         public const Boolean testAI = false;
-        public const int numberOfAI = 2;
+        public const int numberOfAI = 5;
 
         private GamePadState currentState;
         private GamePadState lastState;
@@ -183,6 +183,9 @@ namespace BeatShift.Input
             return b;
         }
 
+        const float futureWeight = 0.7f;
+        const float wallsWeight = 0.3f;
+
         /// <summary>
         /// Calculate how much the AI should be turning. This is likely to fail if the AI is not
         /// going the correct direction for whatever reason.
@@ -197,8 +200,13 @@ namespace BeatShift.Input
 
             float fTrack = futureTrack();
             float nWalls = newWalls();
+            float aWalls = avoidWalls();
 
-            return 0.0f * fTrack + 0.0f * nWalls + 0.0f * randInaccuracy + avoidWalls();
+
+            //System.Diagnostics.Debug.WriteLine("{0:0.000} {1:0.000} {2:0.000} {3:0.000}", randInaccuracy, fTrack, nWalls, aWalls);
+            
+            float retVal = futureWeight * fTrack + wallsWeight * nWalls + aWalls + randInaccuracy;
+            return Math.Max(-1, Math.Min(1, retVal));
         }
 
 
@@ -220,6 +228,8 @@ namespace BeatShift.Input
             return (float) Math.Tanh(width / (offset + extra));
         }
 
+
+        public Vector3 wallTest { get; private set; }
 
         private float newWalls()
         {
@@ -261,8 +271,16 @@ namespace BeatShift.Input
 
             float distance = result.T < shipWidth ? rayLength - shipWidth : rayLength - result.T;
 
+            parent.shipDrawing.testWalls = testVector * rayLength;
             if (result.T == 0)
+            {
                 distance = 0;
+                parent.shipDrawing.wallHit = false;
+            }
+            else
+            {
+                parent.shipDrawing.wallHit = true;
+            }
 
             t = distance / (rayLength - shipWidth);
 
@@ -312,9 +330,11 @@ namespace BeatShift.Input
 
             Physics.currentTrackWall.RayCast(AiRay, 40f, out result);
 
+            float wallAngle;
+
             if (result.T != 0)
             {
-                float wallAngle = Vector3.Dot(Vector3.Normalize(result.Normal), parent.shipPhysics.ShipOrientationMatrix.Left);
+                wallAngle = (float) Vector3.Dot(Vector3.Normalize(result.Normal), parent.shipPhysics.ShipOrientationMatrix.Left);
                 
                 if (wallAngle > 0)
                 {
@@ -327,17 +347,21 @@ namespace BeatShift.Input
             }
 
             return 0;
-            AiRay.Direction = (parent.shipPhysics.ShipOrientationMatrix.Forward + parent.shipPhysics.ShipOrientationMatrix.Right * 2) / 3;
 
-            Physics.currentTrackWall.RayCast(AiRay, 20f, out result);  
+            AiRay.Direction = (parent.shipPhysics.ShipOrientationMatrix.Forward + parent.shipPhysics.ShipOrientationMatrix.Right * 2) / 3;
+            Physics.currentTrackWall.RayCast(AiRay, 30f, out result);
+            if(result.T != 0){
+                wallAngle = Vector3.Dot(Vector3.Normalize(result.Normal), parent.shipPhysics.ShipOrientationMatrix.Left);
+                //if(wallAngle < 
+            }
         }
 
         private float turnWalls(float wallAngle, float wallDistance)
         {
-            System.Diagnostics.Debug.WriteLine(wallAngle);
-            float angVal = (float)Math.Sqrt(Math.Sin(Math.Cosh(wallAngle)));
+            float angVal = (float)Math.Sqrt(Math.Sin(Math.Acos(wallAngle)));
             float disVal = 1 / wallDistance;
-            return Math.Min(1.0f, angVal + disVal);
+            float retVal = angVal + disVal;
+            return float.IsNaN(retVal) ? 0 : Math.Min(1.0f, retVal);
         }
 
         /// <summary>

@@ -210,9 +210,11 @@ namespace BeatShift
 
             // Finishes the racer if required
             if (raceTiming.isRacing) raceTiming.Update();
-
-            shipDrawing.engineGlow.setVelocity(shipPhysics.physicsBody.LinearVelocity);
-            shipDrawing.engineGlow.SetPosition(shipPhysics.ShipPosition,shipPhysics.DrawOrientation);
+            if (shipDrawing.engineGlow != null)
+            {
+                shipDrawing.engineGlow.setVelocity(shipPhysics.physicsBody.LinearVelocity);
+                shipDrawing.engineGlow.SetPosition(shipPhysics.ShipPosition, shipPhysics.DrawOrientation);
+            }
             globalSystems.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
             privateSystems.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
             OtherUpdate(gameTime);
