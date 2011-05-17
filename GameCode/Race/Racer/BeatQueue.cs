@@ -41,7 +41,7 @@ namespace BeatShift
             maxLayer = BeatShift.bgm.Layers();
         }
 
-        public double GetBoost() { return boostBar; }
+        public double GetBoost() { return ((20*myLayer)+ (boostBar/5)); }
 
         public int getLayer() { return myLayer; }
 
@@ -131,7 +131,7 @@ namespace BeatShift
                 invinciEndtime = BeatShift.bgm.songTick() + 3000;
                 myLayer--;
                 BeatShift.bgm.MusicDown(myLayer);
-                boostBar = 50;
+                boostBar = 98;
                 visualisation.Clear();
                 beats.Clear();
                 beatGlow.Glow(leveldownColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
@@ -148,7 +148,7 @@ namespace BeatShift
                 invinciEndtime = BeatShift.bgm.songTick() + 3000;
                 myLayer++;
                 BeatShift.bgm.MusicUp(myLayer);
-                boostBar = 20;
+                boostBar = 2;
                 visualisation.Clear();
                 beats.Clear();
                 beatGlow.Glow(levelupColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
@@ -221,6 +221,8 @@ namespace BeatShift
             boostBar -= 1;
             if (boostBar < 0)
                 boostBar = 0;
+            else if (boostBar == 0)
+                LevelDown();
         }
 
         
