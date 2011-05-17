@@ -50,7 +50,7 @@ namespace BeatShift.Input
             //playerIndex = index;//Player index should be able to be 'any' or 'keyboard' too
             padIndex = PlayerIndex.One;
 
-            setChosenInput(chosenInput);
+            setChosenInput(inputManager);
             
             racer = myRacer;
             tapNo = 0;
@@ -76,7 +76,8 @@ namespace BeatShift.Input
         public void setChosenInput(IInputManager newInputManager)
         {
             chosenInput = newInputManager;
-            if (chosenInput.GetType() == typeof(PadInputManager)) padIndex = ((PadInputManager)chosenInput).getPlayerIndex();
+            if (chosenInput.GetType() == typeof(PadInputManager))
+                padIndex = ((PadInputManager)chosenInput).getPlayerIndex();
         }
 
         public void Update(GameTime gameTime)

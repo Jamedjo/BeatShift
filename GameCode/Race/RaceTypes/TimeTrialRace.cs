@@ -42,7 +42,8 @@ namespace BeatShift
             racer.raceTiming.finalRaceTime = finishTime.ElapsedMilliseconds;
             if (racer.racingControls.chosenInput.GetType() == typeof(PadInputManager))
                 GamePad.SetVibration(racer.racingControls.padIndex, 0.0f, 0.0f);
-            racer.racingControls.setChosenInput( new AiInputManager(racer));
+            if (racer.racingControls.chosenInput.GetType() != typeof(AiInputManager))
+                racer.racingControls.setChosenInput( new AiInputManager(racer));
 
             String ts = racer.raceTiming.getBestLapTime();
             racer.raceTiming.finalRaceTimeString = ts ;

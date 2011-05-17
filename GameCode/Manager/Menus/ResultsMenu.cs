@@ -15,6 +15,8 @@ namespace BeatShift.Menus
         string[] results;
         string[] players;
 
+        bool keyboardShown = false;
+
         //public double[] fastestLap;
         //public PlayerIndex[] playerIndexes;
 
@@ -82,36 +84,49 @@ namespace BeatShift.Menus
             }
         }
 
+        void keyboardCallback(IAsyncResult result)
+        {
+            string retval = Guide.EndShowKeyboardInput(result);
+
+            if (retval == null)
+            {
+                // User cancelled input  
+            }
+            else
+            {
+                // Do whatever you want with the string you got from the user, which is now stored in retval
+            }
+        }
+
         private void calculateResults()
         {
             results = new string[Race.currentRacers.Count];
 
-            //fastestLap = new double[Race.humanRacers.Count];
-            //playerIndexes = new int[Race.humanRacers.Count];
-
-            //MapManager.currentMap = ;
-            //Race.currentRaceType.getRaceTypeString() = ;
-
             foreach (Racer racer in Race.currentRacers)
-            {
                 if (racer.raceTiming.finalRaceTime == long.MaxValue)
-                {
                     racer.raceTiming.finalRaceTimeString = "DNF";
-                }
-            }
 
             if (!Race.currentRaceType.getRaceTypeString().Equals("PointsRace"))
             {
-                List<HighScoreEntry> tempRes = HighScore.getHighScores(MapName.CityMap, 1);
+                //List<HighScoreEntry> tempRes = HighScore.getHighScores(MapManager.currentMap, 1);
                 for (int i = 0; i < Race.humanRacers.Count(); i++)
                 {
                     Racer rH = Race.humanRacers[i];
+                    keyboardShown = false;
                     if( rH.raceTiming.fastestLap.TotalMilliseconds*1000 > 1000 && !Guide.IsVisible) /*CHECK HIGHSCORE*/
                     {
-                        IAsyncResult KeyboardResult = Guide.BeginShowKeyboardInput(rH.racingControls.padIndex, "Player " + (rH.racingControls.padIndex.ToString()) + " has set a new lap record", "Please enter your name", "", null, null);
-                        string highScoreName = Guide.EndShowKeyboardInput(KeyboardResult);
+                        while( !keyboardShown )
+                        try 
+                        {
+                            Guide.BeginShowKeyboardInput(rH.racingControls.padIndex, "Player " + (rH.racingControls.padIndex.ToString()) + " has set a new lap record", "Please enter your name", "", keyboardCallback, (object)"dontcare");
+                        }  
+                        catch 
+                        {
+                            keyboardShown = true;
+                            // create a class bool, initialize it to false, then set it to true here so you know you need to try again because it didn't work the first time,  
+                            // probably because the Guide became visible between when you checked Guide.IsVisible and when you called Guide.BeginShowKeyboardInput  
+                        }  
                         //ENTER NAME AND TIME INTO HIGH SCORES
-
                     }
                 }
             }
