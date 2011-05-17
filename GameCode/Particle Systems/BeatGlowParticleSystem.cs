@@ -79,7 +79,7 @@ namespace DPSF.ParticleSystems
             // TODO: Change any Initialization parameters desired and the Name
             //-----------------------------------------------------------
             // Initialize the Particle System before doing anything else
-            InitializeSpriteParticleSystem(cGraphicsDevice, cContentManager, 200, 5000, "Particles/Textures/Spikey001");
+            InitializeSpriteParticleSystem(cGraphicsDevice, cContentManager, 200, 5000, "Particles/Textures/Particle001");
 
             // Set the Name of the Particle System
             Name = "Beat Glow Particle System";
