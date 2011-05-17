@@ -773,6 +773,21 @@
       <Name>SpaceMap</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Compile Include="Models\Maps\CityMap_invisiblewalls.fbx">
+      <Name>CityMap_invisiblewalls</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>BShiftModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Maps\DesertMap_invisiblewalls.fbx">
+      <Name>DesertMap_invisiblewalls</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>BShiftModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Maps\SpaceMap_invisiblewalls.fbx">
+      <Name>SpaceMap_invisiblewalls</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>BShiftModelProcessor</Processor>
+    </Compile>
     <None Include="Particles\Textures\License.txt">
       <Name>License</Name>
     </None>
@@ -1004,6 +1019,27 @@
   <ItemGroup>
     <Compile Include="Images\pressstart.png">
       <Name>pressstart</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Images\CityMapRender.png">
+      <Name>CityMapRender</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Images\DesertMapRender.png">
+      <Name>DesertMapRender</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Images\SpaceMapRender.png">
+      <Name>SpaceMapRender</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

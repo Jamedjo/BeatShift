@@ -21,7 +21,9 @@ namespace BeatShift
         public RacerId racerID  { get;  set; }
         public RacerType racerType { get; private set; }
         public BeatQueue beatQueue;
+        public RacerPoints racerPoints { get; private set; }
         public Cue Hum;
+        private bool isBoosting = false;
         public ParticleSystemManager globalSystems;
         public ParticleSystemManager privateSystems;
         // General game related variables
@@ -74,6 +76,7 @@ namespace BeatShift
             raceTiming=new RaceTiming(this);
             shipDrawing = new ShipDrawing(new Func<Matrix>(() => Matrix.Identity), new Func<Vector3>(() => Vector3.Zero), this);
             beatQueue = new BeatQueue(this);
+            racerPoints = new RacerPoints();
             privateSystems = new ParticleSystemManager();
             globalSystems = new ParticleSystemManager();
             //setColour(1);//Set to red
@@ -217,6 +220,10 @@ namespace BeatShift
             }
             globalSystems.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
             privateSystems.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
+
+            int lvl = (beatQueue == null) ? 0 : beatQueue.getLayer();
+            racerPoints.Update(gameTime, isBoosting, lvl);
+
             OtherUpdate(gameTime);
         }
 
@@ -225,7 +232,9 @@ namespace BeatShift
             //Additional update code for child classes
         }
 
-        public virtual void setBoost(Boolean boosting) {}
+        public virtual void setBoost(Boolean boosting) {
+            isBoosting = boosting;
+        }
 
     }
 

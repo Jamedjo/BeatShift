@@ -8,7 +8,7 @@ using System.Xml.Linq;
 using System.Xml.Schema;
 using System.Collections.Generic;
 
-namespace BeatShift
+namespace BeatShift.Util
 {
     public static class Options
     {
@@ -310,7 +310,7 @@ namespace BeatShift
                 }
                 try
                 {
-                    sfxVolume = (from item in optsDoc.Root.Descendants() where item.Name == "VoiceVolume" select byte.Parse(item.Value)).First();
+                    voiceVolume = (from item in optsDoc.Root.Descendants() where item.Name == "VoiceVolume" select byte.Parse(item.Value)).First();
                     if (voiceVolume > 100)
                         voiceVolume = 100;
                 }

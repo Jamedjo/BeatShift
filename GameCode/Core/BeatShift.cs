@@ -15,6 +15,7 @@ using BeatShift.Menus;
 using BeatShift.GameDebugTools;
 using BeatShift.Util.Random;
 using DPSF;
+using BeatShift.Util;
 
 namespace BeatShift
 {
