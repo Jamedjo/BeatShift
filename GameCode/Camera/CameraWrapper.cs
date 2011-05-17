@@ -125,6 +125,10 @@ namespace BeatShift.Cameras
                 cameraList.Add(new ChaseCamera(ref properties, getShipPosition, getShipOrientation, getShipUp, racer.shipPhysics.getForwardSpeed, new Vector3(0.0f, 2.5f, 12f), new Vector3(0.0f, 0.0f, -30.0f)));
                 cameraList.Add(new BumperCamera(ref properties, getShipPosition, getShipOrientation, getShipUp));
                 currentCamera = cameraList[cameraID];
+                if (changedFieldOfView != 0)
+                {
+                    setFOV(changedFieldOfView);
+                }
             }
             else if (stage == CameraStage.Racing)
             {
@@ -213,6 +217,17 @@ namespace BeatShift.Cameras
                     break;
             }
 
+        }
+
+        private float changedFieldOfView= 0;
+
+        public void setFOV(float newFOV)
+        {
+            changedFieldOfView = newFOV;
+            foreach (ICameraType c in cameraList)
+            {
+                c.setBaseFieldOfView(newFOV);
+            }
         }
     }
 }
