@@ -69,10 +69,12 @@ namespace BeatShift.Cameras
                 return vv;
             }
         }
-        
+
+        public static float baseFieldOfView = MathHelper.PiOver4;
+
         protected Quaternion camRotation = Quaternion.Identity;
         protected Vector3 camLastUp = Vector3.Up;
-        protected float fieldOfView = MathHelper.PiOver4;
+        protected float fieldOfView = baseFieldOfView;
 
         /// <summary>
         /// This must be shared between all camera instances for each player, or things will not
@@ -114,7 +116,7 @@ namespace BeatShift.Cameras
         public ICameraType(ref SharedCameraProperties properties, FGetPosition getPosition, FGetOrientation getOrientation)
         {
             View = Matrix.CreateLookAt(new Vector3(0, 6, 60), Vector3.Zero, camLastUp);
-            Projection = Matrix.CreatePerspectiveFieldOfView(fieldOfView, properties.Viewport.AspectRatio, 1, 2000);
+            Projection = Matrix.CreatePerspectiveFieldOfView(fieldOfView, properties.Viewport.AspectRatio, 1, 2500);
             this.properties = properties;
             this.getPosition = getPosition;
             this.getOrientation = getOrientation;

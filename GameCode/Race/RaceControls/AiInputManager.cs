@@ -320,7 +320,7 @@ namespace BeatShift.Input
             return float.IsNaN(t) ? 0f : (float)(Math.Sqrt(t) * Math.Sign(direction));
         }
 
-        private float avoidWallsRayLength = 50f;
+        private float avoidWallsRayLength = 100f;
         private float avoidWalls()
         {
             AiRay.Direction = parent.shipPhysics.ShipOrientationMatrix.Forward;
@@ -328,7 +328,7 @@ namespace BeatShift.Input
 
             RayHit result;
 
-            Physics.currentTrackWall.RayCast(AiRay, 40f, out result);
+            Physics.currentTrackWall.RayCast(AiRay, 100f, out result);
 
             float wallAngle;
 
