@@ -46,23 +46,23 @@ namespace BeatShift.Menus
             TextScale = 0.5f;
         }
 
-        //public override void otherUpdate()
-        //{
-        //    if (MenuManager.anyInput.actionTapped(InputAction.Start))
-        //    {
-        //        respondToMenuAccept();
-        //    }
+        public override void otherUpdate()
+        {
+            if (MenuManager.anyInput.actionTapped(InputAction.Start))
+            {
+                respondToMenuAccept();
+            }
 
         //    if (player.IsDisposed != true)
         //    {
         //        if (player.State == MediaState.Stopped)
         //        {
-        //            player.IsLooped = true;
+        //     `       player.IsLooped = true;
         //            player.Play(GameVideos.splashVideo);
         //        }
         //    }
 
-        //}
+        }
 
         public override void otherDraw()
         {

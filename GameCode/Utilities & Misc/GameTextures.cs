@@ -43,6 +43,7 @@ namespace BeatShift
         public static Texture2D BeatVisualisation;
         public static Texture2D TutorialScreen;
         public static Texture2D Crest;
+        public static Texture2D EliminationBar;
         public static Texture2D Eliminated;
 
         public static Texture2D ShipSelectBasis;
@@ -90,6 +91,7 @@ namespace BeatShift
             BeatVisualisation = c.Load<Texture2D>("Visualisation/viz_red");
             TutorialScreen = c.Load<Texture2D>("Images/tutorial_screen");
             Eliminated = c.Load<Texture2D>("HUD/eliminated");
+            EliminationBar = c.Load<Texture2D>("HUD/elimination");
 
             ShipSelectBasis = c.Load<Texture2D>("Images/ShipSelect/ShipSelectBasis");
             Skylar = c.Load<Texture2D>("Images/ShipSelect/Skylar");

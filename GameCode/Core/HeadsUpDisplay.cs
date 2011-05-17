@@ -159,16 +159,36 @@ namespace BeatShift
                 int newBoardWidth = (int)(GameTextures.TopRightBoard.Width * scaleFactorWidth);
                 int newBoardHeight = (int)(GameTextures.TopRightBoard.Height * scaleFactorHeight);
 
-                if (BeatShift.graphics.GraphicsDevice.Viewport.Width > 700)
+                if (Race.currentRaceType.getRaceTypeString().Equals("EliminationRace"))
                 {
-                    Rectangle d = new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width - GameTextures.TopRightBoard.Width, 0, GameTextures.TopRightBoard.Width, GameTextures.TopRightBoard.Height);
-                    BeatShift.spriteBatch.Draw(GameTextures.TopRightBoard, d, Color.White);
+                    {
+                        Rectangle d = new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width - GameTextures.EliminationBar.Width, 0, GameTextures.EliminationBar.Width, GameTextures.EliminationBar.Height);
+                        BeatShift.spriteBatch.Draw(GameTextures.EliminationBar, d, Color.White);
+                        if (racer.raceTiming.currentRanking == 1)
+                        {
+                            DrawMessageColour(BeatShift.newfont, racer.raceTiming.currentRanking.ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 160, 55, 0.75f, Color.PapayaWhip);
+                            DrawMessageColour(BeatShift.newfont, calculateRankSuffix(racer.raceTiming.currentRanking), BeatShift.graphics.GraphicsDevice.Viewport.Width - 140, 55, 0.75f, Color.PapayaWhip);
+                        }
+                        else
+                        {
+                            DrawMessageColour(BeatShift.newfont, racer.raceTiming.currentRanking.ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 160, 55, 0.75f, Color.PapayaWhip);
+                            DrawMessageColour(BeatShift.newfont, calculateRankSuffix(racer.raceTiming.currentRanking), BeatShift.graphics.GraphicsDevice.Viewport.Width - 135, 55, 0.75f, Color.PapayaWhip);
+                        }
+                    }
+
                 }
                 else
-                {
-                    Rectangle d = new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width - GameTextures.TopRightBoardSmall.Width, 0, GameTextures.TopRightBoardSmall.Width, GameTextures.TopRightBoardSmall.Height);
-                    BeatShift.spriteBatch.Draw(GameTextures.TopRightBoardSmall, d, Color.White);
-                }
+                    if (BeatShift.graphics.GraphicsDevice.Viewport.Width > 700)
+                    {
+                        Rectangle d = new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width - GameTextures.TopRightBoard.Width, 0, GameTextures.TopRightBoard.Width, GameTextures.TopRightBoard.Height);
+                        BeatShift.spriteBatch.Draw(GameTextures.TopRightBoard, d, Color.White);
+                    }
+                    else
+                    {
+                        Rectangle d = new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width - GameTextures.TopRightBoardSmall.Width, 0, GameTextures.TopRightBoardSmall.Width, GameTextures.TopRightBoardSmall.Height);
+                        BeatShift.spriteBatch.Draw(GameTextures.TopRightBoardSmall, d, Color.White);
+                    }
+
                 //////////////////////////////
                 ////////// TOTAL LAPS ////////
                 //////////////////////////////
