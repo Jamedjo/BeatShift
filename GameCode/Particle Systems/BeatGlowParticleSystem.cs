@@ -49,7 +49,7 @@ namespace DPSF.ParticleSystems
         //-----------------------------------------------------------
         float mfSizeMin = 10;
         float mfSizeMax = 50;
-        const float size = 8;
+        const float size = 5;
         Vector3 topVelocity;
         Vector3 lowVelocity;
         //===========================================================
@@ -116,8 +116,8 @@ namespace DPSF.ParticleSystems
             // as the Particle Initialization Function.
             topVelocity = new Vector3(0, 0, 0);
             lowVelocity = new Vector3(0, 0, 0);
-            InitialProperties.LifetimeMin = 0.1f;
-            InitialProperties.LifetimeMax = 0.12f;
+            InitialProperties.LifetimeMin = 0.2f;
+            InitialProperties.LifetimeMax = 0.22f;
             InitialProperties.PositionMin = Vector3.Zero;
             InitialProperties.PositionMax = Vector3.Zero;
             InitialProperties.VelocityMin = lowVelocity;
@@ -237,8 +237,12 @@ namespace DPSF.ParticleSystems
         //===========================================================
         // Other Particle System Functions
         //===========================================================
-        public void setPosition(Vector3 position) {
-            Emitter.PositionData.Position = position;
+        public void setPosition(Vector3 position, Quaternion orientation) {
+            Emitter.PositionData.Position = Vector3.Zero;
+            Emitter.PositionData.Position.Y = 3;
+            Emitter.PositionData.Position = Vector3.Transform(Emitter.PositionData.Position, orientation);
+            Emitter.PositionData.Position += position;
+            
         }
         //-----------------------------------------------------------
         // TODO: Place any other functions here

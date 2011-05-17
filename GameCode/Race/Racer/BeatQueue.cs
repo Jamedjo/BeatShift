@@ -217,7 +217,7 @@ namespace BeatShift
             {
 
                 visualisation.SetPosition(parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.DrawOrientation);
-                beatGlow.setPosition(parentRacer.shipPhysics.ShipPosition);
+                beatGlow.setPosition(parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.DrawOrientation);
             }
             if (!parentRacer.raceTiming.hasCompletedRace)
             {

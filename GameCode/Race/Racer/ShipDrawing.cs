@@ -54,7 +54,7 @@ namespace BeatShift
             parentRacer.globalSystems.AddParticleSystem(collision);
             collision.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
 
-            engineGlow = new EngineParticleSystem(null);
+            engineGlow = new EngineParticleSystem(null,parentRacer);
             parentRacer.globalSystems.AddParticleSystem(engineGlow);
             engineGlow.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
 
