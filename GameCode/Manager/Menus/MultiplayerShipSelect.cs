@@ -253,11 +253,14 @@ namespace BeatShift
         public void Draw(GameTime gameTime)
         {
             BeatShift.graphics.GraphicsDevice.Viewport = Viewports.fullViewport;
+            Rectangle viewArea = new Rectangle(0, 0, BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height);
             //TODO: Iterate over viewports instead.
 
             BeatShift.spriteBatch.Begin();
             //draw lines down middle of screen to make the split visible.
             //done in mainGame
+
+            BeatShift.spriteBatch.Draw(GameTextures.MenuBackgroundBlue, viewArea, Color.White);
 
             //for each viewport/controller
             for (int i = 0; i < 4; i++)

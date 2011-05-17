@@ -47,7 +47,7 @@ namespace BeatShift.Menus
             addMenuItem("DESERT MAP", (Action)(delegate
             {
                 MapManager.mapToLoad = MapName.DesertMap;
-                SoundManager.trackToLoad = "City";
+                SoundManager.trackToLoad = "Desert";
                 GameLoop.setGameState(GameState.MultiplayerShipSelect);
                 //if (isSinglePlayer()) MenuManager.setCurrentMenu(MenuPage.SinglePlayerShipSelect);
                 //else GameLoop.setGameState(GameState.MultiplayerShipSelect);

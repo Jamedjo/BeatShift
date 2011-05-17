@@ -240,7 +240,8 @@ namespace BeatShift
         public static void Update(GameTime gameTime)
         {
             // Check to see if the user has paused or unpaused
-            Task music = Parallel.Start(BeatShift.bgm.Update);
+            BeatShift.bgm.Update();
+           // Task music = Parallel.Start();
             if(currentState == GameState.LocalGame || currentState == GameState.NetworkedGame)
                 checkPauseKey(gameTime);
             
@@ -257,12 +258,12 @@ namespace BeatShift
             mainGameinput.Update(gameTime);
             if (!paused)
             {
-                Task particles;
+               // Task particles;
                 Boolean raceUpdated = false;
                 if (GameLoop.getCurrentState() == GameState.LocalGame)
                 {
                     //IWork pudate = new IWork();
-                    particles = Parallel.Start(()=>BeatShift.particleManager.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds));
+                    //particles = Parallel.Start(()=>BeatShift.particleManager.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds));
                     //BeatShift.particleManager.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
                 }
                 
@@ -315,7 +316,7 @@ namespace BeatShift
             //        BeatShift.graphics.ToggleFullScreen();
             //    }
 #endif
-            music.Wait();
+            //music.Wait();
         }
 
         public static void Draw(GameTime gameTime)
@@ -326,13 +327,13 @@ namespace BeatShift
             //Draw Scene background
             BeatShift.graphics.GraphicsDevice.Clear(Color.Black);
 
-            BeatShift.spriteBatch.Begin();
+            //BeatShift.spriteBatch.Begin();
             //if (menuSystem.Visible || shipSelect.Visible)
             //{
                 //GraphicsDevice.Clear(Color.CornflowerBlue);
-                BeatShift.spriteBatch.Draw(GameTextures.MenuBackgroundBlue, viewArea, Color.White);
+                //BeatShift.spriteBatch.Draw(GameTextures.MenuBackgroundBlue, viewArea, Color.White);
             //}
-            BeatShift.spriteBatch.End();
+            //BeatShift.spriteBatch.End();
 
             //Draw other Drawable Game Classes
             if (MenuManager.Visible)

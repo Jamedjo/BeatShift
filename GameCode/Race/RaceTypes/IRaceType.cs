@@ -102,6 +102,7 @@ namespace BeatShift
             {
                 RacerType newRacerType = racer.racerType;
                 if (newRacerType == RacerType.None) newRacerType = RacerType.LocalHuman;
+                racer.shipNumber = Race.currentRacers.IndexOf(racer);
                 racer.insertShipOnMap(newRacerType);
             }
             Console.WriteLine("Done");
