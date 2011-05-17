@@ -12,11 +12,12 @@ using BEPUphysics;
 using BEPUphysics.DataStructures;
 using BeatShift.DebugGraphics;
 using BeatShift.Cameras;
+using ParallelTasks;
 
 namespace BeatShift
 {
     public enum MapName { None, All, CityMap, SpaceMap, DesertMap }
-    public enum ModelCategory { Scenery, Wall, Track } //In draw order
+    public enum ModelCategory { Scenery, Wall, Track, InvisibleWall } //In draw order
 
     public abstract class Map
     {
@@ -32,7 +33,7 @@ namespace BeatShift
         protected Texture2D mapTrackTexture;
         protected Texture2D mapTrackAlphaTexture;
         protected Texture2D mapTrackNormalTexture;
-        
+
         public MapName currentMapName;
 
         public double[] timeTrialRanks = new double[4];
@@ -64,15 +65,13 @@ namespace BeatShift
         {
             Physics.reset();
 
-            Console.Write("adding physics to map... ");
-            foreach (FbxModel mod in modelList)
+             Parallel.ForEach(modelList, mod =>
             {
                 if (mod.mapName == currentMapName || mod.mapName == MapName.All)
                 {
                     Physics.addMapToPhysics(mod.model, mod.category);
                 }
-            }
-            Console.WriteLine("Loaded");
+            });
         }
 
         #endregion
@@ -105,7 +104,7 @@ namespace BeatShift
             Matrix worldInverseTranspose = Matrix.Transpose(Matrix.Invert(worldTransform));
             bshiftEffect.Parameters["wit_Mx"].SetValue(worldInverseTranspose);
 
-            
+
             if (currentMapName == MapName.SpaceMap)
                 bshiftEffect.Parameters["ambientColour"].SetValue(Color.DodgerBlue.ToVector4());
             else if (currentMapName == MapName.CityMap)
@@ -156,13 +155,14 @@ namespace BeatShift
                     drawModel(modelObject, gameTime, camera);
                 }
             }
-            
+
         }
 
         void drawModel(FbxModel modelObject, GameTime gameTime, CameraWrapper camera)
         {
+            if (modelObject.category == ModelCategory.InvisibleWall) return;
             RasterizerState cull = BeatShift.graphics.GraphicsDevice.RasterizerState;
-            if (modelObject.category == ModelCategory.Track && currentMapName == MapName.SpaceMap)
+            if (modelObject.category == ModelCategory.Track)
             {
                 BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
                 drawWithBShiftEffect(modelObject.model, modelObject.transforms, camera);
@@ -226,7 +226,7 @@ namespace BeatShift
             BeatShift.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
 
             drawSpheresOnSingleCamera(gameTime, camera);
-            
+
         }
 
         void drawSpheresOnSingleCamera(GameTime gameTime, CameraWrapper camera)
@@ -265,7 +265,7 @@ namespace BeatShift
                 point = CurrentMapData.mapPoints[i];
 
                 Vector3 drawPosition = point.position;
-                DrawVector.drawArrow(camera, drawPosition, point.roadSurface*9f, Color.Yellow.ToVector3());
+                DrawVector.drawArrow(camera, drawPosition, point.roadSurface * 9f, Color.Yellow.ToVector3());
                 DrawVector.drawArrow(camera, drawPosition, point.tangent * 12f, Color.Blue.ToVector3());
                 DrawVector.drawArrow(camera, drawPosition, point.trackUp * 12f, Color.Red.ToVector3());
             }
@@ -276,7 +276,7 @@ namespace BeatShift
             skyboxModel = BeatShift.contentManager.Load<Model>(modelName);
             //skyboxTexture = BeatShift.contentManager.Load<Texture2D>(textureName);
 
-            foreach(ModelMesh mesh in skyboxModel.Meshes)
+            foreach (ModelMesh mesh in skyboxModel.Meshes)
             {
                 foreach (BasicEffect beffect in mesh.Effects)
                 {
@@ -290,7 +290,7 @@ namespace BeatShift
         //todo call method
         public void DrawSkybox(CameraWrapper camera)
         {
-        // set scale
+            // set scale
             Matrix[] skyboxTransforms = new Matrix[skyboxModel.Bones.Count];
             skyboxModel.CopyAbsoluteBoneTransformsTo(skyboxTransforms);
             Matrix viewMatrix = camera.View;
@@ -307,7 +307,7 @@ namespace BeatShift
                     currentEffect.View = viewMatrix;
                     currentEffect.Projection = projectionMatrix;
 
-                     currentEffect.World = skyboxTransforms[mesh.ParentBone.Index] * translation;//transforms;
+                    currentEffect.World = skyboxTransforms[mesh.ParentBone.Index] * translation;//transforms;
                 }
 
                 mesh.Draw();

@@ -48,10 +48,10 @@ namespace BeatShift
                     racer.Update(gameTime);
                 }
                 );
-                /*foreach (Racer racer in currentRacers)
-                {
-                    racer.Update(gameTime);
-                }*/
+                //foreach (Racer racer in currentRacers)
+                //{
+                //   racer.Update(gameTime);
+                //}
             }
             else
             {

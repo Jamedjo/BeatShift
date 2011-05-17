@@ -59,6 +59,7 @@ namespace BeatShift
             isLastToBeEliminated = false;
             stopwatch = new Stopwatch();
             fastestLap = new TimeSpan(0);
+            finalRaceTime = long.MaxValue;
         }
 
         public void Update()

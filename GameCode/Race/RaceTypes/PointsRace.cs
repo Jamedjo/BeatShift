@@ -4,26 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using BeatShift.Input;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework;
 
 namespace BeatShift
 {
     // When creating this class ensure that only one racer is in the race.
 
-    public class LappedRace : IRaceType
+    public class PointsRace : IRaceType
     {
-        public LappedRace(int MAX_LAPS_IN)
+        public PointsRace(int MAX_LAPS_IN)
         {
             maxLaps = MAX_LAPS_IN;
             areLapsRequired = true;
             areRanksRequired = true;
 
             displayCurrentLapOutofTotalLaps = true;
-            displayCurrentBestLap = true;
-            displayCurrentLapTime = true;
+            displayCurrentBestLap = false;
+            displayCurrentLapTime = false;
             displayCurrentRank = true;
             displayMinimap = true;
+            displayTotalPoints = true;
         }
 
         public override bool hasTheRacerFinished(int laps, int points, int level, bool last, Stopwatch stopwatch)
@@ -44,12 +43,6 @@ namespace BeatShift
             racer.raceTiming.isRacing = false;
             racer.raceTiming.hasCompletedRace = true;
             racer.raceTiming.finalRaceTime = finishTime.ElapsedMilliseconds;
-            if (racer.racingControls.chosenInput.GetType() == typeof(PadInputManager))
-            {
-                GamePad.SetVibration(((PadInputManager)racer.racingControls.chosenInput).getPlayerIndex(), 0.0f, 0.0f);
-//                if (((PadInputManager)racer.racingControls.chosenInput).getPlayerIndex()==PlayerIndex.One)
-  //              System.Diagnostics.Debug.WriteLine("sdfg");
-            }
             racer.racingControls.chosenInput = new AiInputManager(racer);
 
             TimeSpan ts = finishTime.Elapsed;

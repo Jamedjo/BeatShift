@@ -7,13 +7,12 @@ using Microsoft.Xna.Framework.Graphics;
 using BeatShift.Input;
 using Microsoft.Xna.Framework.Input;
 using System.Threading;
-using ParallelTasks;
 
 namespace BeatShift.Menus
 {
     class LoadingMenu : IMenuPage
     {
-        private bool loaded;
+        public Thread loadingThread;
 
         public LoadingMenu()
         {
@@ -24,20 +23,18 @@ namespace BeatShift.Menus
         {
             Texture2D background = GameTextures.TutorialScreen;
             //spriteBatch.Draw(background, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - background.Width / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - background.Height / 2), Color.White);
-            spriteBatch.Draw(background, new Rectangle(0, 0, BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height), Color.White);
-
-            //spriteBatch.Draw(background, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height), Color.White);
-            if (loaded)
-                spriteBatch.Draw(GameTextures.LoadingBefore, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.LoadingBefore.Width / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height - 100, GameTextures.LoadingBefore.Width, GameTextures.LoadingBefore.Height), Color.White);
+            spriteBatch.Draw(background, new Rectangle(0,0,BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height), Color.White);
+            if (!loadingThread.IsAlive)
+                spriteBatch.DrawString(BeatShift.newfont, "PRESS A TO START", new Vector2(450, 620), Color.Lime);
             else
-                spriteBatch.Draw(GameTextures.LoadingAfter, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.LoadingAfter.Width / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height - 100, GameTextures.LoadingAfter.Width, GameTextures.LoadingAfter.Height), Color.White);
+                spriteBatch.DrawString(BeatShift.newfont, "LOADING...", new Vector2(390, 620), Color.DarkRed);
         }
 
         public override void setupMenuItems()
         {
             addMenuItem("", (Action)(delegate
             {
-                if (loaded)
+                if (!loadingThread.IsAlive)
                 {
                     GameLoop.setGameState(GameState.LocalGame);
 #if WINDOWS
@@ -52,22 +49,16 @@ namespace BeatShift.Menus
             }));
         }
 
+        //DO THE LOADING HERE
         void load()
         {
             MapManager.loadMap();
             BeatShift.bgm.loadTrack(SoundManager.trackToLoad);
             if (Options.AddAItoGame)
                 Race.setupAIRacers(AiInputManager.numberOfAI);
-            /*Parallel.ForEach(Race.currentRacers, racer =>
-            {
-                racer.Load();
-            });*/
             foreach (Racer racer in Race.currentRacers)
-            {
                 racer.Load();
-            }
             GC.Collect();
-            loaded = true;
         }
 
         public override void respondToMenuBack()
@@ -78,8 +69,8 @@ namespace BeatShift.Menus
         public override void enteringMenu()
         {
             base.enteringMenu();
-            loaded = false;
-            Parallel.Start(load);
+            loadingThread = new Thread(load);
+            loadingThread.Start();
         }
     }
 }
