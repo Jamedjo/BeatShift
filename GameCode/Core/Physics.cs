@@ -113,7 +113,7 @@ namespace BeatShift
             //If two threads are put on one core, it will bottleneck the engine and run significantly slower than using 3 hardware threads.
             //space.ThreadManager.AddThread(delegate(object information) { Thread.CurrentThread.SetProcessorAffinity(new int[] { 1 }); }, null);
             //space.ThreadManager.AddThread(delegate(object information) { Thread.CurrentThread.SetProcessorAffinity(new int[] { 3 }); }, null);
-            space.ThreadManager.AddThread(delegate(object information) { Thread.CurrentThread.SetProcessorAffinity(new int[] { 5 }); }, null);
+            //space.ThreadManager.AddThread(delegate(object information) { Thread.CurrentThread.SetProcessorAffinity(new int[] { 5 }); }, null);
 
 #else
             if (Environment.ProcessorCount > 1)
@@ -121,7 +121,7 @@ namespace BeatShift
                 //On windows, just throw a thread at every processor.  The thread scheduler will take care of where to put them.
                 for (int i = 0; i < Environment.ProcessorCount; i++)
                 {
-                    space.ThreadManager.AddThread();
+                    //space.ThreadManager.AddThread();
                 }
             }
 #endif

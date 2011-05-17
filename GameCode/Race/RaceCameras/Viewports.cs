@@ -16,6 +16,8 @@ namespace BeatShift
         public readonly static Viewport bottomViewport;
         public readonly static Viewport bottomRightViewport;
         public readonly static Viewport bottomLeftViewport;
+        public readonly static Viewport rightViewPort;
+        public readonly static Viewport leftViewPort;
 
         /// <summary>
         /// Initialize viewports.
@@ -31,9 +33,15 @@ namespace BeatShift
             topRightViewport = BeatShift.graphics.GraphicsDevice.Viewport;
             topLeftViewport = BeatShift.graphics.GraphicsDevice.Viewport;
 
+            leftViewPort = BeatShift.graphics.GraphicsDevice.Viewport;
+            rightViewPort = BeatShift.graphics.GraphicsDevice.Viewport;
+
             topViewport.Height = (fullViewport.Height / 2);
             bottomViewport = topViewport;
             bottomViewport.Y = topViewport.Height;
+            leftViewPort.Width = (fullViewport.Width/2);
+            rightViewPort.Width = leftViewPort.Width;
+            rightViewPort.X = leftViewPort.Width;
             //set size for 4 player split
             bottomRightViewport.Height = (fullViewport.Height / 2);
             bottomRightViewport.Width = (fullViewport.Width / 2);

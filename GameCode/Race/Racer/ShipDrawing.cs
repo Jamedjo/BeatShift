@@ -31,6 +31,10 @@ namespace BeatShift
         Func<Vector3> getShipPosition;
         public CollisionParticleSystem collision;
 
+
+        public Vector3 testWalls = Vector3.Zero;
+        public Boolean wallHit = false;
+
         private Racer parentRacer;
 
         public ShipDrawing(Func<Matrix> getDrawOrientationMatrix, Func<Vector3> getPosition, Racer parent)
@@ -45,15 +49,11 @@ namespace BeatShift
         public void LoadParticles()
         {
             collision = new CollisionParticleSystem(null);
-            BeatShift.particleManager.AddParticleSystem(collision);
+            parentRacer.globalSystems.AddParticleSystem(collision);
             collision.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
 
-            glow = new BeatGlowParticleSystem(null);
-            BeatShift.particleManager.AddParticleSystem(glow);
-            glow.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager,null);
-
             engineGlow = new EngineParticleSystem(null);
-            BeatShift.particleManager.AddParticleSystem(engineGlow);
+            parentRacer.globalSystems.AddParticleSystem(engineGlow);
             engineGlow.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
 
             if (currentShip == ShipName.Skylar)
@@ -111,7 +111,7 @@ namespace BeatShift
             worldMatrix.Translation = getShipPosition();
             shipClasses[(int)currentShip].shipRenderer.World = worldMatrix;
 
-            if (((camera.ShouldDrawOwnShip || !isThisTheCamerasShip) && GameLoop.getCurrentState() == GameState.LocalGame) || isThisTheCamerasShip)
+            if ((camera.ShouldDrawOwnShip || !isThisTheCamerasShip) && GameLoop.getCurrentState() == GameState.LocalGame)
             {
                 foreach (ModelMesh mesh in shipClasses[(int)currentShip].model.Meshes)
                 {
@@ -143,48 +143,14 @@ namespace BeatShift
 
             if (engineGlow != null)
             {
-                engineGlow.SetWorldViewProjectionMatrices(Matrix.Identity, viewMatrix, projectionMatrix);
-                collision.SetWorldViewProjectionMatrices(Matrix.Identity, viewMatrix, projectionMatrix);
-                //was using camera position (0,0,0) so all particles were facing towards the centre
-                //as particles are one sided this made them invisible
-                //this line faces them towards the ship which works as a quick hack when they originate from the centre/center
-                //needs to be replaced with engineGlow.SetCameraPosition(camera.getPosition()); or somthing that uses the camera's position.
-                //Vector3 temp = camera.cameraPosition();
-                if (parentRacer.shipPhysics != null)
-                {
-                    engineGlow.SetCameraPosition(camera.cameraPosition());
-                    collision.SetCameraPosition(camera.cameraPosition());
-                }
-                else
-                {
-                    engineGlow.SetCameraPosition(camera.cameraPosition());
-                    collision.SetCameraPosition(camera.cameraPosition());
-                }
-                engineGlow.Draw();
-                collision.Draw();
-                //Vector3.Transform(camera.cameraPosition(),Matrix.Invert(worldMatrix));
+                parentRacer.globalSystems.SetWorldViewProjectionMatricesForAllParticleSystems(Matrix.Identity, viewMatrix, projectionMatrix);
+                parentRacer.globalSystems.SetCameraPositionForAllParticleSystems(camera.cameraPosition());
+                parentRacer.globalSystems.DrawAllParticleSystems();
                 if (isThisTheCamerasShip && !parentRacer.raceTiming.hasCompletedRace)
                 {
-                    parentRacer.beatQueue.beatGlow.SetWorldViewProjectionMatrices(Matrix.Identity, viewMatrix, projectionMatrix);
-                    parentRacer.beatQueue.visualisation.SetWorldViewProjectionMatrices(Matrix.Identity, viewMatrix, projectionMatrix);
-                    glow.SetWorldViewProjectionMatrices(worldMatrix, viewMatrix, projectionMatrix);
-                    if (parentRacer.shipPhysics != null)
-                    {
-                        parentRacer.beatQueue.beatGlow.SetCameraPosition(Vector3.Transform(camera.cameraPosition(), Matrix.Invert(worldMatrix)));
-                        //parentRacer.beatQueue.visualisation.SetCameraPosition(Vector3.Transform(camera.cameraPosition(), Matrix.Invert(worldMatrix)));
-                        glow.SetCameraPosition(Vector3.Transform(camera.cameraPosition(), Matrix.Invert(worldMatrix)));
-
-                        parentRacer.beatQueue.visualisation.SetCameraPosition(camera.cameraPosition());
-                    }
-                    else
-                    {
-                        parentRacer.beatQueue.beatGlow.SetCameraPosition(camera.cameraPosition());
-                        parentRacer.beatQueue.visualisation.SetCameraPosition(camera.cameraPosition());
-                        glow.SetCameraPosition(camera.cameraPosition());
-                    }
-                    parentRacer.beatQueue.beatGlow.Draw();
-                    parentRacer.beatQueue.visualisation.Draw();
-                    glow.Draw();
+                    parentRacer.privateSystems.SetWorldViewProjectionMatricesForAllParticleSystems(Matrix.Identity, viewMatrix, projectionMatrix);
+                    parentRacer.privateSystems.SetCameraPositionForAllParticleSystems(camera.cameraPosition());
+                    parentRacer.privateSystems.DrawAllParticleSystems();
 
                 }
             }
@@ -195,7 +161,10 @@ namespace BeatShift
                     DrawVector.drawArrow(camera, arrow.pos, arrow.dir, arrow.col);
                 }
             }
-
+            if (isThisTheCamerasShip)
+            {
+                DrawVector.drawArrow(camera, getShipPosition(), testWalls, wallHit ? new Vector3(255, 0, 0) : new Vector3(0, 0, 255));
+            }
             
 
         }

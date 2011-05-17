@@ -29,6 +29,8 @@ namespace BeatShift.Menus
         public float AnimateInDuration { get; set; }
         float animateInElapsedTime = 0;
         float animateInLerp = 0;
+        Color sickLime = new Color(222, 255, 0);
+        public Color slightlyTransparent = new Color(0, 0, 0, 180);
 
         public IMenuPage()
         {
@@ -40,17 +42,17 @@ namespace BeatShift.Menus
 
         private void setDefaultValues()
         {
-            Offset = new Vector2(0, 30);
-            MenuPos = new Vector2(160, 150);
             TitleStartPos = new Vector2(-150, 85);
-            TitlePos = new Vector2(120, 85);
+            TitlePos = new Vector2(BeatShift.graphics.PreferredBackBufferWidth/2 - 265, 170);
+            MenuPos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, 300);
+            Offset = new Vector2(0, 80);
 
             UseTextHeightAsOffset = false;
             UseTextWidthAsOffset = false;
             DrawTitleFromTextCentre = false;
             DrawMenuItemsFromTextCentre = false;
 
-            TextScale = 0.5f;
+            TextScale = 1f;
 
             AnimateInDuration = 160;
             
@@ -165,7 +167,7 @@ namespace BeatShift.Menus
 
         virtual public void DrawSprites(SpriteBatch spriteBatch){
             //Draws within SpriteBatch Begin()/End()Blocks
-            spriteBatch.Draw(GameTextures.MenuBackgroundBlack, new Rectangle(0, 0, BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height), Color.White);              
+            spriteBatch.Draw(GameTextures.MenuBackgroundBlackRed, new Rectangle(0, 0, BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height), Color.White);              
 
         }
 
@@ -173,12 +175,13 @@ namespace BeatShift.Menus
         {
             BeatShift.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
             BeatShift.graphics.GraphicsDevice.Viewport = Viewports.fullViewport;
+            Rectangle viewArea = new Rectangle(0, 0, BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height);
             BeatShift.spriteBatch.Begin();
+            BeatShift.spriteBatch.Draw(GameTextures.Logo, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.Logo.Width/2, -10), Color.White);
 
-            DrawSprites(BeatShift.spriteBatch);
-            Vector2 titleOrigin=Vector2.Zero;
+            DrawSprites(BeatShift.spriteBatch);            Vector2 titleOrigin=Vector2.Zero;
             if (DrawTitleFromTextCentre) titleOrigin = BeatShift.newfontgreen.MeasureString(title) / 2;
-            BeatShift.spriteBatch.DrawString(BeatShift.newfontgreen, title, Vector2.Lerp(TitleStartPos, TitlePos, animateInLerp), Color.White * animateInLerp,0,titleOrigin,1,SpriteEffects.None,1);
+            BeatShift.spriteBatch.DrawString(BeatShift.newfont, title, Vector2.Lerp(TitleStartPos, TitlePos, animateInLerp), Color.White * animateInLerp,0,titleOrigin,0.5f,SpriteEffects.None,1);
 
             Vector2 textSizeSoFar = Vector2.Zero;
             for(int i=0;i<menuItems.Count;i++)
@@ -195,7 +198,7 @@ namespace BeatShift.Menus
                 if (DrawMenuItemsFromTextCentre) itemOrigin = BeatShift.newfont.MeasureString(text) / 2;//textSize / 2;
 
                 Color frontColour = Color.White * animateInLerp;
-                if (i == currentItem) frontColour = Color.Red;
+                if (i == currentItem) frontColour = sickLime;
                 BeatShift.spriteBatch.DrawString(BeatShift.newfont, text, MenuPos + itemoffset, frontColour, 0, itemOrigin,TextScale, SpriteEffects.None, 1);
             }
             BeatShift.spriteBatch.End();

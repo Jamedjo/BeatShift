@@ -108,6 +108,10 @@
     <Reference Include="mscorlib">
       <Private>False</Private>
     </Reference>
+    <Reference Include="ParallelTasks, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\ParallelTasks\Windows Phone\Debug\ParallelTasks.dll</HintPath>
+    </Reference>
     <Reference Include="ProjectMercury">
       <HintPath>..\lib\Mercury\X86\ProjectMercury.dll</HintPath>
     </Reference>

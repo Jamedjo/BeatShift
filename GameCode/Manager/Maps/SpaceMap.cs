@@ -27,10 +27,10 @@ namespace BeatShift
             mapTrackAlphaTexture = BeatShift.contentManager.Load<Texture2D>("Textures/Track2_Alpha");
             mapTrackNormalTexture = BeatShift.contentManager.Load<Texture2D>("Textures/Track2_Normal");
 
-            timeTrialRanks[0] = 24000;
-            timeTrialRanks[1] = 28000;
-            timeTrialRanks[2] = 32000;
-            timeTrialRanks[3] = 38000;
+            timeTrialRanks[0] = 40000;
+            timeTrialRanks[1] = 50000;
+            timeTrialRanks[2] = 60000;
+            timeTrialRanks[3] = 80000;
 
             Console.WriteLine("...Loaded Space map");
         }

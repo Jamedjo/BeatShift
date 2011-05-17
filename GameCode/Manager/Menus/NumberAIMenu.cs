@@ -11,18 +11,19 @@ namespace BeatShift.Menus
     {
         public NumberAIMenu()
         {
-            title = "Choose the number of AI oppenents";
+            title = "SELECT NUMBER OF AI OPPONENTS";
         }
 
         public override void overrideMenuPositions()
         {
+            //DrawTitleFromTextCentre = true;
             DrawMenuItemsFromTextCentre = true;
-            DrawTitleFromTextCentre = true;
-            TitlePos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, 75);
-            MenuPos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, 220);
-            TitleStartPos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, -100);
-            //UseTextWidthAsOffset = true;
-            Offset = new Vector2(0, 40);//additional vertical spaceing.
+            //DrawTitleFromTextCentre = true;
+            //TitlePos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, 75);
+            //MenuPos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, 220);
+            //TitleStartPos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, -100);
+            ////UseTextWidthAsOffset = true;
+            //Offset = new Vector2(0, 40);//additional vertical spaceing.
         }
 
         public override void setupMenuItems()
@@ -30,17 +31,17 @@ namespace BeatShift.Menus
 
             addMenuItem("One", (Action)(delegate
             {
-                Input.AiInputManager.numberOfAI = 1;
+                //Input.AiInputManager.numberOfAI = 1;
                 MenuManager.setCurrentMenu(MenuPage.MapSelect);
             }));
             addMenuItem("Two", (Action)(delegate
             {
-                Input.AiInputManager.numberOfAI = 2;
+                //Input.AiInputManager.numberOfAI = 2;
                 MenuManager.setCurrentMenu(MenuPage.MapSelect);
             }));
             addMenuItem("Three", (Action)(delegate
             {
-                Input.AiInputManager.numberOfAI = 3;
+                //Input.AiInputManager.numberOfAI = 3;
                 MenuManager.setCurrentMenu(MenuPage.MapSelect);
             }));
         }

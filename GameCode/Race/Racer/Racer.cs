@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using BeatShift.Input;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
-
+using DPSF;
 namespace BeatShift
 {
     public class Racer
@@ -24,7 +24,8 @@ namespace BeatShift
         public RacerPoints racerPoints { get; private set; }
         public Cue Hum;
         private bool isBoosting = false;
-
+        public ParticleSystemManager globalSystems;
+        public ParticleSystemManager privateSystems;
         // General game related variables
         const float updatePeriod = 50; //update movement 20 times a second (1000/50=20)
         float lastUpdatedTimer = 0;
@@ -76,6 +77,8 @@ namespace BeatShift
             shipDrawing = new ShipDrawing(new Func<Matrix>(() => Matrix.Identity), new Func<Vector3>(() => Vector3.Zero), this);
             beatQueue = new BeatQueue(this);
             racerPoints = new RacerPoints();
+            privateSystems = new ParticleSystemManager();
+            globalSystems = new ParticleSystemManager();
             //setColour(1);//Set to red
             Hum = SoundManager.getEngineHum();
             //Hum.Play();
@@ -115,7 +118,14 @@ namespace BeatShift
         public void setupRacingControls(IInputManager inputM)
         {
             // AI control tests
-            racingControls = new RacingControls(this, inputM);
+            if (AiInputManager.testAI)
+            {
+                racingControls = new RacingControls(this, new AiInputManager(this));
+            }
+            else
+            {
+                racingControls = new RacingControls(this, inputM);
+            }
             //racingControls = new RacingControls(this, new AiInputManager(this));
         }
         private void setupRacingControls()
@@ -203,9 +213,13 @@ namespace BeatShift
 
             // Finishes the racer if required
             if (raceTiming.isRacing) raceTiming.Update();
-            
-            shipDrawing.engineGlow.setVelocity(shipPhysics.physicsBody.LinearVelocity);
-            shipDrawing.engineGlow.SetPosition(shipPhysics.ShipPosition,shipPhysics.DrawOrientation);
+            if (shipDrawing.engineGlow != null)
+            {
+                shipDrawing.engineGlow.setVelocity(shipPhysics.physicsBody.LinearVelocity);
+                shipDrawing.engineGlow.SetPosition(shipPhysics.ShipPosition, shipPhysics.DrawOrientation);
+            }
+            globalSystems.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
+            privateSystems.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
 
             int lvl = (beatQueue == null) ? 0 : beatQueue.getLayer();
             racerPoints.Update(gameTime, isBoosting, lvl);

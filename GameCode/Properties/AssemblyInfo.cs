@@ -5,8 +5,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("WindowsBeatShift")]
-[assembly: AssemblyProduct("WindowsBeatShift")]
+[assembly: AssemblyTitle("BeatShift")]
+[assembly: AssemblyProduct("BeatShift")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyCompany("Student Support")]
 [assembly: AssemblyCopyright("Copyright © Student Support 2010")]

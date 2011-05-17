@@ -26,17 +26,15 @@ namespace BeatShift.Input
         ///  Set to false and the player retakes control
         /// </summary>
         public const Boolean testAI = false;
-        public static int numberOfAI = 2;
+        public const int numberOfAI = 2;
 
-        private float randInaccuracy;
-        private TimeSpan lastRandChange;
         private GamePadState currentState;
         private GamePadState lastState;
         private Racer parent;
-        private Box aheadBox;
         private float lastTurn = 0f;
 
         Ray AiRay = new Ray();
+        Ray testRay = new Ray();
 
         private Beat? nextBeatToPress = null;
 
@@ -50,15 +48,6 @@ namespace BeatShift.Input
         {
             lastState = currentState = new GamePadState();
             this.parent = parent;
-
-            // WHY WILL THIS NOT PRODUCE COLLISIONS
-            aheadBox = new Box(parent.shipPhysics.ShipPosition + parent.shipPhysics.ShipOrientationMatrix.Forward * 00, 500, 500, 500, 0.01f);
-            aheadBox.Orientation = parent.shipPhysics.ShipOrientationQuaternion;
-
-            aheadBox.CollisionInformation.Events.PairTouched += boxCollide;
-            aheadBox.CollisionInformation.Events.InitialCollisionDetected += boxinitialCollide;
-
-            lastRandChange = TimeSpan.Zero;
         }
 
         Boolean IInputManager.actionPressed(InputAction action)
@@ -138,18 +127,7 @@ namespace BeatShift.Input
             //            System.Diagnostics.Debug.WriteLine("{0} {1}", (c.Contact.Position - ship.ShipPosition).Length(), c.Contact.Normal);
             //        }
             //    }
-            if (gameTime.TotalGameTime.Subtract(lastRandChange).Seconds >= 1)
-            {
-                lastRandChange = gameTime.TotalGameTime;
-                randInaccuracy = (float)SimpleRNG.GetNormal(0, 1.0 / 6.0);
-#if WINDOWS
-                System.Diagnostics.Debug.WriteLine("{0:0.0000}", randInaccuracy);
-#endif
-            }
-
-            aheadBox.Position = parent.shipPhysics.ShipPosition + parent.shipPhysics.ShipOrientationMatrix.Forward * 0;
-            aheadBox.Orientation = parent.shipPhysics.ShipOrientationQuaternion;
-
+                        
             Vector2 leftThumbStick = Vector2.Zero;
             Vector2 rightThumbStick = Vector2.Zero;
 
@@ -205,6 +183,9 @@ namespace BeatShift.Input
             return b;
         }
 
+        const float futureWeight = 0.7f;
+        const float wallsWeight = 0.3f;
+
         /// <summary>
         /// Calculate how much the AI should be turning. This is likely to fail if the AI is not
         /// going the correct direction for whatever reason.
@@ -215,61 +196,40 @@ namespace BeatShift.Input
         /// </returns>
         private float setTurn()
         {
-            //float aWalls = avoidWalls();
+            float randInaccuracy = randTurn();
+
             float fTrack = futureTrack();
             float nWalls = newWalls();
-            lastTurn = (lastTurn + /*0.0f * aWalls +*/ 0.6f * fTrack + 0.3f * nWalls + randInaccuracy) / 2f;
-#if WINDOWS
-            //System.Diagnostics.Debug.WriteLine("{0:0.000} {1:0.000} {2:0.000} {3:0.000} {4:0.000}", lastTurn, aWalls, fTrack, nWalls, randInaccuracy);
-#endif
-            return lastTurn;
+            float aWalls = avoidWalls();
+
+
+            //System.Diagnostics.Debug.WriteLine("{0:0.000} {1:0.000} {2:0.000} {3:0.000}", randInaccuracy, fTrack, nWalls, aWalls);
+            
+            float retVal = futureWeight * fTrack + wallsWeight * nWalls + aWalls + randInaccuracy;
+            return Math.Max(-1, Math.Min(1, retVal));
         }
 
-        private void boxinitialCollide<EntityCollidable>(EntityCollidable sender, Collidable info, CollidablePairHandler pair)
+
+        private float currentRotation = 0f;
+        /// <summary>
+        /// Set the random turn component of the AI.
+        /// </summary>
+        private float randTurn()
         {
-            Collidable candidate = (pair.BroadPhaseOverlap.EntryA == aheadBox.CollisionInformation ? pair.BroadPhaseOverlap.EntryB : pair.BroadPhaseOverlap.EntryA) as Collidable;
-            Contact c;
+            float offset = 2.0f;
+            float radius = 1.0f;
+            float maxRotation = MathHelper.Pi / 7.0f;
 
-            if (candidate.Equals(Physics.currentTrackWall))
-            {
-                foreach (ContactInformation contactInformation in pair.Contacts)
-                {
-                    c = contactInformation.Contact;
-#if WINDOWS
-                    System.Diagnostics.Debug.WriteLine("{0} {1}", (c.Position - parent.shipPhysics.ShipPosition).Length(), c.Normal);
-#endif
-                }
-            }
-            else
-            {
-#if WINDOWS
-                System.Diagnostics.Debug.WriteLine("{0}", candidate.Shape);
-#endif
-            }
+            currentRotation += (float) (SimpleRNG.GetUniform() * 2 - 1) * maxRotation;
+
+            float width = (float) Math.Sin(currentRotation) * radius;
+            float extra = (float) Math.Cos(currentRotation) * radius;
+
+            return (float) Math.Tanh(width / (offset + extra));
         }
 
-        private void boxCollide<EntityCollidable>(EntityCollidable sender, Collidable other, CollidablePairHandler pair)
-        {
-            Collidable candidate = (pair.BroadPhaseOverlap.EntryA == aheadBox.CollisionInformation ? pair.BroadPhaseOverlap.EntryB : pair.BroadPhaseOverlap.EntryA) as Collidable;
-            Contact c;
 
-            if (candidate.Equals(Physics.currentTrackWall))
-            {
-                foreach (ContactInformation contactInformation in pair.Contacts)
-                {
-                    c = contactInformation.Contact;
-#if WINDOWS
-                    System.Diagnostics.Debug.WriteLine("{0} {1}", (c.Position - parent.shipPhysics.ShipPosition).Length(), c.Normal);
-#endif
-                }
-            }
-            else
-            {
-#if WINDOWS
-                System.Diagnostics.Debug.WriteLine("{0}", candidate.Shape);
-#endif
-            }
-        }
+        public Vector3 wallTest { get; private set; }
 
         private float newWalls()
         {
@@ -296,16 +256,14 @@ namespace BeatShift.Input
 
             float direction = Vector3.Dot(relativeTrackHeading, relativeShipRight);
 
-            
-
             Vector3 testVector = parent.shipPhysics.nearestMapPoint.roadSurface * -1 * Math.Sign(direction);
-
-            RayHit result;
 
             Vector3 rayOrigin = parent.shipPhysics.ShipPosition;
 
             float shipWidth = 3f;
             float rayLength = shipWidth + parent.shipPhysics.ShipSpeed / 8;
+
+            RayHit result;
 
             AiRay.Position = rayOrigin;
             AiRay.Direction = testVector;
@@ -313,147 +271,22 @@ namespace BeatShift.Input
 
             float distance = result.T < shipWidth ? rayLength - shipWidth : rayLength - result.T;
 
+            parent.shipDrawing.testWalls = testVector * rayLength;
             if (result.T == 0)
+            {
                 distance = 0;
+                parent.shipDrawing.wallHit = false;
+            }
+            else
+            {
+                parent.shipDrawing.wallHit = true;
+            }
 
             t = distance / (rayLength - shipWidth);
-
 
             float retVal = t * Math.Sign(direction);
 
             return float.IsNaN(retVal) ? 0f : retVal;
-        }
-
-
-        /// <summary>
-        /// A turning system which solely tries to avoid hitting walls. Uses raycasting to
-        /// determine wall distances.
-        /// </summary>
-        /// <returns>
-        /// A turning value.
-        /// </returns>
-        private float avoidWalls()
-        {
-            float t = 0;
-
-            
-            Matrix shipOrientation = parent.shipPhysics.ShipOrientationMatrix;
-
-            Vector3 leftOuterVector = Vector3.Transform(shipOrientation.Forward, Matrix.CreateFromAxisAngle(parent.shipPhysics.ShipTrackUp, MathHelper.Pi / 3));
-            Vector3 leftInnerVector = Vector3.Transform(shipOrientation.Forward, Matrix.CreateFromAxisAngle(parent.shipPhysics.ShipTrackUp, MathHelper.Pi / 6));
-            Vector3 rightOuterVector = Vector3.Transform(shipOrientation.Forward, Matrix.CreateFromAxisAngle(parent.shipPhysics.ShipTrackUp, -1 * MathHelper.Pi / 3));
-            Vector3 rightInnerVector = Vector3.Transform(shipOrientation.Forward, Matrix.CreateFromAxisAngle(parent.shipPhysics.ShipTrackUp, -1 * MathHelper.Pi / 6));
-
-            RayHit result;
-
-            float rayLength = 50f;
-            Vector3 rayOrigin = parent.shipPhysics.ShipPosition - shipOrientation.Up * 2;
-
-            Physics.currentTrackWall.RayCast(new Ray(rayOrigin, leftOuterVector), rayLength, out result);
-            float leftOuter = result.T;
-
-            Physics.currentTrackWall.RayCast(new Ray(rayOrigin, leftInnerVector), rayLength, out result);
-            float leftInner = result.T;
-
-            Physics.currentTrackWall.RayCast(new Ray(rayOrigin, rightOuterVector), rayLength, out result);
-            float rightOuter = result.T;
-
-            Physics.currentTrackWall.RayCast(new Ray(rayOrigin, rightInnerVector), rayLength, out result);
-            float rightInner = result.T;
-
-            float leftM = 0;
-            float leftC = 0;
-            float rightM = 0;
-            float rightC = 0;
-
-            float ellipticElongation = 2f;
-            
-            float angleOfImpactL;
-            float angleOfImpactR;
-            float ellipticDistanceL;
-            float ellipticDistanceR;
-            float scaledImpactDistanceL = float.MaxValue;
-            float scaledImpactDistanceR = float.MaxValue;
-
-            if (leftOuter != 0 && leftInner != 0)
-            {
-                float loX = (float)Math.Cos(Math.PI / 6) * leftOuter;
-                float loY = (float)Math.Sin(Math.PI / 6) * leftOuter;
-
-                float liX = (float)Math.Cos(Math.PI / 3) * leftInner;
-                float liY = (float)Math.Sin(Math.PI / 3) * leftInner;
-
-                float m = (liY - loY) / (liX - loX);
-                leftC = loY - (m * (loX - 4));
-                leftM = -m;
-                if (leftM < 0)
-                {
-                    leftM = float.MaxValue;
-                    leftC = float.PositiveInfinity;
-                }
-                else
-                {
-                    angleOfImpactL = (float)Math.Atan(1 / leftM);
-                    ellipticDistanceL = (float)(ellipticElongation / (ellipticElongation * Math.Cos(angleOfImpactL) + Math.Sin(angleOfImpactL)));
-                    scaledImpactDistanceL = ellipticDistanceL * leftC;
-                }
-            }
-            else
-            {
-                leftM = float.MaxValue;
-                leftC = float.PositiveInfinity;
-            }
-
-            if (rightOuter != 0 && rightInner != 0)
-            {
-                float roX = (float)Math.Cos(Math.PI / 6) * rightOuter;
-                float roY = (float)Math.Sin(Math.PI / 6) * rightOuter;
-
-                float riX = (float)Math.Cos(Math.PI / 3) * rightInner;
-                float riY = (float)Math.Sin(Math.PI / 3) * rightInner;
-
-                float m = (riY - roY) / (riX - roX);
-                rightC = roY - (m * (roX + 4));
-                rightM = -m;
-                if (rightM < 0)
-                {
-                    rightM = float.MaxValue;
-                    rightC = float.PositiveInfinity;
-                }
-                else
-                {
-                    angleOfImpactR = (float) Math.Atan(1 / rightM);
-                    ellipticDistanceR = (float) (ellipticElongation / (ellipticElongation * Math.Cos(angleOfImpactR) + Math.Sin(angleOfImpactR)));
-                    scaledImpactDistanceR = ellipticDistanceR * rightC;
-                }
-            }
-            else
-            {
-                rightM = float.MaxValue;
-                rightC = float.PositiveInfinity;
-            }
-
-            
-            float maxDistance = 150f;
-
-            if (scaledImpactDistanceL < scaledImpactDistanceR)
-            {
-                if (scaledImpactDistanceL < maxDistance)
-                {
-                    t = (maxDistance - scaledImpactDistanceL) / maxDistance;
-                }
-                //System.Diagnostics.Debug.WriteLine("l {0:000.0000}", scaledImpactDistanceL);
-            }
-            else
-            {
-                if (scaledImpactDistanceR < maxDistance)
-                {
-                    t = -(maxDistance - scaledImpactDistanceR) / maxDistance;
-                }
-                //System.Diagnostics.Debug.WriteLine("r {0:000.0000}", scaledImpactDistanceR);
-            }
-
-            return t;
         }
 
         /// <summary>
@@ -466,9 +299,11 @@ namespace BeatShift.Input
         {
             float t;
 
+            int offset = 5;
+
             Matrix shipOrientation = parent.shipPhysics.ShipOrientationMatrix;
             MapPoint lastPoint = parent.shipPhysics.nearestMapPoint;
-            MapPoint nextPoint = parent.shipPhysics.mapData.mapPoints[(parent.shipPhysics.nearestMapPoint.getIndex() + 2) % parent.shipPhysics.mapData.mapPoints.Count];
+            MapPoint nextPoint = parent.shipPhysics.mapData.mapPoints[(parent.shipPhysics.nearestMapPoint.getIndex() + offset) % parent.shipPhysics.mapData.mapPoints.Count];
 
             // partially take current orientation into account, but not too much
             Vector3 guessUp = (shipOrientation.Up + nextPoint.trackUp * 9) / 10;
@@ -482,8 +317,51 @@ namespace BeatShift.Input
 
             //t = (float)Math.Sin(Math.Acos(dotProduct));
             t = (float) (Math.Acos(dotProduct)  / (Math.PI / 2));
-            if ((!(t < 0)) && (!(t > 0)) && (t != 0)) return 0; //Need to check for NaN, could have coded this better.
-            return (float) (Math.Sqrt(t) * Math.Sign(direction));
+            return float.IsNaN(t) ? 0f : (float)(Math.Sqrt(t) * Math.Sign(direction));
+        }
+
+        private float avoidWallsRayLength = 50f;
+        private float avoidWalls()
+        {
+            AiRay.Direction = parent.shipPhysics.ShipOrientationMatrix.Forward;
+            AiRay.Position = parent.shipPhysics.ShipPosition;
+
+            RayHit result;
+
+            Physics.currentTrackWall.RayCast(AiRay, 40f, out result);
+
+            float wallAngle;
+
+            if (result.T != 0)
+            {
+                wallAngle = (float) Vector3.Dot(Vector3.Normalize(result.Normal), parent.shipPhysics.ShipOrientationMatrix.Left);
+                
+                if (wallAngle > 0)
+                {
+                    return -1 * turnWalls(wallAngle, result.T);
+                }
+                else
+                {
+                    return turnWalls(wallAngle, result.T);
+                }
+            }
+
+            return 0;
+
+            AiRay.Direction = (parent.shipPhysics.ShipOrientationMatrix.Forward + parent.shipPhysics.ShipOrientationMatrix.Right * 2) / 3;
+            Physics.currentTrackWall.RayCast(AiRay, 30f, out result);
+            if(result.T != 0){
+                wallAngle = Vector3.Dot(Vector3.Normalize(result.Normal), parent.shipPhysics.ShipOrientationMatrix.Left);
+                //if(wallAngle < 
+            }
+        }
+
+        private float turnWalls(float wallAngle, float wallDistance)
+        {
+            float angVal = (float)Math.Sqrt(Math.Sin(Math.Acos(wallAngle)));
+            float disVal = 1 / wallDistance;
+            float retVal = angVal + disVal;
+            return float.IsNaN(retVal) ? 0 : Math.Min(1.0f, retVal);
         }
 
         /// <summary>
@@ -507,16 +385,18 @@ namespace BeatShift.Input
             Vector3 testVector = shipOrientation.Forward;
             Vector3 rayOrigin = parent.shipPhysics.ShipPosition;
 
-            RayHit result;
-
             float rayLength = 120f;
 
-            Physics.currentTrackWall.RayCast(new Ray(rayOrigin, testVector), rayLength, out result);
+            RayHit result;
+
+            testRay.Position = rayOrigin;
+            testRay.Direction = testVector;
+            Physics.currentTrackWall.RayCast(testRay, rayLength, out result);
 
             float distance = result.T == 0 ?  0 : rayLength - result.T;
 
-            Physics.currentTrackFloor.RayCast(new Ray(rayOrigin, testVector), rayLength, out result);
-            if (distance < result.T)
+            Physics.currentTrackFloor.RayCast(testRay, rayLength, out result);
+            if (distance > result.T)
             {
                 a = 1f;
             }

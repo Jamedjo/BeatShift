@@ -58,9 +58,9 @@ namespace BeatShift
         public void resetInputsAndScreens()
         {
             ssarea[0] = new SplitScreenArea(new PadInputManager(PlayerIndex.One));
-            if (Options.UseKeyboardAsPad2) ssarea[1] = new SplitScreenArea(new KeyInputManager());
-            else ssarea[1] = new SplitScreenArea(new PadInputManager(PlayerIndex.Two));
-            ssarea[2] = new SplitScreenArea(new PadInputManager(PlayerIndex.Three));
+            ssarea[1] = new SplitScreenArea(new PadInputManager(PlayerIndex.Two));
+            if (Options.UseKeyboardAsPad2) ssarea[2] = new SplitScreenArea(new KeyInputManager());
+            else ssarea[2] = new SplitScreenArea(new PadInputManager(PlayerIndex.Three));
             ssarea[3] = new SplitScreenArea(new PadInputManager(PlayerIndex.Four));
 
             //ssarea[0] = new SplitScreenArea(new KeyInputManager());
@@ -182,7 +182,7 @@ namespace BeatShift
         {
             //make sure physics loads
             //while (MapManager.currentMap.physicsLoadingThread.IsAlive) { }
-
+            Race.isPrimed = false;
             //set input managers
             for (int k = 0; k < 4; k++)
             {
@@ -253,18 +253,22 @@ namespace BeatShift
         public void Draw(GameTime gameTime)
         {
             BeatShift.graphics.GraphicsDevice.Viewport = Viewports.fullViewport;
+            Rectangle viewArea = new Rectangle(0, 0, BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height);
             //TODO: Iterate over viewports instead.
 
             BeatShift.spriteBatch.Begin();
             //draw lines down middle of screen to make the split visible.
             //done in mainGame
 
+            BeatShift.spriteBatch.Draw(GameTextures.MenuBackgroundBlue, viewArea, Color.White);
+
             //for each viewport/controller
             for (int i = 0; i < 4; i++)
             {
                 if (ssarea[i].isActive)// is player ISACTIVE (by pressing a) do:
                 {
-                    BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Press start to begin Race", new Vector2(300, 300), Color.Black);
+                    Race.isPrimed = true;
+                    //BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Press start to begin Race", new Vector2(300, 300), Color.Black);
                     // draw name of ship above ship
                     // draw verticle hue bar next to ship
                     // draw arrows either side of ship
