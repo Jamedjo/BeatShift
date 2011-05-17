@@ -326,13 +326,13 @@ namespace BeatShift
             //Draw Scene background
             BeatShift.graphics.GraphicsDevice.Clear(Color.Black);
 
-            BeatShift.spriteBatch.Begin();
+            //BeatShift.spriteBatch.Begin();
             //if (menuSystem.Visible || shipSelect.Visible)
             //{
                 //GraphicsDevice.Clear(Color.CornflowerBlue);
-                BeatShift.spriteBatch.Draw(GameTextures.MenuBackgroundBlue, viewArea, Color.White);
+                //BeatShift.spriteBatch.Draw(GameTextures.MenuBackgroundBlue, viewArea, Color.White);
             //}
-            BeatShift.spriteBatch.End();
+            //BeatShift.spriteBatch.End();
 
             //Draw other Drawable Game Classes
             if (MenuManager.Visible)
