@@ -25,8 +25,8 @@ namespace BeatShift.Input
         /// <summary>
         ///  Set to false and the player retakes control
         /// </summary>
-        public const Boolean testAI = true;
-        public static int numberOfAI = 2;
+        public const Boolean testAI = false;
+        public const int numberOfAI = 2;
 
         private GamePadState currentState;
         private GamePadState lastState;
@@ -34,6 +34,7 @@ namespace BeatShift.Input
         private float lastTurn = 0f;
 
         Ray AiRay = new Ray();
+        Ray testRay = new Ray();
 
         private Beat? nextBeatToPress = null;
 
@@ -245,16 +246,14 @@ namespace BeatShift.Input
 
             float direction = Vector3.Dot(relativeTrackHeading, relativeShipRight);
 
-            
-
             Vector3 testVector = parent.shipPhysics.nearestMapPoint.roadSurface * -1 * Math.Sign(direction);
-
-            RayHit result;
 
             Vector3 rayOrigin = parent.shipPhysics.ShipPosition;
 
             float shipWidth = 3f;
             float rayLength = shipWidth + parent.shipPhysics.ShipSpeed / 8;
+
+            RayHit result;
 
             AiRay.Position = rayOrigin;
             AiRay.Direction = testVector;
@@ -266,7 +265,6 @@ namespace BeatShift.Input
                 distance = 0;
 
             t = distance / (rayLength - shipWidth);
-
 
             float retVal = t * Math.Sign(direction);
 
@@ -333,14 +331,11 @@ namespace BeatShift.Input
             return 0;
 
             AiRay.Direction = (parent.shipPhysics.ShipOrientationMatrix.Forward + parent.shipPhysics.ShipOrientationMatrix.Right * 2) / 3;
-
             Physics.currentTrackWall.RayCast(AiRay, 30f, out result);
             if(result.T != 0){
                 wallAngle = Vector3.Dot(Vector3.Normalize(result.Normal), parent.shipPhysics.ShipOrientationMatrix.Left);
                 //if(wallAngle < 
             }
-
-            
         }
 
         private float turnWalls(float wallAngle, float wallDistance)
@@ -372,15 +367,17 @@ namespace BeatShift.Input
             Vector3 testVector = shipOrientation.Forward;
             Vector3 rayOrigin = parent.shipPhysics.ShipPosition;
 
-            RayHit result;
-
             float rayLength = 120f;
 
-            Physics.currentTrackWall.RayCast(new Ray(rayOrigin, testVector), rayLength, out result);
+            RayHit result;
+
+            testRay.Position = rayOrigin;
+            testRay.Direction = testVector;
+            Physics.currentTrackWall.RayCast(testRay, rayLength, out result);
 
             float distance = result.T == 0 ?  0 : rayLength - result.T;
 
-            Physics.currentTrackFloor.RayCast(new Ray(rayOrigin, testVector), rayLength, out result);
+            Physics.currentTrackFloor.RayCast(testRay, rayLength, out result);
             if (distance > result.T)
             {
                 a = 1f;

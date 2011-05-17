@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 using BeatShift.Input;
 using Microsoft.Xna.Framework.GamerServices;
 using BeatShift.Utilities___Misc;
-
+using ParallelTasks;
 namespace BeatShift
 {
     /// <summary>
@@ -240,9 +240,11 @@ namespace BeatShift
         public static void Update(GameTime gameTime)
         {
             // Check to see if the user has paused or unpaused
+            BeatShift.bgm.Update();
+           // Task music = Parallel.Start();
             if(currentState == GameState.LocalGame || currentState == GameState.NetworkedGame)
                 checkPauseKey(gameTime);
-
+            
             checkPauseGuide();
 
 #if XBOX
@@ -256,6 +258,15 @@ namespace BeatShift
             mainGameinput.Update(gameTime);
             if (!paused)
             {
+               // Task particles;
+                Boolean raceUpdated = false;
+                if (GameLoop.getCurrentState() == GameState.LocalGame)
+                {
+                    //IWork pudate = new IWork();
+                    //particles = Parallel.Start(()=>BeatShift.particleManager.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds));
+                    //BeatShift.particleManager.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
+                }
+                
                 //Update all managed timers.
                 RunningTimer.Update(gameTime);
 
@@ -264,6 +275,7 @@ namespace BeatShift
                 if (Race.Enabled)
                 {
                     Race.Update(gameTime);
+                    raceUpdated = true;
                     HeadsUpDisplay.Update(gameTime);
                 }
                 //if (MapManager.Enabled)
@@ -273,10 +285,8 @@ namespace BeatShift
                 //if (networkedGame.Enabled) networkedGame.Update(gameTime);
                 if (Physics.Enabled)
                     Physics.Update(gameTime);
-                if (MapManager.Enabled)
+                if (MapManager.Enabled&&!raceUpdated)
                     Race.Update(gameTime);
-                if (GameLoop.getCurrentState() == GameState.LocalGame)
-                    BeatShift.particleManager.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
                 // Game should be exited through the menu systems.
                 // Allows the game to return to main menu
                 //if (mainGameinput.actionTapped(InputAction.BackButton))
@@ -306,7 +316,7 @@ namespace BeatShift
             //        BeatShift.graphics.ToggleFullScreen();
             //    }
 #endif
-            BeatShift.bgm.Update();
+            //music.Wait();
         }
 
         public static void Draw(GameTime gameTime)
@@ -317,13 +327,13 @@ namespace BeatShift
             //Draw Scene background
             BeatShift.graphics.GraphicsDevice.Clear(Color.Black);
 
-            BeatShift.spriteBatch.Begin();
+            //BeatShift.spriteBatch.Begin();
             //if (menuSystem.Visible || shipSelect.Visible)
             //{
                 //GraphicsDevice.Clear(Color.CornflowerBlue);
-                BeatShift.spriteBatch.Draw(GameTextures.MenuBackgroundBlue, viewArea, Color.White);
+                //BeatShift.spriteBatch.Draw(GameTextures.MenuBackgroundBlue, viewArea, Color.White);
             //}
-            BeatShift.spriteBatch.End();
+            //BeatShift.spriteBatch.End();
 
             //Draw other Drawable Game Classes
             if (MenuManager.Visible)

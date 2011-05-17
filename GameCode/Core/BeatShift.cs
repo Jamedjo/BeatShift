@@ -113,7 +113,6 @@ namespace BeatShift
         {
             //set up content
             Content.RootDirectory = "Content";
-
             // Now with static constuctor so auto initalized on first access.
             //Viewports.setupViewports();
 

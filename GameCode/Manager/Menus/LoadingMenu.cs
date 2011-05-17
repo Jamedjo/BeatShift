@@ -24,10 +24,13 @@ namespace BeatShift.Menus
             Texture2D background = GameTextures.TutorialScreen;
             //spriteBatch.Draw(background, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - background.Width / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - background.Height / 2), Color.White);
             spriteBatch.Draw(background, new Rectangle(0,0,BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height), Color.White);
+
+
+            //spriteBatch.Draw(background, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height), Color.White);
             if (!loadingThread.IsAlive)
-                spriteBatch.DrawString(BeatShift.newfont, "PRESS A TO START", new Vector2(450, 620), Color.Lime);
+                spriteBatch.Draw(GameTextures.LoadingBefore, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.LoadingBefore.Width / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height - 100, GameTextures.LoadingBefore.Width, GameTextures.LoadingBefore.Height), Color.White);
             else
-                spriteBatch.DrawString(BeatShift.newfont, "LOADING...", new Vector2(390, 620), Color.DarkRed);
+                spriteBatch.Draw(GameTextures.LoadingAfter, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.LoadingAfter.Width / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height - 100, GameTextures.LoadingAfter.Width, GameTextures.LoadingAfter.Height), Color.White);
         }
 
         public override void setupMenuItems()

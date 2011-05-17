@@ -11,18 +11,19 @@ namespace BeatShift.Menus
         public bool debugOptions = true;
         public OptionsMenu()
         {
-            title = "Options";
+            title = "OPTIONS";
         }
 
         public override void overrideMenuPositions()
         {
             DrawMenuItemsFromTextCentre = true;
-            DrawTitleFromTextCentre = true;
-            TitlePos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, 75);
-            MenuPos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, 220);
-            TitleStartPos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, -100);
+            //DrawTitleFromTextCentre = true;
+            //TitlePos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, 75);
+            MenuPos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, 250);
+            //TitleStartPos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, -100);
             //UseTextWidthAsOffset = true;
             Offset = new Vector2(0, 40);//additional vertical spaceing.
+            TextScale = 0.5f;
         }
 
         public override void setupMenuItems()

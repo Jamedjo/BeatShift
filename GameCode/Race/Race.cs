@@ -12,7 +12,7 @@ using System.Diagnostics;
 using System.Collections;
 using BeatShift.Menus;
 using BeatShift.Cameras;
-
+using ParallelTasks;
 
 namespace BeatShift
 {
@@ -27,6 +27,8 @@ namespace BeatShift
         public static List<CameraWrapper> localCameras { get { return humanRacers.Select(hr => hr.localCamera).ToList(); } }
 
         public static List<RacerId> racerIDs = new List<RacerId>();
+        public static bool isPrimed = false;
+
 
         public static string[] AInames;
 
@@ -41,14 +43,24 @@ namespace BeatShift
             {
                 // If the race has started update everything
                 currentRaceType.Update(gameTime);
-                foreach (Racer racer in currentRacers)
+                Parallel.ForEach(currentRacers, racer =>
+                {
                     racer.Update(gameTime);
+                }
+                );
+                /*foreach (Racer racer in currentRacers)
+                {
+                    racer.Update(gameTime);
+                }*/
             }
             else
             {
                 // Only update the camera if the race has not started yet
-                foreach (RacerHuman racer in humanRacers)
+                Parallel.ForEach(humanRacers, racer =>
+                {
                     racer.localCamera.Update(gameTime);
+                }
+                );
             }
         }
 
@@ -100,6 +112,8 @@ namespace BeatShift
             else if (humanRacers.Count == 4)
             {
                 HeadsUpDisplay.DrawSplitBarsFourPlayer();
+                if (Race.isPrimed)
+                    BeatShift.spriteBatch.Draw(GameTextures.Start, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.Start.Width / 2, 0), Color.White);
             }
             BeatShift.spriteBatch.End();
         }
@@ -125,9 +139,8 @@ namespace BeatShift
             {
                 for (int i = 0; i < numberOfAiRacers; i++)
                 {
-                    Racer r = new Racer(new RacerId(pickAiName(i)), currentRacers.Count, RacerType.AI);
+                    Racer r = new Racer(new RacerId(pickAiName(i)), currentRacers.Count+1, RacerType.AI);
                     currentRacers.Add(r);
-                    r.insertShipOnMap(RacerType.AI);
                 }
             }
             //setupViewports();
@@ -230,5 +243,6 @@ namespace BeatShift
         {
             currentRacers = new List<Racer>();
         }
+
     }
 }

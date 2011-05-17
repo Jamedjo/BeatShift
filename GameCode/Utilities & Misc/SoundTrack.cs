@@ -115,7 +115,7 @@ namespace BeatShift
 
         public void MusicUp(int newLevel)
         {
-            SoundManager.levelDown();
+            SoundManager.levelUp();
             if (newLevel < 2)
             {
                 int highest = newLevel;
@@ -198,7 +198,7 @@ namespace BeatShift
 
         public void MusicDown(int newLevel)
         {
-            SoundManager.levelUp();
+            SoundManager.levelDown();
             if (newLevel < 1)
             {
                 int highest = newLevel;
@@ -227,7 +227,7 @@ namespace BeatShift
                     switch (racer.beatQueue.getLayer())
                     {
                         case 1:
-                            is3 = true;
+                            is2 = true;
                             break;
                         case 2:
                             is3 = true;

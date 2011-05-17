@@ -19,13 +19,13 @@ namespace BeatShift.Menus
 
         public ResultsMenu()
         {
-            title = "Race Results";
+            title = "RACE RESULTS";
         }
 
         public override void overrideMenuPositions()
         {
             DrawMenuItemsFromTextCentre = true;
-            DrawTitleFromTextCentre = true;
+            //DrawTitleFromTextCentre = true;
             TitlePos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, 75);
             MenuPos = new Vector2(300, 220);
             TitleStartPos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, -100);
