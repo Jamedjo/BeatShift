@@ -105,13 +105,14 @@ namespace BeatShift.Input
                         vibrateLevelControlLeft = -vibrateLevelControlRight;
                         vibrateLevelControlRight = 0;
                     }
-                    //Console.WriteLine( Math.Sin(sequenceNumber / 20) );
-                    sequenceNumber++;
+                    sequenceNumber = sequenceNumber + 5;
                 }
                 else
                 {
                     racer.beatQueue.isLevellingDown = false;
                     sequenceNumber = 0;
+                    vibrateLevelControlLeft = 0;
+                    vibrateLevelControlRight = 0;
                 }
                 //if (vibrateSequence)
                 //{
