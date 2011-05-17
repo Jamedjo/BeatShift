@@ -13,6 +13,7 @@ using BEPUphysics.DataStructures;
 using BeatShift.DebugGraphics;
 using BeatShift.Cameras;
 using ParallelTasks;
+using BeatShift.Util;
 
 namespace BeatShift
 {

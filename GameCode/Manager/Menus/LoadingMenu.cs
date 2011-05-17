@@ -8,6 +8,7 @@ using BeatShift.Input;
 using Microsoft.Xna.Framework.Input;
 using System.Threading;
 using ParallelTasks;
+using BeatShift.Util;
 
 namespace BeatShift.Menus
 {
