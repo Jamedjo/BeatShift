@@ -25,7 +25,7 @@ namespace BeatShift.Input
         float jumpHeight = 27.5f;
         float speedOnCollision = 0.0f;
         bool justCollided = false;
-        bool justBoost = false;
+        bool wasBoostingPreviousUpdate = false;
         bool justJump = false;
         bool vibrateSequence = false;
         double sequenceNumber;
@@ -200,7 +200,7 @@ namespace BeatShift.Input
                 && (racer.beatQueue.GetBoost() > 0) && (!racer.raceTiming.hasCompletedRace) && (racer.beatQueue.getLayer() > 0))
             {
                 racer.setBoost(true);
-                justBoost = true;
+                wasBoostingPreviousUpdate = true;
                 racer.shipDrawing.engineGlow.boostType(1);
                 float boostIncrease = 0.01f;
 
@@ -223,7 +223,7 @@ namespace BeatShift.Input
                     racer.beatQueue.isLevellingUp = false;
 
             }
-            else if (justBoost)
+            else if (wasBoostingPreviousUpdate)
             {
                 racer.setBoost(false);
                 racer.shipDrawing.engineGlow.boostType(0);
@@ -234,7 +234,7 @@ namespace BeatShift.Input
                 else
                 {
                     vibrateBoostControl = 0.0f;
-                    justBoost = false;
+                    wasBoostingPreviousUpdate = false;
                 }
             }
 

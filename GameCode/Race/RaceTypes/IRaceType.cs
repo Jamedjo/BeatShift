@@ -58,6 +58,7 @@ namespace BeatShift
         public bool displayCurrentLapTime = false;
         public bool displayCurrentRank = false;
         public bool displayMinimap = false;
+        public bool displayTotalPoints = false;
 
         // Race ending variables
         public Stopwatch endRaceTimer { get; protected set; }
@@ -252,7 +253,7 @@ namespace BeatShift
             }
             else
             {
-                foreach (Racer racer in Race.currentRacers)
+                foreach (RacerHuman racer in Race.humanRacers)
                 {
                     result = result || racer.raceTiming.isRacing;
                 }

@@ -19,6 +19,7 @@ namespace BeatShift
             LoadSkybox("Skyboxes/skybox2", "Skyboxes/j_skybox_upper35");
 
             modelList.Add(new FbxModel("SpaceMap_track", MapContent, MapName.SpaceMap, ModelCategory.Track));
+            modelList.Add(new FbxModel("SpaceMap_invisiblewalls", MapContent, MapName.SpaceMap, ModelCategory.InvisibleWall));
             modelList.Add(new FbxModel("SpaceMap_walls", MapContent, MapName.SpaceMap, ModelCategory.Wall));
             modelList.Add(new FbxModel("SpaceMap_scenery", MapContent, MapName.SpaceMap, ModelCategory.Scenery));
             mapData = new MapData("SpaceMap", 60f, 4f);

@@ -20,6 +20,7 @@ namespace BeatShift
 
             modelList.Add(new FbxModel("DesertMap_track", MapContent, MapName.DesertMap, ModelCategory.Track));
             modelList.Add(new FbxModel("DesertMap_walls", MapContent, MapName.DesertMap, ModelCategory.Wall));
+            modelList.Add(new FbxModel("DesertMap_invisiblewalls", MapContent, MapName.DesertMap, ModelCategory.InvisibleWall));
             modelList.Add(new FbxModel("DesertMap_scenery", MapContent, MapName.DesertMap, ModelCategory.Scenery));
             mapData= new MapData("DesertMap", 60f, 4f);
 

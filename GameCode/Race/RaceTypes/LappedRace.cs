@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using BeatShift.Input;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework;
 
 namespace BeatShift
 {
@@ -42,6 +44,12 @@ namespace BeatShift
             racer.raceTiming.isRacing = false;
             racer.raceTiming.hasCompletedRace = true;
             racer.raceTiming.finalRaceTime = finishTime.ElapsedMilliseconds;
+            if (racer.racingControls.chosenInput.GetType() == typeof(PadInputManager))
+            {
+                GamePad.SetVibration(((PadInputManager)racer.racingControls.chosenInput).getPlayerIndex(), 0.0f, 0.0f);
+//                if (((PadInputManager)racer.racingControls.chosenInput).getPlayerIndex()==PlayerIndex.One)
+  //              System.Diagnostics.Debug.WriteLine("sdfg");
+            }
             racer.racingControls.chosenInput = new AiInputManager(racer);
 
             TimeSpan ts = finishTime.Elapsed;
