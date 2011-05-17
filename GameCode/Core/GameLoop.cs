@@ -257,12 +257,12 @@ namespace BeatShift
             mainGameinput.Update(gameTime);
             if (!paused)
             {
-                Task particles;
+               // Task particles;
                 Boolean raceUpdated = false;
                 if (GameLoop.getCurrentState() == GameState.LocalGame)
                 {
                     //IWork pudate = new IWork();
-                    particles = Parallel.Start(()=>BeatShift.particleManager.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds));
+                    //particles = Parallel.Start(()=>BeatShift.particleManager.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds));
                     //BeatShift.particleManager.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
                 }
                 

@@ -29,6 +29,7 @@ namespace BeatShift
         private double[] layerBonus = { 15, 10, 6, 4, 1 };
         private double[] layerPenalty = { 0.25, 0.375, 0.5, 0.75, 1.5 };
         private float[] layerLeeway = { 125.0f, 120.0f, 115.0f, 105.0f, 95.0f };
+        private float[] layerBoost = { 0.0f, 0.1f, 0.2f, 0.3f, 0.4f };
         private Color missColor = Color.Black;
         private Color hitColor = Color.FloralWhite;
         private Color levelupColor = Color.Fuchsia;
@@ -41,7 +42,12 @@ namespace BeatShift
             maxLayer = BeatShift.bgm.Layers();
         }
 
-        public double GetBoost() { return boostBar; }
+        public float getBoostRatio()
+        {
+            return layerBoost[myLayer];
+        }
+
+        public double GetBoost() { return ((20*myLayer)+ (boostBar/5)); }
 
         public int getLayer() { return myLayer; }
 
@@ -131,7 +137,7 @@ namespace BeatShift
                 invinciEndtime = BeatShift.bgm.songTick() + 3000;
                 myLayer--;
                 BeatShift.bgm.MusicDown(myLayer);
-                boostBar = 50;
+                boostBar = 98;
                 visualisation.Clear();
                 beats.Clear();
                 beatGlow.Glow(leveldownColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
@@ -148,7 +154,7 @@ namespace BeatShift
                 invinciEndtime = BeatShift.bgm.songTick() + 3000;
                 myLayer++;
                 BeatShift.bgm.MusicUp(myLayer);
-                boostBar = 20;
+                boostBar = 2;
                 visualisation.Clear();
                 beats.Clear();
                 beatGlow.Glow(levelupColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
@@ -221,6 +227,8 @@ namespace BeatShift
             boostBar -= 1;
             if (boostBar < 0)
                 boostBar = 0;
+            else if (boostBar == 0)
+                LevelDown();
         }
 
         
