@@ -50,8 +50,8 @@ namespace BeatShift
                 }
                 if (Race.currentRaceType.getRaceTypeString().Equals("EliminationRace"))
                 {
-                    //BeatShift.spriteBatch.Begin();
-                    DrawMessage("ELIMINATED!", 325, vOffset / 2);
+                    BeatShift.spriteBatch.Draw(GameTextures.Eliminated, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.Eliminated.Width / 2, 3 * BeatShift.graphics.GraphicsDevice.Viewport.Height / 3, GameTextures.Eliminated.Width, GameTextures.Eliminated.Height), Color.White);
+                    //DrawMessage("ELIMINATED!", 325, vOffset / 2);
                 }
                 if (Race.currentRaceType.getRaceTypeString().Equals("TimeTrialRace"))
                 {
