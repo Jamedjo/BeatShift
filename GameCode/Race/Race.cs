@@ -12,8 +12,8 @@ using System.Diagnostics;
 using System.Collections;
 using BeatShift.Menus;
 using BeatShift.Cameras;
-using BeatShift.Util;
 using ParallelTasks;
+using BeatShift.Util;
 
 namespace BeatShift
 {

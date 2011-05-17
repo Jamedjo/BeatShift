@@ -11,6 +11,7 @@ using BeatShift.Input;
 using BeatShift.Util;
 using DPSF;
 using DPSF.ParticleSystems;
+using BeatShift.Util;
 
 namespace BeatShift
 {
