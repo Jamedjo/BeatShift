@@ -40,8 +40,7 @@ namespace BeatShift.Util
 
         static XDocument scoreDoc;
 
-        // CHANGE List type
-        HighScore(int trackID, int mode, List<HighScoreEntry> thisRaceValues)
+        public static List<HighScoreEntry> getHighScores(int trackID, int mode, List<HighScoreEntry> thisRaceValues)
         {
             List<HighScoreEntry> scoreTable = new List<HighScoreEntry>(10);
 
@@ -107,10 +106,10 @@ namespace BeatShift.Util
                 }
             }
 
-            
+            return results;
         }
 
-        private void init(int trackID, int mode)
+        private static void init(int trackID, int mode)
         {
             
                 StorageContainer container = null;
@@ -145,7 +144,7 @@ namespace BeatShift.Util
             
         } 
 
-        public void saveScores(int trackID, int mode)
+        public static void saveScores(int trackID, int mode)
         {
             {
                 StorageContainer container = null;
