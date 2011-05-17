@@ -43,7 +43,7 @@ namespace BeatShift
             racer.raceTiming.isRacing = false;
             racer.raceTiming.hasCompletedRace = true;
             racer.raceTiming.finalRaceTime = finishTime.ElapsedMilliseconds;
-            racer.racingControls.chosenInput = new AiInputManager(racer);
+            racer.racingControls.setChosenInput(new AiInputManager(racer));
 
             TimeSpan ts = finishTime.Elapsed;
             racer.raceTiming.finalRaceTimeString = racer.raceTiming.convertTimeSpanToString(ts);

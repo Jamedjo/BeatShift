@@ -13,7 +13,8 @@ namespace BeatShift.Input
         decimal[] lastTaps;
         decimal[] tapWeights;
         int tapNo;
-        public IInputManager chosenInput;
+        public IInputManager chosenInput { get; private set; }
+        public PlayerIndex padIndex { get; private set; } //This will (must) remain as the previous padIndex, if later set to AI
         Racer racer;
 
         // Vibration variables
@@ -46,7 +47,10 @@ namespace BeatShift.Input
         public RacingControls(Racer myRacer, IInputManager inputManager)//Should also take 'useKeyboard' Boolean
         {
             //playerIndex = index;//Player index should be able to be 'any' or 'keyboard' too
-            chosenInput = inputManager;
+            padIndex = PlayerIndex.One;
+
+            setChosenInput(chosenInput);
+            
             racer = myRacer;
             tapNo = 0;
             lastTaps = new decimal[4];
@@ -66,6 +70,12 @@ namespace BeatShift.Input
         {
             //Change this? If forward and beat is not being kept then no?
             return chosenInput.actionPressed(action);
+        }
+
+        public void setChosenInput(IInputManager newInputManager)
+        {
+            chosenInput = newInputManager;
+            if (chosenInput.GetType() == typeof(PadInputManager)) padIndex = ((PadInputManager)chosenInput).getPlayerIndex();
         }
 
         public void Update(GameTime gameTime)
@@ -249,7 +259,7 @@ namespace BeatShift.Input
 
             //check pad is being used and vibration option is set to true
             if (chosenInput.GetType() == typeof(PadInputManager) && (Options.ControllerVibration) && (!racer.raceTiming.hasCompletedRace))
-                GamePad.SetVibration(((PadInputManager)chosenInput).getPlayerIndex(), vibrateControl+vibrateLevelControlLeft, vibrateControl+vibrateLevelControlRight);
+                GamePad.SetVibration(padIndex, vibrateControl+vibrateLevelControlLeft, vibrateControl+vibrateLevelControlRight);
 
             #endregion
 

@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using BeatShift.Input;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
+using BeatShift.Util;
 
 namespace BeatShift.Menus
 {
@@ -13,6 +14,10 @@ namespace BeatShift.Menus
     {
         string[] results;
         string[] players;
+
+        //public double[] fastestLap;
+        //public PlayerIndex[] playerIndexes;
+
         bool resultsCalc = false;
 
         Racer eliminationWinner;
@@ -81,6 +86,12 @@ namespace BeatShift.Menus
         {
             results = new string[Race.currentRacers.Count];
 
+            //fastestLap = new double[Race.humanRacers.Count];
+            //playerIndexes = new int[Race.humanRacers.Count];
+
+            //MapManager.currentMap = ;
+            //Race.currentRaceType.getRaceTypeString() = ;
+
             foreach (Racer racer in Race.currentRacers)
             {
                 if (racer.raceTiming.finalRaceTime == long.MaxValue)
@@ -88,6 +99,26 @@ namespace BeatShift.Menus
                     racer.raceTiming.finalRaceTimeString = "DNF";
                 }
             }
+
+            if (!Race.currentRaceType.getRaceTypeString().Equals("PointsRace"))
+            {
+                List<HighScoreEntry> tempRes = HighScore.getHighScores(MapName.CityMap, 1);
+                for (int i = 0; i < Race.humanRacers.Count(); i++)
+                {
+                    Racer rH = Race.humanRacers[i];
+                    if( rH.raceTiming.fastestLap.TotalMilliseconds*1000 > 1000 && !Guide.IsVisible) /*CHECK HIGHSCORE*/
+                    {
+                        IAsyncResult KeyboardResult = Guide.BeginShowKeyboardInput(rH.racingControls.padIndex, "Player " + (rH.racingControls.padIndex.ToString()) + " has set a new lap record", "Please enter your name", "", null, null);
+                        string highScoreName = Guide.EndShowKeyboardInput(KeyboardResult);
+                        //ENTER NAME AND TIME INTO HIGH SCORES
+
+                    }
+                }
+            }
+            
+            //POINTS RACE
+
+            //SAVE
 
             if (Race.currentRaceType.getRaceTypeString().Equals("LappedRace"))
             {
@@ -117,7 +148,7 @@ namespace BeatShift.Menus
             addMenuItem("Highscores", (Action)(delegate
             {
                 MenuManager.setCurrentMenu(MenuPage.HighScore);
-                GameLoop.setGameStateAndResetPlayers(GameState.Menu);
+                GameLoop.setGameState(GameState.Menu);
                 //MenuManager.setCurrentMenu(MenuPage.HighScore);
                 
             }));
