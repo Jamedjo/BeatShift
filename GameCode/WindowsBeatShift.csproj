@@ -165,6 +165,7 @@
     <Compile Include="Particle Systems\BeatGlowParticleSystem.cs" />
     <Compile Include="Particle Systems\CollisionParticleSystem.cs" />
     <Compile Include="Particle Systems\EngineParticleSystem.cs" />
+    <Compile Include="Race\RaceControls\Class1.cs" />
     <Compile Include="Race\Racer\BeatQueue.cs" />
     <Compile Include="Utilities &amp; Misc\Beat.cs">
       <SubType>Code</SubType>
