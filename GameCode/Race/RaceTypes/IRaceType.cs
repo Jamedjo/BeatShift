@@ -251,7 +251,7 @@ namespace BeatShift
             }
             else
             {
-                foreach (Racer racer in Race.currentRacers)
+                foreach (RacerHuman racer in Race.humanRacers)
                 {
                     result = result || racer.raceTiming.isRacing;
                 }
