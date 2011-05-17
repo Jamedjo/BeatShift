@@ -162,7 +162,7 @@ namespace BeatShift
         void drawModel(FbxModel modelObject, GameTime gameTime, CameraWrapper camera)
         {
             RasterizerState cull = BeatShift.graphics.GraphicsDevice.RasterizerState;
-            if (modelObject.category == ModelCategory.Track && currentMapName != MapName.CityMap)
+            if (modelObject.category == ModelCategory.Track && currentMapName == MapName.SpaceMap)
             {
                 BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
                 drawWithBShiftEffect(modelObject.model, modelObject.transforms, camera);

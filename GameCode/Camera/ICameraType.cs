@@ -114,7 +114,7 @@ namespace BeatShift.Cameras
         public ICameraType(ref SharedCameraProperties properties, FGetPosition getPosition, FGetOrientation getOrientation)
         {
             View = Matrix.CreateLookAt(new Vector3(0, 6, 60), Vector3.Zero, camLastUp);
-            Projection = Matrix.CreatePerspectiveFieldOfView(fieldOfView, properties.Viewport.AspectRatio, 1, 2000);
+            Projection = Matrix.CreatePerspectiveFieldOfView(fieldOfView, properties.Viewport.AspectRatio, 1, 2500);
             this.properties = properties;
             this.getPosition = getPosition;
             this.getOrientation = getOrientation;
