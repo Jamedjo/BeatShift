@@ -121,7 +121,6 @@
     <Compile Include="Race\RaceCameras\Viewports.cs" />
     <Compile Include="Race\RaceControls\AiInputManager.cs" />
     <Compile Include="Race\RaceControls\AnyInputManager.cs" />
-    <Compile Include="Race\RaceControls\Class1.cs" />
     <Compile Include="Race\RaceControls\CoOpInputManager.cs" />
     <Compile Include="Race\RaceControls\IInputManager.cs" />
     <Compile Include="Race\RaceControls\InputLayout.cs" />

@@ -13,6 +13,7 @@ using BEPUphysics.DataStructures;
 using BeatShift.DebugGraphics;
 using BeatShift.Cameras;
 using ParallelTasks;
+using BeatShift.Util;
 
 namespace BeatShift
 {
@@ -162,7 +163,7 @@ namespace BeatShift
         {
             if (modelObject.category == ModelCategory.InvisibleWall) return;
             RasterizerState cull = BeatShift.graphics.GraphicsDevice.RasterizerState;
-            if (modelObject.category == ModelCategory.Track)
+            if (modelObject.category == ModelCategory.Track && currentMapName == MapName.SpaceMap)
             {
                 BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
                 drawWithBShiftEffect(modelObject.model, modelObject.transforms, camera);

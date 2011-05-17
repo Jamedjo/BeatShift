@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using BeatShift.Input;
 using DPSF;
 using DPSF.ParticleSystems;
+using BeatShift.Util;
 
 namespace BeatShift
 {
