@@ -205,11 +205,11 @@ namespace BeatShift.Input
                 float boostIncrease = 0.01f;
 
                 if (racer.beatQueue.isLevellingUp)
-                    Boost(0.1);
+                    Boost(racer.beatQueue.getBoostRatio());
                 else
                 {
                     racer.beatQueue.DrainBoost();
-                    Boost(0.1);
+                    Boost(racer.beatQueue.getBoostRatio());
                     boostIncrease = 0.03f;
                 }
 

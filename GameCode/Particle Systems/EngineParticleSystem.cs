@@ -81,10 +81,11 @@ namespace DPSF.ParticleSystems
         //-----------------------------------------------------------
         float mfSizeMin = 10;
         float mfSizeMax = 50;
-        protected Color defaultColor = Color.DarkBlue;//Color.AntiqueWhite;
-        protected Color defaultEnd = Color.OrangeRed;
-        protected Color boostColor = Color.Lime;
-        protected Color boostFadeEnd = Color.AntiqueWhite;
+        int layer=0;
+        protected Color[] defaultColor = { Color.Red, Color.Orange, Color.Gold, Color.DarkBlue, Color.White };//Color.AntiqueWhite;
+        protected Color[] defaultEnd = {Color.Yellow,Color.Red,Color.Orange,Color.OrangeRed,Color.Blue};
+        protected Color[] boostColor = { Color.Lime, Color.Lime, Color.Lime, Color.Lime, Color.Lime};
+        protected Color[] boostFadeEnd = { Color.AntiqueWhite, Color.AntiqueWhite, Color.AntiqueWhite, Color.AntiqueWhite, Color.AntiqueWhite};
         private float lifeTime;
         private float maxLifeTime = 0.6f;
         private const int particleRate = 300;
@@ -171,10 +172,10 @@ namespace DPSF.ParticleSystems
             InitialProperties.EndWidthMax = 1;
             InitialProperties.EndHeightMin = 1;
             InitialProperties.EndHeightMax = 1;
-            InitialProperties.StartColorMin = defaultColor;
-            InitialProperties.StartColorMax = defaultColor;
-            InitialProperties.EndColorMin = defaultEnd;
-            InitialProperties.EndColorMax = defaultEnd;
+            InitialProperties.StartColorMin = defaultColor[layer];
+            InitialProperties.StartColorMax = defaultColor[layer];
+            InitialProperties.EndColorMin = defaultEnd[layer];
+            InitialProperties.EndColorMax = defaultEnd[layer];
 
             // Remove all Events first so that none are added twice if this function is called again
             ParticleEvents.RemoveAllEvents();
@@ -220,16 +221,16 @@ namespace DPSF.ParticleSystems
             switch (type)
             {
                 case 0:
-                    cParticle.StartColor = defaultColor;
-                    cParticle.EndColor = defaultEnd;
+                    cParticle.StartColor = defaultColor[layer];
+                    cParticle.EndColor = defaultEnd[layer];
                     break;
                 case 1:
-                    cParticle.StartColor = boostColor;
-                    cParticle.EndColor = boostFadeEnd;
+                    cParticle.StartColor = boostColor[layer];
+                    cParticle.EndColor = boostFadeEnd[layer];
                     break;
                 default:
-                    cParticle.StartColor = defaultColor;
-                    cParticle.EndColor = defaultEnd;
+                    cParticle.StartColor = defaultColor[layer];
+                    cParticle.EndColor = defaultEnd[layer];
                     break;
             }
         }
@@ -303,6 +304,11 @@ namespace DPSF.ParticleSystems
         public void boostType(int newtype)
         {
             type = newtype;
+        }
+
+        internal void setLayer(int myLayer)
+        {
+            layer = myLayer;
         }
     }
 }

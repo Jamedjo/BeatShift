@@ -175,7 +175,9 @@ namespace BeatShift.Menus
         {
             BeatShift.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
             BeatShift.graphics.GraphicsDevice.Viewport = Viewports.fullViewport;
+            Rectangle viewArea = new Rectangle(0, 0, BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height);
             BeatShift.spriteBatch.Begin();
+            BeatShift.spriteBatch.Draw(GameTextures.MenuBackgroundBlue, viewArea, Color.White);
             BeatShift.spriteBatch.Draw(GameTextures.Logo, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.Logo.Width/2, -10), Color.White);
 
             DrawSprites(BeatShift.spriteBatch);
