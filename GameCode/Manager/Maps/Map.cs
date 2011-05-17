@@ -16,7 +16,7 @@ using BeatShift.Cameras;
 namespace BeatShift
 {
     public enum MapName { None, All, CityMap, SpaceMap, DesertMap }
-    public enum ModelCategory { Scenery, Wall, Track } //In draw order
+    public enum ModelCategory { Scenery, Wall, Track, InvisibleWall } //In draw order
 
     public abstract class Map
     {
