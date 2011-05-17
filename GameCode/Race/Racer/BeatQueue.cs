@@ -29,6 +29,7 @@ namespace BeatShift
         private double[] layerBonus = { 15, 10, 6, 4, 1 };
         private double[] layerPenalty = { 0.25, 0.375, 0.5, 0.75, 1.5 };
         private float[] layerLeeway = { 125.0f, 120.0f, 115.0f, 105.0f, 95.0f };
+        private float[] layerBoost = { 0.0f, 0.1f, 0.2f, 0.3f, 0.4f };
         private Color missColor = Color.Black;
         private Color hitColor = Color.FloralWhite;
         private Color levelupColor = Color.Fuchsia;
@@ -39,6 +40,11 @@ namespace BeatShift
             parentRacer = racer;
             beats = new Queue<Beat>();
             maxLayer = BeatShift.bgm.Layers();
+        }
+
+        public float getBoostRatio()
+        {
+            return layerBoost[myLayer];
         }
 
         public double GetBoost() { return ((20*myLayer)+ (boostBar/5)); }

@@ -217,7 +217,7 @@ namespace BeatShift
             }
             else
             {
-                 bool is2 = (newLevel == 1) ? true : false;
+                bool is2 = (newLevel == 1) ? true : false;
                 bool is3 = (newLevel == 2) ? true : false;
                 bool is4 = (newLevel == 3) ? true : false;
                 bool is5 = (newLevel == 4) ? true : false;
