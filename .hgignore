@@ -44,3 +44,27 @@ glob:GameContent/particles/Textures/Ring004.xcf
 glob:BeatManager/BBF generator/BBF generator/obj/x86/Debug/DesignTimeResolveAssemblyReferences.cache
 glob:BeatManager/BBF generator/BBF generator/obj/x86/Debug/DesignTimeResolveAssemblyReferencesInput.cache
 glob:GameCode/Particle Systems/CollisionParticleSystemold.cs
+glob:GameCode/Particle Systems/BeatGlowParticleSystemold.cs
+glob:Vocal Beatshift/Bounces/._.DS_Store
+glob:GameContent/SoundEffects/Are You Ready.wav
+glob:GameContent/particles/Textures/Ring006.xcf
+glob:GameCode/Particle Systems/EngineParticleSystemold.cs
+glob:ParallelTasks.XML
+glob:Vocal Beatshift/Bounces/._1.wav
+glob:Vocal Beatshift/Bounces/._2.wav
+glob:Vocal Beatshift/Bounces/.DS_Store
+glob:Vocal Beatshift/Bounces/._3.wav
+glob:Vocal Beatshift/Bounces/._GO!.wav
+glob:Vocal Beatshift/Bounces/._Race Complete.wav
+glob:Vocal Beatshift/Bounces/1.wav
+glob:Vocal Beatshift/Bounces/._Final Lap.wav
+glob:GameCode/Particle Systems/BeatRingParticleSystem - Copy.cs
+glob:Vocal Beatshift/Bounces/._New Lap Record.wav
+glob:Vocal Beatshift/Bounces/._Are You Ready?.wav
+glob:Vocal Beatshift/Bounces/3.wav
+glob:Vocal Beatshift/Bounces/2.wav
+glob:Vocal Beatshift/Bounces/Are You Ready?.wav
+glob:Vocal Beatshift/Bounces/Final Lap.wav
+glob:Vocal Beatshift/Bounces/GO!.wav
+glob:Vocal Beatshift/Bounces/New Lap Record.wav
+glob:Vocal Beatshift/Bounces/Race Complete.wav
