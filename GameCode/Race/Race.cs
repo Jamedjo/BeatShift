@@ -137,7 +137,6 @@ namespace BeatShift
                 {
                     Racer r = new Racer(new RacerId(pickAiName(i)), currentRacers.Count, RacerType.AI);
                     currentRacers.Add(r);
-                    r.insertShipOnMap(RacerType.AI);
                 }
             }
             //setupViewports();
