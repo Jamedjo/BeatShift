@@ -119,10 +119,13 @@ namespace BeatShift.Menus
         }
 
         public static void Draw(GameTime gameTime){
-            Rectangle viewArea = new Rectangle(0, 0, BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height);
-            BeatShift.spriteBatch.Begin();
-            BeatShift.spriteBatch.Draw(GameTextures.MenuBackgroundBlue, viewArea, Color.White);
-            BeatShift.spriteBatch.End();
+            if (currentPage.ToString().Equals("SplashScreen") || currentPage.ToString().Equals("Multiplayer") )
+            {
+                Rectangle viewArea = new Rectangle(0, 0, BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height);
+                BeatShift.spriteBatch.Begin();
+                BeatShift.spriteBatch.Draw(GameTextures.MenuBackgroundBlue, viewArea, Color.White);
+                BeatShift.spriteBatch.End();
+            }
             //draw current page
             currentPage.Draw();
         }
