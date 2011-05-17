@@ -97,8 +97,9 @@ namespace BeatShift
                         }
                         else
                         {
-                            //System.Diagnostics.Debug.WriteLine("Wrong button");
+
                         }
+                        visualisation.RemoveRecent();
                         beats.Dequeue();
                         lastTime = temp.getTimeWithLatency((int)latency);
                         //System.Diagnostics.Debug.WriteLine(temp.getTimeWithLatency((int)latency) + ": Dequeued with ratio " + result + ". BB @:  \n" +
