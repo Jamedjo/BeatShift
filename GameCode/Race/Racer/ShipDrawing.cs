@@ -111,7 +111,7 @@ namespace BeatShift
             worldMatrix.Translation = getShipPosition();
             shipClasses[(int)currentShip].shipRenderer.World = worldMatrix;
 
-            if ((camera.ShouldDrawOwnShip || !isThisTheCamerasShip) && GameLoop.getCurrentState() == GameState.LocalGame)
+            if (((camera.ShouldDrawOwnShip || !isThisTheCamerasShip) && GameLoop.getCurrentState() == GameState.LocalGame) || isThisTheCamerasShip)
             {
                 foreach (ModelMesh mesh in shipClasses[(int)currentShip].model.Meshes)
                 {

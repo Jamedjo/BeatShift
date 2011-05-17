@@ -13,6 +13,10 @@ namespace BeatShift
         public static Texture2D Logo;
         public static Texture2D Start;
 
+        public static Texture2D CityRender;
+        public static Texture2D DesertRender;
+        public static Texture2D SpaceRender;
+
         public static Texture2D MenuBackgroundBlue;
         public static Texture2D MenuBackgroundBlack;
         public static Texture2D MenuBackgroundBlackRed;
@@ -53,6 +57,10 @@ namespace BeatShift
             Console.Write("Loading game textures... ");
             Logo = c.Load<Texture2D>("Images/logo");
             Start = c.Load<Texture2D>("Images/pressstart");
+
+            CityRender = c.Load<Texture2D>("Images/CityMapRender");
+            DesertRender = c.Load<Texture2D>("Images/DesertMapRender");
+            SpaceRender = c.Load<Texture2D>("Images/SpaceMapRender");
 
             MenuBackgroundBlue = c.Load<Texture2D>("Images/blue_background");
             MenuBackgroundBlack = c.Load<Texture2D>("Images/black_background");
