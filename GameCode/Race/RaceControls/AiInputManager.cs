@@ -314,9 +314,11 @@ namespace BeatShift.Input
 
             Physics.currentTrackWall.RayCast(AiRay, 40f, out result);
 
+            float wallAngle;
+
             if (result.T != 0)
             {
-                float wallAngle = Vector3.Dot(Vector3.Normalize(result.Normal), parent.shipPhysics.ShipOrientationMatrix.Left);
+                wallAngle = (float) Math.Cosh(Vector3.Dot(Vector3.Normalize(result.Normal), parent.shipPhysics.ShipOrientationMatrix.Left));
                 
                 if (wallAngle > 0)
                 {
@@ -329,11 +331,14 @@ namespace BeatShift.Input
             }
 
             return 0;
+
             AiRay.Direction = (parent.shipPhysics.ShipOrientationMatrix.Forward + parent.shipPhysics.ShipOrientationMatrix.Right * 2) / 3;
 
-            Physics.currentTrackWall.RayCast(AiRay, 20f, out result);
-            
-
+            Physics.currentTrackWall.RayCast(AiRay, 30f, out result);
+            if(result.T != 0){
+                wallAngle = Vector3.Dot(Vector3.Normalize(result.Normal), parent.shipPhysics.ShipOrientationMatrix.Left);
+                //if(wallAngle < 
+            }
 
             
         }
@@ -341,7 +346,7 @@ namespace BeatShift.Input
         private float turnWalls(float wallAngle, float wallDistance)
         {
             System.Diagnostics.Debug.WriteLine(wallAngle);
-            float angVal = (float)Math.Sqrt(Math.Sin(Math.Cosh(wallAngle)));
+            float angVal = (float)Math.Sqrt(Math.Sin(wallAngle));
             float disVal = 1 / wallDistance;
             return Math.Min(1.0f, angVal + disVal);
         }
