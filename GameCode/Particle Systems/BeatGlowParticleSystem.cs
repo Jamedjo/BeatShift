@@ -49,6 +49,7 @@ namespace DPSF.ParticleSystems
         //-----------------------------------------------------------
         float mfSizeMin = 10;
         float mfSizeMax = 50;
+        const float size = 8;
         Vector3 topVelocity;
         Vector3 lowVelocity;
         //===========================================================
@@ -113,10 +114,10 @@ namespace DPSF.ParticleSystems
             // Setup the Initial Properties of the Particles.
             // These are only applied if using InitializeParticleUsingInitialProperties 
             // as the Particle Initialization Function.
-            topVelocity = new Vector3(10, 10, 10);
-            lowVelocity = new Vector3(-10, -10, -10);
-            InitialProperties.LifetimeMin = 0.4f;
-            InitialProperties.LifetimeMax = 0.6f;
+            topVelocity = new Vector3(0, 0, 0);
+            lowVelocity = new Vector3(0, 0, 0);
+            InitialProperties.LifetimeMin = 0.1f;
+            InitialProperties.LifetimeMax = 0.12f;
             InitialProperties.PositionMin = Vector3.Zero;
             InitialProperties.PositionMax = Vector3.Zero;
             InitialProperties.VelocityMin = lowVelocity;
@@ -125,14 +126,14 @@ namespace DPSF.ParticleSystems
             InitialProperties.RotationMax = 0;
             InitialProperties.RotationalVelocityMin = 0;
             InitialProperties.RotationalVelocityMax = 0;
-            InitialProperties.StartWidthMin = 1;
-            InitialProperties.StartWidthMax = 1;
-            InitialProperties.StartHeightMin = 1;
-            InitialProperties.StartHeightMax = 1;
-            InitialProperties.EndWidthMin = 1;
-            InitialProperties.EndWidthMax = 1;
-            InitialProperties.EndHeightMin = 1;
-            InitialProperties.EndHeightMax = 1;
+            InitialProperties.StartWidthMin = size;
+            InitialProperties.StartWidthMax = size;
+            InitialProperties.StartHeightMin = size;
+            InitialProperties.StartHeightMax = size;
+            InitialProperties.EndWidthMin = size;
+            InitialProperties.EndWidthMax = size;
+            InitialProperties.EndHeightMin = size;
+            InitialProperties.EndHeightMax = size;
             InitialProperties.StartColorMin = Color.White;
             InitialProperties.StartColorMax = Color.White;
             InitialProperties.EndColorMin = Color.Green;
@@ -143,12 +144,12 @@ namespace DPSF.ParticleSystems
             ParticleSystemEvents.RemoveAllEvents();
 
             // Allow the Particle's Position, Rotation, Width and Height, Color, Transparency, and Orientation to be updated each frame
-            ParticleEvents.AddEveryTimeEvent(UpdateParticlePositionUsingVelocity);
+            ParticleEvents.AddEveryTimeEvent(UpdateParticlePosition);
             //ParticleEvents.AddEveryTimeEvent(UpdateParticleRotationUsingRotationalVelocity);
             //ParticleEvents.AddEveryTimeEvent(UpdateParticleWidthAndHeightUsingLerp);
             //ParticleEvents.AddEveryTimeEvent(UpdateParticleColorUsingLerp);
 
-
+            ParticleEvents.AddEveryTimeEvent(UpdateParticleTransparencyWithQuickFadeInAndSlowFadeOut, 100);
             // Setup the Emitter
             Emitter.ParticlesPerSecond = 500;
             Emitter.EmitParticlesAutomatically = false;
@@ -206,8 +207,9 @@ namespace DPSF.ParticleSystems
         /// </summary>
         /// <param name="cParticle">The Particle to update</param>
         /// <param name="fElapsedTimeInSeconds">How long it has been since the last update</param>
-        protected void UpdateParticleFunctionExample(DefaultSpriteParticle cParticle, float fElapsedTimeInSeconds)
+        protected void UpdateParticlePosition(DefaultSpriteParticle cParticle, float fElapsedTimeInSeconds)
         {
+            cParticle.Position = Emitter.PositionData.Position;
             // Place code to update the Particle here
             // Example: cParticle.Position += cParticle.Velocity * fElapsedTimeInSeconds;
         }
@@ -235,7 +237,9 @@ namespace DPSF.ParticleSystems
         //===========================================================
         // Other Particle System Functions
         //===========================================================
-
+        public void setPosition(Vector3 position) {
+            Emitter.PositionData.Position = position;
+        }
         //-----------------------------------------------------------
         // TODO: Place any other functions here
         //-----------------------------------------------------------
@@ -247,7 +251,7 @@ namespace DPSF.ParticleSystems
             InitialProperties.StartColorMin = GlowColor;
             InitialProperties.VelocityMin = shipVelocity + lowVelocity;
             InitialProperties.VelocityMax = shipVelocity + topVelocity;
-            Emitter.BurstParticles = RandomNumber.Next(10, 25);
+            Emitter.BurstParticles = 1;
         }
     }
 }

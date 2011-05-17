@@ -94,9 +94,26 @@ namespace BeatShift
                             difference = Math.Abs(difference);
                             result = (decimal)(difference / layerLeeway[myLayer]);
                             result = 1 - result;
-                        }
-                        else
-                        {
+                            switch (temp.Button)
+                            {
+
+                                case Buttons.A:
+                                    hitColor = Color.Lime;
+                                    break;
+                                case Buttons.B:
+                                    hitColor = Color.Red;
+                                    break;
+                                case Buttons.X:
+                                    hitColor = Color.DodgerBlue;
+                                    break;
+                                case Buttons.Y:
+                                    hitColor = Color.Yellow;
+                                    break;
+                                default:
+                                    hitColor = Color.Purple;
+                                    break;
+                            }
+
 
                         }
                         visualisation.RemoveRecent();
@@ -122,7 +139,7 @@ namespace BeatShift
                     if (time > invinciEndtime)
                     {
                         boostBar -= layerPenalty[myLayer];
-                        beatGlow.Glow(missColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
+                        //beatGlow.Glow(missColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
                         //SoundManager.MissedNote();
                     }
             if (boostBar > 100)
@@ -141,7 +158,7 @@ namespace BeatShift
                 boostBar = 98;
                 visualisation.Clear();
                 beats.Clear();
-                beatGlow.Glow(leveldownColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
+                //beatGlow.Glow(leveldownColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
                 parentRacer.shipDrawing.engineGlow.setLayer(myLayer);
                 isLevellingDown = true;
             }
@@ -159,7 +176,7 @@ namespace BeatShift
                 boostBar = 2;
                 visualisation.Clear();
                 beats.Clear();
-                beatGlow.Glow(levelupColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
+                //beatGlow.Glow(levelupColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
                 parentRacer.shipDrawing.engineGlow.setLayer(myLayer);
                 isLevellingUp = true;
             }
@@ -200,6 +217,7 @@ namespace BeatShift
             {
 
                 visualisation.SetPosition(parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.DrawOrientation);
+                beatGlow.setPosition(parentRacer.shipPhysics.ShipPosition);
             }
             if (!parentRacer.raceTiming.hasCompletedRace)
             {
@@ -215,7 +233,7 @@ namespace BeatShift
                         if (lastTime > invinciEndtime)
                         {
                             boostBar -= layerPenalty[myLayer];
-                            beatGlow.Glow(missColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
+                            //beatGlow.Glow(missColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
                            // SoundManager.MissedNote();
                         }
                     }
