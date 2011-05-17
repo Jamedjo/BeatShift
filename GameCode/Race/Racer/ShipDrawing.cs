@@ -31,6 +31,10 @@ namespace BeatShift
         Func<Vector3> getShipPosition;
         public CollisionParticleSystem collision;
 
+
+        public Vector3 testWalls = Vector3.Zero;
+        public Boolean wallHit = false;
+
         private Racer parentRacer;
 
         public ShipDrawing(Func<Matrix> getDrawOrientationMatrix, Func<Vector3> getPosition, Racer parent)
@@ -107,7 +111,7 @@ namespace BeatShift
             worldMatrix.Translation = getShipPosition();
             shipClasses[(int)currentShip].shipRenderer.World = worldMatrix;
 
-            if (((camera.ShouldDrawOwnShip || !isThisTheCamerasShip) && GameLoop.getCurrentState() == GameState.LocalGame) || isThisTheCamerasShip)
+            if ((camera.ShouldDrawOwnShip || !isThisTheCamerasShip) && GameLoop.getCurrentState() == GameState.LocalGame)
             {
                 foreach (ModelMesh mesh in shipClasses[(int)currentShip].model.Meshes)
                 {
@@ -157,7 +161,10 @@ namespace BeatShift
                     DrawVector.drawArrow(camera, arrow.pos, arrow.dir, arrow.col);
                 }
             }
-
+            if (isThisTheCamerasShip)
+            {
+                DrawVector.drawArrow(camera, getShipPosition(), testWalls, wallHit ? new Vector3(255, 0, 0) : new Vector3(0, 0, 255));
+            }
             
 
         }
