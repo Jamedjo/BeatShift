@@ -15,6 +15,7 @@ namespace BeatShift.Menus
         //VideoPlayer player = new VideoPlayer() ;
         ////texture for current frame in video
         //Texture2D videoTexture = null;
+        public static int counter = 0;
 
         public SplashMenu()
         {
@@ -80,15 +81,33 @@ namespace BeatShift.Menus
             //    BeatShift.spriteBatch.Begin();
             //    BeatShift.spriteBatch.Draw(videoTexture, screen, Color.White);
             //}
+            counter++;
 
             BeatShift.spriteBatch.Begin();
             //BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Please press start", new Vector2(350, 300), Color.White);
             BeatShift.spriteBatch.Draw(GameTextures.MenuBackgroundBlue, screen, Color.White);
-            BeatShift.spriteBatch.Draw(GameTextures.CityRender , screen, Color.White);
+
+            if (counter < 300)
+            {
+                BeatShift.spriteBatch.Draw(GameTextures.CityRender, screen, Color.White);
+                Console.WriteLine(counter);
+            }
+            else if (counter < 600)
+            {
+                BeatShift.spriteBatch.Draw(GameTextures.DesertRender, screen, Color.White);
+                Console.WriteLine(counter);
+            }
+            else if (counter < 900)
+            {
+                BeatShift.spriteBatch.Draw(GameTextures.SpaceRender, screen, Color.White);
+                Console.WriteLine(counter);
+            }
+            else
+                counter = 0;
+
+
             BeatShift.spriteBatch.Draw(GameTextures.Start, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.Start.Width / 2, 9* (BeatShift.graphics.GraphicsDevice.Viewport.Height / 10)), Color.White);
-            //BeatShift.spriteBatch.Draw(GameTextures.Start, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.Start.Width / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2), Color.White);
             BeatShift.spriteBatch.Draw(GameTextures.Logo, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.Logo.Width / 2, -10), Color.White);
-            //BeatShift.spriteBatch.Draw(GameTextures.Logo, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.Start.Width / 2, (BeatShift.graphics.GraphicsDevice.Viewport.Height /4)), Color.White);
             BeatShift.spriteBatch.End();
 
         }
