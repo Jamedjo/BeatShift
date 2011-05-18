@@ -376,6 +376,7 @@ namespace BeatShift
     public class SlidingPopup //These draw from the bottom left
     {
         List<SlideInstance> popups = new List<SlideInstance>();
+        List<SlideInstance> temp = new List<SlideInstance>();
         Vector2 motionVector;
         float buttonScale;
 
@@ -407,7 +408,16 @@ namespace BeatShift
                 beat.elapsedDuration += gameTime.ElapsedGameTime.Milliseconds;
             }
             //beats.RemoveAll(beat => (beat.elapsedDuration >= beat.duration));//wont work on xbox
-            popups = popups.Where(beat => (beat.elapsedDuration < beat.duration)).ToList();
+            temp.Clear();
+            for (int i = 0; i < popups.Count; i++)
+            {
+                if (popups[i].elapsedDuration < popups[i].duration) temp.Add(popups[i]);
+            }
+            popups.Clear();
+            for (int j = 0; j < temp.Count; j++)
+            {
+                popups.Add(temp[j]);
+            }
         }
 
         public void Draw(Vector2 position)
