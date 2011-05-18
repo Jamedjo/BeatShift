@@ -87,9 +87,9 @@ namespace BeatShift
         //Unload the models of the map
         public void UnloadContent()
         {
-            Console.Write("Unloading Map data... ");
+            // Console.Write("Unloading Map data... ");
             MapContent.Unload();
-            Console.WriteLine("Unloaded Map");
+            // Console.WriteLine("Unloaded Map");
         }
 
         #region Drawing Related Methods

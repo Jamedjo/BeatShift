@@ -28,7 +28,7 @@ namespace BeatShift.Menus
 
         public float AnimateInDuration { get; set; }
         float animateInElapsedTime = 0;
-        float animateInLerp = 0;
+        public float animateInLerp = 0;
         Color sickLime = new Color(222, 255, 0);
         public Color slightlyTransparent = new Color(0, 0, 0, 180);
 

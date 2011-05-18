@@ -10,7 +10,7 @@ namespace BeatShift.Menus
     /// <summary>
     /// The different pages/screens the menu can be on. 
     /// </summary>
-    public enum MenuPage { Splash, Main, Options, MapSelect, Multiplayer, SinglePlayerShipSelect, RaceSelect, Loading, HighScore}
+    public enum MenuPage { Splash, Main, Options, MapSelect, Multiplayer, SinglePlayerShipSelect, RaceSelect, Loading, HighScore, FinishedLoading}
 
     static class MenuManager
     {
@@ -29,6 +29,7 @@ namespace BeatShift.Menus
         static IMenuPage RaceSelect;
         static IMenuPage Loading;
         static IMenuPage HighScore;
+        static IMenuPage FinishedLoading;
 
         public static IInputManager anyInput = new AnyInputManager();
 
@@ -43,6 +44,7 @@ namespace BeatShift.Menus
             Splash = new SplashMenu();
             Loading = new LoadingMenu();
             HighScore = new HighScoreMenu();
+            FinishedLoading = new FinishedLoadingMenu();
 
             //currentPage = Main;
             currentPage = Splash;
@@ -110,6 +112,9 @@ namespace BeatShift.Menus
                     break;
                 case MenuPage.HighScore:
                     setCurrentPage(HighScore);
+                    break;
+                case MenuPage.FinishedLoading:
+                    setCurrentPage(FinishedLoading);
                     break;
                 default:
                     throw new Exception();

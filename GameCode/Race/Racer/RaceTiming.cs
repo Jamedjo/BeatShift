@@ -101,7 +101,7 @@ namespace BeatShift
                 if (this == Race.currentRaceType.rankings[penultimateRacer].raceTiming)
                 {
                     Race.currentRaceType.rankings[racerToBeEliminated].raceTiming.isLastToBeEliminated = true;
-                    Console.Write("eliminate " + racePosition + 1 + " position");
+                    // Console.Write("eliminate " + racePosition + 1 + " position");
                 }
             }
 

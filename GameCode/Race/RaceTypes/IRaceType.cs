@@ -98,7 +98,7 @@ namespace BeatShift
             raceOver = false;
 
             // Give each ship a ship physics
-            Console.Write("Started adding physics to each ship...");
+            // Console.Write("Started adding physics to each ship...");
             foreach (Racer racer in Race.currentRacers)
             {
                 RacerType newRacerType = racer.racerType;
@@ -106,7 +106,7 @@ namespace BeatShift
                 racer.shipNumber = Race.currentRacers.IndexOf(racer);
                 racer.insertShipOnMap(newRacerType);
             }
-            Console.WriteLine("Done");
+            // Console.WriteLine("Done");
             
             // Construct the rankings for each ship
             if (areRanksRequired)

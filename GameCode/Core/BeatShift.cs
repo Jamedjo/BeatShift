@@ -169,12 +169,12 @@ namespace BeatShift
             // Guarantees that the storage device will be not be null before continuing
             //while(Storage == null)
             //{
-            Console.Write("Getting Storage...");
+            // Console.Write("Getting Storage...");
             // To avoid GuideAlreadyVisibleException
             while(Guide.IsVisible) { }
             StorageDevice.BeginShowSelector(getStorage, "Get initial StorageDevice");
-            Console.Write("   ..."+Storage+"... ");
-            Console.Write("Call Started...");
+            // Console.Write("   ..."+Storage+"... ");
+            // Console.Write("Call Started...");
             //}
 
             // Create a new SpriteBatch, which can be used to draw textures.
@@ -195,13 +195,13 @@ namespace BeatShift
 
         private void getStorage(IAsyncResult result)
         {
-            Console.Write("...Call complete...");
+            // Console.Write("...Call complete...");
             storage = StorageDevice.EndShowSelector(result);
             if(storage != null)
                 Options.Initialize(Storage);
             else
                 StorageDevice.BeginShowSelector(getStorage, "Recursive get StorageDevice");
-            Console.WriteLine("...storage methods completed.");
+            // Console.WriteLine("...storage methods completed.");
         }
 
 

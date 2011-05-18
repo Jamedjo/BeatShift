@@ -38,18 +38,18 @@ namespace BeatShift.Menus
         {
             addMenuItem("", (Action)(delegate
             {
-                if (loaded)
-                {
-                    GameLoop.setGameState(GameState.LocalGame);
-#if WINDOWS
-                    if ((Keyboard.GetState().IsKeyDown(Keys.Enter)) && !AiInputManager.testAI)
-                    {
-                        Race.humanRacers[0].racingControls.chosenInput = new KeyInputManager();
-                        //TODO: Make it so the input type corresponds to the input pressed
-                        //Could be done by checking each possible input manually, bypassing inputManger if necessary
-                    }
-#endif
-                }
+//                if (loaded)
+//                {
+//                    GameLoop.setGameState(GameState.LocalGame);
+//#if WINDOWS
+//                    if ((Keyboard.GetState().IsKeyDown(Keys.Enter)) && !AiInputManager.testAI)
+//                    {
+                        Race.humanRacers[0].racingControls.setChosenInput(new KeyInputManager());
+//                        //TODO: Make it so the input type corresponds to the input pressed
+//                        //Could be done by checking each possible input manually, bypassing inputManger if necessary
+//                    }
+//#endif
+//                }
             }));
         }
 
@@ -81,6 +81,12 @@ namespace BeatShift.Menus
             base.enteringMenu();
             loaded = false;
             Parallel.Start(load);
+        }
+
+        public override void otherUpdate()
+        {
+            base.otherUpdate();
+            if (loaded) MenuManager.setCurrentMenu(MenuPage.FinishedLoading);
         }
     }
 }

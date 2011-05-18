@@ -45,12 +45,9 @@ namespace BeatShift
             racer.raceTiming.hasCompletedRace = true;
             racer.raceTiming.finalRaceTime = finishTime.ElapsedMilliseconds;
             if (racer.racingControls.chosenInput.GetType() == typeof(PadInputManager))
-            {
-                GamePad.SetVibration(((PadInputManager)racer.racingControls.chosenInput).getPlayerIndex(), 0.0f, 0.0f);
-//                if (((PadInputManager)racer.racingControls.chosenInput).getPlayerIndex()==PlayerIndex.One)
-  //              System.Diagnostics.Debug.WriteLine("sdfg");
-            }
-            racer.racingControls.chosenInput = new AiInputManager(racer);
+                GamePad.SetVibration(racer.racingControls.padIndex, 0.0f, 0.0f);
+            if (racer.racingControls.chosenInput.GetType() != typeof(AiInputManager))
+                racer.racingControls.setChosenInput(new AiInputManager(racer));
 
             TimeSpan ts = finishTime.Elapsed;
             racer.raceTiming.finalRaceTimeString = racer.raceTiming.convertTimeSpanToString(ts);

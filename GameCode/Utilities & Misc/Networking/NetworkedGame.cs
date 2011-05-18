@@ -70,7 +70,7 @@ namespace BeatShift
         /// </summary>
         public override void Initialize()
         {
-            Console.Write("Initializing networking (GamerServicesDispatcher)... ");
+            // Console.Write("Initializing networking (GamerServicesDispatcher)... ");
             //This block of code needs to be uncommented somewhere
             //Unfortunately it is very slow (5s) on my PC and delays
             //Startup significantly.
@@ -86,7 +86,7 @@ namespace BeatShift
                 //triggered if live services not running
                 Debug.WriteLine("Unable to initialize GamerServicesDispatcher.");
             }
-            Console.WriteLine("   ...done.");
+            // Console.WriteLine("   ...done.");
 
             base.Initialize();
         }

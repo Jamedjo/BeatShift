@@ -164,9 +164,9 @@ namespace BeatShift.Menus
         public override void leavingMenu()
         {
             // This ought to display a message to the user telling them that the options are being saved.
-            System.Diagnostics.Debug.WriteLine("Start saving options");
+            // System.Diagnostic.Debug.WriteLine("Start saving options");
             Options.saveOptions();
-            System.Diagnostics.Debug.WriteLine("Options saving complete.");
+            // System.Diagnostic.Debug.WriteLine("Options saving complete.");
             base.leavingMenu();
         }
 

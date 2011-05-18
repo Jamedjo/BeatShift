@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+# Visual C# Express 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsBeatShift", "GameCode\WindowsBeatShift.csproj", "{5D55726F-28CC-4B1C-86A4-30CB6F0A9AD3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeatShiftContent", "GameContent\BeatShiftContent.contentproj", "{7E9D60DA-D2B4-41E0-B5EE-3F1EFA30D1CB}"

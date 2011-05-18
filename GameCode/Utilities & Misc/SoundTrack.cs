@@ -60,7 +60,7 @@ namespace BeatShift
             while((temp=file.ReadLine())!=null)
             {
 #if WINDOWS
-                System.Diagnostics.Debug.WriteLine(temp);
+                // System.Diagnostic.Debug.WriteLine(temp);
 #endif
                 string[] bits = temp.Split(' ');
                 int time = Convert.ToInt32(bits[0].Substring(1, bits[0].Length - 2));
@@ -355,7 +355,7 @@ namespace BeatShift
 
              while (!track.IsPrepared)
              {
-                 System.Diagnostics.Debug.WriteLine("Not yet prepped");
+                 // System.Diagnostic.Debug.WriteLine("Not yet prepped");
              }
              SoundManager.Music += new VolumechangeHandler(setVolume);
         }
@@ -365,7 +365,7 @@ namespace BeatShift
         {   // Set the category volume.
             float temp = 2.0f * (SoundManager.getMusicVolume() / 100.0f);
             musicCategory.SetVolume(temp);
-            System.Diagnostics.Debug.WriteLine(temp);
+            // System.Diagnostic.Debug.WriteLine(temp);
         }
 
 
@@ -409,12 +409,12 @@ namespace BeatShift
             try
             {
 #if WINDOWS
-                System.Diagnostics.Debug.WriteLine("Playing: " + track.IsPlaying +
-                    "\n Stopped: " + track.IsStopped + 
-                    "\n Stopping: " + track.IsStopping + 
-                    "\n Prepared: " + track.IsPrepared + 
-                    "\n Preparing: " + track.IsPreparing + 
-                    "\n Created: " + track.IsCreated);
+                // System.Diagnostic.Debug.WriteLine("Playing: " + track.IsPlaying +
+                    //"\n Stopped: " + track.IsStopped + 
+                    //"\n Stopping: " + track.IsStopping + 
+                    //"\n Prepared: " + track.IsPrepared + 
+                    //"\n Preparing: " + track.IsPreparing + 
+                    //"\n Created: " + track.IsCreated;
 #endif
                 if (!track.IsPlaying)
                 {

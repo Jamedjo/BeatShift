@@ -22,6 +22,7 @@ namespace BeatShift
         public RacerType racerType { get; private set; }
         public BeatQueue beatQueue;
         public RacerPoints racerPoints { get; private set; }
+        public SlidingPopup messagePopupManager = new SlidingPopup(new Vector2(0, -100));
         public Cue Hum;
         private bool isBoosting = false;
         public ParticleSystemManager globalSystems;
@@ -29,6 +30,7 @@ namespace BeatShift
         // General game related variables
         const float updatePeriod = 50; //update movement 20 times a second (1000/50=20)
         float lastUpdatedTimer = 0;
+        
 
         /// <summary>
         /// Specifies whether the ship is currently being held, for example after being reset onto the track. This stops control input,
@@ -223,6 +225,8 @@ namespace BeatShift
 
             int lvl = (beatQueue == null) ? 0 : beatQueue.getLayer();
             racerPoints.Update(gameTime, isBoosting, lvl);
+            racerPoints.pointsPopupManager.Update(gameTime);
+            messagePopupManager.Update(gameTime);
 
             OtherUpdate(gameTime);
         }

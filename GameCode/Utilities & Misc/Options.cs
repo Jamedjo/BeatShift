@@ -261,7 +261,7 @@ namespace BeatShift.Util
         /// reliably accessible since that object may not have completed its initialization.</param> 
         public static void Initialize(StorageDevice storageDevice)
         {
-            System.Diagnostics.Debug.WriteLine("BeatShift.Storage: " + BeatShift.Storage != null);
+            // System.Diagnostic.Debug.WriteLine("BeatShift.Storage: " + BeatShift.Storage != null);
             Boolean optsFileExists;
             {
                 StorageContainer container = null;
@@ -291,6 +291,8 @@ namespace BeatShift.Util
                 optsStream.Dispose();
                 optsStream.Close();
                 container.Dispose();
+
+
             }
 
             try
@@ -309,7 +311,7 @@ namespace BeatShift.Util
                 }
                 catch(OverflowException OException)
                 {
-                    System.Diagnostics.Debug.WriteLine(OException.StackTrace);
+                    // System.Diagnostic.Debug.WriteLine(OException.StackTrace);
                     masterVolume = 100;
                 }
                 try
@@ -320,7 +322,7 @@ namespace BeatShift.Util
                 }
                 catch(OverflowException OException)
                 {
-                    System.Diagnostics.Debug.WriteLine(OException.StackTrace);
+                    // System.Diagnostic.Debug.WriteLine(OException.StackTrace);
                     musicVolume = 100;
                 }
                 try
@@ -331,7 +333,7 @@ namespace BeatShift.Util
                 }
                 catch (OverflowException OException)
                 {
-                    System.Diagnostics.Debug.WriteLine(OException.StackTrace);
+                    // System.Diagnostic.Debug.WriteLine(OException.StackTrace);
                     voiceVolume = 100;
                 }
 
@@ -343,7 +345,7 @@ namespace BeatShift.Util
                 }
                 catch(OverflowException OException)
                 {
-                    System.Diagnostics.Debug.WriteLine(OException.StackTrace);
+                    // System.Diagnostic.Debug.WriteLine(OException.StackTrace);
                     sfxVolume = 100;
                 }
 
@@ -391,6 +393,9 @@ namespace BeatShift.Util
                     throw new InvalidOperationException("Options.xml in TitleStorage is invalid", invOpException);
                 }
                 container.Dispose();
+
+
+
                 Initialize(storageDevice);
             }
         }

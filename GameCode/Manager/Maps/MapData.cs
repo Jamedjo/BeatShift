@@ -84,7 +84,7 @@ namespace BeatShift
             {
                 // this will be thrown by OpenStream if mapName.txt
                 // doesn't exist in the title storage location
-                System.Diagnostics.Debug.WriteLine("Problem with loading map points: " + fnfe.ToString());
+                // System.Diagnostic.Debug.WriteLine("Problem with loading map points: " + fnfe.ToString());
             }
         }
 

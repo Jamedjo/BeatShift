@@ -925,6 +925,16 @@
       <Importer>XImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
+    <Compile Include="Skyboxes\skyboxDesert.x">
+      <Name>skyboxDesert</Name>
+      <Importer>XImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Skyboxes\skyboxCity.x">
+      <Name>skyboxCity</Name>
+      <Importer>XImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Particles\Textures\Ring003.png">
@@ -1066,8 +1076,25 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Images\booston.png">
+      <Name>booston</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Images\leveldown.png">
+      <Name>leveldown</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Compile Include="Images\pointsbg.png">
       <Name>pointsbg</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Images\levelup.png">
+      <Name>levelup</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
