@@ -117,6 +117,7 @@ namespace BeatShift
 
             // Begin the countdown
             countDownRunning = true;
+            SoundManager.RaceStart(4);
             countDownTimer.Start();
         }
 
@@ -131,7 +132,6 @@ namespace BeatShift
                 runStandardCountdown(gameTime, false, 3);
             }
         }
-
         protected void runStandardCountdown(GameTime gameTime, bool startOfRace, int countdownLength)
         {
             if (startOfRace == true)
