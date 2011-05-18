@@ -58,7 +58,7 @@ namespace BeatShift.Menus
             MapManager.loadMap();
             BeatShift.bgm.loadTrack(SoundManager.trackToLoad);
             if (Options.AddAItoGame)
-                Race.setupAIRacers(AiInputManager.numberOfAI);
+                Race.setupAIRacers(Options.NumberAI);
             /*Parallel.ForEach(Race.currentRacers, racer =>
             {
                 racer.Load();
