@@ -46,6 +46,7 @@ namespace BeatShift
         public static Texture2D EliminationBar;
         public static Texture2D PointsBackground;
         public static Texture2D Eliminated;
+        public static Texture2D PointsHUD;
 
         public static Texture2D ShipSelectBasis;
         public static Texture2D Skylar;
@@ -95,6 +96,7 @@ namespace BeatShift
             TutorialScreen = c.Load<Texture2D>("Images/tutorial_screen");
             Eliminated = c.Load<Texture2D>("HUD/eliminated");
             EliminationBar = c.Load<Texture2D>("HUD/elimination");
+            PointsHUD = c.Load<Texture2D>("HUD/pointsfrenzy");
 
             ShipSelectBasis = c.Load<Texture2D>("Images/ShipSelect/ShipSelectBasis");
             Skylar = c.Load<Texture2D>("Images/ShipSelect/Skylar");

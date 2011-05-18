@@ -45,35 +45,26 @@ namespace BeatShift
                 if (Race.currentRaceType.getRaceTypeString().Equals("LappedRace"))
                 {
                     //BeatShift.spriteBatch.Begin();//(SpriteSortMode.Immediate, BlendState.AlphaBlend);
-                    DrawMessage("Finished!", 325, vOffset / 2);
-                    DrawMessage("Final Time: " + racer.raceTiming.getFinalTotalTime(), 300, vOffset / 2 + 40);
+                    DrawMessageColour(BeatShift.newfont, "Finished!", BeatShift.graphics.GraphicsDevice.Viewport.Width / 4, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2, 0.6f, Color.PapayaWhip);
+                    //DrawMessage("Finished!", 325, vOffset / 2);
+                    DrawMessageColour(BeatShift.newfont, "Finished!", BeatShift.graphics.GraphicsDevice.Viewport.Width / 4, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 + 40, 0.6f, Color.PapayaWhip);
+                    //DrawMessage("Final Time: " + racer.raceTiming.getFinalTotalTime(), 300, vOffset / 2 + 40);
                 }
                 if (Race.currentRaceType.getRaceTypeString().Equals("EliminationRace"))
                 {
-                    BeatShift.spriteBatch.Draw(GameTextures.Eliminated, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.Eliminated.Width / 2, 3 * BeatShift.graphics.GraphicsDevice.Viewport.Height / 3, GameTextures.Eliminated.Width, GameTextures.Eliminated.Height), Color.White);
+                    BeatShift.spriteBatch.Draw(GameTextures.Eliminated, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.Eliminated.Width / 2, 3 * BeatShift.graphics.GraphicsDevice.Viewport.Height / 3, GameTextures.Eliminated.Width, GameTextures.Eliminated.Height), Color.PapayaWhip);
                     //DrawMessage("ELIMINATED!", 325, vOffset / 2);
                 }
                 if (Race.currentRaceType.getRaceTypeString().Equals("TimeTrialRace"))
                 {
                     //BeatShift.spriteBatch.Begin();
-                    DrawMessage("Best lap time: " + racer.raceTiming.getBestLapTime(), 325, vOffset / 2);
+                    DrawMessageColour(BeatShift.newfont, "Best Lap" + racer.raceTiming.getBestLapTime(), BeatShift.graphics.GraphicsDevice.Viewport.Width / 4, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2, 0.5f, Color.PapayaWhip);
+                    //DrawMessage("Best lap time: " + racer.raceTiming.getBestLapTime(), 325, vOffset / 2);
                 }
 
             }
             else
             {
-
-
-
-                //////////////////////////////
-                //////// TOTAL POINTS ////////
-                //////////////////////////////
-
-                if (Race.currentRaceType.displayTotalPoints)
-                {
-                    DrawMessageColour(BeatShift.newfont, racer.racerPoints.getPoints().ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 195, 0.4f, Color.Goldenrod);
-                }
-
 
                 /////////////////////
                 ///// HUD BAR ///////
@@ -164,20 +155,39 @@ namespace BeatShift
                     {
                         Rectangle d = new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width - GameTextures.EliminationBar.Width, 0, GameTextures.EliminationBar.Width, GameTextures.EliminationBar.Height);
                         BeatShift.spriteBatch.Draw(GameTextures.EliminationBar, d, Color.White);
-                        if (racer.raceTiming.currentRanking == 1)
-                        {
-                            DrawMessageColour(BeatShift.newfont, racer.raceTiming.currentRanking.ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 160, 55, 0.75f, Color.PapayaWhip);
-                            DrawMessageColour(BeatShift.newfont, calculateRankSuffix(racer.raceTiming.currentRanking), BeatShift.graphics.GraphicsDevice.Viewport.Width - 140, 55, 0.75f, Color.PapayaWhip);
-                        }
-                        else
-                        {
-                            DrawMessageColour(BeatShift.newfont, racer.raceTiming.currentRanking.ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 160, 55, 0.75f, Color.PapayaWhip);
-                            DrawMessageColour(BeatShift.newfont, calculateRankSuffix(racer.raceTiming.currentRanking), BeatShift.graphics.GraphicsDevice.Viewport.Width - 135, 55, 0.75f, Color.PapayaWhip);
-                        }
-                    }
 
+                        if ( racer.raceTiming.currentRanking == Race.currentRacers.Count)
+                            DrawMessageColour(BeatShift.newfont, "DANGER!", BeatShift.graphics.GraphicsDevice.Viewport.Width - 190, 55, 0.75f, Color.White);
+                        else
+                            DrawMessageColour(BeatShift.newfont, "SAFE", BeatShift.graphics.GraphicsDevice.Viewport.Width - 180, 55, 0.75f, Color.White);
+
+                        //if (racer.raceTiming.currentRanking == 1)
+                        //{
+                        //    DrawMessageColour(BeatShift.newfont, racer.raceTiming.currentRanking.ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 160, 55, 0.75f, Color.PapayaWhip);
+                        //    DrawMessageColour(BeatShift.newfont, calculateRankSuffix(racer.raceTiming.currentRanking), BeatShift.graphics.GraphicsDevice.Viewport.Width - 140, 55, 0.75f, Color.PapayaWhip);
+                        //}
+                        //else
+                        //{
+                        //    DrawMessageColour(BeatShift.newfont, racer.raceTiming.currentRanking.ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 160, 55, 0.75f, Color.PapayaWhip);
+                        //    DrawMessageColour(BeatShift.newfont, calculateRankSuffix(racer.raceTiming.currentRanking), BeatShift.graphics.GraphicsDevice.Viewport.Width - 135, 55, 0.75f, Color.PapayaWhip);
+                        //}
+                    }
+                }
+                else if (Race.currentRaceType.getRaceTypeString().Equals("PointsRace"))
+                {
+                    if (BeatShift.graphics.GraphicsDevice.Viewport.Width > 700)
+                    {
+                        Rectangle d = new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width - GameTextures.PointsHUD.Width, 0, GameTextures.PointsHUD.Width, GameTextures.PointsHUD.Height);
+                        BeatShift.spriteBatch.Draw(GameTextures.PointsHUD, d, Color.White);
+                    }
+                    else
+                    {
+                        Rectangle d = new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width - GameTextures.PointsHUD.Width, 0, GameTextures.PointsHUD.Width, GameTextures.PointsHUD.Height);
+                        BeatShift.spriteBatch.Draw(GameTextures.PointsHUD, d, Color.White);
+                    }
                 }
                 else
+                {
                     if (BeatShift.graphics.GraphicsDevice.Viewport.Width > 700)
                     {
                         Rectangle d = new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width - GameTextures.TopRightBoard.Width, 0, GameTextures.TopRightBoard.Width, GameTextures.TopRightBoard.Height);
@@ -188,6 +198,17 @@ namespace BeatShift
                         Rectangle d = new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width - GameTextures.TopRightBoardSmall.Width, 0, GameTextures.TopRightBoardSmall.Width, GameTextures.TopRightBoardSmall.Height);
                         BeatShift.spriteBatch.Draw(GameTextures.TopRightBoardSmall, d, Color.White);
                     }
+                }
+
+
+                //////////////////////////////
+                //////// TOTAL POINTS ////////
+                //////////////////////////////
+
+                if (Race.currentRaceType.displayTotalPoints)
+                {
+                    DrawMessageColour(BeatShift.newfont, racer.racerPoints.getPoints().ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - GameTextures.PointsHUD.Width/2 -65, 65, 1f, Color.PapayaWhip);
+                }
 
                 //////////////////////////////
                 ////////// TOTAL LAPS ////////
