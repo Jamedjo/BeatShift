@@ -171,6 +171,11 @@ namespace BeatShift.Menus
 
         }
 
+        public static void DrawMessageColour(SpriteFont font, string message, int x, int y, float scale, Color col)
+        {
+            BeatShift.spriteBatch.DrawString(font, message, new Vector2(x, y), col, 0f, Vector2.Zero, scale, SpriteEffects.None, 1); ;
+        }
+
         public void Draw()
         {
             BeatShift.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
