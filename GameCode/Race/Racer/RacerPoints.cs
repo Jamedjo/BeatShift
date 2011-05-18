@@ -41,8 +41,8 @@ namespace BeatShift
                 var calc = (levelFramesSinceLastCalculation / framesTotalSinceCalc) * (framesWithBoostSinceLastCalculation / framesTotalSinceCalc) * ((waypointsHitSinceLastCalculation + 1) * waypointsHitSinceLastCalculation);
                 points += calc;
                 pointsToMessage += calc;
-                Console.WriteLine("levels:" + levelFramesSinceLastCalculation + ", boost:" + framesWithBoostSinceLastCalculation + ", wayspeed:" + waypointsHitSinceLastCalculation);
-                Console.WriteLine("newPoints:" + calc + ", totalPoints:" + points);
+                // Console.WriteLine("levels:" + levelFramesSinceLastCalculation + ", boost:" + framesWithBoostSinceLastCalculation + ", wayspeed:" + waypointsHitSinceLastCalculation);
+                // Console.WriteLine("newPoints:" + calc + ", totalPoints:" + points);
 
                 //points += result of calulation
                 //send message to animationHUD to display points gained (and multiplier)

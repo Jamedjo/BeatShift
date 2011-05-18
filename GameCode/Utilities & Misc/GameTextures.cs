@@ -63,7 +63,7 @@ namespace BeatShift
         public static void load(ContentManager c)
         {
 
-            Console.Write("Loading game textures... ");
+            // Console.Write("Loading game textures... ");
             Logo = c.Load<Texture2D>("Images/logo");
             Start = c.Load<Texture2D>("Images/pressstart");
 
@@ -113,7 +113,7 @@ namespace BeatShift
             Flux = c.Load<Texture2D>("Images/ShipSelect/Flux");
             ShipSelectBox = c.Load<Texture2D>("Images/ShipSelect/ShipSelectBox");
 
-            Console.WriteLine("   ...textures loaded.");
+            // Console.WriteLine("   ...textures loaded.");
 
             GC.Collect();
         }

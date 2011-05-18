@@ -23,7 +23,7 @@ namespace BeatShift.Menus
             MenuPos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, 250);
             //TitleStartPos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, -100);
             //UseTextWidthAsOffset = true;
-            Offset = new Vector2(0, 40);//additional vertical spaceing.
+            Offset = new Vector2(0, 35);//additional vertical spaceing.
             TextScale = 0.5f;
         }
 
@@ -35,6 +35,17 @@ namespace BeatShift.Menus
             })
             ,
             (Func<string>)delegate { return Options.AddAItoGame.ToString(); }
+            );
+
+            addMenuItem("Number Of AI: ", (Action)(delegate
+            {
+                if (Options.NumberAI > 3)
+                    Options.NumberAI = 0;
+                else
+                    Options.NumberAI ++;
+            })
+            ,
+            (Func<string>)delegate { return Options.NumberAI.ToString(); }
             );
 
             if (debugOptions == true)
@@ -153,9 +164,9 @@ namespace BeatShift.Menus
         public override void leavingMenu()
         {
             // This ought to display a message to the user telling them that the options are being saved.
-            System.Diagnostics.Debug.WriteLine("Start saving options");
+            // System.Diagnostic.Debug.WriteLine("Start saving options");
             Options.saveOptions();
-            System.Diagnostics.Debug.WriteLine("Options saving complete.");
+            // System.Diagnostic.Debug.WriteLine("Options saving complete.");
             base.leavingMenu();
         }
 

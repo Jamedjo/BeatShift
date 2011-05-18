@@ -125,7 +125,7 @@ namespace BeatShift
                     }
                 }
 
-                if (boostBar == 100 && result > 0.8m)
+                if (boostBar == 100)
                 {
                     LevelUp();
                     beatGlow.Glow(hitColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);

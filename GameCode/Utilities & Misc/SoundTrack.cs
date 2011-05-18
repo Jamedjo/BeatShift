@@ -13,6 +13,7 @@ using System.Threading;
 using System.Diagnostics;
 using System.Collections;
 using System.IO;
+using BeatShift.Input;
 
 namespace BeatShift
 {
@@ -59,7 +60,7 @@ namespace BeatShift
             while((temp=file.ReadLine())!=null)
             {
 #if WINDOWS
-                System.Diagnostics.Debug.WriteLine(temp);
+                // System.Diagnostic.Debug.WriteLine(temp);
 #endif
                 string[] bits = temp.Split(' ');
                 int time = Convert.ToInt32(bits[0].Substring(1, bits[0].Length - 2));
@@ -119,16 +120,20 @@ namespace BeatShift
             if (newLevel < 2)
             {
                 int highest = newLevel;
-                foreach (Racer racer in Race.humanRacers)
+
+                foreach (RacerHuman racer in Race.humanRacers)
                 {
-                    if (racer.beatQueue.getLayer() >= 2)
+                    if (!racer.raceTiming.hasCompletedRace)
                     {
-                        highest = racer.beatQueue.getLayer();
-                        break;
-                    }
-                    else if (racer.beatQueue.getLayer() > highest)
-                    {
-                        highest = racer.beatQueue.getLayer();
+                        if (racer.beatQueue.getLayer() >= 2)
+                        {
+                            highest = racer.beatQueue.getLayer();
+                            break;
+                        }
+                        else if (racer.beatQueue.getLayer() > highest)
+                        {
+                            highest = racer.beatQueue.getLayer();
+                        }
                     }
                 }
                 if (newLevel == highest)
@@ -143,20 +148,24 @@ namespace BeatShift
                 bool is4 = (newLevel == 3) ? true : false;
                 bool is5 = (newLevel == 4) ? true : false;
                 int result=0;
-                foreach (Racer racer in Race.humanRacers)
+                foreach (RacerHuman racer in Race.humanRacers)
                 {
-                    switch(racer.beatQueue.getLayer()) {
-                        case 2:
-                            is3 = true;
-                            break;
-                        case 3:
-                            is4 = true;
-                            break;
-                        case 4:
-                            is5 = true;
-                            break;
-                        default:
-                            break;
+                    if (!racer.raceTiming.hasCompletedRace)
+                    {
+                        switch (racer.beatQueue.getLayer())
+                        {
+                            case 2:
+                                is3 = true;
+                                break;
+                            case 3:
+                                is4 = true;
+                                break;
+                            case 4:
+                                is5 = true;
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
                 
@@ -202,12 +211,15 @@ namespace BeatShift
             if (newLevel < 1)
             {
                 int highest = newLevel;
-                foreach (Racer racer in Race.humanRacers)
+                foreach (RacerHuman racer in Race.humanRacers)
                 {
-                    if (racer.beatQueue.getLayer() >= 1)
+                    if (!racer.raceTiming.hasCompletedRace)
                     {
-                        highest = racer.beatQueue.getLayer();
-                        break;
+                        if (racer.beatQueue.getLayer() >= 1)
+                        {
+                            highest = racer.beatQueue.getLayer();
+                            break;
+                        }
                     }
                 }
                 if (newLevel == highest)
@@ -222,24 +234,27 @@ namespace BeatShift
                 bool is4 = (newLevel == 3) ? true : false;
                 bool is5 = (newLevel == 4) ? true : false;
                 int result = 0;
-                foreach (Racer racer in Race.humanRacers)
+                foreach (RacerHuman racer in Race.humanRacers)
                 {
-                    switch (racer.beatQueue.getLayer())
+                    if (!racer.raceTiming.hasCompletedRace)
                     {
-                        case 1:
-                            is2 = true;
-                            break;
-                        case 2:
-                            is3 = true;
-                            break;
-                        case 3:
-                            is4 = true;
-                            break;
-                        case 4:
-                            is5 = true;
-                            break;
-                        default:
-                            break;
+                        switch (racer.beatQueue.getLayer())
+                        {
+                            case 1:
+                                is2 = true;
+                                break;
+                            case 2:
+                                is3 = true;
+                                break;
+                            case 3:
+                                is4 = true;
+                                break;
+                            case 4:
+                                is5 = true;
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
                 result += is2 ? 1000 : 0;
@@ -340,7 +355,7 @@ namespace BeatShift
 
              while (!track.IsPrepared)
              {
-                 System.Diagnostics.Debug.WriteLine("Not yet prepped");
+                 // System.Diagnostic.Debug.WriteLine("Not yet prepped");
              }
              SoundManager.Music += new VolumechangeHandler(setVolume);
         }
@@ -350,7 +365,7 @@ namespace BeatShift
         {   // Set the category volume.
             float temp = 2.0f * (SoundManager.getMusicVolume() / 100.0f);
             musicCategory.SetVolume(temp);
-            System.Diagnostics.Debug.WriteLine(temp);
+            // System.Diagnostic.Debug.WriteLine(temp);
         }
 
 
@@ -394,7 +409,7 @@ namespace BeatShift
             try
             {
 #if WINDOWS
-                System.Diagnostics.Debug.WriteLine("Playing: " + track.IsPlaying +
+                // System.Diagnostic.Debug.WriteLine("Playing: " + track.IsPlaying +
                     "\n Stopped: " + track.IsStopped + 
                     "\n Stopping: " + track.IsStopping + 
                     "\n Prepared: " + track.IsPrepared + 

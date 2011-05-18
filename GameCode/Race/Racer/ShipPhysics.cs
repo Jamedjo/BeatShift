@@ -308,7 +308,8 @@ namespace BeatShift
                 if (currentProgressWaypoint.getIndex() == 0)
                 {
                     //Start point has been reached, shut down the ship if it's the last lap
-                    SoundManager.LapComplete();
+                    if(parentRacer.GetType()==typeof(RacerHuman))
+                        SoundManager.LapComplete();
                     parentRacer.raceTiming.finishLap();//++laps
                     //TODO: shift into 
                 }
@@ -705,7 +706,7 @@ namespace BeatShift
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine("Unfound pair");
+                // System.Diagnostic.Debug.WriteLine("Unfound pair");
             }
         }
 
@@ -776,7 +777,7 @@ namespace BeatShift
             // Cast stabilisation sticks
             bool stabilizersHit = castStabalizerRaysAndApplyImpulses(stabalizerStickLength, 0.77f);
 
-            castSingleRayAndApplyImpulseCorrection(20, 120f * (ShipSpeed/80));
+            castSingleRayAndApplyImpulseCorrection(22, 160f * (ShipSpeed/80));
             // Ifne or all of the stabilizers missed the track, or were too short
             if (!stabilizersHit || overturned)
             {

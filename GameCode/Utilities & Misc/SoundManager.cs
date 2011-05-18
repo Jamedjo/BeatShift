@@ -88,14 +88,14 @@ namespace BeatShift
         {   // Set the category volume.
             float temp = 2.0f * (SoundManager.getEffectVolume() / 100.0f);
             effectCategory.SetVolume(temp);
-            System.Diagnostics.Debug.WriteLine(temp);
+            // System.Diagnostic.Debug.WriteLine(temp);
         }
 
         private void setVoiceVolume(EventArgs e)
         {   // Set the category volume.
             float temp = 2.0f * (SoundManager.getVoiceVolume() / 100.0f);
             voiceCategory.SetVolume(temp);
-            System.Diagnostics.Debug.WriteLine(temp);
+            // System.Diagnostic.Debug.WriteLine(temp);
         }
 
 
@@ -106,9 +106,9 @@ namespace BeatShift
 
         public void LoadContent(ContentManager content)
         {
-            Console.Write("Loading sounds... ");
+            // Console.Write("Loading sounds... ");
 
-            Console.WriteLine("   ...sounds loaded.");
+            // Console.WriteLine("   ...sounds loaded.");
         }
 
         public static void Collision()
@@ -138,12 +138,18 @@ namespace BeatShift
 
         public static void LapComplete()
         {
-            effectSound.PlayCue("LapComplete"); 
+            soundBank.PlayCue("lap_complete"); 
+        }
+
+        public static void LapRecord()
+        {
+            soundBank.PlayCue("New Lap Record");
         }
 
         public static void RaceStart(int count)
         {
-            soundBank.PlayCue("CountDown");                
+            //BeatShift.engine.SetGlobalVariable("Countdown",count);
+            soundBank.PlayCue("countdown");                
         }
 
         public static Cue getEngineHum()

@@ -14,9 +14,9 @@ namespace BeatShift
     {
         public override void LoadContent()
         {
-            Console.Write("Started loading Desert map...");
+            // Console.Write("Started loading Desert map...");
 
-            LoadSkybox("Skyboxes/skybox2", "Skyboxes/j_skybox_upper35");
+            LoadSkybox("Skyboxes/skyboxDesert", "Skyboxes/j_skybox_upper35");
 
             modelList.Add(new FbxModel("DesertMap_track", MapContent, MapName.DesertMap, ModelCategory.Track));
             modelList.Add(new FbxModel("DesertMap_walls", MapContent, MapName.DesertMap, ModelCategory.Wall));
@@ -33,7 +33,7 @@ namespace BeatShift
             timeTrialRanks[2] = 27000;
             timeTrialRanks[3] = 31000;
 
-            Console.WriteLine("loaded desert");
+            // Console.WriteLine("loaded desert");
         }
 
     }
