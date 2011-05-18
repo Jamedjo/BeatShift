@@ -45,7 +45,6 @@ namespace BeatShift
                 if (Race.currentRaceType.getRaceTypeString().Equals("LappedRace"))
                 {
                     //BeatShift.spriteBatch.Begin();//(SpriteSortMode.Immediate, BlendState.AlphaBlend);
-                    DrawMessageColour(BeatShift.newfont, "Finished!", BeatShift.graphics.GraphicsDevice.Viewport.Width / 4, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2, 0.6f, Color.PapayaWhip);
                     //DrawMessage("Finished!", 325, vOffset / 2);
                     DrawMessageColour(BeatShift.newfont, "Finished!", BeatShift.graphics.GraphicsDevice.Viewport.Width / 4, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 + 40, 0.6f, Color.PapayaWhip);
                     //DrawMessage("Final Time: " + racer.raceTiming.getFinalTotalTime(), 300, vOffset / 2 + 40);
