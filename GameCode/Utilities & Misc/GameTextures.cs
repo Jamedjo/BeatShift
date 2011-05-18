@@ -44,7 +44,9 @@ namespace BeatShift
         public static Texture2D TutorialScreen;
         public static Texture2D Crest;
         public static Texture2D EliminationBar;
+        public static Texture2D PointsBackground;
         public static Texture2D Eliminated;
+        public static Texture2D PointsHUD;
 
         public static Texture2D ShipSelectBasis;
         public static Texture2D Skylar;
@@ -82,7 +84,9 @@ namespace BeatShift
             BoostBarLine = c.Load<Texture2D>("HUD/boostbarline_v3");
             BoostBarLineSmall = c.Load<Texture2D>("HUD/boostbarline_v3_small");
             BoostBar = c.Load<Texture2D>("Images/BoostBar");
-            
+
+            PointsBackground = c.Load<Texture2D>("Images/pointsbg");
+
             HorizontalSplit = c.Load<Texture2D>("Images/horizontalsplit");
             VerticalSplit = c.Load<Texture2D>("Images/verticalsplit");
             Crest = c.Load<Texture2D>("HUD/middleicon");
@@ -92,6 +96,7 @@ namespace BeatShift
             TutorialScreen = c.Load<Texture2D>("Images/tutorial_screen");
             Eliminated = c.Load<Texture2D>("HUD/eliminated");
             EliminationBar = c.Load<Texture2D>("HUD/elimination");
+            PointsHUD = c.Load<Texture2D>("HUD/pointsfrenzy");
 
             ShipSelectBasis = c.Load<Texture2D>("Images/ShipSelect/ShipSelectBasis");
             Skylar = c.Load<Texture2D>("Images/ShipSelect/Skylar");

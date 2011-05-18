@@ -296,13 +296,13 @@ namespace BeatShift.Input
                 {
                     if (angularSize < 3.5f)
                     {
-                        Vector3 leftVector = racer.shipPhysics.physicsBody.OrientationMatrix.Up * reversingMultiplier * 75f * (1 + (Math.Abs(angularSize) * 0.12f)) * chosenInput.getActionValue(InputAction.Left);
+                        Vector3 leftVector = racer.shipPhysics.physicsBody.OrientationMatrix.Up * reversingMultiplier * 65f * (1 + (Math.Abs(angularSize) * 0.12f)) * chosenInput.getActionValue(InputAction.Left);
                         Physics.ApplyAngularImpulse(ref leftVector, ref racer.shipPhysics.physicsBody);
                     }
 
                     if (angularSize > -3.5f)
                     {
-                        Vector3 rightVector = racer.shipPhysics.physicsBody.OrientationMatrix.Up * reversingMultiplier * -75f * (1 + (Math.Abs(angularSize) * 0.12f)) * chosenInput.getActionValue(InputAction.Right);
+                        Vector3 rightVector = racer.shipPhysics.physicsBody.OrientationMatrix.Up * reversingMultiplier * -65f * (1 + (Math.Abs(angularSize) * 0.12f)) * chosenInput.getActionValue(InputAction.Right);
                         Physics.ApplyAngularImpulse(ref rightVector, ref racer.shipPhysics.physicsBody);
                     }
                 }
@@ -310,7 +310,7 @@ namespace BeatShift.Input
 
         public void applyForwardMotionFromAnalogue()
         {
-            racer.shipPhysics.physicsBody.ApplyImpulse(racer.shipPhysics.physicsBody.Position, racer.shipPhysics.physicsBody.OrientationMatrix.Forward * 240 * chosenInput.getActionValue(InputAction.Forwards)); //TODO: should be 280?
+            racer.shipPhysics.physicsBody.ApplyImpulse(racer.shipPhysics.physicsBody.Position, racer.shipPhysics.physicsBody.OrientationMatrix.Forward * 480 * chosenInput.getActionValue(InputAction.Forwards)); //TODO: should be 280?
         }
 
         public void Boost(double accuracy)
