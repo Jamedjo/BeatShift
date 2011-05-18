@@ -160,6 +160,7 @@ namespace BeatShift
                 beats.Clear();
                 //beatGlow.Glow(leveldownColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
                 parentRacer.shipDrawing.engineGlow.setLayer(myLayer);
+                parentRacer.messagePopupManager.addPopup(GameTextures.LevelDown, 500);
                 isLevellingDown = true;
             }
             else
@@ -178,6 +179,8 @@ namespace BeatShift
                 beats.Clear();
                 //beatGlow.Glow(levelupColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
                 parentRacer.shipDrawing.engineGlow.setLayer(myLayer);
+                parentRacer.messagePopupManager.addPopup(GameTextures.LevelUp, 500);
+                parentRacer.messagePopupManager.addPopup(GameTextures.BoostOn, 300);
                 isLevellingUp = true;
             }
         }

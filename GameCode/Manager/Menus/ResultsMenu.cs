@@ -93,7 +93,7 @@ namespace BeatShift.Menus
                 int offset = 70;
                 for (int i = 0; i < Race.currentRacers.Count; i++)
                 {
-                    DrawMessageColour(BeatShift.newfont, Race.currentRacers[i].racerID.ToString() + " " + Race.currentRacers[i].racerPoints.getPoints(), 500, 150 + offset, 0.7f, Color.Goldenrod);
+                    DrawMessageColour(BeatShift.newfont, Race.currentRacers[i].racerID.ToString() + " " + Race.currentRacers[i].racerPoints.getTotalPoints(), 500, 150 + offset, 0.7f, Color.Goldenrod);
                     offset = offset + 70;
                 }
             }

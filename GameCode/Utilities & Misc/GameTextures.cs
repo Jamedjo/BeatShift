@@ -44,7 +44,12 @@ namespace BeatShift
         public static Texture2D TutorialScreen;
         public static Texture2D Crest;
         public static Texture2D EliminationBar;
+
         public static Texture2D PointsBackground;
+        public static Texture2D LevelUp;
+        public static Texture2D LevelDown;
+        public static Texture2D BoostOn;
+
         public static Texture2D Eliminated;
         public static Texture2D PointsHUD;
 
@@ -86,6 +91,9 @@ namespace BeatShift
             BoostBar = c.Load<Texture2D>("Images/BoostBar");
 
             PointsBackground = c.Load<Texture2D>("Images/pointsbg");
+            LevelUp = c.Load<Texture2D>("Images/levelup");
+            LevelDown = c.Load<Texture2D>("Images/leveldown");
+            BoostOn = c.Load<Texture2D>("Images/booston");
 
             HorizontalSplit = c.Load<Texture2D>("Images/horizontalsplit");
             VerticalSplit = c.Load<Texture2D>("Images/verticalsplit");

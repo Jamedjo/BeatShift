@@ -22,6 +22,7 @@ namespace BeatShift
         public RacerType racerType { get; private set; }
         public BeatQueue beatQueue;
         public RacerPoints racerPoints { get; private set; }
+        public SlidingPopup messagePopupManager = new SlidingPopup(new Vector2(0, -100));
         public Cue Hum;
         private bool isBoosting = false;
         public ParticleSystemManager globalSystems;
@@ -225,6 +226,7 @@ namespace BeatShift
             int lvl = (beatQueue == null) ? 0 : beatQueue.getLayer();
             racerPoints.Update(gameTime, isBoosting, lvl);
             racerPoints.pointsPopupManager.Update(gameTime);
+            messagePopupManager.Update();
 
             OtherUpdate(gameTime);
         }

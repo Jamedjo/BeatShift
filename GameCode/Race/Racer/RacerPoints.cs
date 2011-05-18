@@ -57,7 +57,7 @@ namespace BeatShift
 
             if (gameTime.TotalGameTime.TotalMilliseconds - lastMessageTime > 2000)
             {
-               if(pointsToMessage>0) pointsPopupManager.addPopup(GameTextures.Logo,pointsToMessage.ToString(), 500);
+               if(pointsToMessage>0) pointsPopupManager.addPopup(GameTextures.PointsBackground,pointsToMessage.ToString(), 500);
                 pointsToMessage = 0;
                 lastMessageTime = BeatShift.singleton.currentTime.TotalGameTime.TotalMilliseconds;
             }

@@ -66,8 +66,18 @@ namespace BeatShift
             else
             {
                 //Draw messages to when points are given
-                racer.racerPoints.pointsPopupManager.Draw(new Vector2(80f,BeatShift.graphics.GraphicsDevice.Viewport.Height - 140));
-                    DrawMessageColour(BeatShift.newfont, racer.racerPoints.getTotalPoints().ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 195, 0.4f, Color.Goldenrod);
+                ////////////////////
+                //// Points Msg ////
+                ////////////////////
+                racer.racerPoints.pointsPopupManager.Draw(new Vector2(80f, BeatShift.graphics.GraphicsDevice.Viewport.Height - 140));
+                DrawMessageColour(BeatShift.newfont, racer.racerPoints.getTotalPoints().ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 195, 0.4f, Color.Goldenrod);
+
+                //////////////////
+                //// Messages ////
+                //////////////////
+                racer.messagePopupManager.Draw(new Vector2(80f, BeatShift.graphics.GraphicsDevice.Viewport.Height - 140));
+                //DrawMessageColour(BeatShift.newfont, racer.racerPoints.getTotalPoints().ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 195, 0.4f, Color.Goldenrod);
+
                 /////////////////////
                 ///// HUD BAR ///////
                 /////////////////////
@@ -209,7 +219,7 @@ namespace BeatShift
 
                 if (Race.currentRaceType.displayTotalPoints)
                 {
-                    DrawMessageColour(BeatShift.newfont, racer.racerPoints.getPoints().ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - GameTextures.PointsHUD.Width/2 -65, 65, 1f, Color.PapayaWhip);
+                    DrawMessageColour(BeatShift.newfont, racer.racerPoints.getTotalPoints().ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - GameTextures.PointsHUD.Width/2 -65, 65, 1f, Color.PapayaWhip);
                 }
 
                 //////////////////////////////
@@ -453,7 +463,8 @@ namespace BeatShift
                 float lerpval = (float)instance.elapsedDuration / instance.duration;
                 Vector2 pos = Vector2.Lerp(position, position+motionVector, lerpval);
                 BeatShift.spriteBatch.Draw(instance.popup, pos, Color.White);// buttonScale);
-                if (instance.hasMessage) BeatShift.spriteBatch.DrawString(BeatShift.newfont, instance.message, pos + new Vector2(4, 4), Color.White);
+                if (instance.hasMessage)
+                    BeatShift.spriteBatch.DrawString(BeatShift.newfont, "+"+instance.message+" points", pos+new Vector2(4, 4), Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 1);
             }
             BeatShift.graphics.GraphicsDevice.BlendState = b;
 
