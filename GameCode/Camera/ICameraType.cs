@@ -135,9 +135,7 @@ namespace BeatShift.Cameras
 
         public void setBaseFieldOfView(float newFOV)
         {
-            fieldOfView *= MathHelper.PiOver4 / baseFieldOfView;
             baseFieldOfView = newFOV;
-            fieldOfView *= newFOV / MathHelper.PiOver4;
         }
             
             
