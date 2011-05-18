@@ -154,8 +154,9 @@
     <Compile Include="Manager\Maps\SpaceMap.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Manager\Menus\HighScoreMenu.cs" />
     <Compile Include="Manager\Menus\LoadingMenu.cs" />
+    <Compile Include="Manager\Menus\HighScoreMenu.cs" />
+    <Compile Include="Manager\Menus\FinishedLoadingMenu.cs" />
     <Compile Include="Manager\Menus\NumberAIMenu.cs" />
     <Compile Include="Manager\Menus\PauseMenu.cs" />
     <Compile Include="Manager\Menus\ResultsMenu.cs" />
