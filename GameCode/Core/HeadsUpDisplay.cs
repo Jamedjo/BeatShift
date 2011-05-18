@@ -83,7 +83,7 @@ namespace BeatShift
                 ///// ORANGE BOOST BAR /////
                 ////////////////////////////
 
-                racer.raceTiming.previousBoost = MathHelper.Lerp(racer.raceTiming.previousBoost, (float)racer.racingControls.getBoostValue() / 100, 0.05f);
+                racer.raceTiming.previousBoost = MathHelper.Lerp(racer.raceTiming.previousBoost, (float)racer.racingControls.getBoostValue() / 100, 0.1f);
                 racer.raceTiming.previousLapProgress = MathHelper.Lerp(racer.raceTiming.previousLapProgress, (float)racer.shipPhysics.getLapPercentage() / 100, 0.05f);
 
                 var chosenLine = (BeatShift.graphics.GraphicsDevice.Viewport.Width > 700) ? GameTextures.BoostBarLine : GameTextures.BoostBarLineSmall;
