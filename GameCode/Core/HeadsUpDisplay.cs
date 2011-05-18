@@ -45,8 +45,10 @@ namespace BeatShift
                 if (Race.currentRaceType.getRaceTypeString().Equals("LappedRace"))
                 {
                     //BeatShift.spriteBatch.Begin();//(SpriteSortMode.Immediate, BlendState.AlphaBlend);
-                    DrawMessage("Finished!", 325, vOffset / 2);
-                    DrawMessage("Final Time: " + racer.raceTiming.getFinalTotalTime(), 300, vOffset / 2 + 40);
+                    DrawMessageColour(BeatShift.newfont, "Finished!", BeatShift.graphics.GraphicsDevice.Viewport.Width / 4, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2, 0.6f, Color.PapayaWhip);
+                    //DrawMessage("Finished!", 325, vOffset / 2);
+                    DrawMessageColour(BeatShift.newfont, "Finished!", BeatShift.graphics.GraphicsDevice.Viewport.Width / 4, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 + 40, 0.6f, Color.PapayaWhip);
+                    //DrawMessage("Final Time: " + racer.raceTiming.getFinalTotalTime(), 300, vOffset / 2 + 40);
                 }
                 if (Race.currentRaceType.getRaceTypeString().Equals("EliminationRace"))
                 {
@@ -157,7 +159,7 @@ namespace BeatShift
                         if ( racer.raceTiming.currentRanking == Race.currentRacers.Count)
                             DrawMessageColour(BeatShift.newfont, "DANGER!", BeatShift.graphics.GraphicsDevice.Viewport.Width - 190, 55, 0.75f, Color.White);
                         else
-                            DrawMessageColour(BeatShift.newfont, "SAFE", BeatShift.graphics.GraphicsDevice.Viewport.Width - 160, 55, 0.75f, Color.White);
+                            DrawMessageColour(BeatShift.newfont, "SAFE", BeatShift.graphics.GraphicsDevice.Viewport.Width - 180, 55, 0.75f, Color.White);
 
                         //if (racer.raceTiming.currentRanking == 1)
                         //{
@@ -205,7 +207,7 @@ namespace BeatShift
 
                 if (Race.currentRaceType.displayTotalPoints)
                 {
-                    DrawMessageColour(BeatShift.newfont, racer.racerPoints.getPoints().ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - GameTextures.PointsHUD.Width/2 -40, 70, 1f, Color.PapayaWhip);
+                    DrawMessageColour(BeatShift.newfont, racer.racerPoints.getPoints().ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - GameTextures.PointsHUD.Width/2 -65, 65, 1f, Color.PapayaWhip);
                 }
 
                 //////////////////////////////
