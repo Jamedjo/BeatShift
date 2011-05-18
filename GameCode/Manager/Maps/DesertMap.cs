@@ -16,7 +16,7 @@ namespace BeatShift
         {
             // Console.Write("Started loading Desert map...");
 
-            LoadSkybox("Skyboxes/skybox2", "Skyboxes/j_skybox_upper35");
+            LoadSkybox("Skyboxes/skyboxDesert", "Skyboxes/j_skybox_upper35");
 
             modelList.Add(new FbxModel("DesertMap_track", MapContent, MapName.DesertMap, ModelCategory.Track));
             modelList.Add(new FbxModel("DesertMap_walls", MapContent, MapName.DesertMap, ModelCategory.Wall));
