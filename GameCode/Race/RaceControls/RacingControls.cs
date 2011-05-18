@@ -310,7 +310,9 @@ namespace BeatShift.Input
 
         public void applyForwardMotionFromAnalogue()
         {
-            racer.shipPhysics.physicsBody.ApplyImpulse(racer.shipPhysics.physicsBody.Position, racer.shipPhysics.physicsBody.OrientationMatrix.Forward * 480 * chosenInput.getActionValue(InputAction.Forwards)); //TODO: should be 280?
+            float forwardsValue = chosenInput.getActionValue(InputAction.Forwards);
+            if ((forwardsValue < 0.05) && chosenInput.actionPressed(InputAction.Boost)) forwardsValue = 1f;//If boost pressed keep accelerating
+            racer.shipPhysics.physicsBody.ApplyImpulse(racer.shipPhysics.physicsBody.Position, racer.shipPhysics.physicsBody.OrientationMatrix.Forward * 480 * forwardsValue); //TODO: should be 280?
         }
 
         public void Boost(double accuracy)

@@ -226,7 +226,7 @@ namespace BeatShift
             int lvl = (beatQueue == null) ? 0 : beatQueue.getLayer();
             racerPoints.Update(gameTime, isBoosting, lvl);
             racerPoints.pointsPopupManager.Update(gameTime);
-            messagePopupManager.Update();
+            messagePopupManager.Update(gameTime);
 
             OtherUpdate(gameTime);
         }
