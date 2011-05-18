@@ -63,7 +63,7 @@ namespace BeatShift.Menus
                         DrawMessageColour(BeatShift.newfont, "4th    " + results[3] + "  " + players[3], 500, 150 + offset * 3, 0.7f, Color.Gainsboro);
                     //BeatShift.spriteBatch.DrawString(BeatShift.newfont, "4th    " + results[3] + "  " + players[3], new Vector2(500, 150 + offset * 3), Color.Gainsboro);
                     else if (i == 4)
-                        DrawMessageColour(BeatShift.newfont, "5th    " + results[4] + "  " + players[4], 500, 150 + offset, 0.7f, Color.Gainsboro);
+                        DrawMessageColour(BeatShift.newfont, "5th    " + results[4] + "  " + players[4], 500, 150 + offset * 4, 0.7f, Color.Gainsboro);
                     //BeatShift.spriteBatch.DrawString(BeatShift.newfont, "5th    " + results[3] + "  " + players[4], new Vector2(500, 150 + offset * 4), Color.Gainsboro);
                 }
             }
@@ -78,19 +78,19 @@ namespace BeatShift.Menus
                 for (int i = 0; i < Race.currentRacers.Count; i++)
                 {
                     if (Race.currentRacers[i].raceTiming.fastestLap.TotalMilliseconds < MapManager.currentMap.timeTrialRanks[0])
-                        DrawMessageColour(BeatShift.newfont, Race.currentRacers[i].racerID.ToString() + " " + Race.currentRacers[i].raceTiming.getBestLapTime(), 500, 150 + offset, 0.7f, Color.Aqua);
+                        DrawMessageColour(BeatShift.newfont, Race.currentRacers[i].racerID.ToString() + " " + Race.currentRacers[i].raceTiming.getBestLapTime(), 500, 150 + offset*i, 0.7f, Color.Aqua);
                     //BeatShift.spriteBatch.DrawString(BeatShift.newfont, Race.currentRacers[i].racerID.ToString() + " " + Race.currentRacers[i].raceTiming.getBestLapTime(), new Vector2(500, 150 + offset * i), Color.Aqua);
                     else if (Race.currentRacers[i].raceTiming.fastestLap.TotalMilliseconds < MapManager.currentMap.timeTrialRanks[1])
-                        DrawMessageColour(BeatShift.newfont, Race.currentRacers[i].racerID.ToString() + " " + Race.currentRacers[i].raceTiming.getBestLapTime(), 500, 150 + offset, 0.7f, Color.Goldenrod);
+                        DrawMessageColour(BeatShift.newfont, Race.currentRacers[i].racerID.ToString() + " " + Race.currentRacers[i].raceTiming.getBestLapTime(), 500, 150 + offset *i, 0.7f, Color.Goldenrod);
                     //BeatShift.spriteBatch.DrawString(BeatShift.newfont, Race.currentRacers[i].racerID.ToString() + " " + Race.currentRacers[i].raceTiming.getBestLapTime(), new Vector2(500, 150 + offset * i), Color.Goldenrod);
                     else if (Race.currentRacers[i].raceTiming.fastestLap.TotalMilliseconds < MapManager.currentMap.timeTrialRanks[2])
-                        DrawMessageColour(BeatShift.newfont, Race.currentRacers[i].racerID.ToString() + " " + Race.currentRacers[i].raceTiming.getBestLapTime(), 500, 150 + offset, 0.7f, Color.White);
+                        DrawMessageColour(BeatShift.newfont, Race.currentRacers[i].racerID.ToString() + " " + Race.currentRacers[i].raceTiming.getBestLapTime(), 500, 150 + offset*i, 0.7f, Color.White);
                     //BeatShift.spriteBatch.DrawString(BeatShift.newfont, Race.currentRacers[i].racerID.ToString() + " " + Race.currentRacers[i].raceTiming.getBestLapTime(), new Vector2(500, 150 + offset * i), Color.White);
                     else if (Race.currentRacers[i].raceTiming.fastestLap.TotalMilliseconds < MapManager.currentMap.timeTrialRanks[3])
-                        DrawMessageColour(BeatShift.newfont, Race.currentRacers[i].racerID.ToString() + " " + Race.currentRacers[i].raceTiming.getBestLapTime(), 500, 150 + offset, 0.7f, Color.SaddleBrown);
+                        DrawMessageColour(BeatShift.newfont, Race.currentRacers[i].racerID.ToString() + " " + Race.currentRacers[i].raceTiming.getBestLapTime(), 500, 150 + offset*i, 0.7f, Color.SaddleBrown);
                     //BeatShift.spriteBatch.DrawString(BeatShift.newfont, Race.currentRacers[i].racerID.ToString() + " " + Race.currentRacers[i].raceTiming.getBestLapTime(), new Vector2(500, 150 + offset * i), Color.SaddleBrown);
                     else
-                        DrawMessageColour(BeatShift.newfont, Race.currentRacers[i].racerID.ToString() + " Unranked", 500, 150 + offset, 0.7f, Color.Gainsboro);
+                        DrawMessageColour(BeatShift.newfont, Race.currentRacers[i].racerID.ToString() + " Unranked", 500, 150 + offset*i, 0.7f, Color.Gainsboro);
                     //BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Unranked " + Race.currentRacers[i].racerID.ToString(), new Vector2(500, 150 + offset * i), Color.Gainsboro);
                 }
             }

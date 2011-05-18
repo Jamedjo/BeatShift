@@ -29,15 +29,6 @@ namespace BeatShift.Menus
         public override void setupMenuItems()
         {
 
-            addMenuItem("SPACE MAP", (Action)(delegate
-            {
-                MapManager.mapToLoad = MapName.SpaceMap;
-                SoundManager.trackToLoad = "Space";
-                //if (isSinglePlayer()) 
-                //    MenuManager.setCurrentMenu(MenuPage.SinglePlayerShipSelect);
-                //else
-                    GameLoop.setGameState(GameState.MultiplayerShipSelect);
-            }));
             addMenuItem("CITY MAP", (Action)(delegate
             {
                 MapManager.mapToLoad = MapName.CityMap;
@@ -51,6 +42,15 @@ namespace BeatShift.Menus
                 GameLoop.setGameState(GameState.MultiplayerShipSelect);
                 //if (isSinglePlayer()) MenuManager.setCurrentMenu(MenuPage.SinglePlayerShipSelect);
                 //else GameLoop.setGameState(GameState.MultiplayerShipSelect);
+            }));
+            addMenuItem("SPACE MAP", (Action)(delegate
+            {
+                MapManager.mapToLoad = MapName.SpaceMap;
+                SoundManager.trackToLoad = "Space";
+                //if (isSinglePlayer()) 
+                //    MenuManager.setCurrentMenu(MenuPage.SinglePlayerShipSelect);
+                //else
+                GameLoop.setGameState(GameState.MultiplayerShipSelect);
             }));
         }
 
