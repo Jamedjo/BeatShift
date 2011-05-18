@@ -13,10 +13,10 @@ namespace BeatShift
     {
         public static String[] Ranks = { "TH", "ST", "ND", "RD", "TH", "TH", "TH", "TH", "TH", "TH", "TH" }; //increase for more players
         public static int updatePeriod = 92;
+        
 
         public static void Update(GameTime gameTime)
         {
-            
         }
 
         /// <summary>
@@ -62,8 +62,8 @@ namespace BeatShift
             }
             else
             {
-
-
+                //Draw messages to when points are given
+                racer.racerPoints.pointsPopupManager.Draw(new Vector2(80f,BeatShift.graphics.GraphicsDevice.Viewport.Height - 140));
 
                 //////////////////////////////
                 //////// TOTAL POINTS ////////
@@ -71,7 +71,7 @@ namespace BeatShift
 
                 if (Race.currentRaceType.displayTotalPoints)
                 {
-                    DrawMessageColour(BeatShift.newfont, racer.racerPoints.getPoints().ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 195, 0.4f, Color.Goldenrod);
+                    DrawMessageColour(BeatShift.newfont, racer.racerPoints.getTotalPoints().ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 195, 0.4f, Color.Goldenrod);
                 }
 
 
@@ -286,7 +286,7 @@ namespace BeatShift
             BeatShift.spriteBatch.DrawString(BeatShift.newfont, message, new Vector2(x + 1, y + 1), Color.Black);//,0,new Vector2(0,0),0.5f,null,0f);
             BeatShift.spriteBatch.DrawString(BeatShift.newfont, message, new Vector2(x, y), Color.White);
         }
-        public static void DrawMessage(SpriteFont font, string message, int x, int y,float scale)
+        public static void DrawMessage(SpriteFont font, string message, int x, int y, float scale)
         {
             BeatShift.spriteBatch.DrawString(font, message, new Vector2(x, y), Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 1); ;
         }
@@ -296,26 +296,26 @@ namespace BeatShift
             BeatShift.spriteBatch.DrawString(font, message, new Vector2(x, y), col, 0f, Vector2.Zero, scale, SpriteEffects.None, 1); ;
         }
 
-            public static void DrawSplitBarsTwoPlayer()
-            {
-                //BeatShift.spriteBatch.Begin();
-                BeatShift.spriteBatch.Draw(GameTextures.VerticalSplit, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.VerticalSplit.Width / 2, 0, GameTextures.VerticalSplit.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height), Color.White);
-            }
+        public static void DrawSplitBarsTwoPlayer()
+        {
+            //BeatShift.spriteBatch.Begin();
+            BeatShift.spriteBatch.Draw(GameTextures.VerticalSplit, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.VerticalSplit.Width / 2, 0, GameTextures.VerticalSplit.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height), Color.White);
+        }
 
-            public static void DrawSplitBarsThreePlayer()
-            {
-                //BeatShift.spriteBatch.Begin();
-                BeatShift.spriteBatch.Draw(GameTextures.HorizontalSplit, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - GameTextures.HorizontalSplit.Height / 2, BeatShift.graphics.GraphicsDevice.Viewport.Width/2, GameTextures.HorizontalSplit.Height), Color.White);
-                BeatShift.spriteBatch.Draw(GameTextures.VerticalSplit, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.VerticalSplit.Width / 2, 0, GameTextures.VerticalSplit.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height), Color.White);
-            }
+        public static void DrawSplitBarsThreePlayer()
+        {
+            //BeatShift.spriteBatch.Begin();
+            BeatShift.spriteBatch.Draw(GameTextures.HorizontalSplit, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - GameTextures.HorizontalSplit.Height / 2, BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, GameTextures.HorizontalSplit.Height), Color.White);
+            BeatShift.spriteBatch.Draw(GameTextures.VerticalSplit, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.VerticalSplit.Width / 2, 0, GameTextures.VerticalSplit.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height), Color.White);
+        }
 
-            public static void DrawSplitBarsFourPlayer()
-            {
-                //BeatShift.spriteBatch.Begin();
-                BeatShift.spriteBatch.Draw(GameTextures.HorizontalSplit, new Rectangle(0, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - GameTextures.HorizontalSplit.Height / 2, BeatShift.graphics.GraphicsDevice.Viewport.Width, GameTextures.HorizontalSplit.Height), Color.White);
-                BeatShift.spriteBatch.Draw(GameTextures.VerticalSplit, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.VerticalSplit.Width / 2, 0, GameTextures.VerticalSplit.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height), Color.White);
-                BeatShift.spriteBatch.Draw(GameTextures.Crest, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.Crest.Width / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - GameTextures.Crest.Height / 2, GameTextures.Crest.Width, GameTextures.Crest.Height), Color.White);
-            }
+        public static void DrawSplitBarsFourPlayer()
+        {
+            //BeatShift.spriteBatch.Begin();
+            BeatShift.spriteBatch.Draw(GameTextures.HorizontalSplit, new Rectangle(0, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - GameTextures.HorizontalSplit.Height / 2, BeatShift.graphics.GraphicsDevice.Viewport.Width, GameTextures.HorizontalSplit.Height), Color.White);
+            BeatShift.spriteBatch.Draw(GameTextures.VerticalSplit, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.VerticalSplit.Width / 2, 0, GameTextures.VerticalSplit.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height), Color.White);
+            BeatShift.spriteBatch.Draw(GameTextures.Crest, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.Crest.Width / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - GameTextures.Crest.Height / 2, GameTextures.Crest.Width, GameTextures.Crest.Height), Color.White);
+        }
 
         public static void DrawSplitBars()
         {
@@ -328,7 +328,7 @@ namespace BeatShift
         }
 
         public static String calculateRankSuffix(int target)
-        { 
+        {
             if (!(target > 10 && target < 20))
                 return Ranks[target % 10];
             else
@@ -342,11 +342,92 @@ namespace BeatShift
             else
                 return 0;
         }
-
-
-
     }
-    
+
+    public class SlidingPopup //These draw from the bottom left
+    {
+        List<SlideInstance> popups = new List<SlideInstance>();
+        Vector2 motionVector;
+        float buttonScale;
+
+        public SlidingPopup(Vector2 MotionVector)
+        {
+            motionVector = MotionVector;
+            buttonScale = 0f;//ButtonScale;
+        }
+
+        public void addPopup(Texture2D popup, int duration)//Must becarefull with add/update order so updates are not one frame out?
+        {
+            popups.Add(new SlideInstance(popup, duration));
+        }
+        public void addPopup(Texture2D popup,String Message, int duration)//Must becarefull with add/update order so updates are not one frame out?
+        {
+            popups.Add(new SlideInstance(popup,Message, duration));
+        }
+        //public void addBeat(ButtonImage button, GameTime currentTime, int expectedHitTime)
+        //{
+        //    beats.Add(new BeatInstance(button, currentTime.TotalGameTime.Milliseconds, expectedHitTime));
+        //}
+
+        //Remove from list when finished, fade just before.
+
+        public void Update(GameTime gameTime)
+        {
+            foreach (SlideInstance beat in popups)
+            {
+                beat.elapsedDuration += gameTime.ElapsedGameTime.Milliseconds;
+            }
+            //beats.RemoveAll(beat => (beat.elapsedDuration >= beat.duration));//wont work on xbox
+            popups = popups.Where(beat => (beat.elapsedDuration < beat.duration)).ToList();
+        }
+
+        public void Draw(Vector2 position)
+        {
+            BlendState b = BeatShift.graphics.GraphicsDevice.BlendState;
+            BeatShift.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+
+            foreach (SlideInstance instance in popups)
+            {
+                float lerpval = (float)instance.elapsedDuration / instance.duration;
+                Vector2 pos = Vector2.Lerp(position, position+motionVector, lerpval);
+                BeatShift.spriteBatch.Draw(instance.popup, pos, Color.White);// buttonScale);
+                if (instance.hasMessage) BeatShift.spriteBatch.DrawString(BeatShift.newfont, instance.message, pos + new Vector2(4, 4), Color.White);
+            }
+            BeatShift.graphics.GraphicsDevice.BlendState = b;
+
+        }
+
+        private class SlideInstance
+        {
+            public Texture2D popup;
+            //float startTime;
+            //float expectedHitTime;
+            public int duration;
+            public int elapsedDuration;
+
+            public bool hasMessage;
+            public String message;
+
+            public SlideInstance(Texture2D Popup, int timeDuration)
+            {
+                popup = Popup;
+                duration = timeDuration;
+                elapsedDuration = 0;
+                hasMessage = false;
+            }
+
+
+            public SlideInstance(Texture2D Popup,String Message, int timeDuration)
+            {
+                popup = Popup;
+                duration = timeDuration;
+                elapsedDuration = 0;
+                hasMessage = true;
+                message = Message;
+            }
+        }
+    }
+
    
-    }
+}
 

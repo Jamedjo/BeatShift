@@ -29,6 +29,7 @@ namespace BeatShift
         // General game related variables
         const float updatePeriod = 50; //update movement 20 times a second (1000/50=20)
         float lastUpdatedTimer = 0;
+        
 
         /// <summary>
         /// Specifies whether the ship is currently being held, for example after being reset onto the track. This stops control input,
@@ -223,6 +224,7 @@ namespace BeatShift
 
             int lvl = (beatQueue == null) ? 0 : beatQueue.getLayer();
             racerPoints.Update(gameTime, isBoosting, lvl);
+            racerPoints.pointsPopupManager.Update(gameTime);
 
             OtherUpdate(gameTime);
         }

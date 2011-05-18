@@ -47,7 +47,7 @@ namespace BeatShift.Menus
             {
                 Race.currentRaceType = new PointsRace(3);
                 Race.resetPlayers();
-                //MenuManager.setCurrentMenu(MenuPage.MapSelect);
+                MenuManager.setCurrentMenu(MenuPage.MapSelect);
             }));
 
         }
