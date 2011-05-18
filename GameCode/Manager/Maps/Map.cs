@@ -163,16 +163,16 @@ namespace BeatShift
         {
             if (modelObject.category == ModelCategory.InvisibleWall) return;
             RasterizerState cull = BeatShift.graphics.GraphicsDevice.RasterizerState;
-            if (modelObject.category == ModelCategory.Track && currentMapName == MapName.SpaceMap)
-            {
-                BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-                drawWithBShiftEffect(modelObject.model, modelObject.transforms, camera);
-            }
-            else
-            {
+            //if (modelObject.category == ModelCategory.Track && currentMapName == MapName.SpaceMap)
+            //{
+            //    BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+            //    drawWithBShiftEffect(modelObject.model, modelObject.transforms, camera);
+            //}
+            //else
+            //{
                 BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
                 drawWithBasicEffect(modelObject, camera);
-            }
+            //}
             BeatShift.graphics.GraphicsDevice.RasterizerState = cull;
         }
 
