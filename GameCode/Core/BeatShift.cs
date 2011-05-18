@@ -140,6 +140,9 @@ namespace BeatShift
 
             GameLoop.setGameStateAndResetPlayers(GameState.Menu);
             engine = new AudioEngine("Content/XACT/BeatShift.xgs");
+            GameLoop.menuBank = new SoundBank(engine, "Content\\XACT\\MusicTracks.xsb");
+            GameLoop.wavBank = new WaveBank(engine, "Content\\XACT\\SpaceMap.xwb");
+            GameLoop.playTitle();
             bgm = new SoundTrack(140);
             bgm.LoadContent(Content,"bgm2");
             sfx = new SoundManager();

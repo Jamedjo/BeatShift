@@ -82,8 +82,11 @@ namespace BeatShift
             privateSystems = new ParticleSystemManager();
             globalSystems = new ParticleSystemManager();
             //setColour(1);//Set to red
-            Hum = SoundManager.getEngineHum();
-            //Hum.Play();
+            //Hum = SoundManager.getEngineHum();
+            if (this.GetType() == typeof(RacerHuman))
+            {
+                Hum.Play();
+            }
             constructRaceVariables();
 
             if (racerType == RacerType.AI)

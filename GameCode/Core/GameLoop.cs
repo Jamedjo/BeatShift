@@ -8,7 +8,9 @@ using Microsoft.Xna.Framework.Input;
 using BeatShift.Input;
 using Microsoft.Xna.Framework.GamerServices;
 using BeatShift.Utilities___Misc;
+using Microsoft.Xna.Framework.Audio;
 using ParallelTasks;
+
 namespace BeatShift
 {
     /// <summary>
@@ -25,7 +27,9 @@ namespace BeatShift
         /// </summary>
         static GameState currentState;
         public static GameState getCurrentState() { return currentState; }
-
+        public static SoundBank menuBank;
+        public static WaveBank wavBank;
+        static Cue titleMusic;
         private static bool paused = false;
         private static bool pausedForGuide = false;
 
@@ -35,6 +39,35 @@ namespace BeatShift
 
         private static IMenuPage pauseMenu = new PauseMenu();
         private static IMenuPage resultsMenu = new ResultsMenu();
+
+        public static void playTitle()
+        {
+            try
+            {
+                if (!titleMusic.IsPlaying)
+                {
+                    titleMusic.Play();
+                }
+            }
+            catch (Exception e)
+            {
+                titleMusic = menuBank.GetCue("Title");
+                while (titleMusic.IsPreparing)
+                {
+                }
+                titleMusic.Play();
+            }
+        }
+
+        public static void StopTitle()
+        {
+            if (titleMusic != null && !titleMusic.IsStopped && titleMusic.IsPlaying)
+            {
+                titleMusic.Stop(AudioStopOptions.AsAuthored);
+            }
+            titleMusic = menuBank.GetCue("Title");
+            GC.Collect();
+        }
 
         public static void setActiveControllers(bool set, int index)
         {
@@ -209,6 +242,7 @@ namespace BeatShift
                     MenuManager.Enabled = true;
                     MenuManager.Visible = true;
                     BeatShift.bgm.stop();
+                    playTitle();
                     break;
                 case GameState.NetworkedGame:
                     BeatShift.networkedGame.Enabled = true;
@@ -233,6 +267,7 @@ namespace BeatShift
                     BeatShift.shipSelect.Visible = true;
                     BeatShift.shipSelect.Enabled = true;
                     BeatShift.shipSelect.enteringState();
+                    playTitle();
                     break;
             }
         }

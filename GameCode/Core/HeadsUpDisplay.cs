@@ -57,7 +57,7 @@ namespace BeatShift
                 if (Race.currentRaceType.getRaceTypeString().Equals("TimeTrialRace"))
                 {
                     //BeatShift.spriteBatch.Begin();
-                    DrawMessageColour(BeatShift.newfont, "Best Lap" + racer.raceTiming.getBestLapTime(), BeatShift.graphics.GraphicsDevice.Viewport.Width / 4, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2, 0.5f, Color.PapayaWhip);
+                    DrawMessageColour(BeatShift.newfont, "Best Lap: " + racer.raceTiming.getBestLapTime(), BeatShift.graphics.GraphicsDevice.Viewport.Width / 4, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2, 0.5f, Color.PapayaWhip);
                     //DrawMessage("Best lap time: " + racer.raceTiming.getBestLapTime(), 325, vOffset / 2);
                 }
 
@@ -69,12 +69,12 @@ namespace BeatShift
                 //// Points Msg ////
                 ////////////////////
                 racer.racerPoints.pointsPopupManager.Draw(new Vector2(80f, BeatShift.graphics.GraphicsDevice.Viewport.Height - 140));
-                DrawMessageColour(BeatShift.newfont, racer.racerPoints.getTotalPoints().ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 195, 0.4f, Color.Goldenrod);
+                //DrawMessageColour(BeatShift.newfont, racer.racerPoints.getTotalPoints().ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 195, 0.3f, Color.Goldenrod);
 
                 //////////////////
                 //// Messages ////
                 //////////////////
-                racer.messagePopupManager.Draw(new Vector2(80f, BeatShift.graphics.GraphicsDevice.Viewport.Height - 140));
+                racer.messagePopupManager.Draw(new Vector2(180f, BeatShift.graphics.GraphicsDevice.Viewport.Height - 140));
                 //DrawMessageColour(BeatShift.newfont, racer.racerPoints.getTotalPoints().ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 195, 0.4f, Color.Goldenrod);
 
                 /////////////////////
@@ -260,6 +260,42 @@ namespace BeatShift
                         DrawMessageColour(BeatShift.newfont, racer.raceTiming.getCurrentLapTime(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 36, 0.4f, Color.PapayaWhip);
                     }
                 }
+                /////////////////////////////
+                ////// WRONG WAY SIGN ///////
+                /////////////////////////////
+
+                if (racer.shipPhysics.wrongWay == true)
+                {
+                    int newWarningWidth = (int)(GameTextures.WrongWaySign.Width * scaleFactorWidth);
+                    int newWarningHeight = (int)(GameTextures.WrongWaySign.Height * scaleFactorHeight);
+                    BeatShift.spriteBatch.Draw(GameTextures.WrongWaySign, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - newWarningWidth / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - newWarningHeight / 2, newWarningWidth, newWarningHeight), Color.White);
+                }
+
+                /////////////////////////////
+                ////// RESETTING SIGN ///////
+                /////////////////////////////
+
+                if (racer.isRespawning && racer.shipPhysics.millisecsLeftTillReset < 2000)
+                {
+                    int newWarningWidth = (int)(GameTextures.ResettingSign.Width * scaleFactorWidth);
+                    int newWarningHeight = (int)(GameTextures.ResettingSign.Height * scaleFactorHeight);
+                    BeatShift.spriteBatch.Draw(GameTextures.ResettingSign, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - newWarningWidth / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - newWarningHeight / 2, newWarningWidth, newWarningHeight), Color.White);
+                }
+
+                /////////////////////////////
+                ////// COUNTDOWN SIGN ///////
+                /////////////////////////////
+
+                if (Race.currentRaceType.countDownRunning)
+                    BeatShift.spriteBatch.Draw(Race.currentRaceType.countdownState, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - Race.currentRaceType.countdownState.Width / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - Race.currentRaceType.countdownState.Height / 2), Color.White);
+
+                // Other info
+                //DrawMessage("Progress: " + racer.getLapPercentage() + "%", 10, vOffset + 26);
+                //DrawMessage("Accuracy: " + racer.racingControls.getLastPress(), 10, vOffset - 30);
+                //DrawMessage("Dist from trac: " + racer.shipPhysics.shipRayToTrackTime, 10, vOffset - 30);
+                //DrawNewMessage(" !\"#$%'()*+,-./0123456789:;<=>?@ABCDEFGHIJ", 0, 30);
+                //DrawNewMessage("KLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrrstuvwxyz{|}~", 0, 90);
+            
 
                 //////////////////////////////
                 ////////// BEST LAP //////////
@@ -299,44 +335,7 @@ namespace BeatShift
                         }
                         //DrawMessage(BeatShift.newfont, calculateRankSuffix(racer.raceTiming.currentRanking), BeatShift.graphics.GraphicsDevice.Viewport.Width - 178 + extraSuffixOffset(racer.raceTiming.currentRanking), 26, 0.25f);
                     }
-
-                    /////////////////////////////
-                    ////// WRONG WAY SIGN ///////
-                    /////////////////////////////
-
-                    if (racer.shipPhysics.wrongWay == true)
-                    {
-                        int newWarningWidth = (int)(GameTextures.WrongWaySign.Width * scaleFactorWidth);
-                        int newWarningHeight = (int)(GameTextures.WrongWaySign.Height * scaleFactorHeight);
-                        BeatShift.spriteBatch.Draw(GameTextures.WrongWaySign, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - newWarningWidth / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - newWarningHeight / 2, newWarningWidth, newWarningHeight), Color.White);
-                    }
-
-                    /////////////////////////////
-                    ////// RESETTING SIGN ///////
-                    /////////////////////////////
-
-                    if (racer.isRespawning && racer.shipPhysics.millisecsLeftTillReset < 2000)
-                    {
-                        int newWarningWidth = (int)(GameTextures.ResettingSign.Width * scaleFactorWidth);
-                        int newWarningHeight = (int)(GameTextures.ResettingSign.Height * scaleFactorHeight);
-                        BeatShift.spriteBatch.Draw(GameTextures.ResettingSign, new Rectangle(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - newWarningWidth / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - newWarningHeight / 2, newWarningWidth, newWarningHeight), Color.White);
-                    }
-
-                    /////////////////////////////
-                    ////// COUNTDOWN SIGN ///////
-                    /////////////////////////////
-
-                    if (Race.currentRaceType.countDownRunning)
-                        BeatShift.spriteBatch.Draw(Race.currentRaceType.countdownState, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - Race.currentRaceType.countdownState.Width / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - Race.currentRaceType.countdownState.Height / 2), Color.White);
-
-                    // Other info
-                    //DrawMessage("Progress: " + racer.getLapPercentage() + "%", 10, vOffset + 26);
-                    //DrawMessage("Accuracy: " + racer.racingControls.getLastPress(), 10, vOffset - 30);
-                    //DrawMessage("Dist from trac: " + racer.shipPhysics.shipRayToTrackTime, 10, vOffset - 30);
-                    //DrawNewMessage(" !\"#$%'()*+,-./0123456789:;<=>?@ABCDEFGHIJ", 0, 30);
-                    //DrawNewMessage("KLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrrstuvwxyz{|}~", 0, 90);
                 }
-
 
             }
         }
@@ -463,7 +462,7 @@ namespace BeatShift
                 Vector2 pos = Vector2.Lerp(position, position+motionVector, lerpval);
                 BeatShift.spriteBatch.Draw(instance.popup, pos, Color.White);// buttonScale);
                 if (instance.hasMessage)
-                    BeatShift.spriteBatch.DrawString(BeatShift.newfont, "+"+instance.message+" points", pos+new Vector2(4, 4), Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 1);
+                    BeatShift.spriteBatch.DrawString(BeatShift.newfont, instance.message+" pts", pos+new Vector2(16, 4), Color.Black, 0f, Vector2.Zero, 0.3f, SpriteEffects.None, 1);
             }
             BeatShift.graphics.GraphicsDevice.BlendState = b;
 
