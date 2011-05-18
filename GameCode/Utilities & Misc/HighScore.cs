@@ -72,47 +72,80 @@ namespace BeatShift.Util
             {
                 scoreTable = tempTable.OrderBy(x => x.value).ToList();
                 sortedInput = thisRaceValues.OrderBy(x => x.value).ToList();
+                scoreDoc = new XDocument();
+                XElement rootNode = new XElement("highScores");
+                scoreDoc.Add(rootNode);
                 for (int i = 0; i < 10; i++)
                 {
-                    if (newID >= sortedInput.Count)
+                    XElement entry = new XElement("entry");
+                    XElement name = new XElement("name");
+                    XElement value = new XElement("value");
+                    if ((newID >= sortedInput.Count) || (scoreTable[oldID].value < sortedInput[newID].value))
                     {
-                        results[i] = scoreTable[oldID++];
+                        results.Add(scoreTable[oldID]);
+
+                        name.SetValue(scoreTable[oldID].name);
+                        value.SetValue(scoreTable[oldID].value);
+                        oldID++;
                     }
-                    else
+                    else 
                     {
-                        if (sortedInput[newID].value < scoreTable[oldID].value)
-                        {
-                            results[i] = sortedInput[newID++];
-                        }
-                        else
-                        {
-                            results[i] = scoreTable[oldID++];
-                        }
+                        results.Add(sortedInput[newID]);
+                        
+                        name.SetValue(sortedInput[newID].name);
+                        value.SetValue(sortedInput[newID].value);
+                        newID++;
                     }
+                    rootNode.Add(entry);
+                    entry.Add(name);
+                    entry.Add(value);
                 }
             }
             else if (mode == 1)
             {
-                scoreTable = tempTable.OrderBy(x => x.value).ToList();
-                sortedInput = thisRaceValues.OrderBy(x => x.value).ToList();
+                scoreTable = tempTable.OrderByDescending(x => x.value).ToList();
+                sortedInput = thisRaceValues.OrderByDescending(x => x.value).ToList();
+                scoreDoc = new XDocument();
+                XElement rootNode = new XElement("highScores");
+                scoreDoc.Add(rootNode);
                 for (int i = 0; i < 10; i++)
                 {
-                    if (newID >= sortedInput.Count)
+                    XElement entry = new XElement("entry");
+                    XElement name = new XElement("name");
+                    XElement value = new XElement("value");
+                    if ((newID >= sortedInput.Count) || (scoreTable[oldID].value > sortedInput[newID].value))
                     {
-                        results[i] = scoreTable[oldID++];
+                        results.Add(scoreTable[oldID]);
+
+                        name.SetValue(scoreTable[oldID].name);
+                        value.SetValue(scoreTable[oldID].value);
+                        oldID++;
                     }
-                    else
+                    else 
                     {
-                        if (scoreTable[oldID].value < sortedInput[newID].value)
-                        {
-                            results[i] = sortedInput[newID++];
-                        }
-                        else
-                        {
-                            results[i] = scoreTable[oldID++];
-                        }
+                        results.Add(sortedInput[newID]);
+                        
+                        name.SetValue(sortedInput[newID].name);
+                        value.SetValue(sortedInput[newID].value);
+                        newID++;
                     }
+                    rootNode.Add(entry);
+                    entry.Add(name);
+                    entry.Add(value);
                 }
+            }
+            
+
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    System.Diagnostics.Debug.WriteLine("n: " + results[i].name + "   s: " + results[i].value);
+            //}
+
+            switch (trackID)
+            {
+                case MapName.CityMap: saveScores(0, mode); break;
+                case MapName.DesertMap: saveScores(1, mode); break;
+                case MapName.SpaceMap: saveScores(2, mode); break;
             }
 
             return results;
@@ -142,20 +175,23 @@ namespace BeatShift.Util
                 else
                 {
                     scoreStream = TitleContainer.OpenStream("HighScore_" + trackID + "_" + mode + ".xml");
-                    saveScores(trackID, mode);
                 }
 
                 StreamReader scoreStreamReader = new StreamReader(scoreStream);
                 scoreDoc = XDocument.Load(scoreStreamReader);
+                
                 scoreStream.Dispose();
                 scoreStream.Close();
                 container.Dispose();
-            
         } 
 
         public static void saveScores(int trackID, int mode)
         {
             {
+
+                System.Diagnostics.Debug.WriteLine(scoreDoc);
+
+
                 StorageContainer container = null;
 
                 while (container == null)
@@ -165,6 +201,8 @@ namespace BeatShift.Util
                     container = BeatShift.Storage.EndOpenContainer(result);
                     result.AsyncWaitHandle.Close();
                 }
+
+
 
                 Stream scoreStream = container.OpenFile("HighScore_" + trackID + "_" + mode + ".xml", FileMode.Create, FileAccess.Write);
                 XmlWriter optsStreamWriter = XmlWriter.Create(scoreStream);

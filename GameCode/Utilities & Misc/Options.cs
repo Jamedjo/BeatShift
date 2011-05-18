@@ -276,6 +276,8 @@ namespace BeatShift.Util
                 optsStream.Dispose();
                 optsStream.Close();
                 container.Dispose();
+
+
             }
 
             try
@@ -364,6 +366,9 @@ namespace BeatShift.Util
                     throw new InvalidOperationException("Options.xml in TitleStorage is invalid", invOpException);
                 }
                 container.Dispose();
+
+
+
                 Initialize(storageDevice);
             }
         }

@@ -88,15 +88,23 @@ namespace BeatShift.Menus
         {
             string retval = Guide.EndShowKeyboardInput(result);
 
+            List<HighScoreEntry> l = new List<HighScoreEntry>();
+
             if (retval == null)
             {
-                // User cancelled input  
+                l.Add(new HighScoreEntry("Anon.", time));
             }
             else
             {
+                l.Add(new HighScoreEntry(retval, time));
                 // Do whatever you want with the string you got from the user, which is now stored in retval
             }
+            HighScore.getHighScores(MapManager.currentMap.currentMapName, raceType, l);
         }
+
+        int raceType;
+        long time = long.MaxValue;
+        PlayerIndex index;
 
         private void calculateResults()
         {
@@ -109,16 +117,28 @@ namespace BeatShift.Menus
             if (!Race.currentRaceType.getRaceTypeString().Equals("PointsRace"))
             {
                 //List<HighScoreEntry> tempRes = HighScore.getHighScores(MapManager.currentMap, 1);
+                raceType = 0;
                 for (int i = 0; i < Race.humanRacers.Count(); i++)
                 {
-                    Racer rH = Race.humanRacers[i];
+                    if (Race.humanRacers[i].raceTiming.fastestLap.TotalMilliseconds * 1000 < time)
+                    {
+                        time = (long)(Race.humanRacers[i].raceTiming.fastestLap.TotalMilliseconds * 1000);
+                        index = Race.humanRacers[i].racingControls.padIndex;
+                    }
+                }
+
+                List<HighScoreEntry> tempRes = HighScore.getHighScores(MapManager.currentMap.currentMapName, 0);
+                
+                if(time < tempRes[9].value){
+
+
                     keyboardShown = false;
-                    if( rH.raceTiming.fastestLap.TotalMilliseconds*1000 > 1000 && !Guide.IsVisible) /*CHECK HIGHSCORE*/
+                    if(!Guide.IsVisible) /*CHECK HIGHSCORE*/
                     {
                         while( !keyboardShown )
                         try 
                         {
-                            Guide.BeginShowKeyboardInput(rH.racingControls.padIndex, "Player " + (rH.racingControls.padIndex.ToString()) + " has set a new lap record", "Please enter your name", "", keyboardCallback, (object)"dontcare");
+                            Guide.BeginShowKeyboardInput(index, "Player " + (index.ToString()) + " has set a new lap record", "Please enter your name", "", keyboardCallback, (object)"dontcare");
                         }  
                         catch 
                         {
