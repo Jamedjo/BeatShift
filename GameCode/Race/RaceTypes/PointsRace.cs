@@ -35,7 +35,7 @@ namespace BeatShift
 
         public override string getRaceTypeString()
         {
-            return "LappedRace";
+            return "PointsRace";
         }
 
         public override void finishRaceForTheRacer(Stopwatch finishTime, Racer racer, int _, int __)
