@@ -326,7 +326,7 @@ namespace BeatShift
 
             if (track!=null&&!track.IsStopped)
             {
-                track.Stop(AudioStopOptions.Immediate);
+                track.Stop(AudioStopOptions.AsAuthored);
             }
             try
             {
@@ -385,7 +385,7 @@ namespace BeatShift
             BeatShift.engine.SetGlobalVariable("Layer", (currentLayer + 0.1f));
             if (track != null && !track.IsStopped&&track.IsPlaying)
             {
-                track.Stop(AudioStopOptions.Immediate);
+                track.Stop(AudioStopOptions.AsAuthored);
             }
             track = soundBank.GetCue(currentTrack);
             GC.Collect();
@@ -418,6 +418,7 @@ namespace BeatShift
 #endif
                 if (!track.IsPlaying)
                 {
+                    track = soundBank.GetCue(currentTrack);
                     track.Play();
                 }
             }

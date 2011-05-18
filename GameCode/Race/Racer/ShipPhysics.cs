@@ -384,7 +384,10 @@ namespace BeatShift
                     parentRacer.lastCollisionPoint= contact.Position ;
                     //Initiate controller vibration
                     parentRacer.isColliding = true;
-                    SoundManager.Collision();
+                    if (parentRacer.GetType() == typeof(RacerHuman))
+                    {
+                        SoundManager.Collision();
+                    }
                     //Calculate direction to bounce
                     Vector3 v1 = Vector3.Cross(nearestMapPoint.trackUp, contact.Normal);
                     Vector3 bounceVector = Vector3.Cross(nearestMapPoint.trackUp, v1);
@@ -655,7 +658,10 @@ namespace BeatShift
                             r.lastCollisionPoint =  contact.Position;
                             //Initiate controller vibration
                             r.isColliding = true;
-                            SoundManager.Collision();
+                            if (r.GetType() == typeof(RacerHuman))
+                            {
+                                SoundManager.Collision();
+                            }
                             //Vector3 relativeVelocity = collidedBody.LinearVelocity - physicsBody.LinearVelocity;
 
                             //float realtiveVelInShipBounceDirection = Vector3.Dot(physicsBody.LinearVelocity, bounceVector) - Vector3.Dot(collidedBody.LinearVelocity, bounceVector);// no need to divide by bounceVector.Length() as normalized
