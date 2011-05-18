@@ -44,3 +44,6 @@ glob:GameContent/particles/Textures/Ring004.xcf
 glob:BeatManager/BBF generator/BBF generator/obj/x86/Debug/DesignTimeResolveAssemblyReferences.cache
 glob:BeatManager/BBF generator/BBF generator/obj/x86/Debug/DesignTimeResolveAssemblyReferencesInput.cache
 glob:GameCode/Particle Systems/CollisionParticleSystemold.cs
+glob:GameCode/Race/Racer/ShipPhysics.cs.orig
+glob:GameCode/Race/RaceControls/RacingControls.cs.orig
+glob:GameCode/Race/Racer/Racer.cs.orig
