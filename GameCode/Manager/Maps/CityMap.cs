@@ -14,7 +14,7 @@ namespace BeatShift
     {
         public override void LoadContent()
         {
-            Console.Write("Started loading City map...");
+            // Console.Write("Started loading City map...");
 
             LoadSkybox("Skyboxes/skybox2", "Skyboxes/j_skybox_upper35");
 
@@ -34,7 +34,7 @@ namespace BeatShift
             timeTrialRanks[2] = 27000;
             timeTrialRanks[3] = 31000;
 
-            Console.WriteLine("...Loaded City map");
+            // Console.WriteLine("...Loaded City map");
         }
 
     }

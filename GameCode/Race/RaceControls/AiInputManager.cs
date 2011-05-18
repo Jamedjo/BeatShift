@@ -271,7 +271,7 @@ namespace BeatShift.Input
 
             float distance = result.T < shipWidth ? rayLength - shipWidth : rayLength - result.T;
 
-            parent.shipDrawing.testWalls = testVector * rayLength;
+            //parent.shipDrawing.testWalls = testVector * rayLength;
             if (result.T == 0)
             {
                 distance = 0;

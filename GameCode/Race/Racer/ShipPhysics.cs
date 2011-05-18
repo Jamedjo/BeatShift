@@ -705,7 +705,7 @@ namespace BeatShift
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine("Unfound pair");
+                // System.Diagnostic.Debug.WriteLine("Unfound pair");
             }
         }
 
