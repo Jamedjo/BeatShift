@@ -6,11 +6,13 @@ using Microsoft.Xna.Framework;
 using BeatShift.Input;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
+using BeatShift.Util;
 
 namespace BeatShift.Menus
 {
     class HighScoreMenu : IMenuPage
     {
+        private List<HighScoreEntry> highScores;
         public HighScoreMenu()
         {
             title = "HIGH SCORES";
@@ -23,11 +25,21 @@ namespace BeatShift.Menus
             //spriteBatch.Draw(GameTextures.MenuBackgroundBlack, new Rectangle(0, 0, BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height), Color.White);
             //spriteBatch.Draw(background, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - background.Width / 2, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2 - background.Height / 2), Color.White);
             spriteBatch.Draw(GameTextures.MenuBackgroundBlackRed, new Rectangle(0, 0, BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height), slightlyTransparent);
+            BeatShift.spriteBatch.DrawString(BeatShift.newfont, MapManager.currentMap.currentMapName + " FASTEST LAPS", new Vector2(500, 150), Color.Aqua);
+            int offset = 0;
+            for (int i = 0; i < highScores.Count; i++)
+            {
+                long timeLong = highScores[i].value * 10;
+                DateTime time = new DateTime(timeLong);
+                DrawMessageColour(BeatShift.newfont, i + ". " + highScores[i].name + " : " + time.Minute + ":"+time.Second+":"+time.Millisecond, 100, 200 + offset, 0.8f, Color.PapayaWhip);
+                offset = offset + 70;
+            }
         }
 
         public override void enteringMenu()
         {
             resetMenuSelection();
+            highScores = HighScore.getHighScores(MapManager.currentMap.currentMapName, 0);
             base.enteringMenu();
         }
 
@@ -35,6 +47,7 @@ namespace BeatShift.Menus
         {
             addMenuItem("CONTINUE", (Action)(delegate
             {
+                MenuManager.setCurrentMenu(MenuPage.Main);
                 GameLoop.setGameStateAndResetPlayers(GameState.Menu);
             }));
         }

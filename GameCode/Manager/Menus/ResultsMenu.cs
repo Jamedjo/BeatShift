@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using BeatShift.Input;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
+using BeatShift.Util;
 
 namespace BeatShift.Menus
 {
@@ -13,6 +14,12 @@ namespace BeatShift.Menus
     {
         string[] results;
         string[] players;
+
+        bool keyboardShown = false;
+
+        //public double[] fastestLap;
+        //public PlayerIndex[] playerIndexes;
+
         bool resultsCalc = false;
 
         Racer eliminationWinner;
@@ -88,28 +95,88 @@ namespace BeatShift.Menus
                 }
             }
 
-            if (Race.currentRaceType.getRaceTypeString().Equals("PointsRace"))
+        void keyboardCallback(IAsyncResult result)
+        {
+            string retval = Guide.EndShowKeyboardInput(result);
+
+            List<HighScoreEntry> l = new List<HighScoreEntry>();
+
+            if (retval == null)
             {
-                int offset = 70;
-                for (int i = 0; i < Race.currentRacers.Count; i++)
-                {
-                    DrawMessageColour(BeatShift.newfont, Race.currentRacers[i].racerID.ToString() + " " + Race.currentRacers[i].racerPoints.getPoints(), 500, 150 + offset, 0.7f, Color.Goldenrod);
+                l.Add(new HighScoreEntry("Anon.", time));
                     offset = offset + 70;
-                }
             }
+            else
+            {
+                l.Add(new HighScoreEntry(retval, time));
+                //RESET XBOX SCORES
+                //l.Add(new HighScoreEntry("Anonymous", 9999999999));
+                //l.Add(new HighScoreEntry("Anonymous", 9999999999));
+                //l.Add(new HighScoreEntry("Anonymous", 9999999999));
+                //l.Add(new HighScoreEntry("Anonymous", 9999999999));
+                //l.Add(new HighScoreEntry("Anonymous", 9999999999));
+                //l.Add(new HighScoreEntry("Anonymous", 9999999999));
+                //l.Add(new HighScoreEntry("Anonymous", 9999999999));
+                //l.Add(new HighScoreEntry("Anonymous", 9999999999));
+                //l.Add(new HighScoreEntry("Anonymous", 9999999999));
+                //l.Add(new HighScoreEntry("Anonymous", 9999999999));
+                // Do whatever you want with the string you got from the user, which is now stored in retval
+            }
+            HighScore.getHighScores(MapManager.currentMap.currentMapName, raceType, l);
         }
+
+        int raceType;
+        long time = long.MaxValue;
+        PlayerIndex index;
 
         private void calculateResults()
         {
             results = new string[Race.currentRacers.Count];
 
             foreach (Racer racer in Race.currentRacers)
-            {
                 if (racer.raceTiming.finalRaceTime == long.MaxValue)
-                {
                     racer.raceTiming.finalRaceTimeString = "DNF";
+
+            if (!Race.currentRaceType.getRaceTypeString().Equals("PointsRace"))
+            {
+                //List<HighScoreEntry> tempRes = HighScore.getHighScores(MapManager.currentMap, 1);
+                raceType = 0;
+                for (int i = 0; i < Race.humanRacers.Count(); i++)
+                {
+                    if (Race.humanRacers[i].raceTiming.fastestLap.TotalMilliseconds * 1000 < time)
+                    {
+                        time = (long)(Race.humanRacers[i].raceTiming.fastestLap.TotalMilliseconds * 1000);
+                        index = Race.humanRacers[i].racingControls.padIndex;
+                    }
+                }
+
+                List<HighScoreEntry> tempRes = HighScore.getHighScores(MapManager.currentMap.currentMapName, 0);
+                
+                if(time < tempRes[9].value){
+
+
+                    keyboardShown = false;
+                    if(!Guide.IsVisible) /*CHECK HIGHSCORE*/
+                    {
+                        while( !keyboardShown )
+                        try 
+                        {
+                            Guide.BeginShowKeyboardInput(index, "Player " + (index.ToString()) + " has set a new lap record", "Please enter your name", "", keyboardCallback, (object)"dontcare");
+                        }  
+                        catch 
+                        {
+                            keyboardShown = true;
+                            // create a class bool, initialize it to false, then set it to true here so you know you need to try again because it didn't work the first time,  
+                            // probably because the Guide became visible between when you checked Guide.IsVisible and when you called Guide.BeginShowKeyboardInput  
+                        }  
+                        //ENTER NAME AND TIME INTO HIGH SCORES
+                    }
                 }
             }
+            
+            //POINTS RACE
+
+            //SAVE
 
             if (Race.currentRaceType.getRaceTypeString().Equals("LappedRace"))
             {
@@ -139,7 +206,7 @@ namespace BeatShift.Menus
             addMenuItem("Highscores", (Action)(delegate
             {
                 MenuManager.setCurrentMenu(MenuPage.HighScore);
-                GameLoop.setGameStateAndResetPlayers(GameState.Menu);
+                GameLoop.setGameState(GameState.Menu);
                 //MenuManager.setCurrentMenu(MenuPage.HighScore);
                 
             }));

@@ -193,7 +193,7 @@ namespace BeatShift
             }
 
 
-            Race.getFullListOfRacerIDsFromSignedInPeople();
+            //Race.getFullListOfRacerIDsFromSignedInPeople();
 
             //If controller was not plugged-in/selected remove that player
             Race.removeNonVisibleRacers();
