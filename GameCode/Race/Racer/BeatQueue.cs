@@ -179,8 +179,8 @@ namespace BeatShift
                 beats.Clear();
                 //beatGlow.Glow(levelupColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
                 parentRacer.shipDrawing.engineGlow.setLayer(myLayer);
-                parentRacer.messagePopupManager.addPopup(GameTextures.LevelUp, 500);
-                parentRacer.messagePopupManager.addPopup(GameTextures.BoostOn, 300);
+                parentRacer.messagePopupManager.addPopup(GameTextures.LevelUp, 700);
+                parentRacer.messagePopupManager.addPopup(GameTextures.BoostOn, 1000);
                 isLevellingUp = true;
             }
         }
