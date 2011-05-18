@@ -100,6 +100,20 @@ namespace BeatShift.Util
             }
         }
 
+        public static int NumberAI
+        {
+            get
+            {
+                return numberAI;
+            }
+
+            set
+            {
+                numberAI = value;
+                optsDoc.Root.Descendants("NumberAI").First().Value = value.ToString();
+            }
+        }
+
         /// <summary>
         /// Controls whether controller vibration is on or off
         /// </summary>
@@ -227,6 +241,7 @@ namespace BeatShift.Util
         // Private local variables accessed through getters and setters to maintain the XDocument state.
         private static Boolean useKeyboardAsPad2;
         private static Boolean addAItoGame;
+        private static int numberAI;
         private static Boolean drawTrackNormals;
         private static Boolean drawWaypoints;
         private static Boolean drawShipBoundingBoxes;
@@ -330,6 +345,18 @@ namespace BeatShift.Util
                 {
                     System.Diagnostics.Debug.WriteLine(OException.StackTrace);
                     sfxVolume = 100;
+                }
+
+                try
+                {
+                    numberAI = (from item in optsDoc.Root.Descendants() where item.Name == "NumberAI" select byte.Parse(item.Value)).First();
+                    if (numberAI > 4)
+                        numberAI = 4;
+                }
+                catch (OverflowException OException)
+                {
+                    System.Diagnostics.Debug.WriteLine(OException.StackTrace);
+                    numberAI = 4;
                 }
 
                 SoundManager.masterVolumeChanged();

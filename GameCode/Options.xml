@@ -4,6 +4,7 @@
   <DrawWayPoints>false</DrawWayPoints>
   <DrawTrackNormals>true</DrawTrackNormals>
   <AddAI>false</AddAI>
+  <NumberAI>2</NumberAI>
   <DrawShipBoundingBoxes>true</DrawShipBoundingBoxes>
   <ControllerVibration>true</ControllerVibration>
   <UseKeyboardAsPad2>true</UseKeyboardAsPad2>
