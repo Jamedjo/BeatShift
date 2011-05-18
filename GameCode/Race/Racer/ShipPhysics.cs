@@ -308,7 +308,8 @@ namespace BeatShift
                 if (currentProgressWaypoint.getIndex() == 0)
                 {
                     //Start point has been reached, shut down the ship if it's the last lap
-                    SoundManager.LapComplete();
+                    if(parentRacer.GetType()==typeof(RacerHuman))
+                        SoundManager.LapComplete();
                     parentRacer.raceTiming.finishLap();//++laps
                     //TODO: shift into 
                 }

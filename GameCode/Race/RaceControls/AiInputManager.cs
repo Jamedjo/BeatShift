@@ -16,6 +16,7 @@ using BEPUphysics.NarrowPhaseSystems.Pairs;
 using BEPUphysics.CollisionTests;
 using BEPUphysics.CollisionRuleManagement;
 using BeatShift.Util.Random;
+using BeatShift.Util;
 
 
 namespace BeatShift.Input
@@ -26,7 +27,7 @@ namespace BeatShift.Input
         ///  Set to false and the player retakes control
         /// </summary>
         public const Boolean testAI = false;
-        public const int numberOfAI = 2;
+        public int numberOfAI = Options.NumberAI;
 
         private GamePadState currentState;
         private GamePadState lastState;
