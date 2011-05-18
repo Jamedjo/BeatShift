@@ -410,11 +410,11 @@ namespace BeatShift
             {
 #if WINDOWS
                 // System.Diagnostic.Debug.WriteLine("Playing: " + track.IsPlaying +
-                    "\n Stopped: " + track.IsStopped + 
-                    "\n Stopping: " + track.IsStopping + 
-                    "\n Prepared: " + track.IsPrepared + 
-                    "\n Preparing: " + track.IsPreparing + 
-                    "\n Created: " + track.IsCreated);
+                    //"\n Stopped: " + track.IsStopped + 
+                    //"\n Stopping: " + track.IsStopping + 
+                    //"\n Prepared: " + track.IsPrepared + 
+                    //"\n Preparing: " + track.IsPreparing + 
+                    //"\n Created: " + track.IsCreated;
 #endif
                 if (!track.IsPlaying)
                 {
