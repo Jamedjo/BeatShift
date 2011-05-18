@@ -8,8 +8,10 @@ using BEPUphysics.DataStructures;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using BeatShift.Input;
+using BeatShift.Util;
 using DPSF;
 using DPSF.ParticleSystems;
+using BeatShift.Util;
 
 namespace BeatShift
 {
@@ -31,6 +33,10 @@ namespace BeatShift
         Func<Vector3> getShipPosition;
         public CollisionParticleSystem collision;
 
+
+        public Vector3 testWalls = Vector3.Zero;
+        public Boolean wallHit = false;
+
         private Racer parentRacer;
 
         public ShipDrawing(Func<Matrix> getDrawOrientationMatrix, Func<Vector3> getPosition, Racer parent)
@@ -48,7 +54,7 @@ namespace BeatShift
             parentRacer.globalSystems.AddParticleSystem(collision);
             collision.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
 
-            engineGlow = new EngineParticleSystem(null);
+            engineGlow = new EngineParticleSystem(null,parentRacer);
             parentRacer.globalSystems.AddParticleSystem(engineGlow);
             engineGlow.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
 
@@ -157,7 +163,10 @@ namespace BeatShift
                     DrawVector.drawArrow(camera, arrow.pos, arrow.dir, arrow.col);
                 }
             }
-
+            if (isThisTheCamerasShip)
+            {
+                DrawVector.drawArrow(camera, getShipPosition(), testWalls, wallHit ? new Vector3(255, 0, 0) : new Vector3(0, 0, 255));
+            }
             
 
         }

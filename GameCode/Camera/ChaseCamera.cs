@@ -83,12 +83,12 @@ namespace BeatShift.Cameras
             // No check that the ship actually is/can though
             if(properties.ShipBoosting)
             {
-                fieldOfView = MathHelper.Lerp(fieldOfView, MathHelper.Pi * 5.0f / 16.0f, 0.05f);
+                fieldOfView = MathHelper.Lerp(fieldOfView, 1.25f * baseFieldOfView, 0.05f);
                 updateProjection();
             }
-            else if(fieldOfView > MathHelper.PiOver4)
+            else if(fieldOfView != baseFieldOfView)
             {
-                fieldOfView = MathHelper.Lerp(fieldOfView, MathHelper.PiOver4, 0.05f);
+                fieldOfView = MathHelper.Lerp(fieldOfView, baseFieldOfView, 0.05f);
                 updateProjection();
             }
 
@@ -100,7 +100,6 @@ namespace BeatShift.Cameras
 
         private void alterFieldOfView()
         {
-            float baseFieldOfView = MathHelper.PiOver4;
             float scaleValue = Math.Min(getSpeed() / 100, MathHelper.E - 1.0f);
             if (scaleValue < 0.0f)
             {

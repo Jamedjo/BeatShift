@@ -51,6 +51,7 @@ namespace BeatShift
         public override void setBoost(Boolean boosting)
         {
             localCamera.setBoost(boosting);
+            base.setBoost(boosting);
         }
 
     }

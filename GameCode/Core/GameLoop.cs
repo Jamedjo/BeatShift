@@ -272,12 +272,6 @@ namespace BeatShift
 
                 if (MenuManager.Enabled)
                     MenuManager.Update(gameTime);
-                if (Race.Enabled)
-                {
-                    Race.Update(gameTime);
-                    raceUpdated = true;
-                    HeadsUpDisplay.Update(gameTime);
-                }
                 //if (MapManager.Enabled)
                 //    MapManager.tempMap.Update(gameTime);
                 if (BeatShift.shipSelect.Enabled)
@@ -285,6 +279,12 @@ namespace BeatShift
                 //if (networkedGame.Enabled) networkedGame.Update(gameTime);
                 if (Physics.Enabled)
                     Physics.Update(gameTime);
+                if (Race.Enabled)
+                {
+                    Race.Update(gameTime);
+                    raceUpdated = true;
+                    HeadsUpDisplay.Update(gameTime);
+                }
                 if (MapManager.Enabled&&!raceUpdated)
                     Race.Update(gameTime);
                 // Game should be exited through the menu systems.

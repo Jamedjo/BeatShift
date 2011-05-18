@@ -94,6 +94,7 @@
     <Compile Include="Manager\Maps\MapData.cs" />
     <Compile Include="Manager\Maps\MapManager.cs" />
     <Compile Include="Manager\Maps\SpaceMap.cs" />
+    <Compile Include="Manager\Menus\HighScoreMenu.cs" />
     <Compile Include="Manager\Menus\LoadingMenu.cs" />
     <Compile Include="Manager\Menus\PauseMenu.cs" />
     <Compile Include="Manager\Menus\ResultsMenu.cs" />
@@ -131,11 +132,13 @@
     <Compile Include="Race\Racer\Racer.cs" />
     <Compile Include="Race\Racer\RacerHuman.cs" />
     <Compile Include="Race\Racer\RacerId.cs" />
+    <Compile Include="Race\Racer\RacerPoints.cs" />
     <Compile Include="Race\Racer\RacerStatistics.cs" />
     <Compile Include="Race\Racer\RaceTiming.cs" />
     <Compile Include="Race\Racer\ShipDrawing.cs" />
     <Compile Include="Race\Racer\ShipFbx.cs" />
     <Compile Include="Race\Racer\ShipPhysics.cs" />
+    <Compile Include="Race\RaceTypes\PointsRace.cs" />
     <Compile Include="Race\RaceTypes\EliminationRace.cs" />
     <Compile Include="Race\RaceTypes\IRaceType.cs" />
     <Compile Include="Race\RaceTypes\LappedRace.cs" />
@@ -146,6 +149,7 @@
     <Compile Include="Utilities &amp; Misc\DebugGraphics\DrawVector.cs" />
     <Compile Include="Utilities &amp; Misc\GameTextures.cs" />
     <Compile Include="Utilities &amp; Misc\GameVideos.cs" />
+    <Compile Include="Utilities &amp; Misc\HighScore.cs" />
     <Compile Include="Utilities &amp; Misc\InputCombo.cs" />
     <Compile Include="Utilities &amp; Misc\Networking\NetworkedGame.cs" />
     <Compile Include="Utilities &amp; Misc\Random\SimpleRNG.cs" />
@@ -157,6 +161,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Utilities &amp; Misc\HighScore_0_0.xml" />
+    <Content Include="Utilities &amp; Misc\HighScore_0_1.xml" />
+    <Content Include="Utilities &amp; Misc\HighScore_1_0.xml" />
+    <Content Include="Utilities &amp; Misc\HighScore_1_1.xml" />
+    <Content Include="Utilities &amp; Misc\HighScore_2_0.xml" />
+    <Content Include="Utilities &amp; Misc\HighScore_2_1.xml" />
     <None Include="Options.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

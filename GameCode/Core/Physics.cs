@@ -35,6 +35,7 @@ namespace BeatShift
 
         public static StaticMesh currentTrackFloor;
         public static StaticMesh currentTrackWall;
+        public static StaticMesh currentTrackInvisibleWall;
 
         public static CollisionGroup noSelfCollideGroup = new CollisionGroup();
 
@@ -150,7 +151,7 @@ namespace BeatShift
 
         public static void addMapToPhysics(Model model, ModelCategory category)
         {
-            if (category == ModelCategory.Track || category == ModelCategory.Wall)
+            if (category == ModelCategory.Track || category == ModelCategory.Wall || category == ModelCategory.InvisibleWall)
             {
                 Vector3[] vertices;
                 int[] indices;
@@ -165,6 +166,11 @@ namespace BeatShift
                     physicsMesh.Material.Bounciness = 0;
                     physicsMesh.CollisionRules.Personal = CollisionRule.NoSolver;
                     currentTrackWall = physicsMesh;
+                }
+                if (category == ModelCategory.InvisibleWall)
+                {
+                    physicsMesh.CollisionRules.Personal = CollisionRule.NoSolver;
+                    currentTrackInvisibleWall = physicsMesh;
                 }
                 if (category == ModelCategory.Track)
                 {

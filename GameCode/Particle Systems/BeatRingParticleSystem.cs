@@ -50,7 +50,10 @@ namespace DPSF.ParticleSystems
         //-----------------------------------------------------------
         float mfSizeMin = 10;
         float mfSizeMax = 50;
-
+        float normLifetime = 2.0f;
+        float overrun = 0.2f;
+        float extradist=0;
+        float notedist = 12.0f;
         //===========================================================
         // Overridden Particle System Functions
         //===========================================================
@@ -115,8 +118,8 @@ namespace DPSF.ParticleSystems
             // Setup the Initial Properties of the Particles.
             // These are only applied if using InitializeParticleUsingInitialProperties 
             // as the Particle Initialization Function.
-            InitialProperties.LifetimeMin = 2.0f;
-            InitialProperties.LifetimeMax = 2.0f;
+            InitialProperties.LifetimeMin = normLifetime+overrun;
+            InitialProperties.LifetimeMax = normLifetime + overrun;
             InitialProperties.PositionMin = Vector3.Zero;
             InitialProperties.PositionMax = Vector3.Zero;
             InitialProperties.VelocityMin = new Vector3(0, 0, 10);
@@ -142,30 +145,33 @@ namespace DPSF.ParticleSystems
 
             // Allow the Particle's Position, Rotation, Width and Height, Color, and Transparency to be updated each frame
             ParticleEvents.AddEveryTimeEvent(LerpParticleDistance);
-            //ParticleEvents.AddEveryTimeEvent(UpdateParticleRotationUsingRotationalVelocity);
+            ParticleEvents.AddEveryTimeEvent(UpdateParticleRotationUsingRotationalVelocity);
             //ParticleEvents.AddEveryTimeEvent(UpdateParticleWidthAndHeightUsingLerp);
             //ParticleEvents.AddEveryTimeEvent(UpdateParticleColorUsingLerp);
-
-            // This function must be executed after the Color Lerp function as the Color Lerp will overwrite the Color's
-            // Transparency value, so we give this function an Execution Order of 100 to make sure it is executed last.
-            //ParticleEvents.AddEveryTimeEvent(UpdateParticleTransparencyToFadeOutUsingLerp, 100);
-
-            // Set the Particle System's Emitter to toggle on and off every 0.5 seconds
-            //ParticleSystemEvents.LifetimeData.EndOfLifeOption = CParticleSystemEvents.EParticleSystemEndOfLifeOptions.Repeat;
-            //ParticleSystemEvents.LifetimeData.Lifetime = 1.0f;
-            //ParticleSystemEvents.AddTimedEvent(0.0f, UpdateParticleSystemEmitParticlesAutomaticallyOn);
-            //ParticleSystemEvents.AddTimedEvent(0.5f, UpdateParticleSystemEmitParticlesAutomaticallyOff);
 
             // Setup the Emitter
             Emitter.ParticlesPerSecond = 50;
             Emitter.PositionData.Position = new Vector3(0, 5, -20f);
             Emitter.EmitParticlesAutomatically = false;
+            ParticleInitializationFunction = InitialiseIndicatorParticle;
+            AddParticle();
+            ParticleInitializationFunction = InitialiseParticleProperties;
+            extradist =notedist*overrun / (normLifetime + overrun);
         }
 
         /// <summary>
         /// Example of how to create a Particle Initialization Function
         /// </summary>
         /// <param name="cParticle">The Particle to be Initialized</param>
+        /// 
+        public void InitialiseIndicatorParticle(DefaultSpriteParticle cParticle)
+        {
+            InitializeParticleUsingInitialProperties(cParticle);
+            cParticle.Lifetime = 0.0f;
+            cParticle.RotationalVelocity = 5f;
+            cParticle.Color = Color.White;
+        }
+
         public void InitialiseParticleProperties(DefaultSpriteParticle cParticle)
         {
             //-----------------------------------------------------------
@@ -175,12 +181,12 @@ namespace DPSF.ParticleSystems
             // then you may delete this function all together.
             //-----------------------------------------------------------
 
-            Quaternion cBackup = Emitter.OrientationData.Orientation;
+            //Quaternion cBackup = Emitter.OrientationData.Orientation;
             //Emitter.OrientationData.Orientation = Quaternion.Identity;
             InitializeParticleUsingInitialProperties(cParticle);
             //Emitter.OrientationData.Orientation = cBackup;
             // Set the Particle's Lifetime (how long it should exist for)
-            cParticle.Lifetime = 2.0f;
+            cParticle.Lifetime = normLifetime+overrun;
 
             // Set the Particle's initial Position to be wherever the Emitter is
             cParticle.Position = Vector3.Transform(cParticle.Position, Emitter.OrientationData.Orientation);
@@ -191,6 +197,8 @@ namespace DPSF.ParticleSystems
             //Vector3 sVelocityMax = new Vector3(50, 100, 50);
             //cParticle.Velocity = DPSFHelper.RandomVectorBetweenTwoVectors(sVelocityMin, sVelocityMax);
 
+
+            
             // Adjust the Particle's Velocity direction according to the Emitter's Orientation
             //cParticle.Velocity = Vector3.Transform(cParticle.Velocity, Emitter.OrientationData.Orientation);
 
@@ -222,11 +230,22 @@ namespace DPSF.ParticleSystems
         {
             // Place code to update the Particle here
             // Example: cParticle.Position += cParticle.Velocity * fElapsedTimeInSeconds;
-            cParticle.Position.X = 0;
-            cParticle.Position.Y = 12 * (1.0f-cParticle.NormalizedElapsedTime);
-            cParticle.Position.Z = 0;
-            cParticle.Position = Vector3.Transform(cParticle.Position, Emitter.OrientationData.Orientation);
-            cParticle.Position += Emitter.PositionData.Position;
+            if (cParticle.Lifetime != 0)
+            {
+                cParticle.Position.X = 0;
+                cParticle.Position.Y = (3-extradist) + 12 * (1.0f - cParticle.NormalizedElapsedTime);
+                cParticle.Position.Z = 0;
+                cParticle.Position = Vector3.Transform(cParticle.Position, Emitter.OrientationData.Orientation);
+                cParticle.Position += Emitter.PositionData.Position;
+            }
+            else
+            {
+                cParticle.Position.X = 0;
+                cParticle.Position.Y = 3;
+                cParticle.Position.Z = 0;
+                cParticle.Position = Vector3.Transform(cParticle.Position, Emitter.OrientationData.Orientation);
+                cParticle.Position += Emitter.PositionData.Position;
+            }
 
         }
 
@@ -266,12 +285,23 @@ namespace DPSF.ParticleSystems
         public void Clear()
         {
             this.RemoveAllParticles();
+            ParticleInitializationFunction = InitialiseIndicatorParticle;
+            AddParticle();
+            ParticleInitializationFunction = InitialiseParticleProperties;
+        }
+
+        public void RemoveRecent()
+        {
+            
+            DefaultSprite3DBillboardParticle cparticle = ActiveParticles.Last.Value;
+            ActiveParticles.RemoveLast();
+            ActiveParticles.RemoveLast();
+            ActiveParticles.AddLast(cparticle);
         }
 
 
         public void addBeat(Buttons noteType, float duration, float elapsedAmount)
-        {
-
+        {            
             //lastElapsed = elapsedAmount;
             switch (noteType)
             {

@@ -278,7 +278,7 @@ Global Settings
         Reserved = 0;
         Read Only = 0;
         Time = 0;
-        Value = 4.283920;
+        Value = 1.720000;
         Initial Value = 0.000000;
         Min = 0.000000;
         Max = 11.000000;
@@ -307,7 +307,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 2::904ab0cd-373a-4be1-bee7-290901d762d5;
+            Name = 2::3d31df17-66d1-43ae-aedf-d079f55ead90;
             Property = 0;
             Sound = 0;
             Line Color = 4294901760;
@@ -363,7 +363,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::6b81d110-511f-484c-b423-b8270af88e8b;
+            Name = 1::cd1b4484-0da2-441d-a792-c8f9cc45edc1;
             Property = 0;
             Sound = 0;
             Line Color = 4294967040;
@@ -405,7 +405,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 3::ba70a639-dc37-4539-bd75-c83f5206cf46;
+            Name = 3::be3aec80-f816-4631-8e4f-7234707777a7;
             Property = 0;
             Sound = 0;
             Line Color = 4278255360;
@@ -489,7 +489,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 4::e8801f0c-e530-4616-be85-affcaa458667;
+            Name = 4::33b7f12e-07b7-4b8f-9df8-d2208df6a472;
             Property = 0;
             Sound = 0;
             Line Color = 4278255615;
@@ -587,7 +587,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 5::c6ab8b7e-8a03-4e59-8fc2-38836658ebcf;
+            Name = 5::69294a4f-3134-4323-9f70-9725dc18a6bb;
             Property = 0;
             Sound = 0;
             Line Color = 4293798568;
@@ -735,14 +735,8 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = Default;
-    Xbox Bank Last Modified Low = 0;
-    Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 0;
-    PC Bank Last Modified High = 0;
-    Header Last Modified Low = 0;
-    Header Last Modified High = 0;
-    Bank Last Revised Low = 839785204;
-    Bank Last Revised High = 30151043;
+    Bank Last Revised Low = 2015865566;
+    Bank Last Revised High = 30151812;
 
     Wave
     {
@@ -757,13 +751,13 @@ Wave Bank
             Channels = 2;
             Sampling Rate = 44100;
             Bits Per Sample = 1;
-            Play Region Offset = 44;
-            Play Region Length = 313344;
+            Play Region Offset = 112;
+            Play Region Length = 474424;
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 403116462;
-            Last Modified High = 30137742;
+            Last Modified Low = 2333940224;
+            Last Modified High = 30151631;
         }
     }
 
@@ -780,13 +774,13 @@ Wave Bank
             Channels = 2;
             Sampling Rate = 44100;
             Bits Per Sample = 1;
-            Play Region Offset = 44;
-            Play Region Length = 313344;
+            Play Region Offset = 112;
+            Play Region Length = 483500;
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 403276471;
-            Last Modified High = 30137742;
+            Last Modified Low = 3028907520;
+            Last Modified High = 30151630;
         }
     }
 
@@ -803,22 +797,22 @@ Wave Bank
             Channels = 2;
             Sampling Rate = 44100;
             Bits Per Sample = 1;
-            Play Region Offset = 44;
-            Play Region Length = 313344;
+            Play Region Offset = 112;
+            Play Region Length = 315104;
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 403456481;
-            Last Modified High = 30137742;
+            Last Modified Low = 3628907520;
+            Last Modified High = 30151630;
         }
     }
 
     Wave
     {
         Name = final_lap;
-        File = ..\SoundEffects\final_lap.wav;
-        Build Settings Last Modified Low = 1884400634;
-        Build Settings Last Modified High = 30141799;
+        File = ..\SoundEffects\Final Lap.wav;
+        Build Settings Last Modified Low = 1085362344;
+        Build Settings Last Modified High = 30151812;
 
         Cache
         {
@@ -826,22 +820,22 @@ Wave Bank
             Channels = 2;
             Sampling Rate = 44100;
             Bits Per Sample = 1;
-            Play Region Offset = 44;
-            Play Region Length = 313344;
+            Play Region Offset = 112;
+            Play Region Length = 316616;
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 402576431;
-            Last Modified High = 30137742;
+            Last Modified Low = 153940224;
+            Last Modified High = 30151631;
         }
     }
 
     Wave
     {
         Name = go;
-        File = ..\SoundEffects\go.wav;
-        Build Settings Last Modified Low = 1884400634;
-        Build Settings Last Modified High = 30141799;
+        File = ..\SoundEffects\GO!.wav;
+        Build Settings Last Modified Low = 1137515327;
+        Build Settings Last Modified High = 30151812;
 
         Cache
         {
@@ -849,22 +843,22 @@ Wave Bank
             Channels = 2;
             Sampling Rate = 44100;
             Bits Per Sample = 1;
-            Play Region Offset = 44;
-            Play Region Length = 313344;
+            Play Region Offset = 112;
+            Play Region Length = 406648;
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 403716496;
-            Last Modified High = 30137742;
+            Last Modified Low = 973940224;
+            Last Modified High = 30151631;
         }
     }
 
     Wave
     {
         Name = lap_complete;
-        File = ..\SoundEffects\lap_complete.wav;
-        Build Settings Last Modified Low = 1884400634;
-        Build Settings Last Modified High = 30141799;
+        File = ..\SoundEffects\Lap Complete.wav;
+        Build Settings Last Modified Low = 740292608;
+        Build Settings Last Modified High = 30151812;
 
         Cache
         {
@@ -872,13 +866,13 @@ Wave Bank
             Channels = 2;
             Sampling Rate = 44100;
             Bits Per Sample = 1;
-            Play Region Offset = 44;
-            Play Region Length = 313344;
+            Play Region Offset = 112;
+            Play Region Length = 97412;
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 403616490;
-            Last Modified High = 30137742;
+            Last Modified Low = 2569739264;
+            Last Modified High = 30150891;
         }
     }
 
@@ -900,8 +894,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 403996512;
-            Last Modified High = 30137742;
+            Last Modified Low = 3628875950;
+            Last Modified High = 30147071;
         }
     }
 
@@ -923,8 +917,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 403346475;
-            Last Modified High = 30137742;
+            Last Modified Low = 3629090966;
+            Last Modified High = 30147071;
         }
     }
 
@@ -946,8 +940,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 403666493;
-            Last Modified High = 30137742;
+            Last Modified Low = 3629806017;
+            Last Modified High = 30147071;
         }
     }
 
@@ -969,8 +963,54 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 404356533;
-            Last Modified High = 30137742;
+            Last Modified Low = 3629976035;
+            Last Modified High = 30147071;
+        }
+    }
+
+    Wave
+    {
+        Name = New Lap Record;
+        File = ..\SoundEffects\New Lap Record.wav;
+        Build Settings Last Modified Low = 1354737752;
+        Build Settings Last Modified High = 30151812;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 112;
+            Play Region Length = 414592;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 1373940224;
+            Last Modified High = 30151631;
+        }
+    }
+
+    Wave
+    {
+        Name = Are You Ready;
+        File = ..\SoundEffects\Are You Ready.wav;
+        Build Settings Last Modified Low = 1763801149;
+        Build Settings Last Modified High = 30151812;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 112;
+            Play Region Length = 404376;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 4048907520;
+            Last Modified High = 30151630;
         }
     }
 }
@@ -1026,12 +1066,6 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = Default;
-    Xbox Bank Last Modified Low = 0;
-    Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 0;
-    PC Bank Last Modified High = 0;
-    Header Last Modified Low = 0;
-    Header Last Modified High = 0;
     Bank Last Revised Low = 4108028343;
     Bank Last Revised High = 30151027;
 
@@ -1160,12 +1194,6 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Xbox Bank Last Modified Low = 0;
-    Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 0;
-    PC Bank Last Modified High = 0;
-    Header Last Modified Low = 0;
-    Header Last Modified High = 0;
     Bank Last Revised Low = 2351503164;
     Bank Last Revised High = 30151226;
 
@@ -1478,6 +1506,12 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = Default;
+    Xbox Bank Last Modified Low = 0;
+    Xbox Bank Last Modified High = 0;
+    PC Bank Last Modified Low = 0;
+    PC Bank Last Modified High = 0;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
     Bank Last Revised Low = 541822072;
     Bank Last Revised High = 30151259;
 
@@ -1738,8 +1772,6 @@ Sound Bank
     Windows File = Win\Voiceover.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
-    Header Last Modified High = 0;
-    Header Last Modified Low = 0;
 
     Sound
     {
@@ -2164,6 +2196,147 @@ Sound Bank
         }
     }
 
+    Sound
+    {
+        Name = Are You Ready;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Voice;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = SpeechEffects;
+                    Bank Index = 1;
+                    Entry Name = Are You Ready;
+                    Entry Index = 11;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = New Lap Record;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Voice;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = SpeechEffects;
+                    Bank Index = 1;
+                    Entry Name = New Lap Record;
+                    Entry Index = 10;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = lap_complete;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Voice;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = SpeechEffects;
+                    Bank Index = 1;
+                    Entry Name = lap_complete;
+                    Entry Index = 5;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
     Cue
     {
         Name = CountDown;
@@ -2300,6 +2473,66 @@ Sound Bank
             Weight Max = 255;
         }
     }
+
+    Cue
+    {
+        Name = New Lap Record;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = New Lap Record;
+            Index = 10;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = Are You Ready;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Are You Ready;
+            Index = 9;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = lap_complete;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = lap_complete;
+            Index = 11;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
 }
 
 Sound Bank
@@ -2388,6 +2621,8 @@ Sound Bank
     Windows File = Win\MusicTracks.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
+    Header Last Modified High = 0;
+    Header Last Modified Low = 0;
 
     Sound
     {
@@ -2443,7 +2678,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 1::6b81d110-511f-484c-b423-b8270af88e8b;
+                RPC Curve Name = 1::cd1b4484-0da2-441d-a792-c8f9cc45edc1;
             }
         }
 
@@ -2484,7 +2719,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 2::904ab0cd-373a-4be1-bee7-290901d762d5;
+                RPC Curve Name = 2::3d31df17-66d1-43ae-aedf-d079f55ead90;
             }
         }
 
@@ -2525,7 +2760,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 3::ba70a639-dc37-4539-bd75-c83f5206cf46;
+                RPC Curve Name = 3::be3aec80-f816-4631-8e4f-7234707777a7;
             }
         }
 
@@ -2566,7 +2801,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 4::e8801f0c-e530-4616-be85-affcaa458667;
+                RPC Curve Name = 4::33b7f12e-07b7-4b8f-9df8-d2208df6a472;
             }
         }
 
@@ -2607,7 +2842,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 5::c6ab8b7e-8a03-4e59-8fc2-38836658ebcf;
+                RPC Curve Name = 5::69294a4f-3134-4323-9f70-9725dc18a6bb;
             }
         }
     }
@@ -2669,7 +2904,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 1::6b81d110-511f-484c-b423-b8270af88e8b;
+                RPC Curve Name = 1::cd1b4484-0da2-441d-a792-c8f9cc45edc1;
             }
         }
 
@@ -2713,7 +2948,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 2::904ab0cd-373a-4be1-bee7-290901d762d5;
+                RPC Curve Name = 2::3d31df17-66d1-43ae-aedf-d079f55ead90;
             }
         }
 
@@ -2757,7 +2992,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 3::ba70a639-dc37-4539-bd75-c83f5206cf46;
+                RPC Curve Name = 3::be3aec80-f816-4631-8e4f-7234707777a7;
             }
         }
 
@@ -2801,7 +3036,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 4::e8801f0c-e530-4616-be85-affcaa458667;
+                RPC Curve Name = 4::33b7f12e-07b7-4b8f-9df8-d2208df6a472;
             }
         }
 
@@ -2845,7 +3080,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 5::c6ab8b7e-8a03-4e59-8fc2-38836658ebcf;
+                RPC Curve Name = 5::69294a4f-3134-4323-9f70-9725dc18a6bb;
             }
         }
     }
@@ -2904,7 +3139,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 1::6b81d110-511f-484c-b423-b8270af88e8b;
+                RPC Curve Name = 1::cd1b4484-0da2-441d-a792-c8f9cc45edc1;
             }
         }
 
@@ -2945,7 +3180,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 2::904ab0cd-373a-4be1-bee7-290901d762d5;
+                RPC Curve Name = 2::3d31df17-66d1-43ae-aedf-d079f55ead90;
             }
         }
 
@@ -2986,7 +3221,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 3::ba70a639-dc37-4539-bd75-c83f5206cf46;
+                RPC Curve Name = 3::be3aec80-f816-4631-8e4f-7234707777a7;
             }
         }
 
@@ -3027,7 +3262,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 4::e8801f0c-e530-4616-be85-affcaa458667;
+                RPC Curve Name = 4::33b7f12e-07b7-4b8f-9df8-d2208df6a472;
             }
         }
 
@@ -3068,7 +3303,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 5::c6ab8b7e-8a03-4e59-8fc2-38836658ebcf;
+                RPC Curve Name = 5::69294a4f-3134-4323-9f70-9725dc18a6bb;
             }
         }
     }
@@ -3481,7 +3716,7 @@ Sound Bank
     Sound
     {
         Name = Collision;
-        Volume = -4000;
+        Volume = -2500;
         Pitch = 0;
         Priority = 0;
 

@@ -13,6 +13,10 @@ namespace BeatShift
         public static Texture2D Logo;
         public static Texture2D Start;
 
+        public static Texture2D CityRender;
+        public static Texture2D DesertRender;
+        public static Texture2D SpaceRender;
+
         public static Texture2D MenuBackgroundBlue;
         public static Texture2D MenuBackgroundBlack;
         public static Texture2D MenuBackgroundBlackRed;
@@ -39,7 +43,9 @@ namespace BeatShift
         public static Texture2D BeatVisualisation;
         public static Texture2D TutorialScreen;
         public static Texture2D Crest;
+        public static Texture2D EliminationBar;
         public static Texture2D PointsBackground;
+        public static Texture2D Eliminated;
 
         public static Texture2D ShipSelectBasis;
         public static Texture2D Skylar;
@@ -54,6 +60,10 @@ namespace BeatShift
             Console.Write("Loading game textures... ");
             Logo = c.Load<Texture2D>("Images/logo");
             Start = c.Load<Texture2D>("Images/pressstart");
+
+            CityRender = c.Load<Texture2D>("Images/CityMapRender");
+            DesertRender = c.Load<Texture2D>("Images/DesertMapRender");
+            SpaceRender = c.Load<Texture2D>("Images/SpaceMapRender");
 
             MenuBackgroundBlue = c.Load<Texture2D>("Images/blue_background");
             MenuBackgroundBlack = c.Load<Texture2D>("Images/black_background");
@@ -83,6 +93,8 @@ namespace BeatShift
             ResettingSign = c.Load<Texture2D>("HUD/resetting_v3");
             BeatVisualisation = c.Load<Texture2D>("Visualisation/viz_red");
             TutorialScreen = c.Load<Texture2D>("Images/tutorial_screen");
+            Eliminated = c.Load<Texture2D>("HUD/eliminated");
+            EliminationBar = c.Load<Texture2D>("HUD/elimination");
 
             ShipSelectBasis = c.Load<Texture2D>("Images/ShipSelect/ShipSelectBasis");
             Skylar = c.Load<Texture2D>("Images/ShipSelect/Skylar");

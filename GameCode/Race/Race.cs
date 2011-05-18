@@ -13,6 +13,7 @@ using System.Collections;
 using BeatShift.Menus;
 using BeatShift.Cameras;
 using ParallelTasks;
+using BeatShift.Util;
 
 namespace BeatShift
 {
@@ -48,10 +49,10 @@ namespace BeatShift
                     racer.Update(gameTime);
                 }
                 );
-                /*foreach (Racer racer in currentRacers)
-                {
-                    racer.Update(gameTime);
-                }*/
+                //foreach (Racer racer in currentRacers)
+                //{
+                //   racer.Update(gameTime);
+                //}
             }
             else
             {

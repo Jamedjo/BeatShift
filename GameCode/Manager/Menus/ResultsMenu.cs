@@ -45,7 +45,7 @@ namespace BeatShift.Menus
                     if ( i == 0 )
                         BeatShift.spriteBatch.DrawString(BeatShift.newfont, "1st    " + results[0] + "  " + players[0], new Vector2(500, 150), Color.Goldenrod);
                     else if (i == 1)
-                        BeatShift.spriteBatch.DrawString(BeatShift.newfont, "2nd   " + results[1] + "  " + players[1], new Vector2(500, 150 + offset), Color.White);
+                        BeatShift.spriteBatch.DrawString(BeatShift.newfont, "2nd    " + results[1] + "  " + players[1], new Vector2(500, 150 + offset), Color.White);
                     else if (i == 2)
                         BeatShift.spriteBatch.DrawString(BeatShift.newfont, "3rd    " + results[2] + "  " + players[2], new Vector2(500, 150 + offset * 2), Color.SaddleBrown);
                     else if (i == 3)
@@ -81,6 +81,14 @@ namespace BeatShift.Menus
         {
             results = new string[Race.currentRacers.Count];
 
+            foreach (Racer racer in Race.currentRacers)
+            {
+                if (racer.raceTiming.finalRaceTime == long.MaxValue)
+                {
+                    racer.raceTiming.finalRaceTimeString = "DNF";
+                }
+            }
+
             if (Race.currentRaceType.getRaceTypeString().Equals("LappedRace"))
             {
                 results = Race.currentRacers.OrderByDescending(r => r.raceTiming.finalRaceTime).Reverse().Select(r => r.raceTiming.getFinalTotalTime()).ToArray();
@@ -106,9 +114,12 @@ namespace BeatShift.Menus
 
         public override void setupMenuItems()
         {
-            addMenuItem("Next Race", (Action)(delegate
+            addMenuItem("Highscores", (Action)(delegate
             {
+                MenuManager.setCurrentMenu(MenuPage.HighScore);
                 GameLoop.setGameStateAndResetPlayers(GameState.Menu);
+                //MenuManager.setCurrentMenu(MenuPage.HighScore);
+                
             }));
             addMenuItem("Main Menu", (Action)(delegate
             {

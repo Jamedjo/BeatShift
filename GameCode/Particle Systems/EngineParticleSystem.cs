@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using BeatShift;
 #endregion
 
 namespace DPSF.ParticleSystems
@@ -70,7 +71,7 @@ namespace DPSF.ParticleSystems
         /// </summary>
         /// <param name="cGame">Handle to the Game object being used. Pass in null for this 
         /// parameter if not using a Game object.</param>
-        public EngineParticleSystem(Game cGame) : base(cGame) { }
+        public EngineParticleSystem(Game cGame, Racer ParentRacer) : base(cGame) { parentRacer = ParentRacer; }
 
         //===========================================================
         // Structures and Variables
@@ -91,6 +92,7 @@ namespace DPSF.ParticleSystems
         private const int particleRate = 300;
         protected Vector3 offSet;
         protected Vector3 velocity;
+        protected Racer parentRacer;
         int type;
         //===========================================================
         // Overridden Particle System Functions
@@ -159,7 +161,7 @@ namespace DPSF.ParticleSystems
             InitialProperties.PositionMin = Vector3.Zero;
             InitialProperties.PositionMax = Vector3.Zero;
             InitialProperties.VelocityMin = new Vector3(-0.05f, -0.05f, 0);
-            InitialProperties.VelocityMax = new Vector3(0.05f, 0.05f, 1);
+            InitialProperties.VelocityMax = new Vector3(0.05f, 0.05f, 3);
             InitialProperties.RotationMin = 0.0f;
             InitialProperties.RotationMax = 0.0f;
             InitialProperties.RotationalVelocityMin = 0.0f;
