@@ -31,7 +31,7 @@ namespace BeatShift.Menus
             {
                 long timeLong = highScores[i].value * 10;
                 DateTime time = new DateTime(timeLong);
-                DrawMessageColour(BeatShift.newfont, i + ". " + highScores[i].name + " : " + time.Minute + ":"+time.Second+":"+time.Millisecond, 360, 230 + offset, 0.7f, Color.PapayaWhip);
+                DrawMessageColour(BeatShift.newfont, (i+1) + ". " + highScores[i].name + " : " + time.Minute + ":"+time.Second+":"+time.Millisecond, 360, 230 + offset, 0.7f, Color.PapayaWhip);
                 offset = offset + 40;
             }
         }
