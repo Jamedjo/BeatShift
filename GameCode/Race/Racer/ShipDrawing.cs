@@ -8,8 +8,10 @@ using BEPUphysics.DataStructures;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using BeatShift.Input;
+using BeatShift.Util;
 using DPSF;
 using DPSF.ParticleSystems;
+using BeatShift.Util;
 
 namespace BeatShift
 {
@@ -52,7 +54,7 @@ namespace BeatShift
             parentRacer.globalSystems.AddParticleSystem(collision);
             collision.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
 
-            engineGlow = new EngineParticleSystem(null);
+            engineGlow = new EngineParticleSystem(null,parentRacer);
             parentRacer.globalSystems.AddParticleSystem(engineGlow);
             engineGlow.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
 

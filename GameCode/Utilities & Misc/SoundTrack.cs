@@ -93,7 +93,7 @@ namespace BeatShift
             tick.Stop();
             track.Pause();
         }
-   public void UnPause()
+        public void UnPause()
         {
             tick.Start();
             track.Resume();
@@ -368,7 +368,10 @@ namespace BeatShift
             ResetBeats();
             currentLayer=0;
             BeatShift.engine.SetGlobalVariable("Layer", (currentLayer + 0.1f));
-            track.Stop(AudioStopOptions.Immediate);
+            if (track != null && !track.IsStopped&&track.IsPlaying)
+            {
+                track.Stop(AudioStopOptions.Immediate);
+            }
             track = soundBank.GetCue(currentTrack);
             GC.Collect();
             shouldPlay = false;

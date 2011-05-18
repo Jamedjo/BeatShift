@@ -154,6 +154,7 @@
     <Compile Include="Manager\Maps\SpaceMap.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Manager\Menus\HighScoreMenu.cs" />
     <Compile Include="Manager\Menus\LoadingMenu.cs" />
     <Compile Include="Manager\Menus\NumberAIMenu.cs" />
     <Compile Include="Manager\Menus\PauseMenu.cs" />
@@ -210,6 +211,7 @@
     <Compile Include="Race\Racer\ShipPhysics.cs" />
     <Compile Include="Race\Race.cs" />
     <Compile Include="Utilities &amp; Misc\GameVideos.cs" />
+    <Compile Include="Utilities &amp; Misc\HighScore.cs" />
     <Compile Include="Utilities &amp; Misc\Random\SimpleRNG.cs" />
     <Compile Include="Utilities &amp; Misc\RunningTimer.cs" />
     <Compile Include="Utilities &amp; Misc\SoundManager.cs" />
@@ -238,6 +240,12 @@
   <ItemGroup>
     <Content Include="Utilities &amp; Misc\Game.ico" />
     <Content Include="Utilities &amp; Misc\GameThumbnail.png" />
+    <Content Include="Utilities &amp; Misc\HighScore_0_0.xml" />
+    <Content Include="Utilities &amp; Misc\HighScore_0_1.xml" />
+    <Content Include="Utilities &amp; Misc\HighScore_1_0.xml" />
+    <Content Include="Utilities &amp; Misc\HighScore_1_1.xml" />
+    <Content Include="Utilities &amp; Misc\HighScore_2_0.xml" />
+    <Content Include="Utilities &amp; Misc\HighScore_2_1.xml" />
     <None Include="Options.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

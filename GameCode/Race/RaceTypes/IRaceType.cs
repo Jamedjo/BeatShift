@@ -140,15 +140,23 @@ namespace BeatShift
                 switch (countDownInt)
                 {
                     case 3:
-                        SoundManager.RaceStart(3);
+                        if(countdownState!=GameTextures.Countdown3){
+                            SoundManager.RaceStart(3);
+                        }
                         countdownState = GameTextures.Countdown3;
                         break;
                     case 2:
-                        SoundManager.RaceStart(2);
+                        if (countdownState != GameTextures.Countdown2)
+                        {
+                            SoundManager.RaceStart(2);
+                        }
                         countdownState = GameTextures.Countdown2;
                         break;
                     case 1:
-                        SoundManager.RaceStart(1);
+                        if (countdownState != GameTextures.Countdown1)
+                        {
+                            SoundManager.RaceStart(1);
+                        }
                         countdownState = GameTextures.Countdown1;
                         break;
                 }
@@ -160,12 +168,16 @@ namespace BeatShift
             {
                 if (startOfRace == true)
                 {
+                    if (countdownState != GameTextures.CountdownGo)
+                    {
+                        SoundManager.RaceStart(0);
+                    }
                     countDownRunning = false;
                     countDownTimer.Reset();
                     countdownState = GameTextures.CountdownGo;
                     // Call GO sound effect
                     // Call music sound effect
-                    SoundManager.RaceStart(0);
+
                     startRace();
                 }
                 else
@@ -253,7 +265,7 @@ namespace BeatShift
             }
             else
             {
-                foreach (Racer racer in Race.currentRacers)
+                foreach (RacerHuman racer in Race.humanRacers)
                 {
                     result = result || racer.raceTiming.isRacing;
                 }
