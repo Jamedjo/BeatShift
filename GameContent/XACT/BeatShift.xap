@@ -295,8 +295,8 @@ Global Settings
         Reserved = 0;
         Read Only = 0;
         Time = 0;
-        Value = 0.580000;
-        Initial Value = 0.370000;
+        Value = 3.840000;
+        Initial Value = 0.000000;
         Min = 0.000000;
         Max = 5.000000;
     }
@@ -313,7 +313,7 @@ Global Settings
         Read Only = 0;
         Time = 0;
         Value = 4.210000;
-        Initial Value = -0.000000;
+        Initial Value = 0.000000;
         Min = 0.000000;
         Max = 4.990000;
     }
@@ -324,7 +324,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 2::3d31df17-66d1-43ae-aedf-d079f55ead90;
+            Name = 2::a3e25b52-6228-48c6-84fb-5b58eca9cdea;
             Property = 0;
             Sound = 0;
             Line Color = 4294901760;
@@ -380,7 +380,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::cd1b4484-0da2-441d-a792-c8f9cc45edc1;
+            Name = 1::33540f78-7cd2-4c4e-a1b9-b1ce5d2d734b;
             Property = 0;
             Sound = 0;
             Line Color = 4294967040;
@@ -422,7 +422,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 3::be3aec80-f816-4631-8e4f-7234707777a7;
+            Name = 3::54d90d93-5e9f-43ce-8b2a-a9214b7df4c5;
             Property = 0;
             Sound = 0;
             Line Color = 4278255360;
@@ -506,7 +506,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 4::33b7f12e-07b7-4b8f-9df8-d2208df6a472;
+            Name = 4::5f7a1248-0569-432e-8a5f-218ad4404563;
             Property = 0;
             Sound = 0;
             Line Color = 4278255615;
@@ -604,7 +604,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 5::69294a4f-3134-4323-9f70-9725dc18a6bb;
+            Name = 5::037c0f4e-c250-44f1-aa77-2b8838bc87a0;
             Property = 0;
             Sound = 0;
             Line Color = 4293798568;
@@ -752,8 +752,14 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = Default;
-    Bank Last Revised Low = 629868407;
-    Bank Last Revised High = 30151953;
+    Xbox Bank Last Modified Low = 0;
+    Xbox Bank Last Modified High = 0;
+    PC Bank Last Modified Low = 0;
+    PC Bank Last Modified High = 0;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
+    Bank Last Revised Low = 2413790787;
+    Bank Last Revised High = 30151965;
 
     Wave
     {
@@ -1083,6 +1089,12 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = Default;
+    Xbox Bank Last Modified Low = 0;
+    Xbox Bank Last Modified High = 0;
+    PC Bank Last Modified Low = 0;
+    PC Bank Last Modified High = 0;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
     Bank Last Revised Low = 4108028343;
     Bank Last Revised High = 30151027;
 
@@ -1211,8 +1223,14 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Bank Last Revised Low = 1537083831;
-    Bank Last Revised High = 30151902;
+    Xbox Bank Last Modified Low = 0;
+    Xbox Bank Last Modified High = 0;
+    PC Bank Last Modified Low = 0;
+    PC Bank Last Modified High = 0;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
+    Bank Last Revised Low = 158511792;
+    Bank Last Revised High = 30151965;
 
     Wave
     {
@@ -1255,8 +1273,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 2910662400;
-            Last Modified High = 30151225;
+            Last Modified Low = 2162919274;
+            Last Modified High = 30151234;
         }
     }
 
@@ -1657,10 +1675,8 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Header Last Modified Low = 0;
-    Header Last Modified High = 0;
-    Bank Last Revised Low = 3383719022;
-    Bank Last Revised High = 30151945;
+    Bank Last Revised Low = 422195409;
+    Bank Last Revised High = 30151972;
 
     Wave
     {
@@ -1785,6 +1801,8 @@ Sound Bank
     Windows File = Win\Voiceover.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
+    Header Last Modified High = 0;
+    Header Last Modified Low = 0;
 
     Sound
     {
@@ -2642,6 +2660,8 @@ Sound Bank
     Windows File = Win\MusicTracks.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
+    Header Last Modified High = 0;
+    Header Last Modified Low = 0;
 
     Sound
     {
@@ -2697,7 +2717,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 1::cd1b4484-0da2-441d-a792-c8f9cc45edc1;
+                RPC Curve Name = 1::33540f78-7cd2-4c4e-a1b9-b1ce5d2d734b;
             }
         }
 
@@ -2738,7 +2758,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 2::3d31df17-66d1-43ae-aedf-d079f55ead90;
+                RPC Curve Name = 2::a3e25b52-6228-48c6-84fb-5b58eca9cdea;
             }
         }
 
@@ -2779,7 +2799,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 3::be3aec80-f816-4631-8e4f-7234707777a7;
+                RPC Curve Name = 3::54d90d93-5e9f-43ce-8b2a-a9214b7df4c5;
             }
         }
 
@@ -2820,7 +2840,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 4::33b7f12e-07b7-4b8f-9df8-d2208df6a472;
+                RPC Curve Name = 4::5f7a1248-0569-432e-8a5f-218ad4404563;
             }
         }
 
@@ -2861,7 +2881,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 5::69294a4f-3134-4323-9f70-9725dc18a6bb;
+                RPC Curve Name = 5::037c0f4e-c250-44f1-aa77-2b8838bc87a0;
             }
         }
     }
@@ -2923,7 +2943,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 1::cd1b4484-0da2-441d-a792-c8f9cc45edc1;
+                RPC Curve Name = 1::33540f78-7cd2-4c4e-a1b9-b1ce5d2d734b;
             }
         }
 
@@ -2967,7 +2987,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 2::3d31df17-66d1-43ae-aedf-d079f55ead90;
+                RPC Curve Name = 2::a3e25b52-6228-48c6-84fb-5b58eca9cdea;
             }
         }
 
@@ -3011,7 +3031,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 3::be3aec80-f816-4631-8e4f-7234707777a7;
+                RPC Curve Name = 3::54d90d93-5e9f-43ce-8b2a-a9214b7df4c5;
             }
         }
 
@@ -3055,7 +3075,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 4::33b7f12e-07b7-4b8f-9df8-d2208df6a472;
+                RPC Curve Name = 4::5f7a1248-0569-432e-8a5f-218ad4404563;
             }
         }
 
@@ -3099,7 +3119,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 5::69294a4f-3134-4323-9f70-9725dc18a6bb;
+                RPC Curve Name = 5::037c0f4e-c250-44f1-aa77-2b8838bc87a0;
             }
         }
     }
@@ -3158,7 +3178,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 1::cd1b4484-0da2-441d-a792-c8f9cc45edc1;
+                RPC Curve Name = 1::33540f78-7cd2-4c4e-a1b9-b1ce5d2d734b;
             }
         }
 
@@ -3199,7 +3219,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 2::3d31df17-66d1-43ae-aedf-d079f55ead90;
+                RPC Curve Name = 2::a3e25b52-6228-48c6-84fb-5b58eca9cdea;
             }
         }
 
@@ -3240,7 +3260,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 3::be3aec80-f816-4631-8e4f-7234707777a7;
+                RPC Curve Name = 3::54d90d93-5e9f-43ce-8b2a-a9214b7df4c5;
             }
         }
 
@@ -3281,7 +3301,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 4::33b7f12e-07b7-4b8f-9df8-d2208df6a472;
+                RPC Curve Name = 4::5f7a1248-0569-432e-8a5f-218ad4404563;
             }
         }
 
@@ -3322,7 +3342,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = LayerChange;
-                RPC Curve Name = 5::69294a4f-3134-4323-9f70-9725dc18a6bb;
+                RPC Curve Name = 5::037c0f4e-c250-44f1-aa77-2b8838bc87a0;
             }
         }
     }
@@ -3332,11 +3352,11 @@ Sound Bank
         Name = TitleMusic;
         Volume = -1200;
         Pitch = 0;
-        Priority = 0;
+        Priority = 210;
 
         Category Entry
         {
-            Name = Default;
+            Name = Music;
         }
 
         Track
@@ -3469,7 +3489,7 @@ Sound Bank
     Sound
     {
         Name = Hum 1;
-        Volume = -4520;
+        Volume = -3150;
         Pitch = 0;
         Priority = 0;
 
@@ -3517,7 +3537,7 @@ Sound Bank
     Sound
     {
         Name = Hum 2;
-        Volume = -4520;
+        Volume = -3090;
         Pitch = 0;
         Priority = 0;
 
@@ -3565,7 +3585,7 @@ Sound Bank
     Sound
     {
         Name = Hum 3;
-        Volume = -4520;
+        Volume = -2970;
         Pitch = 0;
         Priority = 0;
 
@@ -3613,7 +3633,7 @@ Sound Bank
     Sound
     {
         Name = Hum 4;
-        Volume = -4520;
+        Volume = -3090;
         Pitch = 0;
         Priority = 0;
 
@@ -3661,7 +3681,7 @@ Sound Bank
     Sound
     {
         Name = Hum 5;
-        Volume = -4520;
+        Volume = -3090;
         Pitch = 0;
         Priority = 0;
 
@@ -3709,7 +3729,7 @@ Sound Bank
     Sound
     {
         Name = leveldown;
-        Volume = -2850;
+        Volume = -2200;
         Pitch = 0;
         Priority = 0;
 
@@ -3756,7 +3776,7 @@ Sound Bank
     Sound
     {
         Name = levelup;
-        Volume = -2730;
+        Volume = -1970;
         Pitch = 0;
         Priority = 0;
 
@@ -3803,7 +3823,7 @@ Sound Bank
     Sound
     {
         Name = Collision;
-        Volume = -2500;
+        Volume = -2090;
         Pitch = 0;
         Priority = 0;
 
@@ -3858,7 +3878,7 @@ Sound Bank
     Sound
     {
         Name = Lap Complete;
-        Volume = -3650;
+        Volume = -2260;
         Pitch = 0;
         Priority = 0;
 
