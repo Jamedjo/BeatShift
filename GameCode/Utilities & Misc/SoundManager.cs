@@ -138,12 +138,18 @@ namespace BeatShift
 
         public static void LapComplete()
         {
-            effectSound.PlayCue("LapComplete"); 
+            soundBank.PlayCue("lap_complete"); 
+        }
+
+        public static void LapRecord()
+        {
+            soundBank.PlayCue("New Lap Record");
         }
 
         public static void RaceStart(int count)
         {
-            soundBank.PlayCue("CountDown");                
+            //BeatShift.engine.SetGlobalVariable("Countdown",count);
+            soundBank.PlayCue("countdown");                
         }
 
         public static Cue getEngineHum()
