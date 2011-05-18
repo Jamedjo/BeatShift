@@ -23,43 +23,52 @@ namespace BeatShift.Util
         }
     }
 
+    
+
     public static class HighScore
     {
-
-        #region Constants
-
-        const int TIME_MODE = 0;
-        const int POINT_MODE = 1;
         
-        const int CITY = 0;
-        const int SPACE = 1;
-        const int DESERT = 2;
+        private static XDocument scoreDoc;
 
-        #endregion
+        /// <summary>
+        /// Returns the previous highscore list for a track and mode.
+        /// </summary>
+        /// <param name="trackID">The track to get highscores for</param>
+        /// <param name="mode">Either 0 or 1, for TIME_MODE or  POINT_MODE respectively</param>
+        public static List<HighScoreEntry> getHighScores(MapName trackID, int mode){
+             return getHighScores(trackID, mode, new List<HighScoreEntry>());
+        }
 
-
-        static XDocument scoreDoc;
-
-        public static List<HighScoreEntry> getHighScores(int trackID, int mode, List<HighScoreEntry> thisRaceValues)
+        /// <summary>
+        /// Get the highscores for a track and mode, incorporating changes to be made.
+        /// </summary>
+        /// <param name="trackID">The track to get highscores for</param>
+        /// <param name="mode">Either 0 or 1, for TIME_MODE or  POINT_MODE respectively</param>
+        public static List<HighScoreEntry> getHighScores(MapName trackID, int mode, List<HighScoreEntry> thisRaceValues)
         {
             List<HighScoreEntry> scoreTable = new List<HighScoreEntry>(10);
 
-            if (!(trackID == DESERT || trackID == SPACE || trackID == CITY))
+            if (!(trackID == MapName.CityMap || trackID == MapName.DesertMap || trackID == MapName.SpaceMap))
             {
                 throw new ArgumentException("Mode must be a valid track identifier from HighScore.", "trackID");
             }
-            if (!(mode == TIME_MODE || mode == POINT_MODE))
+            if (!(mode == 0 || mode == 1))
             {
                 throw new ArgumentException("Mode must be a valid mode identifier from HighScore.", "mode");
             }
-            init(trackID, mode);
+            switch (trackID)
+            {
+                case MapName.CityMap: init(0, mode); break;
+                case MapName.DesertMap: init(1, mode); break;
+                case MapName.SpaceMap: init(2, mode); break;
+            }
 
             var tempTable = (from item in scoreDoc.Descendants("entry") select new HighScoreEntry(item.Descendants("name").First().Value, long.Parse(item.Descendants("value").First().Value)));
             List<HighScoreEntry> sortedInput;
             
             int oldID = 0, newID = 0; 
             List<HighScoreEntry> results = new List<HighScoreEntry>(10);
-            if (mode == TIME_MODE)
+            if (mode == 0)
             {
                 scoreTable = tempTable.OrderBy(x => x.value).ToList();
                 sortedInput = thisRaceValues.OrderBy(x => x.value).ToList();
@@ -82,7 +91,7 @@ namespace BeatShift.Util
                     }
                 }
             }
-            else if (mode == POINT_MODE)
+            else if (mode == 1)
             {
                 scoreTable = tempTable.OrderBy(x => x.value).ToList();
                 sortedInput = thisRaceValues.OrderBy(x => x.value).ToList();
