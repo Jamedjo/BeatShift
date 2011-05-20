@@ -767,7 +767,7 @@ namespace BeatShift
 
         public double millisecsLeftTillReset = 4000;
         private float currentDistanceToNearestWaypoint;
-
+        private Boolean despawnShown = false;
         /// <summary>
         /// Main raycast function. Gets called in update.
         /// </summary>
@@ -803,6 +803,8 @@ namespace BeatShift
                     {
 
                        // Console.WriteLine("RESPAWNING...");
+
+                        
                         parentRacer.isRespawning = true;
                         //TODO: wait a bit 
                         //currentDistanceToNearestWaypoint = (float)((nextWaypoint.position - ShipPosition).Length()) / 125; //TODO: use actual width of track
@@ -810,6 +812,12 @@ namespace BeatShift
                         //physicsBody.LinearDamping = 0.7f; //BUG!!!
 
                         //Console.WriteLine(currentDistanceToNearestWaypoint);
+                        if (!despawnShown && millisecsLeftTillReset < 700)
+                        {
+                            parentRacer.shipDrawing.spawn.Despawn(parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.DrawOrientation);
+                            despawnShown = true;
+                        }
+                             
 
                     }
                     else
@@ -876,6 +884,8 @@ namespace BeatShift
                         physicsBody.WorldTransform = Matrix.CreateWorld(newShipPosition, mapData.nextPoint(currentProgressWaypoint).position - newShipPosition, currentProgressWaypoint.trackUp);
 
                         //resetShipAtLastWaypoint(); //TODO: start some kind of animation, white noise
+                        parentRacer.shipDrawing.spawn.Respawn(parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.DrawOrientation);
+                        despawnShown = false;
                     }
 
                 }

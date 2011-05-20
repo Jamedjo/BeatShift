@@ -10,6 +10,8 @@ using Microsoft.Xna.Framework.GamerServices;
 using BeatShift.Utilities___Misc;
 using Microsoft.Xna.Framework.Audio;
 using ParallelTasks;
+using DPSF.ParticleSystems;
+using DPSF;
 
 namespace BeatShift
 {
@@ -29,6 +31,7 @@ namespace BeatShift
         public static GameState getCurrentState() { return currentState; }
         public static SoundBank menuBank;
         public static WaveBank wavBank;
+        //private static ParticleSystemManager particleManager;
         static Cue titleMusic;
         private static bool paused = false;
         private static bool pausedForGuide = false;
@@ -293,7 +296,6 @@ namespace BeatShift
             mainGameinput.Update(gameTime);
             if (!paused)
             {
-               // Task particles;
                 Boolean raceUpdated = false;
                 if (GameLoop.getCurrentState() == GameState.LocalGame)
                 {
@@ -358,7 +360,7 @@ namespace BeatShift
         {
             BeatShift.graphics.GraphicsDevice.Viewport = Viewports.fullViewport;
             Rectangle viewArea = new Rectangle(0, 0, BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height);
-
+            
             //Draw Scene background
             BeatShift.graphics.GraphicsDevice.Clear(Color.Black);
 
@@ -383,7 +385,6 @@ namespace BeatShift
             {
                 Race.Draw(gameTime);
             }
-
             if (paused && !pausedForGuide)
                 if (raceComplete)
                     resultsMenu.Draw();

@@ -31,14 +31,14 @@ namespace DPSF.ParticleSystems
 #if (WINDOWS)
     [Serializable]
 #endif
-    public class CollisionParticleSystem : DefaultSprite3DBillboardParticleSystem
+    public class RespawnParticleSystem : DefaultSprite3DBillboardParticleSystem
     {
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="cGame">Handle to the Game object being used. Pass in null for this 
         /// parameter if not using a Game object.</param>
-        public CollisionParticleSystem(Game cGame) : base(cGame) { }
+        public RespawnParticleSystem(Game cGame) : base(cGame) { }
 
         //===========================================================
         // Structures and Variables
@@ -49,6 +49,8 @@ namespace DPSF.ParticleSystems
         //-----------------------------------------------------------
         float mfSizeMin = 10;
         float mfSizeMax = 50;
+        float radius = 6;
+        float size = 3;
         Vector3 velocity;
         //===========================================================
         // Overridden Particle System Functions
@@ -78,10 +80,10 @@ namespace DPSF.ParticleSystems
             // TODO: Change any Initialization parameters desired and the Name
             //-----------------------------------------------------------
             // Initialize the Particle System before doing anything else
-            InitializeSpriteParticleSystem(cGraphicsDevice, cContentManager, 500, 20000, "Particles/Textures/FlowerBurst");
+            InitializeSpriteParticleSystem(cGraphicsDevice, cContentManager, 200, 1000, "Particles/Textures/FlowerBurst");
 
             // Set the Name of the Particle System
-            Name = "Collision particle System";
+            Name = "Spawn particle System";
 
             // Finish loading the Particle System in a separate function call, so if
             // we want to reset the Particle System later we don't need to completely 
@@ -108,7 +110,7 @@ namespace DPSF.ParticleSystems
             // the InitializeParticleProperties function below.
             //ParticleInitializationFunction = InitializeParticleUsingInitialProperties;
             //ParticleInitializationFunction = InitializeParticleProperties;
-            ParticleInitializationFunction = InitializeParticleProperties;
+            ParticleInitializationFunction = InitializeParticlePropertiesRespawn;
             // Setup the Initial Properties of the Particles.
             // These are only applied if using InitializeParticleUsingInitialProperties 
             // as the Particle Initialization Function.
@@ -140,7 +142,7 @@ namespace DPSF.ParticleSystems
             ParticleSystemEvents.RemoveAllEvents();
 
             // Allow the Particle's Position, Rotation, Width and Height, Color, and Transparency to be updated each frame
-            ParticleEvents.AddEveryTimeEvent(UpdateParticlePositionUsingVelocity);
+            ParticleEvents.AddEveryTimeEvent(UpdateParticlePositionBySphereLerp);
             //ParticleEvents.AddEveryTimeEvent(UpdateParticleRotationUsingRotationalVelocity);
             //ParticleEvents.AddEveryTimeEvent(UpdateParticleWidthAndHeightUsingLerp);
             ParticleEvents.AddEveryTimeEvent(UpdateParticleColorUsingLerp);
@@ -167,7 +169,7 @@ namespace DPSF.ParticleSystems
         /// Example of how to create a Particle Initialization Function
         /// </summary>
         /// <param name="cParticle">The Particle to be Initialized</param>
-        public void InitializeParticleProperties(DefaultSprite3DBillboardParticle cParticle)
+        public void InitializeParticlePropertiesDespawn(DefaultSprite3DBillboardParticle cParticle)
         {
             //-----------------------------------------------------------
             // TODO: Initialize all of the Particle's properties here.
@@ -176,29 +178,65 @@ namespace DPSF.ParticleSystems
             // then you may delete this function all together.
             //-----------------------------------------------------------
             // Set the Particle's Lifetime (how long it should exist for)
-            cParticle.Lifetime = 0.1f;
+            cParticle.Lifetime = 1.0f;
 
             // Set the Particle's initial Position to be wherever the Emitter is
-            cParticle.Position = Emitter.PositionData.Position;
+            cParticle.Position = DPSFHelper.PointOnSphere(RandomNumber.Between(0, MathHelper.TwoPi), RandomNumber.Between(0, MathHelper.TwoPi), radius);
+            cParticle.Position = Vector3.Transform(cParticle.Position, Emitter.OrientationData.Orientation);
+            
 
             // Set the Particle's Velocity
-            Vector3 sVelocityMin = new Vector3(-1.8f, -1.8f, -3f);
-            Vector3 sVelocityMax = new Vector3(1.8f, 1.8f, -1.8f);
-            cParticle.Velocity = DPSFHelper.RandomVectorBetweenTwoVectors(sVelocityMin, sVelocityMax);
+            cParticle.Velocity = -cParticle.Position;
             
             // Adjust the Particle's Velocity direction according to the Emitter's Orientation
-            cParticle.Velocity = Vector3.Transform(cParticle.Velocity, Emitter.OrientationData.Orientation);
+            //cParticle.Velocity = Vector3.Transform(cParticle.Velocity, Emitter.OrientationData.Orientation);
+            cParticle.Position += Emitter.PositionData.Position;
 
-            cParticle.Velocity += velocity;
+
             // Give the Particle a random Size
             // Since we have Size Lerp enabled we must also set the Start and End Size
             cParticle.Width = cParticle.StartWidth = cParticle.EndWidth = cParticle.EndHeight =
-                cParticle.Height = cParticle.StartHeight = 2f * RandomNumber.NextFloat();
+                cParticle.Height = cParticle.StartHeight = size;
 
             // Give the Particle a random Color
             // Since we have Color Lerp enabled we must also set the Start and End Color
-            cParticle.Color = cParticle.StartColor = Color.Yellow;
-            cParticle.EndColor = Color.Red;
+            cParticle.Color = cParticle.StartColor = Color.Red;
+            cParticle.EndColor = Color.White;
+        }
+
+        public void InitializeParticlePropertiesRespawn(DefaultSprite3DBillboardParticle cParticle)
+        {
+            //-----------------------------------------------------------
+            // TODO: Initialize all of the Particle's properties here.
+            // If you plan on simply using the default InitializeParticleUsingInitialProperties
+            // Particle Initialization Function (see the LoadParticleSystem() function above), 
+            // then you may delete this function all together.
+            //-----------------------------------------------------------
+            // Set the Particle's Lifetime (how long it should exist for)
+            cParticle.Lifetime = 1.0f;
+
+            // Set the Particle's initial Position to be wherever the Emitter is
+            cParticle.Position = Vector3.Zero; 
+            cParticle.Position = Vector3.Transform(cParticle.Position, Emitter.OrientationData.Orientation);
+
+
+            // Set the Particle's Velocity
+            cParticle.Velocity = DPSFHelper.PointOnSphere(RandomNumber.Between(0, MathHelper.TwoPi), RandomNumber.Between(0, MathHelper.TwoPi), radius);
+
+            // Adjust the Particle's Velocity direction according to the Emitter's Orientation
+            cParticle.Velocity = Vector3.Transform(cParticle.Velocity, Emitter.OrientationData.Orientation);
+            cParticle.Position += Emitter.PositionData.Position;
+
+
+            // Give the Particle a random Size
+            // Since we have Size Lerp enabled we must also set the Start and End Size
+            cParticle.Width = cParticle.StartWidth = cParticle.EndWidth = cParticle.EndHeight =
+                cParticle.Height = cParticle.StartHeight = size;
+
+            // Give the Particle a random Color
+            // Since we have Color Lerp enabled we must also set the Start and End Color
+            cParticle.Color = cParticle.StartColor = Color.White;
+            cParticle.EndColor = Color.Blue;
         }
 
         //===========================================================
@@ -215,8 +253,16 @@ namespace DPSF.ParticleSystems
         /// </summary>
         /// <param name="cParticle">The Particle to update</param>
         /// <param name="fElapsedTimeInSeconds">How long it has been since the last update</param>
-        protected void UpdateParticleFunctionExample(DefaultSpriteParticle cParticle, float fElapsedTimeInSeconds)
+        protected void UpdateParticlePositionBySphereLerp(DefaultSpriteParticle cParticle, float fElapsedTimeInSeconds)
         {
+            cParticle.Position = DPSFHelper.PointOnSphere(RandomNumber.Between(0, MathHelper.TwoPi), RandomNumber.Between(0, MathHelper.TwoPi), cParticle.NormalizedElapsedTime*radius);
+            cParticle.Position = Vector3.Transform(cParticle.Position, Emitter.OrientationData.Orientation);
+
+
+
+            // Adjust the Particle's Velocity direction according to the Emitter's Orientation
+            //cParticle.Velocity = Vector3.Transform(cParticle.Velocity, Emitter.OrientationData.Orientation);
+            cParticle.Position += Emitter.PositionData.Position;
             // Place code to update the Particle here
             // Example: cParticle.Position += cParticle.Velocity * fElapsedTimeInSeconds;
         }
@@ -249,13 +295,26 @@ namespace DPSF.ParticleSystems
         // TODO: Place any other functions here
         //-----------------------------------------------------------
 
-        public void Collision(Vector3 lastCollisionPoint, Quaternion orientation, Vector3 lastVelocity)
+        public void Respawn(Vector3 position, Quaternion orientation)
         {
-            ; ;
-            Emitter.PositionData.Position = lastCollisionPoint;
+            ParticleInitializationFunction = InitializeParticlePropertiesRespawn;
+            Emitter.PositionData.Position = position;
             Emitter.OrientationData.Orientation = orientation;
-            velocity = lastVelocity;
             Emitter.BurstParticles = 80;
+        }
+
+        public void Despawn(Vector3 position, Quaternion orientation)
+        {
+            ParticleInitializationFunction = InitializeParticlePropertiesDespawn;
+            Emitter.PositionData.Position = position;
+            Emitter.OrientationData.Orientation = orientation;
+            Emitter.BurstParticles = 50;
+        }
+
+        public void setPosition(Vector3 position, Quaternion orientation)
+        {
+            Emitter.PositionData.Position = position;
+            Emitter.OrientationData.Orientation = orientation;
         }
     }
 }

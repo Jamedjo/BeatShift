@@ -222,6 +222,7 @@ namespace BeatShift
             {
                 shipDrawing.engineGlow.setVelocity(shipPhysics.physicsBody.LinearVelocity);
                 shipDrawing.engineGlow.SetPosition(shipPhysics.ShipPosition, shipPhysics.DrawOrientation);
+                shipDrawing.spawn.setPosition(shipPhysics.ShipPosition, shipPhysics.DrawOrientation);
             }
             globalSystems.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
             privateSystems.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
