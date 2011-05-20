@@ -27,7 +27,7 @@ namespace BeatShift.Menus
         {
             addMenuItem("LAPPED RACE", (Action)(delegate
             {
-                Race.currentRaceType = new LappedRace(3);
+                Race.currentRaceType = new LappedRace(1);
                 Race.resetPlayers();
                 MenuManager.setCurrentMenu(MenuPage.MapSelect);
             }));
@@ -45,7 +45,7 @@ namespace BeatShift.Menus
             }));
             addMenuItem("POINTS FRENZY", (Action)(delegate
             {
-                Race.currentRaceType = new PointsRace(2);
+                Race.currentRaceType = new PointsRace(1);
                 Race.resetPlayers();
                 MenuManager.setCurrentMenu(MenuPage.MapSelect);
             }));

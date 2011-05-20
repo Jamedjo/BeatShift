@@ -82,8 +82,11 @@ namespace BeatShift
             privateSystems = new ParticleSystemManager();
             globalSystems = new ParticleSystemManager();
             //setColour(1);//Set to red
-            Hum = SoundManager.getEngineHum();
-            //Hum.Play();
+            //Hum = SoundManager.getEngineHum();
+            //if (this.GetType() == typeof(RacerHuman))
+            //{
+            //    Hum.Play();
+            //}
             constructRaceVariables();
 
             if (racerType == RacerType.AI)
@@ -219,6 +222,7 @@ namespace BeatShift
             {
                 shipDrawing.engineGlow.setVelocity(shipPhysics.physicsBody.LinearVelocity);
                 shipDrawing.engineGlow.SetPosition(shipPhysics.ShipPosition, shipPhysics.DrawOrientation);
+                shipDrawing.spawn.setPosition(shipPhysics.ShipPosition, shipPhysics.DrawOrientation);
             }
             globalSystems.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
             privateSystems.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);

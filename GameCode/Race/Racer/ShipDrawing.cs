@@ -32,7 +32,7 @@ namespace BeatShift
         public Func<Matrix> getShipDrawOrientationMatrix;
         Func<Vector3> getShipPosition;
         public CollisionParticleSystem collision;
-
+        public RespawnParticleSystem spawn;
 
         public Vector3 testWalls = Vector3.Zero;
         public Boolean wallHit = false;
@@ -53,6 +53,10 @@ namespace BeatShift
             collision = new CollisionParticleSystem(null);
             parentRacer.globalSystems.AddParticleSystem(collision);
             collision.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
+
+            spawn = new RespawnParticleSystem(null);
+            parentRacer.globalSystems.AddParticleSystem(spawn);
+            spawn.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
 
             engineGlow = new EngineParticleSystem(null,parentRacer);
             parentRacer.globalSystems.AddParticleSystem(engineGlow);
@@ -153,7 +157,6 @@ namespace BeatShift
                     parentRacer.privateSystems.SetWorldViewProjectionMatricesForAllParticleSystems(Matrix.Identity, viewMatrix, projectionMatrix);
                     parentRacer.privateSystems.SetCameraPositionForAllParticleSystems(camera.cameraPosition());
                     parentRacer.privateSystems.DrawAllParticleSystems();
-
                 }
             }
             //if (Options.DrawCollisionPoints)

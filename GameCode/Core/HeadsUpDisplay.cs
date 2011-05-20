@@ -57,7 +57,7 @@ namespace BeatShift
                 if (Race.currentRaceType.getRaceTypeString().Equals("TimeTrialRace"))
                 {
                     //BeatShift.spriteBatch.Begin();
-                    DrawMessageColour(BeatShift.newfont, "Best Lap" + racer.raceTiming.getBestLapTime(), BeatShift.graphics.GraphicsDevice.Viewport.Width / 4, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2, 0.5f, Color.PapayaWhip);
+                    DrawMessageColour(BeatShift.newfont, "Best Lap: " + racer.raceTiming.getBestLapTime(), BeatShift.graphics.GraphicsDevice.Viewport.Width / 4, BeatShift.graphics.GraphicsDevice.Viewport.Height / 2, 0.5f, Color.PapayaWhip);
                     //DrawMessage("Best lap time: " + racer.raceTiming.getBestLapTime(), 325, vOffset / 2);
                 }
 
@@ -69,12 +69,12 @@ namespace BeatShift
                 //// Points Msg ////
                 ////////////////////
                 racer.racerPoints.pointsPopupManager.Draw(new Vector2(80f, BeatShift.graphics.GraphicsDevice.Viewport.Height - 140));
-                DrawMessageColour(BeatShift.newfont, racer.racerPoints.getTotalPoints().ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 195, 0.4f, Color.Goldenrod);
+                //DrawMessageColour(BeatShift.newfont, racer.racerPoints.getTotalPoints().ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 195, 0.3f, Color.Goldenrod);
 
                 //////////////////
                 //// Messages ////
                 //////////////////
-                racer.messagePopupManager.Draw(new Vector2(80f, BeatShift.graphics.GraphicsDevice.Viewport.Height - 140));
+                racer.messagePopupManager.Draw(new Vector2(180f, BeatShift.graphics.GraphicsDevice.Viewport.Height - 140));
                 //DrawMessageColour(BeatShift.newfont, racer.racerPoints.getTotalPoints().ToString(), BeatShift.graphics.GraphicsDevice.Viewport.Width - 125, 195, 0.4f, Color.Goldenrod);
 
                 /////////////////////
@@ -462,7 +462,7 @@ namespace BeatShift
                 Vector2 pos = Vector2.Lerp(position, position+motionVector, lerpval);
                 BeatShift.spriteBatch.Draw(instance.popup, pos, Color.White);// buttonScale);
                 if (instance.hasMessage)
-                    BeatShift.spriteBatch.DrawString(BeatShift.newfont, "+"+instance.message+" points", pos+new Vector2(4, 4), Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 1);
+                    BeatShift.spriteBatch.DrawString(BeatShift.newfont, instance.message+" pts", pos+new Vector2(16, 4), Color.Black, 0f, Vector2.Zero, 0.3f, SpriteEffects.None, 1);
             }
             BeatShift.graphics.GraphicsDevice.BlendState = b;
 

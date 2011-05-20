@@ -8,7 +8,11 @@ using Microsoft.Xna.Framework.Input;
 using BeatShift.Input;
 using Microsoft.Xna.Framework.GamerServices;
 using BeatShift.Utilities___Misc;
+using Microsoft.Xna.Framework.Audio;
 using ParallelTasks;
+using DPSF.ParticleSystems;
+using DPSF;
+
 namespace BeatShift
 {
     /// <summary>
@@ -25,7 +29,10 @@ namespace BeatShift
         /// </summary>
         static GameState currentState;
         public static GameState getCurrentState() { return currentState; }
-
+        public static SoundBank menuBank;
+        public static WaveBank wavBank;
+        //private static ParticleSystemManager particleManager;
+        static Cue titleMusic;
         private static bool paused = false;
         private static bool pausedForGuide = false;
 
@@ -35,6 +42,35 @@ namespace BeatShift
 
         private static IMenuPage pauseMenu = new PauseMenu();
         private static IMenuPage resultsMenu = new ResultsMenu();
+
+        public static void playTitle()
+        {
+            try
+            {
+                if (!titleMusic.IsPlaying)
+                {
+                    titleMusic.Play();
+                }
+            }
+            catch (Exception e)
+            {
+                titleMusic = menuBank.GetCue("Title");
+                while (titleMusic.IsPreparing)
+                {
+                }
+                titleMusic.Play();
+            }
+        }
+
+        public static void StopTitle()
+        {
+            if (titleMusic != null && !titleMusic.IsStopped && titleMusic.IsPlaying)
+            {
+                titleMusic.Stop(AudioStopOptions.AsAuthored);
+            }
+            titleMusic = menuBank.GetCue("Title");
+            GC.Collect();
+        }
 
         public static void setActiveControllers(bool set, int index)
         {
@@ -209,6 +245,7 @@ namespace BeatShift
                     MenuManager.Enabled = true;
                     MenuManager.Visible = true;
                     BeatShift.bgm.stop();
+                    playTitle();
                     break;
                 case GameState.NetworkedGame:
                     BeatShift.networkedGame.Enabled = true;
@@ -233,6 +270,7 @@ namespace BeatShift
                     BeatShift.shipSelect.Visible = true;
                     BeatShift.shipSelect.Enabled = true;
                     BeatShift.shipSelect.enteringState();
+                    playTitle();
                     break;
             }
         }
@@ -258,7 +296,6 @@ namespace BeatShift
             mainGameinput.Update(gameTime);
             if (!paused)
             {
-               // Task particles;
                 Boolean raceUpdated = false;
                 if (GameLoop.getCurrentState() == GameState.LocalGame)
                 {
@@ -323,7 +360,7 @@ namespace BeatShift
         {
             BeatShift.graphics.GraphicsDevice.Viewport = Viewports.fullViewport;
             Rectangle viewArea = new Rectangle(0, 0, BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height);
-
+            
             //Draw Scene background
             BeatShift.graphics.GraphicsDevice.Clear(Color.Black);
 
@@ -348,7 +385,6 @@ namespace BeatShift
             {
                 Race.Draw(gameTime);
             }
-
             if (paused && !pausedForGuide)
                 if (raceComplete)
                     resultsMenu.Draw();

@@ -109,6 +109,7 @@ namespace BeatShift.Menus
                     break;
                 case MenuPage.Loading:
                     setCurrentPage(Loading);
+                    GameLoop.StopTitle();
                     break;
                 case MenuPage.HighScore:
                     setCurrentPage(HighScore);

@@ -216,6 +216,7 @@ namespace BeatShift
 
         public void Update()
         {
+            
             if (visualisation != null)
             {
 

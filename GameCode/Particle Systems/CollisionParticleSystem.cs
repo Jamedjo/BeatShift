@@ -78,10 +78,10 @@ namespace DPSF.ParticleSystems
             // TODO: Change any Initialization parameters desired and the Name
             //-----------------------------------------------------------
             // Initialize the Particle System before doing anything else
-            InitializeSpriteParticleSystem(cGraphicsDevice, cContentManager, 1000, 50000, "Particles/Textures/FlowerBurst");
+            InitializeSpriteParticleSystem(cGraphicsDevice, cContentManager, 500, 20000, "Particles/Textures/FlowerBurst");
 
             // Set the Name of the Particle System
-            Name = "Collisiokn particle System";
+            Name = "Collision particle System";
 
             // Finish loading the Particle System in a separate function call, so if
             // we want to reset the Particle System later we don't need to completely 
