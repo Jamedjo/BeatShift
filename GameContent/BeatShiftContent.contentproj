@@ -589,6 +589,7 @@
       <Name>skylarTexture</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_TextureFormat>DxtCompressed</ProcessorParameters_TextureFormat>
     </Compile>
     <Compile Include="Images\tutorial_screen.png">
       <Name>tutorial_screen</Name>
@@ -909,6 +910,7 @@
       <Name>Track2_Normal</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_TextureFormat>DxtCompressed</ProcessorParameters_TextureFormat>
     </Compile>
     <Compile Include="XACT\BeatShift.xap">
       <Name>Sounds</Name>
@@ -948,6 +950,7 @@
       <Name>Track2_Alpha</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_TextureFormat>DxtCompressed</ProcessorParameters_TextureFormat>
     </Compile>
     <Compile Include="Textures\Track2_Diffuse.jpg">
       <Name>Track2_Diffuse</Name>
@@ -958,6 +961,7 @@
       <Name>Track2_Specular</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_TextureFormat>DxtCompressed</ProcessorParameters_TextureFormat>
     </Compile>
   </ItemGroup>
   <ItemGroup>
