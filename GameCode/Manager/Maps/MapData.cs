@@ -113,19 +113,34 @@ namespace BeatShift
             return mapPoints[previousIndex(previousIndex(previousIndex(previousIndex(nextIndex))))];
         }
 
+   
+        //Compares which map point is nearest out of the two given points
+        //returns true if second point is nearest
+        Boolean nearestMapPoint(Vector3 position, float firstMapPointDistance, MapPoint secondMapPoint, out float secondDistance)
+        {
+            secondDistance = distanceToMapPoint(position, secondMapPoint);
+            if (secondDistance < firstMapPointDistance) return true;
+            return false;
+        }
+        float distanceToMapPoint(Vector3 position, MapPoint point)
+        {
+            return (point.position-position).Length();
+        }
+
+
         MapPoint[] testPoint = new MapPoint[4];//, testPoint1, testPoint2, testPoint3;
         /// <summary>
         /// Algorithm to find the nearest map point to a position given knowledge about its previous position to limit the search.
+        /// Default searches 2 MapPoints back and 2 forward meaning that 5 MapPoints are checked for the nearest one.
+        /// TODO: If point within the threshold is not found the search is expanded to 12 either side, giving 25 places.
         /// </summary>
-        /// <param name="position"></param>
-        /// <param name="searchDepth">
-        /// Default searches 'searchDepth' MapPoints back and 'searchDepth' forward.
-        /// So search depth of 2 creates 5 distance comparisions including the lastNearetPoint.
-        /// TODO: If point within the threshold is not found the search is expanded to 12 either side, giving 25 places.</param>
-        /// <param name="threshold"></param>
+        /// <param name="position">The world space position to search for.</param>
+        /// <param name="lastNearestPoint">The MapPoint that it is expected that 'position' will be near</param>
         /// <returns></returns>
-        public MapPoint nearestMapPoint(Vector3 position, MapPoint lastNearestPoint, int searchDepth, float threshold)
+        public MapPoint nearestMapPoint(Vector3 position, MapPoint lastNearestPoint)
         {
+            int searchDepth=2;
+            float threshold=60f;
             MapPoint nearest = lastNearestPoint;
             float distance = distanceToMapPoint(position,lastNearestPoint);
             float tempDistance;
@@ -144,35 +159,9 @@ namespace BeatShift
             }
             return nearest;
         }
-
-        //Compares which map point is nearest out of the two given points
-        //returns true if second point is nearest
-        Boolean nearestMapPoint(Vector3 position, float firstMapPointDistance, MapPoint secondMapPoint, out float secondDistance)
-        {
-            secondDistance = distanceToMapPoint(position, secondMapPoint);
-            if (secondDistance < firstMapPointDistance) return true;
-            return false;
-        }
-        float distanceToMapPoint(Vector3 position, MapPoint point)
-        {
-            return (point.position-position).Length();
-        }
-
-        /// <summary>
-        /// Algorithm to find the nearest map point to a position given knowledge about its previous position to limit the search.
-        /// Default searches 2 MapPoints back and 2 forward meaning that 5 MapPoints are checked for the nearest one.
-        /// TODO: If point within the threshold is not found the search is expanded to 12 either side, giving 25 places.
-        /// </summary>
-        /// <param name="position">The world space position to search for.</param>
-        /// <param name="lastNearestPoint">The MapPoint that it is expected that 'position' will be near</param>
-        /// <returns></returns>
-        public MapPoint nearestMapPoint(Vector3 position, MapPoint lastNearestPoint)
-        {
-            return nearestMapPoint(position, lastNearestPoint, 2, 60f);
-        }
     }
 
-    public class MapPoint
+    public struct MapPoint
     {
         int index;
         Vector3 curveposition;
