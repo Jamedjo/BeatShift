@@ -781,13 +781,14 @@ namespace BeatShift
             float stabalizerStickLength = 40f;
 
             // Cast stabilisation sticks
-            bool stabilizersHit = castStabalizerRaysAndApplyImpulses(stabalizerStickLength, 0.77f);
+            bool stabilizersHit = castStabalizerRaysAndApplyImpulses(stabalizerStickLength, 0.77f,false);
+            castSingleRayAndApplyImpulse(Vector3.Zero, stabalizerStickLength, 0f, true);//Reduce down velocity if below float distance
 
             castSingleRayAndApplyImpulseCorrection(22, 160f * (ShipSpeed/80));
             // Ifne or all of the stabilizers missed the track, or were too short
             if (!stabilizersHit || overturned)
             {
-                bool centreRaycastHit = castSingleRayAndApplyImpulse(Vector3.Zero, 100, 4f);
+                bool centreRaycastHit = castSingleRayAndApplyImpulse(Vector3.Zero, 100, 4f,true);
 
                 
 
@@ -901,7 +902,7 @@ namespace BeatShift
         /// <param name="stickLength"></param>
         /// <param name="power"></param>
         /// <returns></returns>
-        public Boolean castStabalizerRaysAndApplyImpulses(float stickLength, float power)
+        public Boolean castStabalizerRaysAndApplyImpulses(float stickLength, float power, bool adjustVelocity)
         {
             //positionOffsetList = stabilizerRaycastList;
             float toi;
@@ -909,7 +910,7 @@ namespace BeatShift
 
             for (int i = 0; i < rayCount; i++)
             {
-                cSRAAI_results[i] = castSingleRay(stabilizerRaycastList[i], stickLength, power, out toi, out cSRAAI_rayTruePos[i], out cSRAAI_offsetRayPos[i], out cSRAAI_impulseVector[i]);
+                cSRAAI_results[i] = castSingleRay(stabilizerRaycastList[i], stickLength, power, out toi, out cSRAAI_rayTruePos[i], out cSRAAI_offsetRayPos[i], out cSRAAI_impulseVector[i], adjustVelocity);
                 shipRayToTrackTime += toi;
                 // Console.WriteLine(shipRayToTrackTime);
                 //if (i == 4) castSingleForwardRayAndApplyImpulse(positionOffsetList.ElementAt(i), stickLength);
@@ -940,13 +941,13 @@ namespace BeatShift
             return allRaysHit;
         }
 
-        public Boolean castSingleRayAndApplyImpulse(Vector3 positionOffset, float stickLength, float power)
+        public Boolean castSingleRayAndApplyImpulse(Vector3 positionOffset, float stickLength, float power, bool adjustVelocity)
         {
             Vector3 rayTruePos;
             Vector3 offsetRayPos;
             Vector3 impulseVector;
             float timeOfImpact;
-            Boolean result = castSingleRay(positionOffset, stickLength, power, out timeOfImpact, out rayTruePos, out offsetRayPos, out impulseVector);
+            Boolean result = castSingleRay(positionOffset, stickLength, power, out timeOfImpact, out rayTruePos, out offsetRayPos, out impulseVector, adjustVelocity);
 
             shipRayToTrackTime = timeOfImpact;
 
@@ -1029,7 +1030,7 @@ namespace BeatShift
 
         }
 
-        public Boolean castSingleRay(Vector3 positionOffset, float stickLength, float power, out float timeOfImpact, out Vector3 rayTruePos, out Vector3 offsetRayPos, out Vector3 impulseVector)
+        public Boolean castSingleRay(Vector3 positionOffset, float stickLength, float power, out float timeOfImpact, out Vector3 rayTruePos, out Vector3 offsetRayPos, out Vector3 impulseVector,bool adjustVelocity)
         {
             //Vector3 rayCastDirection = Matrix.Identity.Down;//Always raycast in gravity direction.
             //Vector3 rayCastDirection = ship.OrientationMatrix.Down;//Raycast down from ship
@@ -1061,7 +1062,7 @@ namespace BeatShift
 
             if (result)
             {
-                impulseVector = rayCastDirection * (float)calculateImpulseSizeFromRay(offsetTimeOfImpact, rayCastDirection) * power;
+                impulseVector = rayCastDirection * (float)calculateImpulseSizeFromRay(offsetTimeOfImpact, rayCastDirection,adjustVelocity) * power;
             }
             return result;
         }
@@ -1072,50 +1073,58 @@ namespace BeatShift
         /// <param name="offsetTimeOfImpact">Time of impact minus the verticle offset from which the rays were cast. Negative if ship below the track.</param>
         /// <param name="rayDirection">Direction the ray was cast in.</param>
         /// <returns></returns>
-        public float calculateImpulseSizeFromRay(float offsetTimeOfImpact, Vector3 rayDirection)
+        public float calculateImpulseSizeFromRay(float offsetTimeOfImpact, Vector3 rayDirection,bool adjustVelocity)
         {
             Vector3 impulseDirection = rayDirection;
             float floatDistance = 1f;
             offsetTimeOfImpact -= floatDistance;
 
             //If below float height above track
-            if (offsetTimeOfImpact < 0)
+            if (offsetTimeOfImpact < 0f)
             {
                 offsetTimeOfImpact = -offsetTimeOfImpact;
                 impulseDirection = -impulseDirection;
 
-
-                float velocityDownwards = Vector3.Dot(physicsBody.LinearVelocity, rayDirection) / rayDirection.Length();
-                if (velocityDownwards > 0)
+                if (adjustVelocity)
                 {
-                    //Set velocity in downwards direction to zero by redcuing overall velocity vector
-                    physicsBody.LinearVelocity -= ((velocityDownwards) * rayDirection) * 0.7f;
+                    float velocityDownwards = Vector3.Dot(physicsBody.LinearVelocity, rayDirection) / rayDirection.Length();
+                    if (velocityDownwards > 0f)
+                    {
+                        //Set velocity in downwards direction to zero by redcuing overall velocity vector
+                        physicsBody.LinearVelocity -= ((velocityDownwards) * rayDirection) * 0.7f;
 
-                    //set velocity up/down component to a new value
-                    float upMotionFloat = 0.2f;
-                    physicsBody.LinearVelocity += (-rayDirection * upMotionFloat);
+                        //set velocity up/down component to a new value
+                        float upMotionFloat = 0.2f;
+                        physicsBody.LinearVelocity += (-rayDirection * upMotionFloat);
+                    }
                 }
 
-                return -offsetTimeOfImpact * 1.6f;
+                if (offsetTimeOfImpact > 3f)
+                    offsetTimeOfImpact += 0.00001f;
+                return -1 * Math.Min(offsetTimeOfImpact * 9f, 0f);
+                //return -offsetTimeOfImpact * 1.6f;
             }
-            else if (offsetTimeOfImpact > 0)
+            else if (offsetTimeOfImpact > 0f)
             {
                 float downVelocityMagnitude = Vector3.Dot(physicsBody.LinearVelocity, rayDirection) / rayDirection.Length();
 
-                // Gentle bobbing
-                if (downVelocityMagnitude < -25f && offsetTimeOfImpact > 14)
-                    physicsBody.LinearVelocity -= (rayDirection) * 0.3f;
+                //if(adjustVelocity)
+                {
+                    // Gentle bobbing
+                    if (downVelocityMagnitude < -25f && offsetTimeOfImpact > 14f)
+                        physicsBody.LinearVelocity -= (rayDirection) * 0.3f;
 
-                // Stop this thing flying into space if we're far away from the track AND going up
-                if (downVelocityMagnitude < -25f && offsetTimeOfImpact > 16)
-                    physicsBody.LinearVelocity -= (downVelocityMagnitude * rayDirection * 0.39f);
+                    // Stop this thing flying into space if we're far away from the track AND going up
+                    if (downVelocityMagnitude < -25f && offsetTimeOfImpact > 16f)
+                        physicsBody.LinearVelocity -= (downVelocityMagnitude * rayDirection * 0.39f);
+                }
 
                 // Terminal velocity based on max speed in raycast direction, once going down past terminal velocity only apply small impulses
                 float terminalVelocitySpeed = 25f;
                 if (downVelocityMagnitude >= terminalVelocitySpeed)
                 {
                     // Setting it to zero would disable stabilizers after a fall.
-                    offsetTimeOfImpact /= 12;
+                    offsetTimeOfImpact /= 12f;
                 }
 
                 //// Stop it going thru the floor
@@ -1125,7 +1134,7 @@ namespace BeatShift
                 //}
 
                 // Calculate impulse
-                float impulse = (float)Math.Min(offsetTimeOfImpact * 9, 30);//Graph of y=x is used
+                float impulse = (float)Math.Min(offsetTimeOfImpact * 9f, 30f);//Graph of y=x is used
 
                 return impulse;
             }
