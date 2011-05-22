@@ -51,7 +51,7 @@ namespace BeatShift
                 //send message to animationHUD to display points gained (and multiplier)
 
                 
-                if(waypointsHitSinceLastCalculation> && calc>0)
+                //if(waypointsHitSinceLastCalculation> 1&& calc>0)
                 {
                     points += calc;
                     pointsToMessage += calc;
