@@ -207,6 +207,11 @@ namespace BeatShift.Input
 
             #region BOOST
 
+#if WINDOWS
+            //Debug boost to get super speed
+            if(Keyboard.GetState().IsKeyDown(Keys.X)) Boost(3f);
+#endif
+
             // vibrations from boost
             if (((chosenInput.actionPressed(InputAction.Boost)) || (racer.beatQueue.isLevellingUp)) 
                 && (racer.beatQueue.GetBoost() > 0) && (!racer.raceTiming.hasCompletedRace) && (racer.beatQueue.getLayer() > 0))
