@@ -75,6 +75,7 @@ namespace BeatShift.Cameras
         protected Quaternion camRotation = Quaternion.Identity;
         protected Vector3 camLastUp = Vector3.Up;
         protected float fieldOfView = baseFieldOfView;
+        protected const int farClipDistance = 3500;
 
         /// <summary>
         /// This must be shared between all camera instances for each player, or things will not
@@ -116,7 +117,7 @@ namespace BeatShift.Cameras
         public ICameraType(ref SharedCameraProperties properties, FGetPosition getPosition, FGetOrientation getOrientation)
         {
             View = Matrix.CreateLookAt(new Vector3(0, 6, 60), Vector3.Zero, camLastUp);
-            Projection = Matrix.CreatePerspectiveFieldOfView(fieldOfView, properties.Viewport.AspectRatio, 1, 2500);
+            Projection = Matrix.CreatePerspectiveFieldOfView(fieldOfView, properties.Viewport.AspectRatio, 1, farClipDistance);
             this.properties = properties;
             this.getPosition = getPosition;
             this.getOrientation = getOrientation;
@@ -128,7 +129,7 @@ namespace BeatShift.Cameras
         /// </summary>
         public void updateProjection()
         {
-            Projection = Matrix.CreatePerspectiveFieldOfView(fieldOfView, properties.Viewport.AspectRatio, 1, 2000);
+            Projection = Matrix.CreatePerspectiveFieldOfView(fieldOfView, properties.Viewport.AspectRatio, 1, farClipDistance);
         }
 
         public abstract void Update(GameTime gameTime);

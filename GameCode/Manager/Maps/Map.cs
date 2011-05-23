@@ -291,12 +291,12 @@ namespace BeatShift
         //todo call method
         public void DrawSkybox(CameraWrapper camera)
         {
-            // set scale
+            Matrix scale = Matrix.CreateScale(7f);
             Matrix[] skyboxTransforms = new Matrix[skyboxModel.Bones.Count];
             skyboxModel.CopyAbsoluteBoneTransformsTo(skyboxTransforms);
             Matrix viewMatrix = camera.View;
             Matrix projectionMatrix = camera.Projection;
-
+            Vector3 upMovement = new Vector3(0f, 50f, 0f);
 
             foreach (ModelMesh mesh in skyboxModel.Meshes)
             {
@@ -304,11 +304,11 @@ namespace BeatShift
 
                 foreach (BasicEffect currentEffect in mesh.Effects)
                 {
-                    Matrix translation = Matrix.CreateTranslation(camera.racer.shipPhysics.physicsBody.Position);
+                    Matrix translation = Matrix.CreateTranslation(camera.racer.shipPhysics.physicsBody.Position+upMovement);
                     currentEffect.View = viewMatrix;
                     currentEffect.Projection = projectionMatrix;
 
-                    currentEffect.World = skyboxTransforms[mesh.ParentBone.Index] * translation;//transforms;
+                    currentEffect.World = scale * skyboxTransforms[mesh.ParentBone.Index] * translation;//transforms;
                 }
 
                 mesh.Draw();
