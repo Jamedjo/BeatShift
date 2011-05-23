@@ -120,10 +120,11 @@ namespace BeatShift
 
             SimpleRNG.SetSeedFromSystemTime();
 
-#if WINDOWS
+#if DEBUG
             DebugSystem.Initialize(this, "FontA");
             DebugSystem.Instance.FpsCounter.Visible = true;
             DebugSystem.Instance.TimeRuler.Visible = true;
+            DebugSystem.Instance.TimeRuler.ShowLog = true;
 #endif
 
             MenuManager.Initialize();
@@ -161,6 +162,8 @@ namespace BeatShift
 
             GC.Collect();
             //gamerServices.Initialize();
+
+            //base.Initialize();
         }
 
         /// <summary>
@@ -233,17 +236,10 @@ namespace BeatShift
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-#if WINDOWS
-            DebugSystem.Instance.TimeRuler.StartFrame();
-            DebugSystem.Instance.TimeRuler.BeginMark("SomeCode", Color.Blue);
-#endif
+            //DO NOT ADD CODE HERE
             currentTime = gameTime;
             GameLoop.Update(gameTime);
-            engine.Update();
             base.Update(gameTime);
-#if WINDOWS
-            DebugSystem.Instance.TimeRuler.EndMark("SomeCode");
-#endif
         }
 
         #endregion
@@ -256,6 +252,7 @@ namespace BeatShift
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            //DO NOT ADD CODE HERE
             GameLoop.Draw(gameTime);
             base.Draw(gameTime);
         }

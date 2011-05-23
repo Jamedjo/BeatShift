@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Audio;
 using ParallelTasks;
 using DPSF.ParticleSystems;
 using DPSF;
+using BeatShift.GameDebugTools;
 
 namespace BeatShift
 {
@@ -277,6 +278,10 @@ namespace BeatShift
 
         public static void Update(GameTime gameTime)
         {
+#if DEBUG
+            DebugSystem.Instance.TimeRuler.StartFrame();
+            DebugSystem.Instance.TimeRuler.BeginMark("Background", Color.Blue);
+#endif
             // Check to see if the user has paused or unpaused
             BeatShift.bgm.Update();
            // Task music = Parallel.Start();
@@ -293,7 +298,12 @@ namespace BeatShift
 
             BeatShift.gamerServices.Update(gameTime);
 
+            //Update mainGameInput
             mainGameinput.Update(gameTime);
+
+#if DEBUG
+            DebugSystem.Instance.TimeRuler.EndMark("Background");
+#endif
             if (!paused)
             {
                 Boolean raceUpdated = false;
@@ -309,21 +319,40 @@ namespace BeatShift
 
                 if (MenuManager.Enabled)
                     MenuManager.Update(gameTime);
-                //if (MapManager.Enabled)
-                //    MapManager.tempMap.Update(gameTime);
                 if (BeatShift.shipSelect.Enabled)
                     BeatShift.shipSelect.Update(gameTime);
+
                 //if (networkedGame.Enabled) networkedGame.Update(gameTime);
+
+#if DEBUG
+                DebugSystem.Instance.TimeRuler.BeginMark("Physics", Color.Red);
+#endif
                 if (Physics.Enabled)
                     Physics.Update(gameTime);
+#if DEBUG
+                DebugSystem.Instance.TimeRuler.EndMark("Physics");
+#endif
+
+
+#if DEBUG
+                DebugSystem.Instance.TimeRuler.BeginMark("Race", Color.Yellow);
+#endif
                 if (Race.Enabled)
                 {
                     Race.Update(gameTime);
                     raceUpdated = true;
                     HeadsUpDisplay.Update(gameTime);
                 }
+#if DEBUG
+                DebugSystem.Instance.TimeRuler.EndMark("Race");
+#endif
+
+
+                //What??
                 if (MapManager.Enabled&&!raceUpdated)
                     Race.Update(gameTime);
+
+
                 // Game should be exited through the menu systems.
                 // Allows the game to return to main menu
                 //if (mainGameinput.actionTapped(InputAction.BackButton))
@@ -354,6 +383,9 @@ namespace BeatShift
             //    }
 #endif
             //music.Wait();
+
+
+            BeatShift.engine.Update();
         }
 
         public static void Draw(GameTime gameTime)
@@ -391,6 +423,7 @@ namespace BeatShift
                 else
                     pauseMenu.Draw();
             //if (networkedGame.Visible) networkedGame.Draw(gameTime);
+
         }
 
     }
