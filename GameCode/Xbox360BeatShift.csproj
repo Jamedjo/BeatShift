@@ -90,6 +90,7 @@
     <Compile Include="Manager\Maps\CityMap.cs" />
     <Compile Include="Manager\Maps\DesertMap.cs" />
     <Compile Include="Manager\Maps\FbxModel.cs" />
+    <Compile Include="Manager\Maps\KdTree3.cs" />
     <Compile Include="Manager\Maps\Map.cs" />
     <Compile Include="Manager\Maps\MapData.cs" />
     <Compile Include="Manager\Maps\MapManager.cs" />

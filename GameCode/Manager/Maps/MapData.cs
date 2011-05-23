@@ -12,6 +12,7 @@ using System.Collections;
 using Microsoft.Xna.Framework.Storage;
 using System.IO;
 using System.Diagnostics;
+using BeatShift.Manager.Maps;
 
 
 namespace BeatShift
@@ -25,6 +26,7 @@ namespace BeatShift
         float verticalOffset = 4f;
 
         public List<MapPoint> mapPoints = new List<MapPoint>();
+        public KdTree3 mapPointTree;
 
 
         public MapData(String mapName,float waypoint_Width, float vertical_Offset)
@@ -86,6 +88,9 @@ namespace BeatShift
                 // doesn't exist in the title storage location
                 // System.Diagnostic.Debug.WriteLine("Problem with loading map points: " + fnfe.ToString());
             }
+
+            mapPointTree = new KdTree3(mapPoints);
+
         }
 
         public MapPoint getStartPoint(){
@@ -122,46 +127,19 @@ namespace BeatShift
             if (secondDistance < firstMapPointDistance) return true;
             return false;
         }
+
         float distanceToMapPoint(Vector3 position, MapPoint point)
         {
             return (point.position-position).Length();
         }
 
-
-        MapPoint[] testPoint = new MapPoint[4];//, testPoint1, testPoint2, testPoint3;
-        /// <summary>
-        /// Algorithm to find the nearest map point to a position given knowledge about its previous position to limit the search.
-        /// Default searches 2 MapPoints back and 2 forward meaning that 5 MapPoints are checked for the nearest one.
-        /// TODO: If point within the threshold is not found the search is expanded to 12 either side, giving 25 places.
-        /// </summary>
-        /// <param name="position">The world space position to search for.</param>
-        /// <param name="lastNearestPoint">The MapPoint that it is expected that 'position' will be near</param>
-        /// <returns></returns>
-        public MapPoint nearestMapPoint(Vector3 position, MapPoint lastNearestPoint)
+        public MapPoint nearestMapPoint(Vector3 position)
         {
-            int searchDepth=2;
-            float threshold=60f;
-            MapPoint nearest = lastNearestPoint;
-            float distance = distanceToMapPoint(position,lastNearestPoint);
-            float tempDistance;
-            testPoint[0] = nextPoint(lastNearestPoint);
-            testPoint[1] = nextPoint(testPoint[0]);
-            testPoint[2] = previousPoint(lastNearestPoint);
-            testPoint[3] = previousPoint(testPoint[2]);
-
-            for (int i = 0; i < testPoint.Length; i++)
-            {
-                if (nearestMapPoint(position, distance, testPoint[i], out tempDistance))
-                {
-                    distance = tempDistance;
-                    nearest = testPoint[i];
-                }
-            }
-            return nearest;
+            return mapPointTree.getNearestNeighbour(position);
         }
     }
 
-    public struct MapPoint
+    public class MapPoint
     {
         int index;
         Vector3 curveposition;

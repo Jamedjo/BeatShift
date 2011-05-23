@@ -290,9 +290,10 @@ namespace BeatShift
 
         }
 
-        public void UpdateWaypoints()
+        public void UpdateWaypoints(GameTime gameTime)
         {
-            nearestMapPoint = mapData.nearestMapPoint(ShipPosition, nearestMapPoint);
+            nearestMapPoint = mapData.nearestMapPoint(ShipPosition);
+            if(gameTime.TotalGameTime.Milliseconds%500 ==0) nearestMapPoint.pointHit();//togle colour of nearest mapPoint every 500ms
 
             //Check for collision with next waypoint
             ////If distance between ship and waypoint is less than waypoint radius they have collided. (Was using the sphere around the waypoint)
@@ -303,7 +304,7 @@ namespace BeatShift
             //If the Vector from the waypoint to the ship is within 90 degrees of tangent it is on the positive side of the waypoint plane
             if (Vector3.Dot(nextWaypoint.tangent, (ShipPosition - nextWaypoint.position)) >= 0)
             {
-                nextWaypoint.pointHit();
+                //nextWaypoint.pointHit();
                 currentProgressWaypoint = nextWaypoint;
                 if (currentProgressWaypoint.getIndex() == 0)
                 {
@@ -326,14 +327,14 @@ namespace BeatShift
             //So use direction of change of nearest waypoint in the array of waypoints: get the index of the nearest waypoint and track its changes.
 
             //If distance between ship and waypoint is less than waypoint radius they have collided.
-            MapPoint wrongwayPoint = mapData.wrongwayPoint(mapData.wrongwayPoint(currentProgressWaypoint));
+            MapPoint wrongwayPoint = mapData.wrongwayPoint(currentProgressWaypoint);
             //distance = (ShipPosition - wrongwayPoint.position).Length();
             Boolean behindWrongwaypoint = (Vector3.Dot(wrongwayPoint.tangent, (ShipPosition - wrongwayPoint.position)) < 0);
             
             if (Vector3.Dot(physicsBody.OrientationMatrix.Forward, nearestMapPoint.tangent)< -0.2 && parentRacer.raceTiming.isRacing)
             {
                 //System.Diagnostics.Debug.WriteLine("Wrong Way!!! Point:" + wrongwayPoint.getIndex() + "\n");
-                currentProgressWaypoint = wrongwayPoint;
+                currentProgressWaypoint = wrongwayPoint;//TODO: remove this line?
                 wrongWay = true;
             }
             else { wrongWay = false; }
@@ -1099,8 +1100,6 @@ namespace BeatShift
                     }
                 }
 
-                if (offsetTimeOfImpact > 3f)
-                    offsetTimeOfImpact += 0.00001f;
                 return -1 * Math.Min(offsetTimeOfImpact * 9f, 0f);
                 //return -offsetTimeOfImpact * 1.6f;
             }

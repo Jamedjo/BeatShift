@@ -214,7 +214,7 @@ namespace BeatShift
             shipPhysics.counteractPitching();
 
             // Update the way points and therefore the current lap
-            shipPhysics.UpdateWaypoints(); //if (shipPhysics != null) shipPhysics.UpdateWaypoints();
+            shipPhysics.UpdateWaypoints(gameTime); //if (shipPhysics != null) shipPhysics.UpdateWaypoints();
 
             // Finishes the racer if required
             if (raceTiming.isRacing) raceTiming.Update();
