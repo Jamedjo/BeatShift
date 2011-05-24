@@ -270,6 +270,14 @@ namespace BeatShift.GameDebugTools
                     Echo("   particles disabled");
             });
 
+            // Command to toggle between test states to create live code changes.
+            RegisterCommand("teststate", "Toggle between custom test states",
+            delegate(IDebugCommandHost host, string command, IList<string> args)
+            {
+                Globals.nextState();
+                Echo("Globals.TestState set to state "+Globals.TestState);
+            });
+
             //'pos' command
 
             //Command to reset all debug settings and high-scores for release?

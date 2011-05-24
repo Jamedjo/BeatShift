@@ -25,5 +25,16 @@ namespace BeatShift
         //public static Vector2 testVector3 = new Vector2();
         //public static Vector2 testVector4 = new Vector2();
         //public static Vector2 testVector5 = new Vector2();
+
+        //TestStates are to be used to try different bits of code, switching between them in real-time wihtout having to recompile
+        //Before a comit is made, all code using these should be finalized so they are no longer used
+        public static int TestState = 0;
+        private const int numberOfStates = 6;
+        public static void nextState()
+        {
+            if(TestState>=numberOfStates-1) TestState = 0;
+            else TestState++;
+        }
     }
+
 }
