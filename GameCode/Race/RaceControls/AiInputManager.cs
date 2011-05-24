@@ -38,9 +38,10 @@ namespace BeatShift.Input
 
         //values used to determine turn
         private float turnVal = 0;
-        private float fTrack = 0;
-        private float nWalls = 0;
-        private float aWalls = 0;
+        private float fTrack3 = 0;
+        private float fTrack5 = 0;
+        private float sideWalls = 0;
+        private float frontWalls = 0;
 
         //values used to determine acceleration
         private float accelVal = 0;
@@ -196,9 +197,6 @@ namespace BeatShift.Input
             return b;
         }
 
-        const float futureWeight = 0.7f;
-        const float wallsWeight = 0.3f;
-
         /// <summary>
         /// Calculate how much the AI should be turning. This is likely to fail if the AI is not
         /// going the correct direction for whatever reason.
@@ -211,14 +209,45 @@ namespace BeatShift.Input
         {
             float randInaccuracy = randTurn();
 
-            fTrack = futureTrack();
-            nWalls = newWalls();
-            aWalls = avoidWalls();
+            fTrack3 = futureTrack(3);
+            fTrack5 = futureTrack(5); 
+            sideWalls = avoidSideWalls();
+            frontWalls = avoidWallsInFront();
 
 
             //System.Diagnostics.Debug.WriteLine("{0:0.000} {1:0.000} {2:0.000} {3:0.000}", randInaccuracy, fTrack, nWalls, aWalls);
             
-            float retVal = futureWeight * fTrack + wallsWeight * nWalls + aWalls + randInaccuracy;
+            //                         0.7*fTrack    +0.3*nWalls  + aWalls  + randInaccuracy
+            //float retVal = futureWeight * fTrack + wallsWeight * nWalls + aWalls + randInaccuracy;
+
+
+            //Steer towards the centre of the track (3 waypoints ahead), adjusting for long term centre (5 ahead)
+            float steerCentre = 0.7f * fTrack3 + 0.3f * fTrack5;
+
+            float balancedDescision = sideWalls * 0.5f + steerCentre * 0.5f;
+
+            //If previous calculations continue ship in the same direction.
+            if (Math.Abs(balancedDescision) < 0.2f)
+            {
+                //Ensure that steering is adjusted to avoid walls in front of ship.
+                balancedDescision += frontWalls;
+            }
+
+            float retVal=0;
+            if (Globals.TestState == 0)
+                retVal = balancedDescision;
+            if (Globals.TestState == 1)
+                retVal = sideWalls;
+            if (Globals.TestState == 2)
+                retVal = frontWalls;
+            if (Globals.TestState == 3)
+                retVal = steerCentre;
+            if (Globals.TestState == 4)
+                retVal = fTrack3;
+            if (Globals.TestState == 5)
+                retVal = fTrack5;
+            
+
             return Math.Max(-1, Math.Min(1, retVal));
         }
 
@@ -244,7 +273,11 @@ namespace BeatShift.Input
 
         public Vector3 wallTest { get; private set; }
 
-        private float newWalls()
+        /// <summary>
+        /// Casts a ray sideways from the ship to determine how near the wall is and how to respond.
+        /// </summary>
+        /// <returns>Returns a value to represent how urgently the ship must turn to avoid a wall</returns>
+        private float avoidSideWalls()
         {
             float t = 0;
 
@@ -312,15 +345,14 @@ namespace BeatShift.Input
 
         /// <summary>
         /// A very simplistic turning system. Has no notion of avoiding crashes.
+        /// Returns an amount to turn to get the ship to aim 'offset' waypoints ahead
         /// </summary>
         /// <returns>
         /// A turning value.
         /// </returns>
-        private float futureTrack()
+        private float futureTrack(int offset)
         {
             float t;
-
-            int offset = 5;
 
             Matrix shipOrientation = parent.shipPhysics.ShipOrientationMatrix;
             MapPoint lastPoint = parent.shipPhysics.nearestMapPoint;
@@ -342,7 +374,11 @@ namespace BeatShift.Input
         }
 
         private float avoidWallsRayLength = 100f;
-        private float avoidWalls()
+        /// <summary>
+        /// Avoid walls in front of the ship by turning away from them.
+        /// </summary>
+        /// <returns></returns>
+        private float avoidWallsInFront()
         {
             AiRay.Direction = parent.shipPhysics.ShipOrientationMatrix.Forward;
             AiRay.Position = parent.shipPhysics.ShipPosition;
@@ -441,7 +477,7 @@ namespace BeatShift.Input
         private static Vector2 hudPosition2 = new Vector2(52f, 52f);
         public void DrawAiHUD(CameraWrapper camera, GameTime gameTime)
         {
-            String message = "AI-HUD:\nAcceleration: "+accelVal+"\n  -closerBy: "+closerBy+"\n  -cB_Fraction: "+closerByFraction+"\n\nTurn: "+turnVal+"\n  -fTrack: "+fTrack+"\n  -nWalls: "+nWalls+"\n  -aWalls: "+aWalls;
+            String message = "AI-HUD:\nAcceleration: " + accelVal + "\n  -closerBy: " + closerBy + "\n  -cB_Fraction: " + closerByFraction + "\n\nTurn: " + turnVal + "\n  -fTrack3: " + fTrack3 + "\n  -fTrack5: " + fTrack5 + "\n  -sideWalls: " + sideWalls + "\n  -frontWalls: " + frontWalls;
             BeatShift.spriteBatch.DrawString(BeatShift.newfont, message, hudPosition, Color.White, 0f, Vector2.Zero, 0.65f, SpriteEffects.None, 1);
             BeatShift.spriteBatch.DrawString(BeatShift.newfont, message, hudPosition2, Color.Black, 0f, Vector2.Zero, 0.65f, SpriteEffects.None, 1);
         }
