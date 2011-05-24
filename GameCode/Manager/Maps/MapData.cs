@@ -144,11 +144,23 @@ namespace BeatShift
         int index;
         Vector3 curveposition;
         public Vector3 position;
-        //public Vector3 normal;//not sure what this is as the normal&binormal could be any vectors in the plane defined by the tangent
-        public Vector3 tangent;//the direction forwards/backwards direction if the racetrack
+        
+        /// <summary>
+        /// the direction forwards/backwards direction if the racetrack
+        /// </summary>
+        public Vector3 tangent;
+        
         //Vector3 roll;
-        public Vector3 roadSurface;//the left/right direction of the racetrack
-        public Vector3 trackUp;//the up direction of the racetrack
+
+        /// <summary>
+        /// the left/right direction of the racetrack
+        /// </summary>
+        public Vector3 roadSurface;
+
+        /// <summary>
+        /// //the up direction of the racetrack
+        /// </summary>
+        public Vector3 trackUp;
         
         //float width;
         //Vector3 colour;

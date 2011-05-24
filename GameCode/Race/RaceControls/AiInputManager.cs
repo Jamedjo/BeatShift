@@ -26,7 +26,7 @@ namespace BeatShift.Input
         /// <summary>
         ///  Set to false and the player retakes control
         /// </summary>
-        public const Boolean testAI = false;
+        public static bool testAI = false;//DO NOT CHANGE THIS TO TRUE, USE THE CONSOLE BEFORE A RACE
         public int numberOfAI = Options.NumberAI;
 
         private GamePadState currentState;
@@ -246,18 +246,25 @@ namespace BeatShift.Input
             if (float.IsNaN(shipOrientation.Forward.X))
                 return 0;
 
-            MapPoint lastPoint = parent.shipPhysics.nearestMapPoint;
-            MapPoint nextPoint = parent.shipPhysics.mapData.mapPoints[(lastPoint.getIndex() + 1) % parent.shipPhysics.mapData.mapPoints.Count];
+            //MapPoint lastPoint = parent.shipPhysics.nearestMapPoint;
+            //MapPoint nextPoint = parent.shipPhysics.mapData.nextPoint(lastPoint);
+            MapPoint nearPoint = parent.shipPhysics.nearestMapPoint;
 
             // partially take current orientation into account, but not too much
-            Vector3 guessUp = (shipOrientation.Up + nextPoint.trackUp * 9) / 10;
+            //Vector3 guessUp = (shipOrientation.Up + nextPoint.trackUp * 9) / 10;
 
-            Vector3 relativeTrackHeading = Vector3.Normalize(Vector3.Cross(nextPoint.tangent, guessUp));
-            Vector3 relativeShipRight = Vector3.Normalize(Vector3.Cross(lastPoint.roadSurface, guessUp));
+            //Vector3 relativeTrackHeading = Vector3.Normalize(Vector3.Cross(nextPoint.roadSurface, guessUp));
+            //Vector3 relativeShipRight = Vector3.Normalize(Vector3.Cross(lastPoint.tangent, guessUp));
 
-            float direction = Vector3.Dot(relativeTrackHeading, relativeShipRight);
+            //float direction = Vector3.Dot(relativeTrackHeading, relativeShipRight);
+            
+            // Find if left/right of centre of track by determining which side of
+            // the plane defined by the roadSurface vector the ship is on
+                //If the Vector from the waypoint to the ship is within 90 degrees of roadSurface
+                //it is on the side the track the roadSurface arrow faces
+            float direction = Vector3.Dot(nearPoint.roadSurface, (parent.shipPhysics.ShipPosition - nearPoint.position));
 
-            Vector3 testVector = parent.shipPhysics.nearestMapPoint.roadSurface * -1 * Math.Sign(direction);
+            Vector3 testVector = parent.shipPhysics.nearestMapPoint.roadSurface * Math.Sign(direction);
 
             Vector3 rayOrigin = parent.shipPhysics.ShipPosition;
 
@@ -272,7 +279,8 @@ namespace BeatShift.Input
 
             float distance = result.T < shipWidth ? rayLength - shipWidth : rayLength - result.T;
 
-            //parent.shipDrawing.testWalls = testVector * rayLength;
+            //Setup arrows for drawing
+            parent.shipDrawing.testWalls = testVector * rayLength;
             if (result.T == 0)
             {
                 distance = 0;
@@ -285,7 +293,7 @@ namespace BeatShift.Input
 
             t = distance / (rayLength - shipWidth);
 
-            float retVal = t * Math.Sign(direction);
+            float retVal = t * -1 * Math.Sign(direction);
 
             return float.IsNaN(retVal) ? 0f : retVal;
         }

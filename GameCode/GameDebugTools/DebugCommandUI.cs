@@ -15,6 +15,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using BeatShift.Util;
+using BeatShift.Input;
 
 #endregion
 
@@ -245,6 +246,17 @@ namespace BeatShift.GameDebugTools
             delegate(IDebugCommandHost host, string command, IList<string> args)
             {
                 Globals.DisplayHUD = !Globals.DisplayHUD;
+            });
+
+            // Command to toggle forcing AI as the input controller.
+            RegisterCommand("testai", "Toggle forcing AI as the input controller",
+            delegate(IDebugCommandHost host, string command, IList<string> args)
+            {
+                AiInputManager.testAI = !AiInputManager.testAI;
+                if (AiInputManager.testAI)
+                    Echo("   input forced to AI");
+                else
+                    Echo("   input setup uses controllers");
             });
 
             //Command to reset all debug settings and high-scores for release?
