@@ -30,7 +30,7 @@ namespace BeatShift.Menus
             for (int i = 0; i < highScores.Count; i++)
             {
                 long timeLong = highScores[i].value * 10;
-                DateTime time = new DateTime(Math.Min(timeLong,DateTime.MaxValue.Ticks));
+                DateTime time = new DateTime(Math.Max(DateTime.MinValue.Ticks,Math.Min(timeLong,DateTime.MaxValue.Ticks)));
                 DrawMessageColour(BeatShift.newfont, i + ". " + highScores[i].name + " : " + time.Minute + ":"+time.Second+":"+time.Millisecond, 360, 230 + offset, 0.7f, Color.PapayaWhip);
                 offset = offset + 40;
             }

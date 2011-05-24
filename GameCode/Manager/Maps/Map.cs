@@ -162,6 +162,8 @@ namespace BeatShift
         void drawModel(FbxModel modelObject, GameTime gameTime, CameraWrapper camera)
         {
             if (modelObject.category == ModelCategory.InvisibleWall) return;
+            if ((!Globals.DisplayScenery) && modelObject.category.Equals(ModelCategory.Scenery)) return;//If scenery should not be displayed, don't draw scenry
+
             RasterizerState cull = BeatShift.graphics.GraphicsDevice.RasterizerState;
             //if (modelObject.category == ModelCategory.Track && currentMapName == MapName.SpaceMap)
             //{
@@ -296,7 +298,7 @@ namespace BeatShift
             skyboxModel.CopyAbsoluteBoneTransformsTo(skyboxTransforms);
             Matrix viewMatrix = camera.View;
             Matrix projectionMatrix = camera.Projection;
-            Vector3 upMovement = new Vector3(0f, 50f, 0f);
+            //Vector3 upMovement = new Vector3(0f, 50f, 0f);
 
             foreach (ModelMesh mesh in skyboxModel.Meshes)
             {
@@ -304,7 +306,7 @@ namespace BeatShift
 
                 foreach (BasicEffect currentEffect in mesh.Effects)
                 {
-                    Matrix translation = Matrix.CreateTranslation(camera.racer.shipPhysics.physicsBody.Position+upMovement);
+                    Matrix translation = Matrix.CreateTranslation(camera.racer.shipPhysics.physicsBody.Position);//+upMovement);
                     currentEffect.View = viewMatrix;
                     currentEffect.Projection = projectionMatrix;
 
