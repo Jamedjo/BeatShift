@@ -41,8 +41,8 @@ namespace BeatShift.DebugGraphics
             GraphicsDevice gDevice = BeatShift.graphics.GraphicsDevice;
             arrowVertices[0] = new VertexPositionColor(Vector3.Forward * D.Length(), Color.White);
             arrowVertexBuffer.SetData(arrowVertices);
-            arrowEffect.Alpha = 0.5f;
-            gDevice.BlendState = BlendState.AlphaBlend;
+            //arrowEffect.Alpha = 0.5f;
+            //gDevice.BlendState = BlendState.AlphaBlend;
             gDevice.SetVertexBuffer(arrowVertexBuffer);
             arrowEffect.World = Matrix.CreateWorld(position, D, Vector3.Up);
             arrowEffect.View = camera.View;

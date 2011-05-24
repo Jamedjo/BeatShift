@@ -260,6 +260,9 @@ namespace BeatShift
             }
         }
 
+        Vector3 red = Color.Red.ToVector3();
+        Vector3 yellow = Color.Yellow.ToVector3();
+        Vector3 blue = Color.Blue.ToVector3();
         void drawTrackNormals(GameTime gameTime, CameraWrapper camera)
         {
             MapPoint point;
@@ -268,9 +271,9 @@ namespace BeatShift
                 point = CurrentMapData.mapPoints[i];
 
                 Vector3 drawPosition = point.position;
-                DrawVector.drawArrow(camera, drawPosition, point.roadSurface * 9f, Color.Yellow.ToVector3());
-                DrawVector.drawArrow(camera, drawPosition, point.tangent * 12f, Color.Blue.ToVector3());
-                DrawVector.drawArrow(camera, drawPosition, point.trackUp * 12f, Color.Red.ToVector3());
+                DrawVector.drawArrow(camera, drawPosition, point.roadSurface * 9f, yellow);
+                DrawVector.drawArrow(camera, drawPosition, point.tangent * 12f, blue);
+                DrawVector.drawArrow(camera, drawPosition, point.trackUp * 12f, red);
             }
         }
 

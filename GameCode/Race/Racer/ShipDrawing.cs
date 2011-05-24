@@ -34,6 +34,7 @@ namespace BeatShift
         public CollisionParticleSystem collision;
         public RespawnParticleSystem spawn;
 
+        //Ai test arrows
         public Vector3 testWalls = Vector3.Zero;
         public Boolean wallHit = false;
 
@@ -166,7 +167,7 @@ namespace BeatShift
                     DrawVector.drawArrow(camera, arrow.pos, arrow.dir, arrow.col);
                 }
             }
-            if (isThisTheCamerasShip)
+            if (isThisTheCamerasShip&&AiInputManager.testAI)
             {
                 DrawVector.drawArrow(camera, getShipPosition(), testWalls, wallHit ? new Vector3(255, 0, 0) : new Vector3(0, 0, 255));
             }
