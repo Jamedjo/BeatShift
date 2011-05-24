@@ -150,19 +150,22 @@ namespace BeatShift
                 drawArrowListRays.Clear();
             }
 
-            if (engineGlow != null)
+            if (Globals.EnableParticles)
             {
-                parentRacer.globalSystems.SetWorldViewProjectionMatricesForAllParticleSystems(Matrix.Identity, viewMatrix, projectionMatrix);
-                parentRacer.globalSystems.SetCameraPositionForAllParticleSystems(camera.cameraPosition());
-                parentRacer.globalSystems.DrawAllParticleSystems();
-                if (isThisTheCamerasShip && !parentRacer.raceTiming.hasCompletedRace)
+                if (engineGlow != null)
                 {
-                    parentRacer.privateSystems.SetWorldViewProjectionMatricesForAllParticleSystems(Matrix.Identity, viewMatrix, projectionMatrix);
-                    parentRacer.privateSystems.SetCameraPositionForAllParticleSystems(camera.cameraPosition());
-                    parentRacer.privateSystems.DrawAllParticleSystems();
+                    parentRacer.globalSystems.SetWorldViewProjectionMatricesForAllParticleSystems(Matrix.Identity, viewMatrix, projectionMatrix);
+                    parentRacer.globalSystems.SetCameraPositionForAllParticleSystems(camera.cameraPosition());
+                    parentRacer.globalSystems.DrawAllParticleSystems();
+                    if (isThisTheCamerasShip && !parentRacer.raceTiming.hasCompletedRace)
+                    {
+                        parentRacer.privateSystems.SetWorldViewProjectionMatricesForAllParticleSystems(Matrix.Identity, viewMatrix, projectionMatrix);
+                        parentRacer.privateSystems.SetCameraPositionForAllParticleSystems(camera.cameraPosition());
+                        parentRacer.privateSystems.DrawAllParticleSystems();
+                    }
                 }
             }
-            //if (Options.DrawCollisionPoints)
+            //if (Options.DrawCollisionPoints)  
             {
                 foreach (D_Arrow arrow in drawArrowListPermanent)
                 {

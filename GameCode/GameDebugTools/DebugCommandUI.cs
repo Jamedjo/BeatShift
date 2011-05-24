@@ -259,6 +259,19 @@ namespace BeatShift.GameDebugTools
                     Echo("   input setup uses controllers");
             });
 
+            // Command to toggle drawing and updating of particles.
+            RegisterCommand("particles", "Toggle drawing and updating of particles",
+            delegate(IDebugCommandHost host, string command, IList<string> args)
+            {
+                Globals.EnableParticles = !Globals.EnableParticles;
+                if (Globals.EnableParticles)
+                    Echo("   particles enabled");
+                else
+                    Echo("   particles disabled");
+            });
+
+            //'pos' command
+
             //Command to reset all debug settings and high-scores for release?
 
 

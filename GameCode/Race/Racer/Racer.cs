@@ -218,14 +218,19 @@ namespace BeatShift
 
             // Finishes the racer if required
             if (raceTiming.isRacing) raceTiming.Update();
-            if (shipDrawing.engineGlow != null)
+
+
+            if (Globals.EnableParticles)
             {
-                shipDrawing.engineGlow.setVelocity(shipPhysics.physicsBody.LinearVelocity);
-                shipDrawing.engineGlow.SetPosition(shipPhysics.ShipPosition, shipPhysics.DrawOrientation);
-                shipDrawing.spawn.setPosition(shipPhysics.ShipPosition, shipPhysics.DrawOrientation);
+                if (shipDrawing.engineGlow != null)
+                {
+                    shipDrawing.engineGlow.setVelocity(shipPhysics.physicsBody.LinearVelocity);
+                    shipDrawing.engineGlow.SetPosition(shipPhysics.ShipPosition, shipPhysics.DrawOrientation);
+                    shipDrawing.spawn.setPosition(shipPhysics.ShipPosition, shipPhysics.DrawOrientation);
+                }
+                globalSystems.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
+                privateSystems.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
-            globalSystems.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
-            privateSystems.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
 
             int lvl = (beatQueue == null) ? 0 : beatQueue.getLayer();
             racerPoints.Update(gameTime, isBoosting, lvl);
