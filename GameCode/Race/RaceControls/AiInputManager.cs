@@ -198,8 +198,7 @@ namespace BeatShift.Input
         }
 
         /// <summary>
-        /// Calculate how much the AI should be turning. This is likely to fail if the AI is not
-        /// going the correct direction for whatever reason.
+        /// Calculate how much the AI should be turning.
         /// </summary>
         /// <returns>
         /// A float describing the X componont of the left thumbstick of the AI's virtual
@@ -222,9 +221,10 @@ namespace BeatShift.Input
 
 
             //Steer towards the centre of the track (3 waypoints ahead), adjusting for long term centre (5 ahead)
+            //TODO: Change the 0.7 and 0.3 based on a 'planning' skill
             float steerCentre = 0.7f * fTrack3 + 0.3f * fTrack5;
 
-            float balancedDescision = sideWalls * 0.5f + steerCentre * 0.5f;
+            float balancedDescision = sideWalls * 1.4f + steerCentre;
 
             //If previous calculations continue ship in the same direction.
             if (Math.Abs(balancedDescision) < 0.2f)
@@ -234,18 +234,18 @@ namespace BeatShift.Input
             }
 
             float retVal=0;
-            if (Globals.TestState == 0)
+            //if (Globals.TestState == 0)
                 retVal = balancedDescision;
-            if (Globals.TestState == 1)
-                retVal = sideWalls;
-            if (Globals.TestState == 2)
-                retVal = frontWalls;
-            if (Globals.TestState == 3)
-                retVal = steerCentre;
-            if (Globals.TestState == 4)
-                retVal = fTrack3;
-            if (Globals.TestState == 5)
-                retVal = fTrack5;
+            //if (Globals.TestState == 1)
+            //    retVal = sideWalls*3f;
+            //if (Globals.TestState == 2)
+            //    retVal = frontWalls;
+            //if (Globals.TestState == 3)
+            //    retVal = steerCentre;
+            //if (Globals.TestState == 4)
+            //    retVal = sideWalls*3f + steerCentre;
+            //if (Globals.TestState == 5)
+            //    retVal = sideWalls*1f + steerCentre;
             
 
             return Math.Max(-1, Math.Min(1, retVal));
@@ -373,7 +373,6 @@ namespace BeatShift.Input
             return float.IsNaN(t) ? 0f : (float)(Math.Sqrt(t) * Math.Sign(direction));
         }
 
-        private float avoidWallsRayLength = 100f;
         /// <summary>
         /// Avoid walls in front of the ship by turning away from them.
         /// </summary>
