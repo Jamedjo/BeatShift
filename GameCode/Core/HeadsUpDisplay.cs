@@ -344,20 +344,20 @@ namespace BeatShift
             }
         }
 
-        public static void DrawMessage(string message, int x, int y)
-        {
-            //spriteBatch.DrawString("Speed: " + shipSpeed, new Vector2(10, 10), Color.OrangeRed, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
-            BeatShift.spriteBatch.DrawString(BeatShift.newfont, message, new Vector2(x + 1, y + 1), Color.Black);//,0,new Vector2(0,0),0.5f,null,0f);
-            BeatShift.spriteBatch.DrawString(BeatShift.newfont, message, new Vector2(x, y), Color.White);
-        }
-        public static void DrawMessage(SpriteFont font, string message, int x, int y, float scale)
-        {
-            BeatShift.spriteBatch.DrawString(font, message, new Vector2(x, y), Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 1); ;
-        }
+        //public static void DrawMessage(string message, int x, int y)
+        //{
+        //    //spriteBatch.DrawString("Speed: " + shipSpeed, new Vector2(10, 10), Color.OrangeRed, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+        //    BeatShift.spriteBatch.DrawString(BeatShift.newfont, message, new Vector2(x + 1, y + 1), Color.Black);//,0,new Vector2(0,0),0.5f,null,0f);
+        //    BeatShift.spriteBatch.DrawString(BeatShift.newfont, message, new Vector2(x, y), Color.White);
+        //}
+        //public static void DrawMessage(SpriteFont font, string message, int x, int y, float scale)
+        //{
+        //    BeatShift.spriteBatch.DrawString(font, message, new Vector2(x, y), Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 1); ;
+        //}
 
         public static void DrawMessageColour(SpriteFont font, string message, int x, int y, float scale, Color col)
         {
-            BeatShift.spriteBatch.DrawString(font, message, new Vector2(x, y), col, 0f, Vector2.Zero, scale, SpriteEffects.None, 1); ;
+            BeatShift.spriteBatch.DrawString(font, message, new Vector2(x, y), col, 0f, Vector2.Zero, scale, SpriteEffects.None, 1);
         }
 
         public static void DrawSplitBarsTwoPlayer()

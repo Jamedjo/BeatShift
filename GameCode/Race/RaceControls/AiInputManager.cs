@@ -17,6 +17,8 @@ using BEPUphysics.CollisionTests;
 using BEPUphysics.CollisionRuleManagement;
 using BeatShift.Util.Random;
 using BeatShift.Util;
+using BeatShift.Cameras;
+using Microsoft.Xna.Framework.Graphics;
 
 
 namespace BeatShift.Input
@@ -33,6 +35,17 @@ namespace BeatShift.Input
         private GamePadState lastState;
         private Racer parent;
         private float lastTurn = 0f;
+
+        //values used to determine turn
+        private float turnVal = 0;
+        private float fTrack = 0;
+        private float nWalls = 0;
+        private float aWalls = 0;
+
+        //values used to determine acceleration
+        private float accelVal = 0;
+        private float closerBy = 0;
+        private float closerByFraction = 0;
 
         Ray AiRay = new Ray();
         Ray testRay = new Ray();
@@ -134,24 +147,23 @@ namespace BeatShift.Input
 
             Buttons pressedButtons;
 
-            float acceleration;
-
             pressedButtons = setButtons();
 
-            leftThumbStick.X = setTurn();
+            turnVal = setTurn();
+            leftThumbStick.X = turnVal;
 
-            acceleration = setAcceleration();
+            accelVal = setAcceleration();
 
             GamePadThumbSticks sticks = new GamePadThumbSticks(leftThumbStick, rightThumbStick);
             GamePadButtons buttons = new GamePadButtons(pressedButtons);
             GamePadTriggers triggers;
-            if (acceleration >= 0f)
+            if (accelVal >= 0f)
             {
-                triggers = new GamePadTriggers(0f, acceleration);
+                triggers = new GamePadTriggers(0f, accelVal);
             }
             else
             {
-                triggers = new GamePadTriggers(-acceleration, 0f);
+                triggers = new GamePadTriggers(-accelVal, 0f);
             }
             GamePadDPad dpad = new GamePadDPad();
 
@@ -199,9 +211,9 @@ namespace BeatShift.Input
         {
             float randInaccuracy = randTurn();
 
-            float fTrack = futureTrack();
-            float nWalls = newWalls();
-            float aWalls = avoidWalls();
+            fTrack = futureTrack();
+            nWalls = newWalls();
+            aWalls = avoidWalls();
 
 
             //System.Diagnostics.Debug.WriteLine("{0:0.000} {1:0.000} {2:0.000} {3:0.000}", randInaccuracy, fTrack, nWalls, aWalls);
@@ -280,15 +292,15 @@ namespace BeatShift.Input
             float distance = result.T < shipWidth ? rayLength - shipWidth : rayLength - result.T;
 
             //Setup arrows for drawing
-            parent.shipDrawing.testWalls = testVector * rayLength;
+            parent.shipDrawing.aiWallRayArrow = testVector * rayLength;
             if (result.T == 0)
             {
                 distance = 0;
-                parent.shipDrawing.wallHit = false;
+                parent.shipDrawing.aiWallRayHit = false;
             }
             else
             {
-                parent.shipDrawing.wallHit = true;
+                parent.shipDrawing.aiWallRayHit = true;
             }
 
             t = distance / (rayLength - shipWidth);
@@ -405,16 +417,33 @@ namespace BeatShift.Input
             float distance = result.T == 0 ?  0 : rayLength - result.T;
 
             Physics.currentTrackFloor.RayCast(testRay, rayLength, out result);
+
+            parent.shipDrawing.aiFrontRayArrow = testVector * rayLength;
+            parent.shipDrawing.aiFrontRayHit = (result.T == 0)? false : true;
+
             if (distance > result.T)
             {
+                closerBy = 0;
+                closerByFraction = 0;
                 a = 1f;
             }
             else
             {
-                a = (1 - (distance / rayLength)) * (1 - (distance / rayLength));
+                closerBy = rayLength - distance;
+                closerByFraction = closerBy / rayLength;
+                a = closerByFraction * closerByFraction;
             }
             
             return a;
+        }
+
+        private static Vector2 hudPosition = new Vector2(50f, 50f);
+        private static Vector2 hudPosition2 = new Vector2(52f, 52f);
+        public void DrawAiHUD(CameraWrapper camera, GameTime gameTime)
+        {
+            String message = "AI-HUD:\nAcceleration: "+accelVal+"\n  -closerBy: "+closerBy+"\n  -cB_Fraction: "+closerByFraction+"\n\nTurn: "+turnVal+"\n  -fTrack: "+fTrack+"\n  -nWalls: "+nWalls+"\n  -aWalls: "+aWalls;
+            BeatShift.spriteBatch.DrawString(BeatShift.newfont, message, hudPosition, Color.White, 0f, Vector2.Zero, 0.65f, SpriteEffects.None, 1);
+            BeatShift.spriteBatch.DrawString(BeatShift.newfont, message, hudPosition2, Color.Black, 0f, Vector2.Zero, 0.65f, SpriteEffects.None, 1);
         }
     }
 }

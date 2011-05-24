@@ -14,6 +14,7 @@ using BeatShift.Menus;
 using BeatShift.Cameras;
 using ParallelTasks;
 using BeatShift.Util;
+using BeatShift.Input;
 
 namespace BeatShift
 {
@@ -103,6 +104,13 @@ namespace BeatShift
                     //BeatShift.graphics.GraphicsDevice.Viewport = h_racer.localCamera.Viewport;
                     BeatShift.spriteBatch.Begin();
                     HeadsUpDisplay.DrawHUD(h_racer.localCamera, h_racer, gameTime);
+
+                    //If testing AI through a human racer, draw AI debug HUD
+                    if (AiInputManager.testAI && (h_racer.racingControls != null) && (h_racer.racingControls.chosenInput != null) && h_racer.racingControls.chosenInput.GetType().Equals(typeof(AiInputManager)))
+                    {
+                        ((AiInputManager)h_racer.racingControls.chosenInput).DrawAiHUD(h_racer.localCamera, gameTime);
+                    }
+
                     BeatShift.spriteBatch.End();
                 }
 

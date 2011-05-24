@@ -112,9 +112,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\ParallelTasks\Windows Phone\Debug\ParallelTasks.dll</HintPath>
     </Reference>
-    <Reference Include="ProjectMercury">
-      <HintPath>..\lib\Mercury\X86\ProjectMercury.dll</HintPath>
-    </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
