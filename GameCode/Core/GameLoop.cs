@@ -353,13 +353,6 @@ namespace BeatShift
                     Race.Update(gameTime);
 
 
-                // Game should be exited through the menu systems.
-                // Allows the game to return to main menu
-                //if (mainGameinput.actionTapped(InputAction.BackButton))
-                //{
-                //    //MenuManager.setCurrentMenu(MenuPage.Main);
-                //    GameLoop.setGameStateAndResetPlayers(GameState.Menu);
-                //}
             }
 
             if( paused && !pausedForGuide )

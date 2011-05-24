@@ -44,15 +44,22 @@ namespace BeatShift
             {
                 // If the race has started update everything
                 currentRaceType.Update(gameTime);
-                Parallel.ForEach(currentRacers, racer =>
+
+                if (Globals.UpdateRaceWithParallel)
                 {
-                    racer.Update(gameTime);
+                    Parallel.ForEach(currentRacers, racer =>
+                    {
+                        racer.Update(gameTime);
+                    }
+                    );
                 }
-                );
-                //foreach (Racer racer in currentRacers)
-                //{
-                //   racer.Update(gameTime);
-                //}
+                else
+                {
+                    foreach (Racer racer in currentRacers)
+                    {
+                        racer.Update(gameTime);
+                    }
+                }
             }
             else
             {
@@ -85,38 +92,41 @@ namespace BeatShift
                 }
             }
 
-            
 
-            foreach (RacerHuman h_racer in humanRacers)
+            if (Globals.DisplayHUD)
             {
+                foreach (RacerHuman h_racer in humanRacers)
+                {
 
-                //if(Physics.Visible)
-                //    Physics.Draw(gameTime);
-                //BeatShift.graphics.GraphicsDevice.Viewport = h_racer.localCamera.Viewport;
+                    //if(Physics.Visible)
+                    //    Physics.Draw(gameTime);
+                    //BeatShift.graphics.GraphicsDevice.Viewport = h_racer.localCamera.Viewport;
+                    BeatShift.spriteBatch.Begin();
+                    HeadsUpDisplay.DrawHUD(h_racer.localCamera, h_racer, gameTime);
+                    BeatShift.spriteBatch.End();
+                }
+
                 BeatShift.spriteBatch.Begin();
-                HeadsUpDisplay.DrawHUD(h_racer.localCamera, h_racer, gameTime);
+
+                BeatShift.singleton.GraphicsDevice.Viewport = Viewports.fullViewport;
+
+                if (humanRacers.Count == 2)
+                {
+                    HeadsUpDisplay.DrawSplitBarsTwoPlayer();
+                }
+                else if (humanRacers.Count == 3)
+                {
+                    HeadsUpDisplay.DrawSplitBarsThreePlayer();
+                }
+                else if (humanRacers.Count == 4)
+                {
+                    HeadsUpDisplay.DrawSplitBarsFourPlayer();
+                    if (Race.isPrimed)
+                        BeatShift.spriteBatch.Draw(GameTextures.Start, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.Start.Width / 2, 0), Color.White);
+                }
                 BeatShift.spriteBatch.End();
             }
-
-            BeatShift.spriteBatch.Begin();
-
-            BeatShift.singleton.GraphicsDevice.Viewport = Viewports.fullViewport;
-
-            if (humanRacers.Count == 2)
-            {
-                HeadsUpDisplay.DrawSplitBarsTwoPlayer();
-            }
-            else if (humanRacers.Count == 3)
-            {
-                HeadsUpDisplay.DrawSplitBarsThreePlayer();
-            }
-            else if (humanRacers.Count == 4)
-            {
-                HeadsUpDisplay.DrawSplitBarsFourPlayer();
-                if (Race.isPrimed)
-                    BeatShift.spriteBatch.Draw(GameTextures.Start, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.Start.Width / 2, 0), Color.White);
-            }
-            BeatShift.spriteBatch.End();
+            else BeatShift.singleton.GraphicsDevice.Viewport = Viewports.fullViewport;
         }
 
 

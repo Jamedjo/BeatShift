@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
+using BeatShift.Util;
 
 #endregion
 
@@ -206,6 +207,49 @@ namespace BeatShift.GameDebugTools
             {
                 Echo(command.Substring(5));
             });
+
+            // Command to toggle trackNormals
+            RegisterCommand("arrows", "Toggle drawing of track normal/tangent arrows",
+            delegate(IDebugCommandHost host, string command, IList<string> args)
+            {
+                Options.DrawTrackNormals = !Options.DrawTrackNormals;
+            });
+
+            // Command to toggle drawing of waypoint spheres
+            RegisterCommand("waypoints", "Toggle drawing of waypoints",
+            delegate(IDebugCommandHost host, string command, IList<string> args)
+            {
+                Options.DrawWaypoints = !Options.DrawWaypoints;
+            });
+
+            // Command to toggle if racers are updated with a parellel ForEach, or serially
+            RegisterCommand("parallel", "Toggle racer update between parallel and serial",
+            delegate(IDebugCommandHost host, string command, IList<string> args)
+            {
+                Globals.UpdateRaceWithParallel = !Globals.UpdateRaceWithParallel;
+                if (Globals.UpdateRaceWithParallel)
+                    Echo("   update set to parallel");
+                else
+                    Echo("   update set to serial");
+            });
+
+            // Command to toggle drawing of map scenery
+            RegisterCommand("scenery", "Toggle drawing of map scenery",
+            delegate(IDebugCommandHost host, string command, IList<string> args)
+            {
+                Globals.DisplayScenery = !Globals.DisplayScenery;
+            });
+
+            // Command to toggle drawing of HUD
+            RegisterCommand("hud", "Toggle drawing of HUD",
+            delegate(IDebugCommandHost host, string command, IList<string> args)
+            {
+                Globals.DisplayHUD = !Globals.DisplayHUD;
+            });
+
+            //Command to reset all debug settings and high-scores for release?
+
+
         }
 
         /// <summary>
