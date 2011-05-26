@@ -20,11 +20,38 @@ namespace BeatShift
         //These are to be used to help position HUD items, without having to recompile
         //Before a commit is made, these should be reset to how they were found and chosen coordinates used
         //These can be set using the 'pos' command from the ingame console
-        //public static Vector2 testVector1 = new Vector2();
-        //public static Vector2 testVector2 = new Vector2();
+        //Should make this more rubust/flexible as seperate class wrapping a private array.
+        public static Vector2 testVector1 = new Vector2();
+        public static Vector2 testVector2 = new Vector2();
         //public static Vector2 testVector3 = new Vector2();
         //public static Vector2 testVector4 = new Vector2();
         //public static Vector2 testVector5 = new Vector2();
+        public static void setVector(int testVectorNumber, float x, float y)
+        {
+            switch (testVectorNumber)
+            {
+                case 1:
+                    testVector1.X = x;
+                    testVector1.Y = y;
+                    break;
+                case 2:
+                    testVector2.X = x;
+                    testVector2.Y = y;
+                    break;
+            }
+        }
+        public static Vector2 getVector(int testVectorNumber)
+        {
+            switch (testVectorNumber)
+            {
+                case 1:
+                    return testVector1;
+                case 2:
+                    return testVector2;
+                default:
+                    return new Vector2();
+            }
+        }
 
         //TestStates are to be used to try different bits of code, switching between them in real-time wihtout having to recompile
         //Before a comit is made, all code using these should be finalized so they are no longer used

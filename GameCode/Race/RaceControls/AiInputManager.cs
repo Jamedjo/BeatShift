@@ -472,13 +472,13 @@ namespace BeatShift.Input
             return a;
         }
 
-        private static Vector2 hudPosition = new Vector2(50f, 50f);
-        private static Vector2 hudPosition2 = new Vector2(52f, 52f);
+        private static Vector2 hudPosition = new Vector2(50f, 80f);
+        private static Vector2 hudPosition2 = new Vector2(52f, 82f);
         public void DrawAiHUD(CameraWrapper camera, GameTime gameTime)
         {
             String message = "AI-HUD:\nAcceleration: " + accelVal + "\n  -closerBy: " + closerBy + "\n  -cB_Fraction: " + closerByFraction + "\n\nTurn: " + turnVal + "\n  -fTrack3: " + fTrack3 + "\n  -fTrack5: " + fTrack5 + "\n  -sideWalls: " + sideWalls + "\n  -frontWalls: " + frontWalls;
-            BeatShift.spriteBatch.DrawString(BeatShift.newfont, message, hudPosition, Color.White, 0f, Vector2.Zero, 0.65f, SpriteEffects.None, 1);
-            BeatShift.spriteBatch.DrawString(BeatShift.newfont, message, hudPosition2, Color.Black, 0f, Vector2.Zero, 0.65f, SpriteEffects.None, 1);
+            BeatShift.spriteBatch.DrawString(BeatShift.newfont, message, Globals.testVector1, Color.White, 0f, Vector2.Zero, 0.65f, SpriteEffects.None, 1);
+            BeatShift.spriteBatch.DrawString(BeatShift.newfont, message, Globals.testVector2, Color.Black, 0f, Vector2.Zero, 0.65f, SpriteEffects.None, 1);
         }
     }
 }

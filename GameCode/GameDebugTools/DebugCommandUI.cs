@@ -279,6 +279,38 @@ namespace BeatShift.GameDebugTools
             });
 
             //'pos' command
+            // Command to 
+            RegisterCommand("pos", "set/show test Vector2 positions: 'pos help' for details.",
+            delegate(IDebugCommandHost host, string command, IList<string> arguments)
+            {
+                if (String.Compare(arguments[0], "help", StringComparison.OrdinalIgnoreCase) == 0)
+                {
+                    host.Echo("pos command allows testVectors to be dynamicaly set");
+                    host.Echo("e.g. a GUI element could be set to position Globals.testVector1");
+                    host.Echo("     the position is not saved but can be hard coded once finalized");
+                    host.Echo("'pos show vectorNumber' to view coordinates of a test vector");
+                    host.Echo("'pos vectorNumber x-coordinate y-coordinate' to set test vector");
+                }
+                else if (String.Compare(arguments[0], "show", StringComparison.OrdinalIgnoreCase) == 0)
+                {
+                    //show オプションで現在座標を表示する
+                    // "pos show testVectorNumber": option to display current coordinates
+                    // e.g. "pos show 1"
+                    int vectorNumber = Int32.Parse(arguments[1]);
+                    Vector2 debugPos = Globals.getVector(vectorNumber);
+                    host.Echo(String.Format("Pos={0},{1}", debugPos.X, debugPos.Y));
+                }
+                else
+                {
+                    // "pos x座標 y座標"と入力されたものを処理する
+                    // Input processed as "pos testVectorNumber x-coordinates y-coordinates"
+                    // e.g. "pos 1 59.4f 200f"
+                    int vectorNumber = Int32.Parse(arguments[0]);
+                    Globals.setVector(vectorNumber, Single.Parse(arguments[1]), Single.Parse(arguments[2]));
+                    Vector2 debugPos = Globals.getVector(vectorNumber);
+                    host.Echo(String.Format("Pos={0},{1}", debugPos.X, debugPos.Y));
+                }
+            });
 
             //Command to reset all debug settings and high-scores for release?
 
