@@ -53,8 +53,8 @@ namespace BeatShift.Menus
             //Set title position
             //DrawTitleFromTextCentre = true;
             DrawMenuItemsFromTextCentre = true;
-            //TitlePos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, 75);
-            //TitleStartPos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, -100);
+            //TitlePos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - 265, 170);
+            //TitleStartPos = new Vector2((BeatShift.graphics.GraphicsDevice.Viewport.Width / 2) +50, 170);
 
             //Set position of menu items
             //MenuPos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, 220);

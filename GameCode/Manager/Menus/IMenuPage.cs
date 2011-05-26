@@ -42,7 +42,7 @@ namespace BeatShift.Menus
 
         private void setDefaultValues()
         {
-            TitleStartPos = new Vector2(-150, 85);
+            TitleStartPos = new Vector2((BeatShift.graphics.GraphicsDevice.Viewport.Width / 2) + 50, 170);
             TitlePos = new Vector2(BeatShift.graphics.PreferredBackBufferWidth/2 - 265, 170);
             MenuPos = new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2, 300);
             Offset = new Vector2(0, 80);
