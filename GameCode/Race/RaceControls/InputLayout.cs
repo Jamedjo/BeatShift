@@ -49,8 +49,8 @@ namespace BeatShift.Input
             setupAction(InputAction.PadDown, Keys.NumPad2, Buttons.DPadDown);
             setupAction(InputAction.PadLeft, Keys.NumPad4, Buttons.DPadLeft);
             setupAction(InputAction.PadRight, Keys.NumPad6, Buttons.DPadRight);
-            setupAction(InputAction.CameraToggle, Keys.C, Buttons.LeftShoulder);
-            setupAction(InputAction.CameraReverse, Keys.Tab, Buttons.RightStick);
+            setupAction(InputAction.CameraToggle, Keys.LeftControl, Buttons.LeftShoulder);
+            setupAction(InputAction.CameraReverse, Keys.LeftAlt, Buttons.RightStick);
 
             //throw error if any of arrays are empty as this means action not set up
             for (int i = 0; i < Utils.GetValues<InputAction>().Count(); i++)

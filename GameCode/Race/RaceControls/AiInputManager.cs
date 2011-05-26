@@ -38,6 +38,7 @@ namespace BeatShift.Input
 
         //values used to determine turn
         private float turnVal = 0;
+        private float randInaccuracy = 0;
         private float fTrack3 = 0;
         private float fTrack5 = 0;
         private float sideWalls = 0;
@@ -206,7 +207,7 @@ namespace BeatShift.Input
         /// </returns>
         private float setTurn()
         {
-            float randInaccuracy = randTurn();
+            randInaccuracy = randTurn();
 
             fTrack3 = futureTrack(3);
             fTrack5 = futureTrack(5); 
@@ -223,8 +224,8 @@ namespace BeatShift.Input
             //Steer towards the centre of the track (3 waypoints ahead), adjusting for long term centre (5 ahead)
             //TODO: Change the 0.7 and 0.3 based on a 'planning' skill
             float steerCentre = 0.7f * fTrack3 + 0.3f * fTrack5;
-
-            float balancedDescision = sideWalls * 1.4f + steerCentre;
+            float mistakes = randInaccuracy * 0.2f;//Adjust this value with skill
+            float balancedDescision = sideWalls * 1.4f + steerCentre + mistakes;
 
             //If previous calculations continue ship in the same direction.
             if (Math.Abs(balancedDescision) < 0.2f)
@@ -320,7 +321,7 @@ namespace BeatShift.Input
 
             AiRay.Position = rayOrigin;
             AiRay.Direction = testVector;
-            Physics.currentTrackWall.RayCast(AiRay, rayLength, out result);
+            Physics.currentTrackInvisibleWall.RayCast(AiRay, rayLength, out result);
 
             float distance = result.T < shipWidth ? rayLength - shipWidth : rayLength - result.T;
 
@@ -384,7 +385,7 @@ namespace BeatShift.Input
 
             RayHit result;
 
-            Physics.currentTrackWall.RayCast(AiRay, 100f, out result);
+            Physics.currentTrackInvisibleWall.RayCast(AiRay, 100f, out result);
 
             float wallAngle;
 
@@ -405,7 +406,7 @@ namespace BeatShift.Input
             return 0;
 
             AiRay.Direction = (parent.shipPhysics.ShipOrientationMatrix.Forward + parent.shipPhysics.ShipOrientationMatrix.Right * 2) / 3;
-            Physics.currentTrackWall.RayCast(AiRay, 30f, out result);
+            Physics.currentTrackInvisibleWall.RayCast(AiRay, 30f, out result);
             if(result.T != 0){
                 wallAngle = Vector3.Dot(Vector3.Normalize(result.Normal), parent.shipPhysics.ShipOrientationMatrix.Left);
                 //if(wallAngle < 
@@ -447,7 +448,7 @@ namespace BeatShift.Input
 
             testRay.Position = rayOrigin;
             testRay.Direction = testVector;
-            Physics.currentTrackWall.RayCast(testRay, rayLength, out result);
+            Physics.currentTrackInvisibleWall.RayCast(testRay, rayLength, out result);
 
             float distance = result.T == 0 ?  0 : rayLength - result.T;
 
@@ -476,7 +477,7 @@ namespace BeatShift.Input
         private static Vector2 hudPosition2 = new Vector2(52f, 82f);
         public void DrawAiHUD(CameraWrapper camera, GameTime gameTime)
         {
-            String message = "AI-HUD:\nAcceleration: " + accelVal + "\n  -closerBy: " + closerBy + "\n  -cB_Fraction: " + closerByFraction + "\n\nTurn: " + turnVal + "\n  -fTrack3: " + fTrack3 + "\n  -fTrack5: " + fTrack5 + "\n  -sideWalls: " + sideWalls + "\n  -frontWalls: " + frontWalls;
+            String message = "AI-HUD:\nAcceleration: " + accelVal + "\n  -closerBy: " + closerBy + "\n  -cB_Fraction: " + closerByFraction + "\n\nTurn: " + turnVal + "\n  -randInaccuracy: " + randInaccuracy + "\n  -fTrack3: " + fTrack3 + "\n  -fTrack5: " + fTrack5 + "\n  -sideWalls: " + sideWalls + "\n  -frontWalls: " + frontWalls;
             BeatShift.spriteBatch.DrawString(BeatShift.newfont, message, hudPosition, Color.White, 0f, Vector2.Zero, 0.65f, SpriteEffects.None, 1);
             BeatShift.spriteBatch.DrawString(BeatShift.newfont, message, hudPosition2, Color.Black, 0f, Vector2.Zero, 0.65f, SpriteEffects.None, 1);
         }

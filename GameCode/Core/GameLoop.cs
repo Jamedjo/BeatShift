@@ -280,30 +280,29 @@ namespace BeatShift
         {
 #if DEBUG
             DebugSystem.Instance.TimeRuler.StartFrame();
-            DebugSystem.Instance.TimeRuler.BeginMark("Background", Color.Blue);
 #endif
-            // Check to see if the user has paused or unpaused
-            BeatShift.bgm.Update();
-           // Task music = Parallel.Start();
-            if(currentState == GameState.LocalGame || currentState == GameState.NetworkedGame)
-                checkPauseKey(gameTime);
-            
-            checkPauseGuide();
+            using (new ProfileSection("Background", Color.Blue))
+            {
+                // Check to see if the user has paused or unpaused
+                BeatShift.bgm.Update();
+                // Task music = Parallel.Start();
+                if (currentState == GameState.LocalGame || currentState == GameState.NetworkedGame)
+                    checkPauseKey(gameTime);
+
+                checkPauseGuide();
 
 #if XBOX
             checkControllers(gameTime);
 #endif
 
-            // If the user hasn't paused, Update normally
+                // If the user hasn't paused, Update normally
 
-            BeatShift.gamerServices.Update(gameTime);
+                BeatShift.gamerServices.Update(gameTime);
 
-            //Update mainGameInput
-            mainGameinput.Update(gameTime);
+                //Update mainGameInput
+                mainGameinput.Update(gameTime);
+            }
 
-#if DEBUG
-            DebugSystem.Instance.TimeRuler.EndMark("Background");
-#endif
             if (!paused)
             {
                 Boolean raceUpdated = false;
@@ -324,28 +323,23 @@ namespace BeatShift
 
                 //if (networkedGame.Enabled) networkedGame.Update(gameTime);
 
-#if DEBUG
-                DebugSystem.Instance.TimeRuler.BeginMark("Physics", Color.Red);
-#endif
-                if (Physics.Enabled)
-                    Physics.Update(gameTime);
-#if DEBUG
-                DebugSystem.Instance.TimeRuler.EndMark("Physics");
-#endif
-
-
-#if DEBUG
-                DebugSystem.Instance.TimeRuler.BeginMark("Race", Color.Yellow);
-#endif
-                if (Race.Enabled)
+                using (new ProfileSection("Physics", Color.Red))
                 {
-                    Race.Update(gameTime);
-                    raceUpdated = true;
-                    HeadsUpDisplay.Update(gameTime);
+                    if (Physics.Enabled)
+                        Physics.Update(gameTime);
                 }
-#if DEBUG
-                DebugSystem.Instance.TimeRuler.EndMark("Race");
-#endif
+
+
+                using (new ProfileSection("Race", Color.Yellow))
+                {
+
+                    if (Race.Enabled)
+                    {
+                        Race.Update(gameTime);
+                        raceUpdated = true;
+                        HeadsUpDisplay.Update(gameTime);
+                    }
+                }
 
 
                 //What??
