@@ -172,7 +172,7 @@ namespace BeatShift
             //}
             //else
             //{
-                BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+            if (modelObject.category == ModelCategory.Track) BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
                 drawWithBasicEffect(modelObject, camera);
             //}
             BeatShift.graphics.GraphicsDevice.RasterizerState = cull;
@@ -186,7 +186,15 @@ namespace BeatShift
             {
                 foreach (BasicEffect beffect in mesh.Effects)
                 {
-                    setupEffect(beffect, viewMatrix, projectionMatrix, fbxModel.transforms[mesh.ParentBone.Index]);
+                    //setupEffect(beffect, viewMatrix, projectionMatrix, fbxModel.transforms[mesh.ParentBone.Index]);
+
+                    beffect.View = viewMatrix;
+                    beffect.Projection = projectionMatrix;
+                    beffect.World = fbxModel.transforms[mesh.ParentBone.Index];
+
+                    beffect.EnableDefaultLighting();
+                     //beffect.PreferPerPixelLighting = true;
+
                     //if (fbxModel.category == ModelCategory.Wall)
                     //{
                     //    Vector3 colour = new Vector3(240, 100, 255)*0.2f;

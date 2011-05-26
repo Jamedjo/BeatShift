@@ -101,6 +101,7 @@ namespace BeatShift
 
             //Turn on antialiasing
             graphics.PreferMultiSampling = true;
+
             //Components.Add(new GamerServicesComponent(this));
             //TODO: xbox-live
         }
