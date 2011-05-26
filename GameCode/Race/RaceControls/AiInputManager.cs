@@ -321,7 +321,7 @@ namespace BeatShift.Input
 
             AiRay.Position = rayOrigin;
             AiRay.Direction = testVector;
-            Physics.currentTrackWall.RayCast(AiRay, rayLength, out result);
+            Physics.currentTrackInvisibleWall.RayCast(AiRay, rayLength, out result);
 
             float distance = result.T < shipWidth ? rayLength - shipWidth : rayLength - result.T;
 
@@ -385,7 +385,7 @@ namespace BeatShift.Input
 
             RayHit result;
 
-            Physics.currentTrackWall.RayCast(AiRay, 100f, out result);
+            Physics.currentTrackInvisibleWall.RayCast(AiRay, 100f, out result);
 
             float wallAngle;
 
@@ -406,7 +406,7 @@ namespace BeatShift.Input
             return 0;
 
             AiRay.Direction = (parent.shipPhysics.ShipOrientationMatrix.Forward + parent.shipPhysics.ShipOrientationMatrix.Right * 2) / 3;
-            Physics.currentTrackWall.RayCast(AiRay, 30f, out result);
+            Physics.currentTrackInvisibleWall.RayCast(AiRay, 30f, out result);
             if(result.T != 0){
                 wallAngle = Vector3.Dot(Vector3.Normalize(result.Normal), parent.shipPhysics.ShipOrientationMatrix.Left);
                 //if(wallAngle < 
@@ -448,7 +448,7 @@ namespace BeatShift.Input
 
             testRay.Position = rayOrigin;
             testRay.Direction = testVector;
-            Physics.currentTrackWall.RayCast(testRay, rayLength, out result);
+            Physics.currentTrackInvisibleWall.RayCast(testRay, rayLength, out result);
 
             float distance = result.T == 0 ?  0 : rayLength - result.T;
 
