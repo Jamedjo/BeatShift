@@ -109,6 +109,8 @@ namespace BeatShift.Cameras
 
         void resetProjection()
         {
+            //for each camera in list, updateProjection() ?
+
             //Projection = Matrix.CreatePerspectiveFieldOfView(
             //    MathHelper.PiOver4 * 1.5f,
             //    (float)Viewport.Width /
@@ -125,16 +127,23 @@ namespace BeatShift.Cameras
 
                 //If many HUMAN racers at this stage, then screen space limited, so adjust FOV.
                 float chaseFOV = ICameraType.defaultFieldOfView;
-                Vector3 chaseFocalPoint = new Vector3(0.0f, 0.0f, -40.0f);
-                Vector3 chasePosition = new Vector3(0.0f, 4.0f, 14.0f);
+                Vector3 chasePosition = new Vector3(0.0f, 4.0f, 16.0f);
+                Vector3 chaseFocalPoint = new Vector3(0.0f, 1.0f, -40.0f);
+                Vector3 chasePosition2 = new Vector3(0.0f, 2.5f, 12f);
+                Vector3 chaseFocalPoint2 = new Vector3(0.0f, 1.0f, -30.0f);
                 if (Race.humanRacers.Count > 1)
                 {
                     chaseFOV = MathHelper.PiOver2;
-                    //chaseFocalPoint = new Vector3(0.0f
+
+                    chasePosition = new Vector3(0.0f, 2.5f, 12f);
+                    chaseFocalPoint = new Vector3(0.0f, 6.0f, 0.0f);
+
+                    chasePosition2 = new Vector3(0.0f, 2f, 10.0f);
+                    chaseFocalPoint2 = new Vector3(0.0f, 5.0f, 0f);
                 }
 
-                cameraList.Add(new ChaseCamera(ref properties, getShipPosition, getShipOrientation, getShipUp, racer.shipPhysics.getForwardSpeed, chasePosition ,chaseFocalPoint ,chaseFOV));
-                cameraList.Add(new ChaseCamera(ref properties, getShipPosition, getShipOrientation, getShipUp, racer.shipPhysics.getForwardSpeed, new Vector3(0.0f, 2.5f, 12f), new Vector3(0.0f, 0.0f, -30.0f),chaseFOV));
+                cameraList.Add(new ChaseCamera(ref properties, getShipPosition, getShipOrientation, getShipUp, racer.shipPhysics.getForwardSpeed, chasePosition, chaseFocalPoint, chaseFOV));
+                cameraList.Add(new ChaseCamera(ref properties, getShipPosition, getShipOrientation, getShipUp, racer.shipPhysics.getForwardSpeed, chasePosition2, chaseFocalPoint2, chaseFOV));
                 cameraList.Add(new BumperCamera(ref properties, getShipPosition, getShipOrientation, getShipUp));
                 currentCamera = cameraList[cameraID];
             }
