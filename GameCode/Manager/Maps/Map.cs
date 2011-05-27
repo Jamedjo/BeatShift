@@ -193,6 +193,7 @@ namespace BeatShift
                     beffect.World = fbxModel.transforms[mesh.ParentBone.Index];
 
                     beffect.EnableDefaultLighting();
+                    //beffect.SpecularPower = 12f;
                      //beffect.PreferPerPixelLighting = true;
 
                     //if (fbxModel.category == ModelCategory.Wall)

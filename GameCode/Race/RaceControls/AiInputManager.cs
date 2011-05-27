@@ -147,9 +147,7 @@ namespace BeatShift.Input
             Vector2 leftThumbStick = Vector2.Zero;
             Vector2 rightThumbStick = Vector2.Zero;
 
-            Buttons pressedButtons;
-
-            pressedButtons = setButtons();
+            Buttons pressedButtons = setButtons();
 
             turnVal = setTurn();
             leftThumbStick.X = turnVal;
@@ -174,8 +172,9 @@ namespace BeatShift.Input
             
         }
 
+        Boolean buttonNeedsReleasing = false;
         /// <summary>
-        /// Decide which buttons (if any the AI should be pressing.
+        /// Decide which buttons, if any, the AI should be pressing.
         /// </summary>
         /// <returns>
         /// A Buttons object with appropriate flags set.
@@ -184,14 +183,20 @@ namespace BeatShift.Input
         {
             Buttons b = new Buttons();
 
-            if (nextBeatToPress == null)
+            //If beat button is pressed but not released, press no buttons
+            if (buttonNeedsReleasing)
             {
-                nextBeatToPress = parent.beatQueue.nextBeat();
+                buttonNeedsReleasing = false;
+                return b;
             }
-            else if (nextBeatToPress.Value.Time > BeatShift.bgm.songTick())
+
+            nextBeatToPress = parent.beatQueue.nextBeat();
+            
+           //If button is already due, press it.
+            if( (nextBeatToPress!=null) && (nextBeatToPress.Value.Time > BeatShift.bgm.songTick()))
             {
                 b |= nextBeatToPress.Value.Button;
-                nextBeatToPress = null;
+                buttonNeedsReleasing = true;
             }
             
             // Initially no buttons.

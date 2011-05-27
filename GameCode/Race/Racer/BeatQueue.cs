@@ -198,24 +198,9 @@ namespace BeatShift
                 int temp2 = (int)(newBeat.getTimeWithLatency((int)latency) - BeatShift.bgm.songTick());
                 int elapsed = duration - temp2;
                 //System.Console.WriteLine(elapsed + " " + temp2);
-                switch (newBeat.Button){
-                    case Buttons.A:
-                        visualisation.addBeat(Buttons.A, duration,elapsed);
-                        //Console.Out.WriteLine("A");
-                        break;
-                    case Buttons.B:
-                        visualisation.addBeat(Buttons.B, duration, elapsed);
-                        //Console.Out.WriteLine("B");
-                        break;
-                    case Buttons.X:
-                        visualisation.addBeat(Buttons.X, duration, elapsed);
-                        //Console.Out.WriteLine("X");
-                        break;
-                    case Buttons.Y:
-                        visualisation.addBeat(Buttons.Y, duration, elapsed);
-                        //Console.Out.WriteLine("Y");
-                        break;
-                }
+                
+                visualisation.addBeat(newBeat.Button, duration, elapsed);
+
                 beats.Enqueue(newBeat);
             }   
         }
