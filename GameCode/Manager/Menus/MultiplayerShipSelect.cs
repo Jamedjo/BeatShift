@@ -198,14 +198,6 @@ namespace BeatShift
             //If controller was not plugged-in/selected remove that player
             Race.removeNonVisibleRacers();
 
-            if (Race.currentRacers.Count > 1)
-            {
-                foreach (RacerHuman r in Race.humanRacers)
-                {
-                    r.localCamera.setFOV(MathHelper.PiOver2);
-                }
-            }
-
             GameLoop.setGameState(GameState.Menu);
             MenuManager.setCurrentMenu(MenuPage.Loading);
         }

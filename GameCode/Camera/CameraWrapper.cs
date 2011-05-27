@@ -122,14 +122,21 @@ namespace BeatShift.Cameras
             if (stage == CameraStage.ShipSelect)
             {
                 stage++;
-                cameraList.Add(new ChaseCamera(ref properties, getShipPosition, getShipOrientation, getShipUp, racer.shipPhysics.getForwardSpeed, new Vector3(0.0f, 4.0f, 16.0f), new Vector3(0.0f, 0.0f, -40.0f)));
-                cameraList.Add(new ChaseCamera(ref properties, getShipPosition, getShipOrientation, getShipUp, racer.shipPhysics.getForwardSpeed, new Vector3(0.0f, 2.5f, 12f), new Vector3(0.0f, 0.0f, -30.0f)));
+
+                //If many HUMAN racers at this stage, then screen space limited, so adjust FOV.
+                float chaseFOV = ICameraType.defaultFieldOfView;
+                Vector3 chaseFocalPoint = new Vector3(0.0f, 0.0f, -40.0f);
+                Vector3 chasePosition = new Vector3(0.0f, 4.0f, 14.0f);
+                if (Race.humanRacers.Count > 1)
+                {
+                    chaseFOV = MathHelper.PiOver2;
+                    //chaseFocalPoint = new Vector3(0.0f
+                }
+
+                cameraList.Add(new ChaseCamera(ref properties, getShipPosition, getShipOrientation, getShipUp, racer.shipPhysics.getForwardSpeed, chasePosition ,chaseFocalPoint ,chaseFOV));
+                cameraList.Add(new ChaseCamera(ref properties, getShipPosition, getShipOrientation, getShipUp, racer.shipPhysics.getForwardSpeed, new Vector3(0.0f, 2.5f, 12f), new Vector3(0.0f, 0.0f, -30.0f),chaseFOV));
                 cameraList.Add(new BumperCamera(ref properties, getShipPosition, getShipOrientation, getShipUp));
                 currentCamera = cameraList[cameraID];
-                if (changedFieldOfView != 0)
-                {
-                    setFOV(changedFieldOfView);
-                }
             }
             else if (stage == CameraStage.Racing)
             {
@@ -220,19 +227,5 @@ namespace BeatShift.Cameras
 
         }
 
-        private float changedFieldOfView= 0;
-
-        public void setFOV(float newFOV)
-        {
-            changedFieldOfView = newFOV;
-            foreach (ICameraType c in cameraList)
-            {
-                if (c.GetType().Equals(typeof(ChaseCamera)))
-                {
-                    c.setBaseFieldOfView(newFOV);
-                    c.updateProjection();
-                }
-            }
-        }
     }
 }

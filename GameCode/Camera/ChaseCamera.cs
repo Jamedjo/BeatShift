@@ -22,9 +22,10 @@ namespace BeatShift.Cameras
 
         private Matrix oldRot;
 
-        public ChaseCamera(ref SharedCameraProperties properties, FGetPosition getPosition, FGetOrientation getOrientation, FGetUp getUpVector, FGetSpeed getSpeed, Vector3 relativePosition, Vector3 relativeFocalPoint)
+        public ChaseCamera(ref SharedCameraProperties properties, FGetPosition getPosition, FGetOrientation getOrientation, FGetUp getUpVector, FGetSpeed getSpeed, Vector3 relativePosition, Vector3 relativeFocalPoint, float BaseFieldOfView)
             : base(ref properties, getPosition, getOrientation)
         {
+            this.baseFieldOfView = BaseFieldOfView;
             getUp = getUpVector;
             this.getSpeed = getSpeed;
             this.relativeFocalPoint = relativeFocalPoint;

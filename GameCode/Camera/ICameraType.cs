@@ -70,8 +70,9 @@ namespace BeatShift.Cameras
             }
         }
 
-        protected static float baseFieldOfView = MathHelper.PiOver4;
-        protected float fieldOfView = baseFieldOfView;
+        public const float defaultFieldOfView = MathHelper.PiOver4;
+        protected float baseFieldOfView = defaultFieldOfView;
+        protected float fieldOfView = defaultFieldOfView;//Must be same as above
 
         protected Quaternion camRotation = Quaternion.Identity;
         protected Vector3 camLastUp = Vector3.Up;
@@ -134,12 +135,12 @@ namespace BeatShift.Cameras
 
         public abstract void Update(GameTime gameTime);
 
-        public void setBaseFieldOfView(float newFOV)
-        {
-            fieldOfView *= MathHelper.PiOver4 / baseFieldOfView;
-            baseFieldOfView = newFOV;
-            fieldOfView *= newFOV / MathHelper.PiOver4;
-        }
+        //public void setBaseFieldOfView(float newFOV)
+        //{
+        //    fieldOfView *= MathHelper.PiOver4 / baseFieldOfView;
+        //    baseFieldOfView = newFOV;
+        //    fieldOfView *= newFOV / MathHelper.PiOver4;
+        //}
             
             
     }
