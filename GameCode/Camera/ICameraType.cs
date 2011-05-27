@@ -71,10 +71,10 @@ namespace BeatShift.Cameras
         }
 
         protected static float baseFieldOfView = MathHelper.PiOver4;
+        protected float fieldOfView = baseFieldOfView;
 
         protected Quaternion camRotation = Quaternion.Identity;
         protected Vector3 camLastUp = Vector3.Up;
-        protected float fieldOfView = baseFieldOfView;
         protected const int farClipDistance = 3500;
 
         /// <summary>

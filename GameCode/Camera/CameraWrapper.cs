@@ -116,6 +116,7 @@ namespace BeatShift.Cameras
             //    1, 2000);
         }
 
+        //Called when the ship/camera is placed on the map, 
         public void nextStage()
         {
             if (stage == CameraStage.ShipSelect)
@@ -226,7 +227,11 @@ namespace BeatShift.Cameras
             changedFieldOfView = newFOV;
             foreach (ICameraType c in cameraList)
             {
-                c.setBaseFieldOfView(newFOV);
+                if (c.GetType().Equals(typeof(ChaseCamera)))
+                {
+                    c.setBaseFieldOfView(newFOV);
+                    c.updateProjection();
+                }
             }
         }
     }
