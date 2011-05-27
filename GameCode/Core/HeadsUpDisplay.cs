@@ -24,13 +24,13 @@ namespace BeatShift
         /// </summary>
         public static void DrawHUD(CameraWrapper camera, Racer racer, GameTime gameTime)//(Matrix viewMatrix, Matrix projectionMatrix)
         {
+
             //Getting information from the GraphicsDevice might be very slow on Xbox
-            int viewportHeight = BeatShift.graphics.GraphicsDevice.Viewport.Height;
-            int viewportWidth = BeatShift.graphics.GraphicsDevice.Viewport.Width;
+            int viewportHeight = camera.Viewport.Height;
+            int viewportWidth = camera.Viewport.Width;
 
             if (racer.racerType == RacerType.None)
                 return;//No HUD when just viewing ship model.
-            BeatShift.graphics.GraphicsDevice.Viewport = camera.Viewport;
             //Draw speed text //must be after mesh.draw
 
             int vOffset = camera.Viewport.Height - 60;

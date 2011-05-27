@@ -98,6 +98,7 @@ namespace BeatShift
             {
                 foreach (RacerHuman h_racer in humanRacers)
                 {
+                    BeatShift.graphics.GraphicsDevice.Viewport = h_racer.localCamera.Viewport;
 
                     //if(Physics.Visible)
                     //    Physics.Draw(gameTime);
