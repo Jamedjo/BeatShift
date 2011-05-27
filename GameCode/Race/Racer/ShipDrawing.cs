@@ -21,16 +21,16 @@ namespace BeatShift
         List<ShipFbx> shipClasses = new List<ShipFbx>();
         public Color shipColour;
         public ShipName currentShip = ShipName.Skylar;
-        //Model shipPhysicsModel;
-        BasicEffect shipPhysicsModelEffect;
-        public List<D_Arrow> drawArrowListRays = new List<D_Arrow>();
-        public List<D_Arrow> drawArrowListPermanent = new List<D_Arrow>();
+        //BasicEffect shipPhysicsModelEffect;
         public Boolean isVisible = true;
-        public EngineParticleSystem engineGlow;
-        public BeatGlowParticleSystem glow;
+
         //Physics delegate functions
         public Func<Matrix> getShipDrawOrientationMatrix;
         Func<Vector3> getShipPosition;
+        public EngineParticleSystem engineGlow;
+        public BeatGlowParticleSystem glow;
+
+        //particles
         public CollisionParticleSystem collision;
         public RespawnParticleSystem spawn;
 
@@ -39,6 +39,10 @@ namespace BeatShift
         public Boolean aiWallRayHit = false;
         public Vector3 aiFrontRayArrow = Vector3.Zero;
         public Boolean aiFrontRayHit = false;
+
+        //test arrows
+        public List<D_Arrow> drawArrowListRays = new List<D_Arrow>();
+        public List<D_Arrow> drawArrowListPermanent = new List<D_Arrow>();
 
         private Racer parentRacer;
 
@@ -159,9 +163,10 @@ namespace BeatShift
                     parentRacer.globalSystems.DrawAllParticleSystems();
                     if (isThisTheCamerasShip && !parentRacer.raceTiming.hasCompletedRace)
                     {
-                        parentRacer.privateSystems.SetWorldViewProjectionMatricesForAllParticleSystems(Matrix.Identity, viewMatrix, projectionMatrix);
-                        parentRacer.privateSystems.SetCameraPositionForAllParticleSystems(camera.cameraPosition());
-                        parentRacer.privateSystems.DrawAllParticleSystems();
+                        //Draw visualizations with camera's view matrix, but with the visualization projection matrix
+                        parentRacer.visualizationSystems.SetWorldViewProjectionMatricesForAllParticleSystems(Matrix.Identity, camera.VisualizationViewM, camera.VisualizationProjection);
+                        parentRacer.visualizationSystems.SetCameraPositionForAllParticleSystems(camera.cameraPosition());
+                        parentRacer.visualizationSystems.DrawAllParticleSystems();
                     }
                 }
             }

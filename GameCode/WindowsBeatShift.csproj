@@ -136,6 +136,7 @@
     <Compile Include="Camera\MouseCamera.cs" />
     <Compile Include="Camera\RevolveCamera.cs" />
     <Compile Include="Camera\SharedCameraProperties.cs" />
+    <Compile Include="Camera\VisCamera.cs" />
     <Compile Include="GameDebugTools\DebugCommandUI.cs" />
     <Compile Include="GameDebugTools\DebugManager.cs" />
     <Compile Include="GameDebugTools\DebugSystem.cs" />

@@ -26,7 +26,7 @@ namespace BeatShift
         public Cue Hum;
         private bool isBoosting = false;
         public ParticleSystemManager globalSystems;
-        public ParticleSystemManager privateSystems;
+        public ParticleSystemManager visualizationSystems;
         // General game related variables
         const float updatePeriod = 50; //update movement 20 times a second (1000/50=20)
         float lastUpdatedTimer = 0;
@@ -79,7 +79,7 @@ namespace BeatShift
             shipDrawing = new ShipDrawing(new Func<Matrix>(() => Matrix.Identity), new Func<Vector3>(() => Vector3.Zero), this);
             beatQueue = new BeatQueue(this);
             racerPoints = new RacerPoints();
-            privateSystems = new ParticleSystemManager();
+            visualizationSystems = new ParticleSystemManager();
             globalSystems = new ParticleSystemManager();
             //setColour(1);//Set to red
             //Hum = SoundManager.getEngineHum();
@@ -229,7 +229,7 @@ namespace BeatShift
                     shipDrawing.spawn.setPosition(shipPhysics.ShipPosition, shipPhysics.DrawOrientation);
                 }
                 globalSystems.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
-                privateSystems.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
+                visualizationSystems.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
 
             int lvl = (beatQueue == null) ? 0 : beatQueue.getLayer();

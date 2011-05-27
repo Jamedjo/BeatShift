@@ -43,6 +43,23 @@ namespace BeatShift.Cameras
             }
         }
 
+        public Matrix VisualizationViewM
+        {
+            get
+            {
+                if (beatVisCamera == null) return View;
+                return beatVisCamera.View;
+            }
+        }
+        public Matrix VisualizationProjection
+        {
+            get
+            {
+                if (beatVisCamera == null) return Projection;
+                return beatVisCamera.Projection;
+            }
+        }
+
         public Boolean ShouldDrawOwnShip
         {
             get
@@ -76,8 +93,9 @@ namespace BeatShift.Cameras
 
         private int cameraID = 0;
         private ICameraType currentCamera;
-       
+
         private RevolveCamera revolveCamera;
+        private VisCamera beatVisCamera;
 
         private CameraStage stage;
         public readonly Racer racer;
@@ -102,6 +120,12 @@ namespace BeatShift.Cameras
 #endif
         }
 
+        private void updateBeatVis()
+        {
+            beatVisCamera.Update(null);
+            beatVisCamera.updateProjection();
+        }
+
         public Vector3 cameraPosition()
         {
             return currentCamera.CamPosition;
@@ -109,7 +133,7 @@ namespace BeatShift.Cameras
 
         void resetProjection()
         {
-            //for each camera in list, updateProjection() ?
+            //for each camera in list, updateProjection() ?, then update beatVisProjection?
 
             //Projection = Matrix.CreatePerspectiveFieldOfView(
             //    MathHelper.PiOver4 * 1.5f,
@@ -131,6 +155,7 @@ namespace BeatShift.Cameras
                 Vector3 chaseFocalPoint = new Vector3(0.0f, 1.0f, -40.0f);
                 Vector3 chasePosition2 = new Vector3(0.0f, 2.5f, 12f);
                 Vector3 chaseFocalPoint2 = new Vector3(0.0f, 1.0f, -30.0f);
+                float beatVisHeightOffset = 0f;
                 if (Race.humanRacers.Count > 1)
                 {
                     chaseFOV = MathHelper.PiOver2;
@@ -140,7 +165,12 @@ namespace BeatShift.Cameras
 
                     chasePosition2 = new Vector3(0.0f, 2f, 10.0f);
                     chaseFocalPoint2 = new Vector3(0.0f, 5.0f, 0f);
+
+                    beatVisHeightOffset = 2f;
                 }
+
+                beatVisCamera = new VisCamera(ref properties, getShipPosition, getShipOrientation, getShipUp, beatVisHeightOffset);
+                updateBeatVis();
 
                 cameraList.Add(new ChaseCamera(ref properties, getShipPosition, getShipOrientation, getShipUp, racer.shipPhysics.getForwardSpeed, chasePosition, chaseFocalPoint, chaseFOV));
                 cameraList.Add(new ChaseCamera(ref properties, getShipPosition, getShipOrientation, getShipUp, racer.shipPhysics.getForwardSpeed, chasePosition2, chaseFocalPoint2, chaseFOV));
@@ -229,6 +259,10 @@ namespace BeatShift.Cameras
                     {
                         cam.Update(gameTime);
                     }
+
+                    //Update beatVisProjection //?TODO:?with v.small FOV change?
+                    beatVisCamera.Update(null);
+
                     break;
                 case CameraStage.PostRace:
                     break;

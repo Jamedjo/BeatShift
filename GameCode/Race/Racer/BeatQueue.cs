@@ -71,11 +71,12 @@ namespace BeatShift
         public void Load()
         {
             visualisation = new BeatRingParticleSystem(null);
-            parentRacer.privateSystems.AddParticleSystem(visualisation);
+            parentRacer.visualizationSystems.AddParticleSystem(visualisation);
             visualisation.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
 
+            //Creates feedback visualization to show when beats are hit
             beatGlow = new BeatGlowParticleSystem(null);
-            parentRacer.privateSystems.AddParticleSystem(beatGlow);
+            parentRacer.visualizationSystems.AddParticleSystem(beatGlow);
             beatGlow.AutoInitialize(BeatShift.graphics.GraphicsDevice, BeatShift.contentManager, null);
         }
 
