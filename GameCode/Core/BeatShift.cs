@@ -64,11 +64,6 @@ namespace BeatShift
         public static SoundManager sfx;
         public static AudioEngine engine;
 
-        // Particle related variables
-        public static BoostSettings settingsb;
-        public static ParticleEmitter emitter;
-        public static Effect pEffect;
-
         // General variables
         private static StorageDevice storage = null;
         public static StorageDevice Storage {get{ return storage; }}
@@ -150,11 +145,6 @@ namespace BeatShift
             bgm.LoadContent(Content,"bgm2");
             sfx = new SoundManager();
             sfx.LoadContent(Content);
-   
-            Texture2D map = Content.Load<Texture2D>("Particles/defcol");
-            Texture2D paticle = Content.Load<Texture2D>("Particles/try");
-           // pEffect = Content.Load<Effect>("Particles/Particle");
-            settingsb = new BoostSettings(map, paticle);
 
             base.Initialize();
 

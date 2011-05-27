@@ -56,7 +56,7 @@ namespace BeatShift
         //TestStates are to be used to try different bits of code, switching between them in real-time wihtout having to recompile
         //Before a comit is made, all code using these should be finalized so they are no longer used
         public static int TestState = 0;
-        private const int numberOfStates = 6;
+        private const int numberOfStates = 7;
         public static void nextState()
         {
             if(TestState>=numberOfStates-1) TestState = 0;

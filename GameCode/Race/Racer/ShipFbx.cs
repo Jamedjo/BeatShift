@@ -28,6 +28,10 @@ namespace BeatShift
             shipRenderer.EnableDefaultLighting();
             shipRenderer.PreferPerPixelLighting = true;
 
+            //Set specular settings so ship doesn't appear over-lit
+            shipRenderer.SpecularColor = new Vector3(0.2f, 0.2f, 0.2f);
+            shipRenderer.SpecularPower = 12f;
+
             //Override the default texture
             //Texture2D grayTexture;
             //grayTexture = content.Load<Texture2D>("tex5");
