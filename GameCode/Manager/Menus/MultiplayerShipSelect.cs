@@ -150,7 +150,7 @@ namespace BeatShift
                 switchShipLeft(i);
                 switchShipRight(i);
                
-                activePlayerPressedStart = activePlayerPressedStart || (ssarea[i].input.actionTapped(InputAction.Start) && (Race.humanRacers[i].shipDrawing.isVisible));
+                activePlayerPressedStart = activePlayerPressedStart || (ssarea[i].input.actionTapped(InputAction.Start) && (ssarea[i].isActive));
             }
 
 
@@ -188,8 +188,6 @@ namespace BeatShift
             for (int k = 0; k < 4; k++)
             {
                 Race.humanRacers[k].setupRacingControls(ssarea[k].input);
-
-                
             }
 
 

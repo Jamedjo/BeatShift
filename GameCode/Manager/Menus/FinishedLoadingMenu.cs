@@ -38,14 +38,14 @@ namespace BeatShift.Menus
             addMenuItem("", (Action)(delegate
             {
                     GameLoop.setGameState(GameState.LocalGame);
-#if WINDOWS
-                    if ((Keyboard.GetState().IsKeyDown(Keys.Enter)) && !AiInputManager.testAI)
-                    {
-                        Race.humanRacers[0].racingControls.setChosenInput(new KeyInputManager());
-                        //TODO: Make it so the input type corresponds to the input pressed
-                        //Could be done by checking each possible input manually, bypassing inputManger if necessary
-                    }
-#endif
+//#if WINDOWS
+//                    if ((Keyboard.GetState().IsKeyDown(Keys.Enter)) && !AiInputManager.testAI)
+//                    {
+//                        Race.humanRacers[0].racingControls.setChosenInput(new KeyInputManager());
+//                        //TODO: Make it so the input type corresponds to the input pressed
+//                        //Could be done by checking each possible input manually, bypassing inputManger if necessary
+//                    }
+//#endif
             }));
         }
 
