@@ -207,7 +207,7 @@ namespace BeatShift.Input
 
             #region BOOST
 
-#if WINDOWS
+#if DEBUG
             //Debug boost to get super speed
             if(Keyboard.GetState().IsKeyDown(Keys.X)) Boost(3f);
 #endif
@@ -329,9 +329,11 @@ namespace BeatShift.Input
             
             float forwardsValue = chosenInput.getActionValue(InputAction.Forwards);
             if ((forwardsValue < 0.05) && chosenInput.actionPressed(InputAction.Boost)) forwardsValue = 1f;//If boost pressed keep accelerating
-            
+
+            float baseSpeed = racer.beatQueue.getSpeedMultiplier();
+
             //Apply impulse
-            racer.shipPhysics.physicsBody.ApplyImpulse(racer.shipPhysics.physicsBody.Position, racer.shipPhysics.physicsBody.OrientationMatrix.Forward * 230 * forwardsValue); //TODO: should be 280?
+            racer.shipPhysics.physicsBody.ApplyImpulse(racer.shipPhysics.physicsBody.Position, racer.shipPhysics.physicsBody.OrientationMatrix.Forward * 230 * forwardsValue * baseSpeed);
         }
 
         public void Boost(double accuracy)
