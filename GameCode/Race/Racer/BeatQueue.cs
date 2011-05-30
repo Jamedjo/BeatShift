@@ -30,7 +30,8 @@ namespace BeatShift
         private double[] layerPenalty = { 0.25, 0.375, 0.5, 0.75, 1.5 };
         private float[] layerLeeway = { 125.0f, 120.0f, 115.0f, 110.0f, 105.0f };
         private float[] layerBoost = { 0.0f, 0.1f, 0.2f, 0.3f, 0.4f };
-        private float[] layerSpeedMultiplier = { 1.0f, 1.1f, 1.2f, 1.3f, 1.4f };
+        private float[] layerSpeedMultiplier = { 1.0f, 1.1f, 1.3f, 1.6f, 1.9f };
+        private int combo;
         private Color missColor = Color.Black;
         private Color hitColor = Color.FloralWhite;
         private Color levelupColor = Color.Fuchsia;
@@ -131,23 +132,23 @@ namespace BeatShift
                     }
                 }
 
-                if (boostBar == 100)
+                if ((result > 0m))
                 {
-                    LevelUp();
-                    beatGlow.Glow(hitColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
-                }
-                else if ((result > 0m))
-                {
+                    if (boostBar == 100)
+                        LevelUp();
                     boostBar += ((double)result * layerBonus[myLayer]);
                     beatGlow.Glow(hitColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
+                    combo++;
                 }
                 else if ((boostBar > 0) && (result == 0m))
+                {
+                    combo = 0;
                     if (time > invinciEndtime)
                     {
                         boostBar -= layerPenalty[myLayer];
-                        //beatGlow.Glow(missColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
-                        //SoundManager.MissedNote();
+                        combo = 0;
                     }
+                }
             if (boostBar > 100)
                 boostBar = 100;
             else if (boostBar < 0)
@@ -205,6 +206,11 @@ namespace BeatShift
             }   
         }
 
+        public int getCombo()
+        {
+            return combo;
+        }
+
         public void Update()
         {
             
@@ -223,13 +229,10 @@ namespace BeatShift
                     {
                         lastTime = temp.getTimeWithLatency((int)latency);
                         beats.Dequeue();
-
-                        //System.Diagnostics.Debug.WriteLine(temp + ": Dequeued because way out");
+                        combo = 0;
                         if (lastTime > invinciEndtime)
                         {
                             boostBar -= layerPenalty[myLayer];
-                            //beatGlow.Glow(missColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
-                           // SoundManager.MissedNote();
                         }
                     }
                 }
