@@ -70,3 +70,4 @@ glob:Vocal Beatshift/Bounces/New Lap Record.wav
 glob:Vocal Beatshift/Bounces/Race Complete.wav
 glob:GameCode/Race/Racer/Racer.cs.orig
 glob:GameCode/Race/Racer/ShipPhysics.cs.orig
+glob:**.mayaSwatches**
