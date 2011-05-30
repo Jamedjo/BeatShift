@@ -30,9 +30,9 @@ namespace BeatShift
                 return false;
         }
 
-        public override string getRaceTypeString()
+        public override RaceType getRaceType()
         {
-            return "EliminationRace";
+            return RaceType.EliminiationRace;
         }
 
         public override void finishRaceForTheRacer(Stopwatch finishTime, Racer racer, int _, int __)

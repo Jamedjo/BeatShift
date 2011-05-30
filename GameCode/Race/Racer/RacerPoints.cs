@@ -15,7 +15,7 @@ namespace BeatShift
         private int framesTotalSinceCalc = 0;
         private double lastCalculateTime = 0;
 
-        private int waypointsSinceLastMessage = 0;//If very few waypoints are hit during the raceTODOTODO
+        //private int waypointsSinceLastMessage = 0;//If very few waypoints are hit during the race//TODO:use?
 
         private double pointsToMessage = 0;
         private double lastMessageTime = 0;

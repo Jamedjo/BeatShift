@@ -45,7 +45,7 @@ namespace BeatShift.Menus
             Texture2D background = GameTextures.MenuBackgroundBlack;
             spriteBatch.Draw(background, new Rectangle(0, 0, 1300, background.Height / 2 + 50), Color.White);
             spriteBatch.Draw(background, new Rectangle(0, 0, 600, background.Height / 2 + 50), Color.White);
-            if (resultsCalc == true && Race.currentRaceType.getRaceTypeString().Equals("LappedRace"))
+            if (resultsCalc == true && Race.currentRaceType.getRaceType().Equals(RaceType.LappedRace))
             {
                 for (int i = 0; i < Race.currentRacers.Count; i++)
                 {
@@ -67,12 +67,12 @@ namespace BeatShift.Menus
                     //BeatShift.spriteBatch.DrawString(BeatShift.newfont, "5th    " + results[3] + "  " + players[4], new Vector2(500, 150 + offset * 4), Color.Gainsboro);
                 }
             }
-            else if (Race.currentRaceType.getRaceTypeString().Equals("EliminationRace"))
+            else if (Race.currentRaceType.getRaceType().Equals(RaceType.EliminiationRace))
             {
                 DrawMessageColour(BeatShift.newfont, "Survivor " + eliminationWinner.racerID.ToString(), 500, 300, 0.8f, Color.Goldenrod);
                 //BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Survivor:  " + eliminationWinner.racerID.ToString(), new Vector2(500, 300), Color.Goldenrod);
             }
-            else if (Race.currentRaceType.getRaceTypeString().Equals("TimeTrialRace"))
+            else if (Race.currentRaceType.getRaceType().Equals(RaceType.TimeTrialRace))
             {
                 int offset = 70;
                 for (int i = 0; i < Race.currentRacers.Count; i++)
@@ -94,7 +94,7 @@ namespace BeatShift.Menus
                     //BeatShift.spriteBatch.DrawString(BeatShift.newfont, "Unranked " + Race.currentRacers[i].racerID.ToString(), new Vector2(500, 150 + offset * i), Color.Gainsboro);
                 }
             }
-            if (Race.currentRaceType.getRaceTypeString().Equals("PointsRace"))
+            if (Race.currentRaceType.getRaceType().Equals(RaceType.PointsRace))
             {
                 int offset = 70;
                 for (int i = 0; i < Race.currentRacers.Count; i++)
@@ -134,7 +134,7 @@ namespace BeatShift.Menus
             HighScore.getHighScores(MapManager.currentMap.currentMapName, raceType, l);
         }
 
-        int raceType;
+        HighScoreType raceType = HighScoreType.TimeMode;
         long time = long.MaxValue;
         PlayerIndex index;
 
@@ -146,10 +146,10 @@ namespace BeatShift.Menus
                 if (racer.raceTiming.finalRaceTime == long.MaxValue)
                     racer.raceTiming.finalRaceTimeString = "DNF";
 
-            if (!Race.currentRaceType.getRaceTypeString().Equals("PointsRace"))
+            if (!Race.currentRaceType.getRaceType().Equals(RaceType.PointsRace))
             {
                 //List<HighScoreEntry> tempRes = HighScore.getHighScores(MapManager.currentMap, 1);
-                raceType = 0;
+                raceType = HighScoreType.PointMode;
                 for (int i = 0; i < Race.humanRacers.Count(); i++)
                 {
                     if (Race.humanRacers[i].raceTiming.fastestLap.TotalMilliseconds * 1000 < time)
@@ -187,13 +187,13 @@ namespace BeatShift.Menus
 
             //SAVE
 
-            if (Race.currentRaceType.getRaceTypeString().Equals("LappedRace"))
+            if (Race.currentRaceType.getRaceType().Equals(RaceType.LappedRace))
             {
                 results = Race.currentRacers.OrderByDescending(r => r.raceTiming.finalRaceTime).Reverse().Select(r => r.raceTiming.getFinalTotalTime()).ToArray();
                 players = Race.currentRacers.OrderByDescending(r => r.raceTiming.finalRaceTime).Reverse().Select(r => r.racerID.ToString()).ToArray();
                 resultsCalc = true;
             }
-            else if ( Race.currentRaceType.getRaceTypeString().Equals("EliminationRace") )
+            else if ( Race.currentRaceType.getRaceType().Equals(RaceType.EliminiationRace))
             {
                 foreach (Racer racer in Race.currentRacers)
                 {

@@ -14,8 +14,6 @@ namespace BeatShift.Menus
     class SinglePlayerShipSelect : IMenuPage
     {
 
-        float shipHue = 1;
-
         //Stuff for playing videos of ships
         VideoPlayer playerSkylar = new VideoPlayer();
         VideoPlayer playerOmicron = new VideoPlayer();

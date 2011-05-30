@@ -23,7 +23,7 @@ namespace BeatShift.Util
         }
     }
 
-    
+    public enum HighScoreType { TimeMode, PointMode }
 
     public static class HighScore
     {
@@ -35,7 +35,8 @@ namespace BeatShift.Util
         /// </summary>
         /// <param name="trackID">The track to get highscores for</param>
         /// <param name="mode">Either 0 or 1, for TIME_MODE or  POINT_MODE respectively</param>
-        public static List<HighScoreEntry> getHighScores(MapName trackID, int mode){
+        public static List<HighScoreEntry> getHighScores(MapName trackID, HighScoreType mode)
+        {
              return getHighScores(trackID, mode, new List<HighScoreEntry>());
         }
 
@@ -44,7 +45,7 @@ namespace BeatShift.Util
         /// </summary>
         /// <param name="trackID">The track to get highscores for</param>
         /// <param name="mode">Either 0 or 1, for TIME_MODE or  POINT_MODE respectively</param>
-        public static List<HighScoreEntry> getHighScores(MapName trackID, int mode, List<HighScoreEntry> thisRaceValues)
+        public static List<HighScoreEntry> getHighScores(MapName trackID, HighScoreType mode, List<HighScoreEntry> thisRaceValues)
         {
             List<HighScoreEntry> scoreTable = new List<HighScoreEntry>(10);
 
@@ -52,7 +53,7 @@ namespace BeatShift.Util
             {
                 throw new ArgumentException("Mode must be a valid track identifier from HighScore.", "trackID");
             }
-            if (!(mode == 0 || mode == 1))
+            if (!(mode == HighScoreType.TimeMode || mode == HighScoreType.PointMode))
             {
                 throw new ArgumentException("Mode must be a valid mode identifier from HighScore.", "mode");
             }
@@ -68,7 +69,7 @@ namespace BeatShift.Util
             
             int oldID = 0, newID = 0; 
             List<HighScoreEntry> results = new List<HighScoreEntry>(10);
-            if (mode == 0)
+            if (mode == HighScoreType.TimeMode)
             {
                 scoreTable = tempTable.OrderBy(x => x.value).ToList();
                 sortedInput = thisRaceValues.OrderBy(x => x.value).ToList();
@@ -101,7 +102,7 @@ namespace BeatShift.Util
                     entry.Add(value);
                 }
             }
-            else if (mode == 1)
+            else if (mode == HighScoreType.PointMode)
             {
                 scoreTable = tempTable.OrderByDescending(x => x.value).ToList();
                 sortedInput = thisRaceValues.OrderByDescending(x => x.value).ToList();
@@ -151,7 +152,7 @@ namespace BeatShift.Util
             return results;
         }
 
-        private static void init(int trackID, int mode)
+        private static void init(int trackID, HighScoreType mode)
         {
             
                 StorageContainer container = null;
@@ -166,15 +167,15 @@ namespace BeatShift.Util
                 }
 
                 Stream scoreStream;
-                fileExists = container.FileExists("HighScore_" + trackID + "_" + mode + ".xml");
+                fileExists = container.FileExists("HighScore_" + trackID + "_" + ((int)mode) + ".xml");
 
                 if (fileExists)
                 {
-                    scoreStream = container.OpenFile("HighScore_" + trackID + "_" + mode + ".xml", FileMode.Open, FileAccess.Read);
+                    scoreStream = container.OpenFile("HighScore_" + trackID + "_" + ((int)mode) + ".xml", FileMode.Open, FileAccess.Read);
                 }
                 else
                 {
-                    scoreStream = TitleContainer.OpenStream("HighScore_" + trackID + "_" + mode + ".xml");
+                    scoreStream = TitleContainer.OpenStream("HighScore_" + trackID + "_" + ((int)mode) + ".xml");
                 }
 
                 StreamReader scoreStreamReader = new StreamReader(scoreStream);
@@ -185,7 +186,7 @@ namespace BeatShift.Util
                 container.Dispose();
         } 
 
-        public static void saveScores(int trackID, int mode)
+        public static void saveScores(int trackID, HighScoreType mode)
         {
             {
 
@@ -204,7 +205,7 @@ namespace BeatShift.Util
 
 
 
-                Stream scoreStream = container.OpenFile("HighScore_" + trackID + "_" + mode + ".xml", FileMode.Create, FileAccess.Write);
+                Stream scoreStream = container.OpenFile("HighScore_" + trackID + "_" + ((int)mode) + ".xml", FileMode.Create, FileAccess.Write);
                 XmlWriter optsStreamWriter = XmlWriter.Create(scoreStream);
                 scoreDoc.WriteTo(optsStreamWriter);
                 optsStreamWriter.Flush();

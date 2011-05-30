@@ -17,6 +17,8 @@ namespace BeatShift
 
     // NB Each ship knows how many laps it has done and when it has finished
 
+    public enum RaceType {LappedRace,PointsRace,EliminiationRace,TimeTrialRace}
+
     /// <summary>
     ///  This deals with laps, poisitions (indirectly) and finishing.
     /// </summary>
@@ -251,7 +253,7 @@ namespace BeatShift
             int countEliminated = 0;
 
             // False if at least one ship is still going
-            if (Race.currentRaceType.getRaceTypeString().Equals("EliminationRace"))
+            if (Race.currentRaceType.getRaceType().Equals(RaceType.EliminiationRace))
             {
                 foreach (Racer racer in Race.currentRacers)
                 {
@@ -331,7 +333,7 @@ namespace BeatShift
 
         #region HUD Display Methods
 
-        public abstract string getRaceTypeString();
+        public abstract RaceType getRaceType();
 
         #endregion
 
