@@ -278,6 +278,13 @@ namespace BeatShift.GameDebugTools
                 Echo("Globals.TestState set to state "+Globals.TestState);
             });
 
+            // Command to quickly exit game.
+            RegisterCommand("exitgame", "Quickly exit game",
+            delegate(IDebugCommandHost host, string command, IList<string> args)
+            {
+                BeatShift.singleton.Exit();
+            });
+
             //'pos' command
             // Command to 
             RegisterCommand("pos", "set/show test Vector2 positions: 'pos help' for details.",
