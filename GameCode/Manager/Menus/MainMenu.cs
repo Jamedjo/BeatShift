@@ -18,7 +18,7 @@ namespace BeatShift.Menus
         public override void setupMenuItems()
         {
             addMenuItem("RACE", (Action)(delegate{
-                MenuManager.setCurrentMenu(MenuPage.RaceSelect);
+                MenuManager.mainMenuSystem.setCurrentMenu(MenuPage.RaceSelect);
             }));
             //addMenuItem("START CO-OP RACE", (Action)(delegate
             //{
@@ -33,7 +33,7 @@ namespace BeatShift.Menus
             //}));
             addMenuItem("OPTIONS", (Action)(delegate
             {
-                MenuManager.setCurrentMenu(MenuPage.Options);
+                MenuManager.mainMenuSystem.setCurrentMenu(MenuPage.Options);
             }));
             addMenuItem("EXIT", (Action)(delegate
             {

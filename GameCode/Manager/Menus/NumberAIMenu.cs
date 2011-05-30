@@ -32,17 +32,17 @@ namespace BeatShift.Menus
             addMenuItem("One", (Action)(delegate
             {
                 //Input.AiInputManager.numberOfAI = 1;
-                MenuManager.setCurrentMenu(MenuPage.MapSelect);
+                MenuManager.mainMenuSystem.setCurrentMenu(MenuPage.MapSelect);
             }));
             addMenuItem("Two", (Action)(delegate
             {
                 //Input.AiInputManager.numberOfAI = 2;
-                MenuManager.setCurrentMenu(MenuPage.MapSelect);
+                MenuManager.mainMenuSystem.setCurrentMenu(MenuPage.MapSelect);
             }));
             addMenuItem("Three", (Action)(delegate
             {
                 //Input.AiInputManager.numberOfAI = 3;
-                MenuManager.setCurrentMenu(MenuPage.MapSelect);
+                MenuManager.mainMenuSystem.setCurrentMenu(MenuPage.MapSelect);
             }));
         }
     }

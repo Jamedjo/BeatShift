@@ -32,6 +32,7 @@ namespace BeatShift.Menus
         Color sickLime = new Color(222, 255, 0);
         public Color slightlyTransparent = new Color(0, 0, 0, 180);
 
+
         public IMenuPage()
         {
             setDefaultValues();
@@ -176,12 +177,9 @@ namespace BeatShift.Menus
             BeatShift.spriteBatch.DrawString(font, message, new Vector2(x, y), col, 0f, Vector2.Zero, scale, SpriteEffects.None, 1); ;
         }
 
-        public void Draw()
+        public void Draw(Rectangle viewArea)
         {
-            BeatShift.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
-            BeatShift.graphics.GraphicsDevice.Viewport = Viewports.fullViewport;
-            Rectangle viewArea = new Rectangle(0, 0, BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height);
-            BeatShift.spriteBatch.Begin();
+
             BeatShift.spriteBatch.Draw(GameTextures.Logo, new Vector2(BeatShift.graphics.GraphicsDevice.Viewport.Width / 2 - GameTextures.Logo.Width/2, -10), Color.White);
 
             //BeatShift.spriteBatch.Draw(GameTextures.MenuBackgroundBlue, viewArea, Color.White);
@@ -208,9 +206,7 @@ namespace BeatShift.Menus
                 if (i == currentItem) frontColour = sickLime;
                 BeatShift.spriteBatch.DrawString(BeatShift.newfont, text, MenuPos + itemoffset, frontColour, 0, itemOrigin,TextScale, SpriteEffects.None, 1);
             }
-            BeatShift.spriteBatch.End();
 
-            otherDraw();
         }
         public virtual void otherDraw()
         {

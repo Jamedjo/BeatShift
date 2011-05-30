@@ -4,152 +4,96 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using BeatShift.Input;
+using Microsoft.Xna.Framework.GamerServices;
 
 namespace BeatShift.Menus
 {
-    /// <summary>
-    /// The different pages/screens the menu can be on. 
-    /// </summary>
-    public enum MenuPage { Splash, Main, Options, MapSelect, Multiplayer, SinglePlayerShipSelect, RaceSelect, Loading, HighScore, FinishedLoading}
+    public enum MenuStack { Main, Paused, PostRace }
 
     static class MenuManager
     {
-        public static Boolean Enabled = true;
-        public static Boolean Visible = true;
+        //public static Boolean Enabled = true;
+        //public static Boolean Visible = true;
 
-        public static Stack<MenuPage> MenuTrail = new Stack<MenuPage>();
-
-        static IMenuPage currentPage;
-        static IMenuPage Splash;
-        static IMenuPage Main;
-        static IMenuPage Options;
-        static IMenuPage MapSelect;
-        static IMenuPage Multiplayer;
-        static IMenuPage SinglePlayerShipSelect;
-        static IMenuPage RaceSelect;
-        static IMenuPage Loading;
-        static IMenuPage HighScore;
-        static IMenuPage FinishedLoading;
+        static List<IMenuStack> menuSystems = new List<IMenuStack>();
 
         public static IInputManager anyInput = new AnyInputManager();
 
+        public static IMenuStack mainMenuSystem = new IMenuStack(MenuPage.Splash,true);
+        public static IMenuStack pausedSystem = new IMenuStack(MenuPage.Pause,false);
+        public static IMenuStack postRaceSystem = new IMenuStack(MenuPage.Results,false);
+
         public static void Initialize()
         {
-            Main = new MainMenu();
-            Options = new OptionsMenu();
-            MapSelect = new MapSelectMenu();
-            Multiplayer = new MultiplayerMenu();
-            SinglePlayerShipSelect = new SinglePlayerShipSelect();
-            RaceSelect = new RaceSelectMenu();
-            Splash = new SplashMenu();
-            Loading = new LoadingMenu();
-            HighScore = new HighScoreMenu();
-            FinishedLoading = new FinishedLoadingMenu();
+            menuSystems.Add(mainMenuSystem);
+            menuSystems.Add(pausedSystem);
+            menuSystems.Add(postRaceSystem);
 
-            //currentPage = Main;
-            currentPage = Splash;
-            currentPage.enteringMenu();
+            mainMenuSystem.isActive = true;
         }
 
-        static void setCurrentPage(IMenuPage page)
+        static IMenuStack getMenuStackFromEnum(MenuStack stack)
         {
-            if (page == currentPage) return; //No change so do nothing
-            currentPage.leavingMenu();
-            currentPage = page;
-            page.enteringMenu();
-        }
-
-        /// <summary>
-        /// Checks the trail for the last menu screen 
-        /// </summary>
-        public static void menuBack()
-        {
-            if (MenuTrail.Peek() == MenuPage.Main)
-                return;
-            else
+            switch (stack)
             {
-                MenuTrail.Pop();
-                MenuPage temp = MenuTrail.Pop();
-                if (temp == MenuPage.Main)
-                    MenuTrail.Clear();
-                setCurrentMenu(temp);
+                case MenuStack.Main:
+                    return mainMenuSystem;
+                case MenuStack.Paused:
+                    return pausedSystem;
+                case MenuStack.PostRace:
+                    return postRaceSystem;
+                default:
+                    throw new Exception();
+                    return null;
             }
         }
 
-        /// <summary>
-        /// Sets the screen/page the menu is currently on and highlights the first item in that menu.
-        /// Triggers leavingMenu() and enteringMenu() actions.
-        /// </summary>
-        /// <param name="page">The page to move to.</param>
-        public static void setCurrentMenu(MenuPage page)
+        public static void EnableSystem(MenuStack stack)
         {
-            MenuTrail.Push(page);
-            switch (page)
+            DisableAllMenus();
+            getMenuStackFromEnum(stack).isActive = true;
+            getMenuStackFromEnum(stack).resetToMain();
+        }
+
+        public static void DisableAllMenus()
+        {
+            foreach (IMenuStack m in menuSystems)
             {
-                case MenuPage.Main:
-                    setCurrentPage(Main);
-                    break;
-                case MenuPage.MapSelect:
-                    setCurrentPage(MapSelect);
-                    break;
-                case MenuPage.Multiplayer:
-                    setCurrentPage(Multiplayer);
-                    break;
-                case MenuPage.Options:
-                    setCurrentPage(Options);
-                    break;
-                case MenuPage.SinglePlayerShipSelect:
-                    setCurrentPage(SinglePlayerShipSelect);
-                    break;
-                case MenuPage.RaceSelect:
-                    setCurrentPage(RaceSelect);
-                    break;
-                case MenuPage.Splash:
-                    setCurrentPage(Splash);
-                    break;
-                case MenuPage.Loading:
-                    setCurrentPage(Loading);
-                    GameLoop.StopTitle();
-                    break;
-                case MenuPage.HighScore:
-                    setCurrentPage(HighScore);
-                    break;
-                case MenuPage.FinishedLoading:
-                    setCurrentPage(FinishedLoading);
-                    break;
-                default:
-                    throw new Exception();
+                m.isActive = false;
+            }
+        }
+
+        public static void menuBack()
+        {
+            foreach (IMenuStack m in menuSystems)
+            {
+                if (m.isActive)
+                    m.menuBack();
             }
         }
 
         public static void Update(GameTime gameTime)
         {
             //Update input manager state ready for menu page to use
-            anyInput.Update(gameTime);
-            
-            //Update current page text values, inputs, and any custom updates
-            currentPage.Update(gameTime);
+            if(!Guide.IsVisible) anyInput.Update(gameTime);
+
+            //Update menu stacks
+            foreach (IMenuStack m in menuSystems)
+            {
+                if (m.isActive)
+                    m.Update(gameTime);
+            }
+
         }
 
         public static void Draw(GameTime gameTime){
-            if (!currentPage.ToString().Equals("PauseMenu") || !currentPage.ToString().Equals("ResultsMenu") )
+            foreach (IMenuStack m in menuSystems)
             {
-                Rectangle viewArea = new Rectangle(0, 0, BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height);
-                BeatShift.spriteBatch.Begin();
-                BeatShift.spriteBatch.Draw(GameTextures.MenuBackgroundBlue, viewArea, Color.White);
-                BeatShift.spriteBatch.End();
+                if(m.isActive)
+                    m.Draw(gameTime);
             }
-            //draw current page
-            currentPage.Draw();
         }
 
-
-        public static void resetToMain()
-        {
-            MenuManager.MenuTrail.Clear();
-            MenuManager.MenuTrail.Push(MenuPage.Main);
-            currentPage = Main;
-        }
     }
 
 }

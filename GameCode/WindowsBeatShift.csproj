@@ -151,10 +151,12 @@
     <Compile Include="Manager\Maps\CityMap.cs" />
     <Compile Include="Manager\Maps\DesertMap.cs" />
     <Compile Include="Manager\Maps\FbxModel.cs" />
+    <Compile Include="Manager\Menus\IMenuPage.cs" />
     <Compile Include="Manager\Maps\KdTree3.cs" />
     <Compile Include="Manager\Maps\SpaceMap.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Manager\Menus\IMenuStack.cs" />
     <Compile Include="Manager\Menus\LoadingMenu.cs" />
     <Compile Include="Manager\Menus\HighScoreMenu.cs" />
     <Compile Include="Manager\Menus\FinishedLoadingMenu.cs" />
@@ -177,7 +179,6 @@
     </Compile>
     <Compile Include="Utilities &amp; Misc\ButtonDraw.cs" />
     <Compile Include="Utilities &amp; Misc\ControlSelect.cs" />
-    <Compile Include="Manager\Menus\IMenuPage.cs" />
     <Compile Include="Manager\Menus\MainMenu.cs" />
     <Compile Include="Manager\Menus\MapSelectMenu.cs" />
     <Compile Include="Manager\Menus\MenuItem.cs" />

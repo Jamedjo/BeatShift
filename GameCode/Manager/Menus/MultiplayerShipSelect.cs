@@ -197,7 +197,7 @@ namespace BeatShift
             Race.removeNonVisibleRacers();
 
             GameLoop.setGameState(GameState.Menu);
-            MenuManager.setCurrentMenu(MenuPage.Loading);
+            MenuManager.mainMenuSystem.setCurrentMenu(MenuPage.Loading);
         }
 
         private void respondToMenuBack(int i)

@@ -86,7 +86,7 @@ namespace BeatShift.Menus
         public override void otherUpdate()
         {
             base.otherUpdate();
-            if (loaded) MenuManager.setCurrentMenu(MenuPage.FinishedLoading);
+            if (loaded) MenuManager.mainMenuSystem.setCurrentMenu(MenuPage.FinishedLoading);
         }
     }
 }

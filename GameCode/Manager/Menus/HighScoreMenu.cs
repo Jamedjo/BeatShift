@@ -47,8 +47,9 @@ namespace BeatShift.Menus
         {
             addMenuItem("CONTINUE", (Action)(delegate
             {
-                MenuManager.setCurrentMenu(MenuPage.Main);
-                GameLoop.setGameStateAndResetPlayers(GameState.Menu);
+                MenuManager.menuBack();
+                //MenuManager.setCurrentMenu(MenuPage.Main);
+                //GameLoop.setGameStateAndResetPlayers(GameState.Menu);
             }));
         }
 

@@ -73,7 +73,7 @@ namespace BeatShift
             }
         }
 
-        public static void Draw(GameTime gameTime)
+        public static void DrawMap(GameTime gameTime)
         {
             foreach (RacerHuman h_racer in humanRacers)
             {
@@ -82,8 +82,14 @@ namespace BeatShift
 
                 if (MapManager.Visible && Options.DrawWaypoints)
                     MapManager.currentMap.drawSpheres(gameTime, h_racer.localCamera);
+            }
 
+        }
 
+        public static void Draw(GameTime gameTime)
+        {
+            foreach (RacerHuman h_racer in humanRacers)
+            {
                 foreach (Racer allRacer in currentRacers)
                 {
                     if (allRacer.shipDrawing.isVisible)

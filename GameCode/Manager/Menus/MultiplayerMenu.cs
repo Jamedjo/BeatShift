@@ -27,7 +27,7 @@ namespace BeatShift.Menus
         {
             addMenuItem("SPLIT SCREEN" , (Action)(delegate
             {
-                MenuManager.setCurrentMenu(MenuPage.RaceSelect);
+                MenuManager.mainMenuSystem.setCurrentMenu(MenuPage.RaceSelect);
             }));
             addMenuItem("CREATE LIVE SESSION", (Action)(delegate
             {

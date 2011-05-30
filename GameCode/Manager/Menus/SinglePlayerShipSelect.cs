@@ -39,7 +39,7 @@ namespace BeatShift.Menus
                 addMenuItem("", (Action)(delegate
                 {
                     startSinglePlayerGame();
-                    MenuManager.setCurrentMenu(MenuPage.Loading);
+                    MenuManager.mainMenuSystem.setCurrentMenu(MenuPage.Loading);
                 }));
             }
         }

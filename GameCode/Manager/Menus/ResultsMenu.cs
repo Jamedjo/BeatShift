@@ -138,7 +138,7 @@ namespace BeatShift.Menus
         long time = long.MaxValue;
         PlayerIndex index;
 
-        private void calculateResults()
+        public void calculateResults()
         {
             results = new string[Race.currentRacers.Count];
 
@@ -208,15 +208,13 @@ namespace BeatShift.Menus
         {
             resetMenuSelection();
             base.enteringMenu();
-            calculateResults();
         }
 
         public override void setupMenuItems()
         {
             addMenuItem("Highscores", (Action)(delegate
             {
-                MenuManager.setCurrentMenu(MenuPage.HighScore);
-                GameLoop.setGameState(GameState.Menu);
+                MenuManager.postRaceSystem.setCurrentMenu(MenuPage.HighScore);
                 //MenuManager.setCurrentMenu(MenuPage.HighScore);
                 
             }));

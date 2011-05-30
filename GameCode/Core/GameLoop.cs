@@ -41,9 +41,6 @@ namespace BeatShift
 
         private static bool[] activeControllers = new bool[4];
 
-        private static IMenuPage pauseMenu = new PauseMenu();
-        private static IMenuPage resultsMenu = new ResultsMenu();
-
         public static void playTitle()
         {
             try
@@ -137,13 +134,13 @@ namespace BeatShift
                 if (!paused)
                 {
                     BeginPause(true);
-                    pauseMenu.enteringMenu();
+                    MenuManager.EnableSystem(MenuStack.Paused);
                     MenuManager.anyInput.Update(gameTime);
                 }
-                else
+                else if(MenuManager.pausedSystem.isActive)
                 {
                     EndPause();
-                    pauseMenu.leavingMenu();
+                    MenuManager.DisableAllMenus();
                 }
             }
         }
@@ -151,16 +148,19 @@ namespace BeatShift
         private static void checkPauseGuide()
         {
             // Pause if the Guide is up
-            if (!paused && Guide.IsVisible && currentState == GameState.LocalGame)
+            if (!paused && Guide.IsVisible)// && currentState == GameState.LocalGame)
             {
                 BeginPause(false);
                 //Console.Write("Game Paused \n");
             }
             // If we paused for the guide, unpause if the guide
             // went away
-            else if (paused && pausedForGuide && !Guide.IsVisible && currentState == GameState.LocalGame)
+            else if (paused && pausedForGuide && !Guide.IsVisible)// && currentState == GameState.LocalGame)
             {
-                EndPause();
+                pausedForGuide = false;
+
+                if(MenuManager.pausedSystem.isActive==false) //Checks that the game wasn't double-paused with both guide+pauseMenu
+                    EndPause();
                 //Console.Write("Game Resumed \n");
             }
         }
@@ -174,7 +174,7 @@ namespace BeatShift
                     if (activeControllers[k] && !GamePad.GetState((PlayerIndex)(k)).IsConnected)
                     {
                         BeginPause(true);
-                        pauseMenu.enteringMenu();
+                        MenuManager.EnableSystem(MenuStack.Paused);
                         MenuManager.anyInput.Update(gameTime);
                         break;
                     }
@@ -184,7 +184,8 @@ namespace BeatShift
         {
             BeginPause(true);
             raceComplete = true;
-            resultsMenu.enteringMenu();
+            MenuManager.EnableSystem(MenuStack.PostRace);
+            ((ResultsMenu)IMenuStack.Results).calculateResults();
             MenuManager.anyInput.Update(gameTime);
         }
 
@@ -224,8 +225,7 @@ namespace BeatShift
 
             BeatShift.graphics.GraphicsDevice.Viewport = Viewports.fullViewport;
 
-            MenuManager.Enabled = false;
-            MenuManager.Visible = false;
+            MenuManager.DisableAllMenus();
             BeatShift.networkedGame.Enabled = false;
             BeatShift.networkedGame.Visible = false;
             MapManager.Enabled = false;
@@ -243,8 +243,8 @@ namespace BeatShift
             switch (newState)
             {
                 case GameState.Menu:
-                    MenuManager.Enabled = true;
-                    MenuManager.Visible = true;
+                    MenuManager.EnableSystem(MenuStack.Main);
+                    MenuManager.mainMenuSystem.setCurrentMenu(MenuPage.Main);
                     BeatShift.bgm.stop();
                     playTitle();
                     break;
@@ -261,10 +261,9 @@ namespace BeatShift
                     MapManager.Visible = true;
                     Race.setupViewports();
                     Race.currentRaceType.startRaceProcedure();
-                    MenuManager.resetToMain();
                     break;
                 case GameState.MultiplayerShipSelect:
-                    MenuManager.MenuTrail.Push(MenuPage.MapSelect);
+                    MenuManager.mainMenuSystem.MenuTrail.Push(MenuPage.MapSelect);
                     Race.setupSelectionRacers(4,false);
                     Race.Enabled = true;
                     Race.Visible = true;
@@ -300,7 +299,12 @@ namespace BeatShift
                 BeatShift.gamerServices.Update(gameTime);
 
                 //Update mainGameInput
-                mainGameinput.Update(gameTime);
+                if(!Guide.IsVisible) mainGameinput.Update(gameTime);
+            }
+
+            if (!pausedForGuide)
+            {
+                MenuManager.Update(gameTime);
             }
 
             if (!paused)
@@ -316,8 +320,6 @@ namespace BeatShift
                 //Update all managed timers.
                 RunningTimer.Update(gameTime);
 
-                if (MenuManager.Enabled)
-                    MenuManager.Update(gameTime);
                 if (BeatShift.shipSelect.Enabled)
                     BeatShift.shipSelect.Update(gameTime);
 
@@ -349,14 +351,6 @@ namespace BeatShift
 
             }
 
-            if( paused && !pausedForGuide )
-            {
-                if (raceComplete)
-                    resultsMenu.Update(gameTime);
-                else
-                    pauseMenu.Update(gameTime);
-                MenuManager.anyInput.Update(gameTime);
-            }
 
             //full screen option
 #if WINDOWS
@@ -380,35 +374,33 @@ namespace BeatShift
             BeatShift.graphics.GraphicsDevice.Viewport = Viewports.fullViewport;
             Rectangle viewArea = new Rectangle(0, 0, BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height);
             
-            //Draw Scene background
+            //Clear screen to black
             BeatShift.graphics.GraphicsDevice.Clear(Color.Black);
 
-            //BeatShift.spriteBatch.Begin();
-            //if (menuSystem.Visible || shipSelect.Visible)
-            //{
-                //GraphicsDevice.Clear(Color.CornflowerBlue);
-                //BeatShift.spriteBatch.Draw(GameTextures.MenuBackgroundBlue, viewArea, Color.White);
-            //}
-            //BeatShift.spriteBatch.End();
-
-            //Draw other Drawable Game Classes
-            if (MenuManager.Visible)
-            {
-                MenuManager.Draw(gameTime);
-            }
             if (BeatShift.shipSelect.Visible && !( paused || Guide.IsVisible ) )
             {
                 BeatShift.shipSelect.Draw(gameTime);
             }
+
+            //Draw map
+            if (Race.Visible)
+            {
+                Race.DrawMap(gameTime);
+            }
+
+            //Draw Main menu system if active, before drawing ship-selection ships
+            if(MenuManager.mainMenuSystem.isActive) MenuManager.Draw(gameTime);
+
+            //Draw ships/racers and HUD
             if (Race.Visible)
             {
                 Race.Draw(gameTime);
             }
-            if (paused && !pausedForGuide)
-                if (raceComplete)
-                    resultsMenu.Draw();
-                else
-                    pauseMenu.Draw();
+
+            //Draw any other menu systems (Pause/PostGame) which are active
+            if (!MenuManager.mainMenuSystem.isActive) MenuManager.Draw(gameTime);
+
+
             //if (networkedGame.Visible) networkedGame.Draw(gameTime);
 
         }

@@ -35,7 +35,7 @@ namespace BeatShift.Menus
         {
             addMenuItem("Press Start to Play", (Action)(delegate
             {
-                MenuManager.setCurrentMenu(MenuPage.Main);
+                MenuManager.mainMenuSystem.setCurrentMenu(MenuPage.Main);
             }));
          }
 

@@ -27,6 +27,7 @@ namespace BeatShift.Menus
 
         public override void enteringMenu()
         {
+            MenuManager.anyInput.Update(BeatShift.singleton.currentTime);
             resetMenuSelection();
             base.enteringMenu();
         }
@@ -36,16 +37,23 @@ namespace BeatShift.Menus
             addMenuItem("RESUME", (Action)(delegate
             {
                 GameLoop.EndPause();
+                MenuManager.DisableAllMenus();
+            }));
+            addMenuItem("OPTIONS", (Action)(delegate
+            {
+                MenuManager.pausedSystem.setCurrentMenu(MenuPage.Options);
             }));
             addMenuItem("MAIN MENU", (Action)(delegate
             {
                 GameLoop.setGameStateAndResetPlayers(GameState.Menu);
             }));
-            addMenuItem("EXIT", (Action)(delegate
-            {
-                BeatShift.singleton.Exit();
-            }));
 
+        }
+
+        public override void respondToMenuBack()
+        {
+            GameLoop.EndPause();
+            MenuManager.DisableAllMenus();
         }
 
         public override void overrideMenuPositions()

@@ -29,25 +29,25 @@ namespace BeatShift.Menus
             {
                 Race.currentRaceType = new LappedRace(3);
                 Race.resetPlayers();
-                MenuManager.setCurrentMenu(MenuPage.MapSelect);
+                MenuManager.mainMenuSystem.setCurrentMenu(MenuPage.MapSelect);
             }));
             addMenuItem("TIME TRIAL", (Action)(delegate
             {
                 Race.currentRaceType = new TimeTrialRace();
                 Race.resetPlayers();
-                MenuManager.setCurrentMenu(MenuPage.MapSelect);
+                MenuManager.mainMenuSystem.setCurrentMenu(MenuPage.MapSelect);
             }));
             addMenuItem("ELIMINATION", (Action)(delegate
             {
                 Race.currentRaceType = new EliminationRace(5); //TODO: define how many racers we want in menu
                 Race.resetPlayers();
-                MenuManager.setCurrentMenu(MenuPage.MapSelect);
+                MenuManager.mainMenuSystem.setCurrentMenu(MenuPage.MapSelect);
             }));
             addMenuItem("POINTS FRENZY", (Action)(delegate
             {
                 Race.currentRaceType = new PointsRace(1);
                 Race.resetPlayers();
-                MenuManager.setCurrentMenu(MenuPage.MapSelect);
+                MenuManager.mainMenuSystem.setCurrentMenu(MenuPage.MapSelect);
             }));
 
         }
