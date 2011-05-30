@@ -15,6 +15,7 @@ namespace BeatShift.Input
         private PlayerIndex index;
         private GamePadState currentPadState;
         private GamePadState lastPadState;
+        private GamePadType padType = GamePadType.GamePad;
 
         public PlayerIndex getPlayerIndex()
         {
@@ -47,9 +48,11 @@ namespace BeatShift.Input
 
         void IInputManager.Update(GameTime gameTime)
         {
-            //if (currentPadState.IsConnected)
+            //TODO: React to this//if (currentPadState.IsConnected)
             lastPadState = currentPadState;
             currentPadState = GamePad.GetState(index);
+
+            padType = GamePad.GetCapabilities(index).GamePadType;
         }
 
         #endregion
@@ -57,6 +60,12 @@ namespace BeatShift.Input
         public Boolean wasButtonTapped(Buttons check)
         {
             return (currentPadState.IsButtonDown(check) && !lastPadState.IsButtonDown(check));
+        }
+
+        private float scaleWheelInput(float inVal)
+        {
+            float outVal = inVal * 4f;
+            return Math.Min(1f,outVal);
         }
 
         public float getButtonValue(Buttons check)
@@ -75,9 +84,11 @@ namespace BeatShift.Input
                 //Get value or '-value' so that a positive value is given in the direction being checked.
                 case Buttons.LeftThumbstickRight:
                     unclampedValue = currentPadState.ThumbSticks.Left.X;
+                    if ((unclampedValue > 0) && padType == GamePadType.Wheel) unclampedValue = scaleWheelInput(unclampedValue);
                     break;
                 case Buttons.LeftThumbstickLeft:
                     unclampedValue = -currentPadState.ThumbSticks.Left.X;
+                    if ((unclampedValue > 0) && padType == GamePadType.Wheel) unclampedValue = scaleWheelInput(unclampedValue);
                     break;
                 case Buttons.LeftThumbstickUp:
                     unclampedValue = currentPadState.ThumbSticks.Left.Y;
