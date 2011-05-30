@@ -155,7 +155,7 @@ namespace BeatShift
         {
             //Add AI racers
             initializeAiNames();
-            if (!currentRaceType.getRaceTypeString().Equals("TimeTrialRace"))
+            if (!currentRaceType.getRaceType().Equals(RaceType.TimeTrialRace))
             {
                 for (int i = 0; i < numberOfAiRacers; i++)
                 {

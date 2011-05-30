@@ -74,9 +74,9 @@ namespace BeatShift
 
             if (currentLap == 1 || stopwatch.Elapsed.TotalMilliseconds < fastestLap.TotalMilliseconds)
                 fastestLap = stopwatch.Elapsed;
-            
 
-            if (Race.currentRaceType.getRaceTypeString().Equals("EliminationRace"))
+
+            if (Race.currentRaceType.getRaceType().Equals(RaceType.EliminiationRace))
             {
                 // Penultimate racer destroys the guy in last place on each lap
                 int racersStillGoing = Race.currentRacers.Count;

@@ -46,19 +46,19 @@ namespace BeatShift
                 ////////////////////////
                 ///// FINAL RESULTS ////
                 ////////////////////////
-                if (Race.currentRaceType.getRaceTypeString().Equals("LappedRace"))
+                if (Race.currentRaceType.getRaceType().Equals(RaceType.LappedRace))
                 {
                     //BeatShift.spriteBatch.Begin();//(SpriteSortMode.Immediate, BlendState.AlphaBlend);
                     //DrawMessage("Finished!", 325, vOffset / 2);
                     DrawMessageColour(BeatShift.newfont, "Finished!", viewportWidth / 4, viewportHeight / 2 + 40, 0.6f, Color.PapayaWhip);
                     //DrawMessage("Final Time: " + racer.raceTiming.getFinalTotalTime(), 300, vOffset / 2 + 40);
                 }
-                if (Race.currentRaceType.getRaceTypeString().Equals("EliminationRace"))
+                if (Race.currentRaceType.getRaceType().Equals(RaceType.EliminiationRace))
                 {
                     BeatShift.spriteBatch.Draw(GameTextures.Eliminated, new Rectangle(viewportWidth / 2 - GameTextures.Eliminated.Width / 2, 3 * viewportHeight / 3, GameTextures.Eliminated.Width, GameTextures.Eliminated.Height), Color.PapayaWhip);
                     //DrawMessage("ELIMINATED!", 325, vOffset / 2);
                 }
-                if (Race.currentRaceType.getRaceTypeString().Equals("TimeTrialRace"))
+                if (Race.currentRaceType.getRaceType().Equals(RaceType.TimeTrialRace))
                 {
                     //BeatShift.spriteBatch.Begin();
                     DrawMessageColour(BeatShift.newfont, "Best Lap: " + racer.raceTiming.getBestLapTime(), viewportWidth / 4, viewportHeight / 2, 0.5f, Color.PapayaWhip);
@@ -117,9 +117,9 @@ namespace BeatShift
                     BeatShift.spriteBatch.Draw(chosenLine, orange_dest, orange_src2, Color.White);
                 }
 
-                ////////////////////////
-                /////// LEVEL //////////
-                ////////////////////////
+                /////////////////////////
+                ///////// LEVEL /////////
+                /////////////////////////
 
                 if (viewportWidth > 700)
                 {
@@ -130,6 +130,19 @@ namespace BeatShift
                 {
                     DrawMessageColour(BeatShift.volterfont, "LEVEL", viewportWidth - 143, vOffset - 12, 0.4f, Color.PapayaWhip);
                     DrawMessageColour(BeatShift.volterfont, (racer.beatQueue.getLayer() + 1).ToString(), viewportWidth - 136, vOffset - 3, 0.8f, Color.PapayaWhip);
+                }
+
+                ////////////////////////
+                ///// COMBO COUNT //////
+                ////////////////////////
+
+                if (viewportWidth > 700)
+                {
+                    DrawMessageColour(BeatShift.volterfont, racer.beatQueue.getCombo().ToString()+"x", viewportWidth - 240, vOffset - 73, 3f, Color.Black);
+                }
+                else
+                {
+                    DrawMessageColour(BeatShift.volterfont, racer.beatQueue.getCombo().ToString() + "x", viewportWidth - 143, vOffset - 42, 2.4f, Color.Black);
                 }
 
                 ////////////////////////
@@ -165,7 +178,7 @@ namespace BeatShift
                 int newBoardWidth = (int)(GameTextures.TopRightBoard.Width * scaleFactorWidth);
                 int newBoardHeight = (int)(GameTextures.TopRightBoard.Height * scaleFactorHeight);
 
-                if (Race.currentRaceType.getRaceTypeString().Equals("EliminationRace"))
+                if (Race.currentRaceType.getRaceType().Equals(RaceType.EliminiationRace))
                 {
                     {
                         Rectangle d = new Rectangle(viewportWidth - GameTextures.EliminationBar.Width, 0, GameTextures.EliminationBar.Width, GameTextures.EliminationBar.Height);
@@ -188,7 +201,7 @@ namespace BeatShift
                         //}
                     }
                 }
-                else if (Race.currentRaceType.getRaceTypeString().Equals("PointsRace"))
+                else if (Race.currentRaceType.getRaceType().Equals(RaceType.PointsRace))
                 {
                     if (viewportWidth > 700)
                     {

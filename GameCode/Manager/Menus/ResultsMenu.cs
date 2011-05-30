@@ -152,9 +152,10 @@ namespace BeatShift.Menus
                 raceType = HighScoreType.PointMode;
                 for (int i = 0; i < Race.humanRacers.Count(); i++)
                 {
-                    if (Race.humanRacers[i].raceTiming.fastestLap.TotalMilliseconds * 1000 < time)
+                    long racersFastersTime = (long)(Race.humanRacers[i].raceTiming.fastestLap.TotalMilliseconds * 1000);
+                    if ( (racersFastersTime > 1 ) && racersFastersTime < time)//Needs a sanity check, as fastestLap is zero if a lap is not completed?
                     {
-                        time = (long)(Race.humanRacers[i].raceTiming.fastestLap.TotalMilliseconds * 1000);
+                        time = racersFastersTime;
                         index = Race.humanRacers[i].racingControls.padIndex;
                     }
                 }
