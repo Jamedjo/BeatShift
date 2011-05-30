@@ -26,6 +26,7 @@ namespace BeatShift
         AudioCategory voiceCategory;
         AudioCategory effectCategory;
         public static string trackToLoad;
+        public static bool raceBegan = false;
         public static event VolumechangeHandler Music;
         public static event VolumechangeHandler Voice;
         public static event VolumechangeHandler Effect;
@@ -113,7 +114,10 @@ namespace BeatShift
 
         public static void Collision()
         {
-            effectSound.PlayCue("Collision");
+            if (raceBegan)
+            {
+                effectSound.PlayCue("Collision");
+            }
         }
 
         public static void levelUp()
