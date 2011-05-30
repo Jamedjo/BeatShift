@@ -98,7 +98,7 @@ namespace BeatShift
             // Not the actual race but the putting of the cars on the map before countdown
             raceProcedureBegun = true;
             raceOver = false;
-
+            SoundManager.raceBegan = false;
             // Give each ship a ship physics
             // Console.Write("Started adding physics to each ship...");
             foreach (Racer racer in Race.currentRacers)
@@ -173,6 +173,7 @@ namespace BeatShift
                     if (countdownState != GameTextures.CountdownGo)
                     {
                         SoundManager.RaceStart(0);
+                        SoundManager.raceBegan = true;
                     }
                     countDownRunning = false;
                     countDownTimer.Reset();
