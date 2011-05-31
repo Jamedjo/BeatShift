@@ -11,6 +11,7 @@ using BEPUphysics.Entities.Prefabs;
 using Microsoft.Xna.Framework.Input;
 using BEPUphysics.Collidables.MobileCollidables;
 using BEPUphysics.PositionUpdating;
+using BEPUphysics.Collidables.Events;
 
 namespace BeatShift
 {/// <summary>
@@ -77,7 +78,6 @@ namespace BeatShift
 
                 body.PositionUpdateMode = PositionUpdateMode.Continuous;
 
-                //body.CollisionInformation.Events.ContactCreated += new ContactCreatedEventHandler<EntityCollidable>(Events_InitialCollisionDetected);
 
 
                 Vehicle = new Vehicle(body);
@@ -87,30 +87,37 @@ namespace BeatShift
                 //The wheel model used is not aligned initially with how a wheel would normally look, so rotate them.
                 Matrix wheelGraphicRotation = Matrix.CreateFromAxisAngle(Vector3.Forward, MathHelper.PiOver2);
 
+                float shipWidth = 5f;//2.2f;//TODO:don't set manually
+                float shipLength = 7.5f;//3.6f;//TODO:don't set manually
+
+                float staticFriction = 0.2f;
+                float dynamicFriction = 1.5f;
+
+
                 Vehicle.AddWheel(new Wheel(
                                      new RaycastWheelShape(.5f, wheelGraphicRotation),
-                                     new WheelSuspension(2000, 100f, Vector3.Down, .8f, new Vector3(-1.1f, 0, 1.8f)),
+                                     new WheelSuspension(2000, 100f, Vector3.Down, .8f, new Vector3(-shipWidth / 2, 0f, shipLength / 2)),
                                      new WheelDrivingMotor(3f, 30000, 10000),
                                      new WheelBrake(1.5f, 2, .02f),
-                                     new WheelSlidingFriction(4f, 5f)));
+                                     new WheelSlidingFriction(dynamicFriction, staticFriction)));
                 Vehicle.AddWheel(new Wheel(
                                      new RaycastWheelShape(.5f, wheelGraphicRotation),
-                                     new WheelSuspension(2000, 100f, Vector3.Down, .8f, new Vector3(-1.1f, 0, -1.8f)),
+                                     new WheelSuspension(2000, 100f, Vector3.Down, .8f, new Vector3(-shipWidth / 4, 0f, -shipLength / 2)),
                                      new WheelDrivingMotor(3f, 30000, 10000),
                                      new WheelBrake(1.5f, 2, .02f),
-                                     new WheelSlidingFriction(4f, 5f)));
+                                     new WheelSlidingFriction(dynamicFriction, staticFriction)));
                 Vehicle.AddWheel(new Wheel(
                                      new RaycastWheelShape(.5f, wheelGraphicRotation),
-                                     new WheelSuspension(2000, 100f, Vector3.Down, .8f, new Vector3(1.1f, 0, 1.8f)),
+                                     new WheelSuspension(2000, 100f, Vector3.Down, .8f, new Vector3(shipWidth / 2, 0f, shipLength / 2)),
                                      new WheelDrivingMotor(3f, 30000, 10000),
                                      new WheelBrake(1.5f, 2, .02f),
-                                     new WheelSlidingFriction(4f, 5f)));
+                                     new WheelSlidingFriction(dynamicFriction, staticFriction)));
                 Vehicle.AddWheel(new Wheel(
                                      new RaycastWheelShape(.5f, wheelGraphicRotation),
-                                     new WheelSuspension(2000, 100f, Vector3.Down, .8f, new Vector3(1.1f, 0, -1.8f)),
+                                     new WheelSuspension(2000, 100f, Vector3.Down, .8f, new Vector3(shipWidth / 4, 0f, -shipLength / 2)),
                                      new WheelDrivingMotor(3f, 30000, 10000),
                                      new WheelBrake(1.5f, 2, .02f),
-                                     new WheelSlidingFriction(4f, 5f)));
+                                     new WheelSlidingFriction(dynamicFriction, staticFriction)));
 
                 #endregion
 

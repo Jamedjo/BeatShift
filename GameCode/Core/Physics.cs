@@ -164,7 +164,8 @@ namespace BeatShift
                     //physicsMesh.Material.KineticFriction = 0.9f;//Improves wall collisions by slowing ship down
                     //physicsMesh.Material.StaticFriction = 0.9f;//Improves wall collisions by slowing ship down
                     //physicsMesh.Material.Bounciness = 0;
-                    //physicsMesh.CollisionRules.Personal = CollisionRule.NoSolver;
+                    physicsMesh.CollisionRules.Personal = CollisionRule.NoSolver;
+                    physicsMesh.Sidedness = BEPUphysics.CollisionShapes.ConvexShapes.TriangleSidedness.Counterclockwise;//Only collide with the outside of walls.
                     currentTrackWall = physicsMesh;
                 }
                 if (category == ModelCategory.InvisibleWall)
@@ -174,8 +175,8 @@ namespace BeatShift
                 }
                 if (category == ModelCategory.Track)
                 {
-                    physicsMesh.Material.Bounciness = 0.3f;
-                    physicsMesh.Material.KineticFriction = 0.1f;
+                    //physicsMesh.Material.Bounciness = 0.3f;
+                    //physicsMesh.Material.KineticFriction = 0.1f;
 
                     
                    // physicsMesh.CollisionRules.Personal = CollisionRule.NoSolver;//No collisions with track

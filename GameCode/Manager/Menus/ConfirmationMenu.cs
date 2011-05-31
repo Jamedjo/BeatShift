@@ -41,5 +41,11 @@ namespace BeatShift.Menus
         public override void setupMenuItems()
         {
         }
+
+        public override void enteringMenu()
+        {
+            resetMenuSelection();
+            base.enteringMenu();
+        }
     }
 }
