@@ -22,8 +22,8 @@ namespace BeatShift.Menus
 
             //Setup menu items
             menuItems = new List<MenuItem>();
-            addMenuItem(yes, yesAction);
             addMenuItem(no, noAction);
+            addMenuItem(yes, yesAction);
         }
 
         public override void overrideMenuPositions()

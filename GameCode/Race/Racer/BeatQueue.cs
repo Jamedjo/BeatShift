@@ -137,7 +137,7 @@ namespace BeatShift
                     if (boostBar == 100)
                         LevelUp();
                     boostBar += ((double)result * layerBonus[myLayer]);
-                    beatGlow.Glow(hitColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
+                    beatGlow.Glow(hitColor, parentRacer.shipPhysics.ShipDrawPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
                     combo++;
                 }
                 else if ((boostBar > 0) && (result == 0m))
@@ -217,8 +217,8 @@ namespace BeatShift
             if (visualisation != null)
             {
 
-                visualisation.SetPosition(parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.DrawOrientation);
-                beatGlow.setPosition(parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.DrawOrientation);
+                visualisation.SetPosition(parentRacer.shipPhysics.ShipDrawPosition, parentRacer.shipPhysics.DrawOrientation);
+                beatGlow.setPosition(parentRacer.shipPhysics.ShipDrawPosition, parentRacer.shipPhysics.DrawOrientation);
             }
             if (!parentRacer.raceTiming.hasCompletedRace)
             {

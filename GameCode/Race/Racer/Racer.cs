@@ -7,6 +7,7 @@ using BeatShift.Input;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 using DPSF;
+using Microsoft.Xna.Framework.Input;
 namespace BeatShift
 {
     public class Racer
@@ -109,7 +110,7 @@ namespace BeatShift
         {
             racerType = newRacerType;
             shipPhysics = new ShipPhysics(this);
-            shipDrawing.setPositionFunctions(new Func<Matrix>(() => shipPhysics.DrawOrientationMatrix), new Func<Vector3>(() => shipPhysics.ShipPosition));
+            shipDrawing.setPositionFunctions(new Func<Matrix>(() => shipPhysics.DrawOrientationMatrix), new Func<Vector3>(() => shipPhysics.ShipDrawPosition));
             setupRacingControls();
         }
 
@@ -211,7 +212,12 @@ namespace BeatShift
 
             }
 
-            shipPhysics.counteractPitching();
+            /////////////////////////////////
+            //BEPU VECHICLE//
+            ////////////////////////////////////////////////////////////
+            shipPhysics.bepuV.Update(Physics.space.TimeStepSettings.TimeStepDuration,shipPhysics.nearestMapPoint.trackUp*-1,Keyboard.GetState(),GamePad.GetState(PlayerIndex.One));
+
+            //shipPhysics.counteractPitching();
 
             // Update the way points and therefore the current lap
             shipPhysics.UpdateWaypoints(gameTime); //if (shipPhysics != null) shipPhysics.UpdateWaypoints();
@@ -225,8 +231,8 @@ namespace BeatShift
                 if (shipDrawing.engineGlow != null)
                 {
                     shipDrawing.engineGlow.setVelocity(shipPhysics.physicsBody.LinearVelocity);
-                    shipDrawing.engineGlow.SetPosition(shipPhysics.ShipPosition, shipPhysics.DrawOrientation);
-                    shipDrawing.spawn.setPosition(shipPhysics.ShipPosition, shipPhysics.DrawOrientation);
+                    shipDrawing.engineGlow.SetPosition(shipPhysics.ShipDrawPosition, shipPhysics.DrawOrientation);
+                    shipDrawing.spawn.setPosition(shipPhysics.ShipDrawPosition, shipPhysics.DrawOrientation);
                 }
                 globalSystems.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
                 visualizationSystems.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);

@@ -21,6 +21,8 @@ using BEPUphysics.Settings;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using BEPUphysics.MathExtensions;
+using BEPUphysics.PositionUpdating;
+using BeatShift.GameDebugTools;
 
 
 namespace BeatShift
@@ -29,10 +31,11 @@ namespace BeatShift
     public class ShipPhysics
     {
         public CompoundBody physicsBody;
-        public ConvexHullShape convexHull;     
+        public ConvexHullShape convexHull;
         public Vector3 ShipPosition { get { return physicsBody.Position; /*shipHull.CenterPosition;*/ } set { physicsBody.Position = value; /*shipHull.CenterPosition = value;*/ } }
-        public Matrix DrawOrientationMatrix { get { var rQ = Quaternion.CreateFromAxisAngle(Vector3.Forward, getRoll()); var oldQ = physicsBody.Orientation; var mulQ = oldQ * rQ; return Matrix.CreateFromQuaternion(mulQ); } }
-        public Quaternion DrawOrientation { get { var rQ = Quaternion.CreateFromAxisAngle(Vector3.Forward, getRoll()); var oldQ = physicsBody.Orientation; return oldQ * rQ;  } }
+        public Vector3 ShipDrawPosition { get { return bepuV.Vehicle.Body.Position; /*shipHull.CenterPosition;*/ } }
+        public Matrix DrawOrientationMatrix { get { return Matrix3X3.ToMatrix4X4(bepuV.Vehicle.Body.OrientationMatrix); } } //{ get { var rQ = Quaternion.CreateFromAxisAngle(Vector3.Forward, getRoll()); var oldQ = physicsBody.Orientation; var mulQ = oldQ * rQ; return Matrix.CreateFromQuaternion(mulQ); } }
+        public Quaternion DrawOrientation { get { return bepuV.Vehicle.Body.Orientation; } } //{ get { var rQ = Quaternion.CreateFromAxisAngle(Vector3.Forward, getRoll()); var oldQ = physicsBody.Orientation; return oldQ * rQ;  } }
         public float ShipSpeed { get { return getForwardSpeed(); } }
         public float radiusForGrip = 100;
         Vector3[] stabilizerRaycastList;
@@ -60,24 +63,6 @@ namespace BeatShift
         Boolean[] cSRAAI_results = new Boolean[rayCount];
 
         private Quaternion previousOrientation;
-
-        public Quaternion ShipOrientationQuaternion
-        {
-            get
-            {
-                if (float.IsNaN(physicsBody.Orientation.W))
-                {
-                    return previousOrientation;
-                }
-                return physicsBody.Orientation;
-            }
-
-            set
-            {
-                physicsBody.Orientation = value;
-            }
-        }
-
         public Matrix ShipOrientationMatrix
         {
             get
@@ -105,6 +90,8 @@ namespace BeatShift
         private Racer parentRacer;
         public bool wrongWay = false;
 
+        public BepuVehicle bepuV;
+
         //Temporary AI
         int AiSpeed = 250;
 
@@ -126,6 +113,10 @@ namespace BeatShift
             {
                 AiSpeed = (new Random(parentRacer.shipNumber * 3 + 29)).Next(200, 290);
             }
+
+            bepuV = new BepuVehicle(physicsBody.Position,importPhysicsHull());
+            bepuV.Activate(physicsBody.Position);
+
         }
 
         private void initializeWaypoints()
@@ -180,6 +171,8 @@ namespace BeatShift
             physicsBody.LinearDamping = 0.5f;//As there is rarely friction must slow ship down every update
             physicsBody.AngularDamping = 0.94f;
             physicsBody.Material.KineticFriction = 2f;
+
+            physicsBody.PositionUpdateMode = PositionUpdateMode.Continuous;
 
             physicsBody.CollisionInformation.Events.ContactCreated += new ContactCreatedEventHandler<EntityCollidable>(Events_InitialCollisionDetected);
         }
@@ -356,16 +349,19 @@ namespace BeatShift
             {
                 //var contact = pair.Contacts[0].Contact;
 
+                //if(contact.PenetrationDepth>2f)
+                //DebugSystem.Instance.DebugCommandUI.Echo(contact.PenetrationDepth.ToString());
+
                 // Select collisionInformation for object in contact with instead of the ships own collisionInformation
                 Collidable candidate = (pair.BroadPhaseOverlap.EntryA == physicsBody.CollisionInformation ? pair.BroadPhaseOverlap.EntryB : pair.BroadPhaseOverlap.EntryA) as Collidable;
                 if (candidate.Equals(Physics.currentTrackFloor))
                 {
 
                     // Bounce up a little on collisions
-                    Vector3 rayDirection = -nearestMapPoint.trackUp;
-                    float downVelocityMagnitude = Vector3.Dot(physicsBody.LinearVelocity, rayDirection) / rayDirection.Length();
-                    physicsBody.LinearVelocity -= rayDirection * downVelocityMagnitude;
-                    physicsBody.LinearVelocity -= (rayDirection * 5f);
+    //                Vector3 rayDirection = -contact.Normal;//-nearestMapPoint.trackUp;
+    //                float downVelocityMagnitude = Vector3.Dot(physicsBody.LinearVelocity, rayDirection) / rayDirection.Length();
+    //                physicsBody.LinearVelocity -= rayDirection * downVelocityMagnitude;
+    //                //physicsBody.LinearVelocity -= (rayDirection * 5f);
 
                     //physicsBody.ApplyLinearImpulse(-rayDirection * 2.5f);
 
@@ -393,6 +389,9 @@ namespace BeatShift
                     Vector3 v1 = Vector3.Cross(nearestMapPoint.trackUp, contact.Normal);
                     Vector3 bounceVector = Vector3.Cross(nearestMapPoint.trackUp, v1);
                     bounceVector.Normalize();
+
+                    if (bounceVector.Length() < 0.8f)
+                        bounceVector = Vector3.Zero;
 
                     //Remove ships velocity towards the wall
                     //by setting velocity component in direction of bounce to 0
@@ -1086,37 +1085,50 @@ namespace BeatShift
                 offsetTimeOfImpact = -offsetTimeOfImpact;
                 impulseDirection = -impulseDirection;
 
-                if (adjustVelocity)
-                {
-                    float velocityDownwards = Vector3.Dot(physicsBody.LinearVelocity, rayDirection) / rayDirection.Length();
-                    if (velocityDownwards > 0f)
-                    {
-                        //Set velocity in downwards direction to zero by redcuing overall velocity vector
-                        physicsBody.LinearVelocity -= ((velocityDownwards) * rayDirection) * 0.7f;
+                //if (adjustVelocity)
+                //{
+                //    float velocityDownwards = Vector3.Dot(physicsBody.LinearVelocity, rayDirection) / rayDirection.Length();
+                //    if (velocityDownwards > 0f)
+                //    {
+                //        //Set velocity in downwards direction to zero by redcuing overall velocity vector
+                //        physicsBody.LinearVelocity -= ((velocityDownwards) * rayDirection) * 0.7f;
 
-                        //set velocity up/down component to a new value
-                        float upMotionFloat = 0.2f;
-                        physicsBody.LinearVelocity += (-rayDirection * upMotionFloat);
-                    }
-                }
+                //        //set velocity up/down component to a new value
+                //        float upMotionFloat = 0.2f;
+                //        physicsBody.LinearVelocity += (-rayDirection * upMotionFloat);
+                //    }
+                //}
 
-                return -1 * Math.Min(offsetTimeOfImpact * 9f, 0f);
-                //return -offsetTimeOfImpact * 1.6f;
+                //if (Globals.TestState == 0)
+                //    return -1 * Math.Max(offsetTimeOfImpact * 15f, 0f);
+                //if (Globals.TestState == 1)
+                //    return -1 * Math.Max(offsetTimeOfImpact * 30f, 0f);
+                //if (Globals.TestState == 2)
+                //    return -1 * Math.Max(offsetTimeOfImpact * 45f, 0f);
+                //if (Globals.TestState == 3)
+                //    return -1 * Math.Max(offsetTimeOfImpact * 60f, 0f);
+                //if (Globals.TestState == 4)
+                    return -1 * Math.Max(offsetTimeOfImpact * 90f, 0f);
+                //if (Globals.TestState == 5)
+                //    return -1 * Math.Max(offsetTimeOfImpact * 150f, 0f);
+                //if (Globals.TestState == 6)
+                //    return -1 * Math.Max(offsetTimeOfImpact * 1500f, 0f);
+                ////return -offsetTimeOfImpact * 1.6f;
             }
             else if (offsetTimeOfImpact > 0f)
             {
                 float downVelocityMagnitude = Vector3.Dot(physicsBody.LinearVelocity, rayDirection) / rayDirection.Length();
 
                 //if(adjustVelocity)
-                {
-                    // Gentle bobbing
-                    if (downVelocityMagnitude < -25f && offsetTimeOfImpact > 14f)
-                        physicsBody.LinearVelocity -= (rayDirection) * 0.3f;
+                //{
+                //    // Gentle bobbing
+                //    if (downVelocityMagnitude < -25f && offsetTimeOfImpact > 14f)
+                //        physicsBody.LinearVelocity -= (rayDirection) * 0.3f;
 
-                    // Stop this thing flying into space if we're far away from the track AND going up
-                    if (downVelocityMagnitude < -25f && offsetTimeOfImpact > 16f)
-                        physicsBody.LinearVelocity -= (downVelocityMagnitude * rayDirection * 0.39f);
-                }
+                //    // Stop this thing flying into space if we're far away from the track AND going up
+                //    if (downVelocityMagnitude < -25f && offsetTimeOfImpact > 16f)
+                //        physicsBody.LinearVelocity -= (downVelocityMagnitude * rayDirection * 0.39f);
+                //}
 
                 // Terminal velocity based on max speed in raycast direction, once going down past terminal velocity only apply small impulses
                 float terminalVelocitySpeed = 25f;
@@ -1133,7 +1145,21 @@ namespace BeatShift
                 //}
 
                 // Calculate impulse
-                float impulse = (float)Math.Min(offsetTimeOfImpact * 9f, 30f);//Graph of y=x is used
+                float impulse;
+                //if (Globals.TestState == 0)
+                    impulse = (float)Math.Min(offsetTimeOfImpact * 90f, 80f);//Graph of y=x is used //If nearestMapPoint is tagged with Jump, then reduce this max to 30
+                //else if (Globals.TestState == 1)
+                //    impulse = (float)Math.Min(offsetTimeOfImpact * 9f, 30f);//Graph of y=x is used
+                //else if (Globals.TestState == 2)
+                //    impulse = (float)Math.Min(offsetTimeOfImpact * 9f, 60f);//Graph of y=x is used
+                //else if (Globals.TestState == 3)
+                //    impulse = (float)Math.Min(offsetTimeOfImpact * 60f, 100f);//Graph of y=x is used
+                //else if (Globals.TestState == 4)
+                //    impulse = (float)Math.Min(offsetTimeOfImpact * 900f, 70f);//Graph of y=x is used
+                //else if (Globals.TestState == 5)
+                //    impulse = (float)Math.Min(offsetTimeOfImpact * 90f, 3000f);//Graph of y=x is used
+                //else //(Globals.TestState == 6)
+                //    impulse = (float)Math.Min(offsetTimeOfImpact * 90f, 30000f);//Graph of y=x is used
 
                 return impulse;
             }

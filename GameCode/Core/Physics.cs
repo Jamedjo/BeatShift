@@ -55,7 +55,7 @@ namespace BeatShift
             //space.Update();
         }
 
-        public static void ApplyAngularImpulse(ref Vector3 impulse, ref CompoundBody physicsBody)
+        public static void ApplyAngularImpulse(ref Vector3 impulse, Entity physicsBody)
         {
             physicsBody.AngularMomentum += impulse;
 
@@ -161,10 +161,10 @@ namespace BeatShift
 
                 if (category == ModelCategory.Wall)
                 {
-                    physicsMesh.Material.KineticFriction = 0.9f;//Improves wall collisions by slowing ship down
-                    physicsMesh.Material.StaticFriction = 0.9f;//Improves wall collisions by slowing ship down
-                    physicsMesh.Material.Bounciness = 0;
-                    physicsMesh.CollisionRules.Personal = CollisionRule.NoSolver;
+                    //physicsMesh.Material.KineticFriction = 0.9f;//Improves wall collisions by slowing ship down
+                    //physicsMesh.Material.StaticFriction = 0.9f;//Improves wall collisions by slowing ship down
+                    //physicsMesh.Material.Bounciness = 0;
+                    //physicsMesh.CollisionRules.Personal = CollisionRule.NoSolver;
                     currentTrackWall = physicsMesh;
                 }
                 if (category == ModelCategory.InvisibleWall)
@@ -178,7 +178,7 @@ namespace BeatShift
                     physicsMesh.Material.KineticFriction = 0.1f;
 
                     
-                    physicsMesh.CollisionRules.Personal = CollisionRule.NoSolver;//No collisions with track
+                   // physicsMesh.CollisionRules.Personal = CollisionRule.NoSolver;//No collisions with track
                     //CollisionGroup noSelfCollideGroup = new CollisionGroup();
                     currentTrackFloor = physicsMesh;
                     // currentTrackFloor.Events.InitialCollisionDetected += new BEPUphysics.NarrowPhaseSystems.CollisionInformations.Events.InitialCollisionDetectedEventHandler<Entity>(trackCollisionFn); 
