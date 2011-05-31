@@ -10,7 +10,7 @@ namespace BeatShift.Menus
     /// <summary>
     /// The different pages/screens the menu can be on. 
     /// </summary>
-    public enum MenuPage { Splash, Main, Options, MapSelect, Multiplayer, SinglePlayerShipSelect, RaceSelect, Loading, HighScore, FinishedLoading, Pause, Results }
+    public enum MenuPage { Splash, Main, Options, MapSelect, Multiplayer, SinglePlayerShipSelect, RaceSelect, Loading, HighScore, FinishedLoading, Pause, Results, Confimation }
 
     class IMenuStack
     {
@@ -37,6 +37,7 @@ namespace BeatShift.Menus
         static IMenuPage FinishedLoading = new FinishedLoadingMenu();
         static IMenuPage Pause = new PauseMenu();
         public static IMenuPage Results = new ResultsMenu();
+        public static IMenuPage Confim = new ConfirmationMenu();
 
         public IMenuStack(MenuPage rootPage, Boolean drawBackground)
         {
@@ -86,6 +87,8 @@ namespace BeatShift.Menus
                     return Pause;
                 case MenuPage.Results:
                     return Results;
+                case MenuPage.Confimation:
+                    return Confim;
                 default:
                     throw new Exception();
                     return null;

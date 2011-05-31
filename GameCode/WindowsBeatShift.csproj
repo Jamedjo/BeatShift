@@ -151,6 +151,7 @@
     <Compile Include="Manager\Maps\CityMap.cs" />
     <Compile Include="Manager\Maps\DesertMap.cs" />
     <Compile Include="Manager\Maps\FbxModel.cs" />
+    <Compile Include="Manager\Menus\ConfirmationMenu.cs" />
     <Compile Include="Manager\Menus\IMenuPage.cs" />
     <Compile Include="Manager\Maps\KdTree3.cs" />
     <Compile Include="Manager\Maps\SpaceMap.cs">

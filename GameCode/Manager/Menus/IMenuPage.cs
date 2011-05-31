@@ -12,7 +12,7 @@ namespace BeatShift.Menus
     {
 
         protected String title="";
-        List<MenuItem> menuItems = new List<MenuItem>();
+        protected List<MenuItem> menuItems = new List<MenuItem>();
         int currentItem = 0;
 
         public Vector2 Offset { get; set; }//pixels gap offset between menu items

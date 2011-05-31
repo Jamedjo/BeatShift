@@ -98,6 +98,7 @@
     <Compile Include="Manager\Maps\MapData.cs" />
     <Compile Include="Manager\Maps\MapManager.cs" />
     <Compile Include="Manager\Maps\SpaceMap.cs" />
+    <Compile Include="Manager\Menus\ConfirmationMenu.cs" />
     <Compile Include="Manager\Menus\FinishedLoadingMenu.cs" />
     <Compile Include="Manager\Menus\HighScoreMenu.cs" />
     <Compile Include="Manager\Menus\IMenuPage.cs" />

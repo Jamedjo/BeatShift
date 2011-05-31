@@ -45,7 +45,16 @@ namespace BeatShift.Menus
             }));
             addMenuItem("MAIN MENU", (Action)(delegate
             {
-                GameLoop.setGameStateAndResetPlayers(GameState.Menu);
+                ((ConfirmationMenu)IMenuStack.Confim).initYesNo("Are you sure you wish to return to the main menu", "Yes", "No",
+                    (Action)(delegate
+                    {
+                        GameLoop.setGameStateAndResetPlayers(GameState.Menu);
+                    }),
+                    (Action)(delegate
+                    {
+                        MenuManager.menuBack();
+                    }));
+                MenuManager.pausedSystem.setCurrentMenu(MenuPage.Confimation);
             }));
 
         }
