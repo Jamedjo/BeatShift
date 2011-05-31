@@ -30,10 +30,10 @@ namespace BeatShift
     enum Quadrant { Front, Back, Left, Right, FrontLeft, FrontRight, BackLeft, BackRight };
     public class ShipPhysics
     {
-        public CompoundBody physicsBody;
+        //public CompoundBody physicsBody;
+        public Entity racerEntity { get { return bepuV.Vehicle.Body; } }
         public ConvexHullShape convexHull;
-        public Vector3 ShipPosition { get { return physicsBody.Position; /*shipHull.CenterPosition;*/ } set { physicsBody.Position = value; /*shipHull.CenterPosition = value;*/ } }
-        public Vector3 ShipDrawPosition { get { return bepuV.Vehicle.Body.Position; /*shipHull.CenterPosition;*/ } }
+        public Vector3 ShipPosition { get { return racerEntity.Position; /*shipHull.CenterPosition;*/ } set { racerEntity.Position = value; /*shipHull.CenterPosition = value;*/ } }
         public Matrix DrawOrientationMatrix { get { return Matrix3X3.ToMatrix4X4(bepuV.Vehicle.Body.OrientationMatrix); } } //{ get { var rQ = Quaternion.CreateFromAxisAngle(Vector3.Forward, getRoll()); var oldQ = physicsBody.Orientation; var mulQ = oldQ * rQ; return Matrix.CreateFromQuaternion(mulQ); } }
         public Quaternion DrawOrientation { get { return bepuV.Vehicle.Body.Orientation; } } //{ get { var rQ = Quaternion.CreateFromAxisAngle(Vector3.Forward, getRoll()); var oldQ = physicsBody.Orientation; return oldQ * rQ;  } }
         public float ShipSpeed { get { return getForwardSpeed(); } }
@@ -67,15 +67,15 @@ namespace BeatShift
         {
             get
             {
-                if (float.IsNaN(physicsBody.Orientation.W))
+                if (float.IsNaN(racerEntity.Orientation.W))
                 {
                     return Matrix.CreateFromQuaternion(previousOrientation);
                 }
-                return Matrix.CreateFromQuaternion(physicsBody.Orientation);
+                return Matrix.CreateFromQuaternion(racerEntity.Orientation);
             }
             set
             {
-                physicsBody.Orientation = Quaternion.CreateFromRotationMatrix(value);
+                racerEntity.Orientation = Quaternion.CreateFromRotationMatrix(value);
             }
         }
 
@@ -100,9 +100,12 @@ namespace BeatShift
             parentRacer = parent;
             initializeWaypoints();
             setupStabalizerRaycastPositions();
-            constructPhysicsBody();
-            Physics.space.Add(physicsBody);
+            //constructPhysicsBody();
+            //Physics.space.Add(physicsBody);
             //physicsBody.CollisionInformation.Hierarchy.CollisionInformation.CollisionRules.InitialCollisionDetected += new BEPUphysics.Events.InitialCollisionDetectedEventHandler(alertCollision); TODO: GET COLLISIONS WORKING
+            
+            bepuV = new BepuVehicle(Vector3.Zero,importPhysicsHull());
+            bepuV.Activate();
             placeShipOnStartingGrid(parentRacer.shipNumber);
 
             backPosRight = new Vector3(shipWidth / 2, 0f, shipLength / 2);
@@ -114,8 +117,6 @@ namespace BeatShift
                 AiSpeed = (new Random(parentRacer.shipNumber * 3 + 29)).Next(200, 290);
             }
 
-            bepuV = new BepuVehicle(physicsBody.Position,importPhysicsHull());
-            bepuV.Activate(physicsBody.Position);
 
         }
 
@@ -127,56 +128,6 @@ namespace BeatShift
             nextWaypoint = mapData.nextPoint(currentProgressWaypoint);
         }
 
-        private void constructPhysicsBody()
-        {
-            CollisionRules cr = new CollisionRules();
-            //cr.Group = Physics.noSelfCollideGroup;
-
-            //Physics.space.NarrowPhase.Pairs..Settings.CollisionDetection.CollisionGroupRules.Add(new CollisionGroupPair(noSelfCollideGroup, noSelfCollideGroup), CollisionRule.NoPair);
-            cr.Personal = CollisionRule.NoSolver;
-            //cr.Specific = CollisionRule.Normal.
-
-            convexHull = new ConvexHullShape(importPhysicsHull());
-            //convexHull.CollisionMargin = 0.4f;
-
-
-            //BoxShape b1 = new BoxShape(2f, 0.8f, 8f);
-            //b1.CollisionMargin = 0.4f;
-            //BoxShape b2 = new BoxShape(4f, 1f, 6f);
-            //b2.CollisionMargin = 0.4f;
-
-            var bodies = new List<CompoundChildData>()
-            {
-                new CompoundChildData(new CompoundShapeEntry(convexHull, Vector3.Zero, 25f),cr)
-                //new DynamicCompoundChildData(new CompoundChildData(new CompoundShapeEntry(b1, Vector3.Zero) ,cr), 15f),
-                //new DynamicCompoundChildData(new CompoundChildData(new CompoundShapeEntry(b2, Vector3.Zero) ,cr), 45f)
-            };
-
-            //CompoundShapeEntry cse = new CompoundShapeEntry(convexHull, Vector3.Zero);
-
-            //var body = new CompoundBody(
-
-            //Build the first body
-
-            //var cb1 = new CompoundBody(bodies);
-
-            physicsBody = new CompoundBody(bodies, 60f);
-
-            //physicsBody.PositionUpdateMode = BEPUphysics.PositionUpdating.PositionUpdateMode.Continuous;
-
-            //Console.WriteLine("SHIPcolisionmargin" + shipHull.CollisionMargin);
-            physicsBody.IsAlwaysActive = true;
-
-            //physicsBody.CenterOfMassOffset = new Vector3(0, 0f, 0);//Becareful with this as forces/impulses act from here including raycasts
-            physicsBody.LinearDamping = 0.5f;//As there is rarely friction must slow ship down every update
-            physicsBody.AngularDamping = 0.94f;
-            physicsBody.Material.KineticFriction = 2f;
-
-            physicsBody.PositionUpdateMode = PositionUpdateMode.Continuous;
-
-            physicsBody.CollisionInformation.Events.ContactCreated += new ContactCreatedEventHandler<EntityCollidable>(Events_InitialCollisionDetected);
-        }
-        
         const int rayCount = 4;
         void setupStabalizerRaycastPositions()
         {
@@ -222,16 +173,16 @@ namespace BeatShift
 
         private void resetShipAndFaceNextWaypoint(Vector3 newShipPosition)
         {
-            if (float.IsNaN(physicsBody.Position.X) == true)
+            if (float.IsNaN(racerEntity.Position.X) == true)
             {
-                previousOrientation = physicsBody.Orientation;
+                previousOrientation = racerEntity.Orientation;
             }
             //previousOrientationMatrix = physicsBody.OrientationMatrix;
 
 
             //Make ship face towards the next waypoint at start, so it faces the right way around the track.
             ShipPosition = newShipPosition;
-            physicsBody.WorldTransform = Matrix.CreateWorld(newShipPosition, mapData.nextPoint(currentProgressWaypoint).position - newShipPosition, currentProgressWaypoint.trackUp);
+            racerEntity.WorldTransform = Matrix.CreateWorld(newShipPosition, mapData.nextPoint(currentProgressWaypoint).position - newShipPosition, currentProgressWaypoint.trackUp);
         }
 
         private Vector3 getStartingGridPosition(int shipNumber)
@@ -245,10 +196,19 @@ namespace BeatShift
             return startPoint;
         }
 
+        public void applyImpulseInSurfacePlane(Vector3 impulse)
+        {
+            Vector3 nearestNormal = nearestMapPoint.trackUp;//TODO: use resulting normal from downwards raycast
+            nearestNormal.Normalize();
+            Vector3 newImpulse = impulse - (Vector3.Dot(impulse,nearestNormal) * nearestNormal);
+            
+            racerEntity.ApplyImpulse(racerEntity.Position, newImpulse);
+        }
+
         public void couteractDrift()
         {
             //Apply sliding friction
-            Vector3 v = physicsBody.LinearVelocity;
+            Vector3 v = racerEntity.LinearVelocity;
 
             if (v.Length() == 0)
                 return;
@@ -267,18 +227,18 @@ namespace BeatShift
 
             //physicsBody.ApplyImpulse(physicsBody.CenterOfMass, dir);
 
-            float anglularLength = physicsBody.AngularVelocity.Length();
+            float anglularLength = racerEntity.AngularVelocity.Length();
             float angLenSquared = anglularLength * anglularLength;
             float centripetalF = radiusForGrip * angLenSquared;//physicsBody.Mass * r * angLenSquared;
             if (centripetalF <= 0)
                 return;
             if (Vector3.Dot(v, ShipOrientationMatrix.Right) < 0)
             {
-                physicsBody.ApplyImpulse(physicsBody.Position, ShipOrientationMatrix.Right * centripetalF);
+                racerEntity.ApplyImpulse(racerEntity.Position, ShipOrientationMatrix.Right * centripetalF);
             }
             else
             {
-                physicsBody.ApplyImpulse(physicsBody.Position, ShipOrientationMatrix.Left * centripetalF);
+                racerEntity.ApplyImpulse(racerEntity.Position, ShipOrientationMatrix.Left * centripetalF);
             }
 
         }
@@ -323,8 +283,8 @@ namespace BeatShift
             MapPoint wrongwayPoint = mapData.wrongwayPoint(currentProgressWaypoint);
             //distance = (ShipPosition - wrongwayPoint.position).Length();
             Boolean behindWrongwaypoint = (Vector3.Dot(wrongwayPoint.tangent, (ShipPosition - wrongwayPoint.position)) < 0);
-            
-            if (Vector3.Dot(physicsBody.OrientationMatrix.Forward, nearestMapPoint.tangent)< -0.2 && parentRacer.raceTiming.isRacing)
+
+            if (Vector3.Dot(racerEntity.OrientationMatrix.Forward, nearestMapPoint.tangent) < -0.2 && parentRacer.raceTiming.isRacing)
             {
                 //System.Diagnostics.Debug.WriteLine("Wrong Way!!! Point:" + wrongwayPoint.getIndex() + "\n");
                 currentProgressWaypoint = wrongwayPoint;//TODO: remove this line?
@@ -333,16 +293,17 @@ namespace BeatShift
             else { wrongWay = false; }
         }
 
-        public void UpdateFromAI()
-        {
-            if (parentRacer.raceTiming.isRacing == true)
-            {
-                physicsBody.ApplyImpulse(physicsBody.Position, Vector3.Normalize(nextWaypoint.position - ShipPosition) * AiSpeed);
-            }
-        }
+        //public void UpdateFromAI()
+        //{
+        //    if (parentRacer.raceTiming.isRacing == true)
+        //    {
+        //        racerEntity.ApplyImpulse(racerEntity.Position, Vector3.Normalize(nextWaypoint.position - ShipPosition) * AiSpeed);
+        //    }
+        //}
 
         // public delegate void ContactCreatedEventHandler<T>(T sender, BEPUphysics.Collidables.Collidable other, BEPUphysics.NarrowPhaseSystems.Pairs.CollidablePairHandler pair, BEPUphysics.CollisionTests.ContactData contact)
 
+#if asdsa
         private void Events_InitialCollisionDetected(EntityCollidable sender, Collidable info, CollidablePairHandler pair, ContactData contact)
         {
             try
@@ -715,6 +676,7 @@ namespace BeatShift
                 // System.Diagnostic.Debug.WriteLine("Unfound pair");
             }
         }
+#endif
 
         float angleBetween(Vector3 a, Vector3 b)
         {
@@ -772,414 +734,414 @@ namespace BeatShift
         /// Main raycast function. Gets called in update.
         /// </summary>
         /// <param name="gameTime"></param>
-        public void UpdateWithRayCasts(GameTime gameTime)
-        {
-            //If the race hasn't begun don't raycast
-            //if (!isRacing)
+        //public void UpdateWithRayCasts(GameTime gameTime)
+        //{
+        //    //If the race hasn't begun don't raycast
+        //    //if (!isRacing)
 
-            // The max distance where ship should try keep it's orientation matched to the track beneth it.
-            float stabalizerStickLength = 40f;
+        //    // The max distance where ship should try keep it's orientation matched to the track beneth it.
+        //    float stabalizerStickLength = 40f;
 
-            // Cast stabilisation sticks
-            bool stabilizersHit = castStabalizerRaysAndApplyImpulses(stabalizerStickLength, 0.77f,false);
-            castSingleRayAndApplyImpulse(Vector3.Zero, stabalizerStickLength, 0f, true);//Reduce down velocity if below float distance
+        //    // Cast stabilisation sticks
+        //    bool stabilizersHit = castStabalizerRaysAndApplyImpulses(stabalizerStickLength, 0.77f,false);
+        //    castSingleRayAndApplyImpulse(Vector3.Zero, stabalizerStickLength, 0f, true);//Reduce down velocity if below float distance
 
-            castSingleRayAndApplyImpulseCorrection(22, 160f * (ShipSpeed/80));
-            // Ifne or all of the stabilizers missed the track, or were too short
-            if (!stabilizersHit || overturned)
-            {
-                bool centreRaycastHit = castSingleRayAndApplyImpulse(Vector3.Zero, 100, 4f,true);
+        //    castSingleRayAndApplyImpulseCorrection(22, 160f * (ShipSpeed/80));
+        //    // Ifne or all of the stabilizers missed the track, or were too short
+        //    if (!stabilizersHit || overturned)
+        //    {
+        //        bool centreRaycastHit = castSingleRayAndApplyImpulse(Vector3.Zero, 100, 4f,true);
 
                 
 
-                if (!centreRaycastHit || overturned)
-                {
-                    //Main raycast stick failed too
-                    //Ship is either upside-down or not on the track or race has not begun
+        //        if (!centreRaycastHit || overturned)
+        //        {
+        //            //Main raycast stick failed too
+        //            //Ship is either upside-down or not on the track or race has not begun
 
-                    millisecsLeftTillReset -= (BeatShift.singleton.currentTime.ElapsedGameTime.TotalMilliseconds); //* currentDistanceToNearestWaypoint);
-                    //physicsBody.LinearDamping = 0.8f;
+        //            millisecsLeftTillReset -= (BeatShift.singleton.currentTime.ElapsedGameTime.TotalMilliseconds); //* currentDistanceToNearestWaypoint);
+        //            //physicsBody.LinearDamping = 0.8f;
 
-                    if (parentRacer.raceTiming.isRacing && millisecsLeftTillReset > 0)//Checked before updatewithraycasts is called
-                    {
+        //            if (parentRacer.raceTiming.isRacing && millisecsLeftTillReset > 0)//Checked before updatewithraycasts is called
+        //            {
 
-                       // Console.WriteLine("RESPAWNING...");
+        //               // Console.WriteLine("RESPAWNING...");
 
                         
-                        parentRacer.isRespawning = true;
-                        //TODO: wait a bit 
-                        //currentDistanceToNearestWaypoint = (float)((nextWaypoint.position - ShipPosition).Length()) / 125; //TODO: use actual width of track
+        //                parentRacer.isRespawning = true;
+        //                //TODO: wait a bit 
+        //                //currentDistanceToNearestWaypoint = (float)((nextWaypoint.position - ShipPosition).Length()) / 125; //TODO: use actual width of track
 
-                        //physicsBody.LinearDamping = 0.7f; //BUG!!!
+        //                //physicsBody.LinearDamping = 0.7f; //BUG!!!
 
-                        //Console.WriteLine(currentDistanceToNearestWaypoint);
-                        if (!despawnShown && millisecsLeftTillReset < 700)
-                        {
-                            parentRacer.shipDrawing.spawn.Despawn(parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.DrawOrientation);
-                            despawnShown = true;
-                        }
+        //                //Console.WriteLine(currentDistanceToNearestWaypoint);
+        //                if (!despawnShown && millisecsLeftTillReset < 700)
+        //                {
+        //                    parentRacer.shipDrawing.spawn.Despawn(parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.DrawOrientation);
+        //                    despawnShown = true;
+        //                }
                              
 
-                    }
-                    else
-                    {
-                        parentRacer.isRespawning = false;
-                        millisecsLeftTillReset = 5000;
-                               //public struct ResetColumn { public Vector3 pos; int column; int resetWaypointIncrement; }
+        //            }
+        //            else
+        //            {
+        //                parentRacer.isRespawning = false;
+        //                millisecsLeftTillReset = 5000;
+        //                       //public struct ResetColumn { public Vector3 pos; int column; int resetWaypointIncrement; }
 
-                        Vector3 originalPos = currentProgressWaypoint.position;
-                        Vector3 putativePos = currentProgressWaypoint.position; //nearestMapPoint.position;
+        //                Vector3 originalPos = currentProgressWaypoint.position;
+        //                Vector3 putativePos = currentProgressWaypoint.position; //nearestMapPoint.position;
 
-                        float shipLength = 1.5f;//TODO:don't set manually
-                        int columnInc = 0;
-                        int waypointInc = 0;
-                        bool readyToPlaceOnTrack = false;
-                        ResetColumn newRC = new ResetColumn(putativePos, parentRacer.raceTiming.stopwatch.ElapsedMilliseconds);
+        //                float shipLength = 1.5f;//TODO:don't set manually
+        //                int columnInc = 0;
+        //                int waypointInc = 0;
+        //                bool readyToPlaceOnTrack = false;
+        //                ResetColumn newRC = new ResetColumn(putativePos, parentRacer.raceTiming.stopwatch.ElapsedMilliseconds);
 
-                        // On each iteration - 5 horizontal slots
-                        while(!readyToPlaceOnTrack && waypointInc < 8)
-                        {
-                            putativePos -= 2 * shipLength * currentProgressWaypoint.tangent;
-                            // Start at current way point, go left and right to find an empty spot, then start going forward.
-                            if (Race.currentRaceType.resettingShips.Count == 0)
-                            {
-                                readyToPlaceOnTrack = true;
-                                newRC.position = putativePos;
-                                newRC.timeFromReset = parentRacer.raceTiming.stopwatch.ElapsedMilliseconds;
-                            }             
+        //                // On each iteration - 5 horizontal slots
+        //                while(!readyToPlaceOnTrack && waypointInc < 8)
+        //                {
+        //                    putativePos -= 2 * shipLength * currentProgressWaypoint.tangent;
+        //                    // Start at current way point, go left and right to find an empty spot, then start going forward.
+        //                    if (Race.currentRaceType.resettingShips.Count == 0)
+        //                    {
+        //                        readyToPlaceOnTrack = true;
+        //                        newRC.position = putativePos;
+        //                        newRC.timeFromReset = parentRacer.raceTiming.stopwatch.ElapsedMilliseconds;
+        //                    }             
               
-                            // Go across 5
-                            while (!readyToPlaceOnTrack && columnInc<3)
-                            {
-                                foreach(ResetColumn rc in Race.currentRaceType.resettingShips)
-                                {
-                                        if ((rc.position.X - putativePos.X) < shipLength && (rc.position.Y - putativePos.Y) < shipLength && (rc.position.Z - putativePos.Z) < shipLength)
-                                        {
-                                            readyToPlaceOnTrack = false;
+        //                    // Go across 5
+        //                    while (!readyToPlaceOnTrack && columnInc<3)
+        //                    {
+        //                        foreach(ResetColumn rc in Race.currentRaceType.resettingShips)
+        //                        {
+        //                                if ((rc.position.X - putativePos.X) < shipLength && (rc.position.Y - putativePos.Y) < shipLength && (rc.position.Z - putativePos.Z) < shipLength)
+        //                                {
+        //                                    readyToPlaceOnTrack = false;
                                             
-                                        }
-                                        else
-                                        {
-                                            // Found a good location to place the ship
-                                            readyToPlaceOnTrack = true;
-                                            newRC.position = putativePos;
-                                            newRC.timeFromReset = parentRacer.raceTiming.stopwatch.ElapsedMilliseconds;
-                                            //newRC.column = columnInc;
-                                            //newRC.resetWaypointIncrement = resetWaypointInc;}
-                                        }
-                                }
+        //                                }
+        //                                else
+        //                                {
+        //                                    // Found a good location to place the ship
+        //                                    readyToPlaceOnTrack = true;
+        //                                    newRC.position = putativePos;
+        //                                    newRC.timeFromReset = parentRacer.raceTiming.stopwatch.ElapsedMilliseconds;
+        //                                    //newRC.column = columnInc;
+        //                                    //newRC.resetWaypointIncrement = resetWaypointInc;}
+        //                                }
+        //                        }
 
-                                putativePos += shipLength * currentProgressWaypoint.tangent;
-                                columnInc++; 
-                            }
-                            columnInc = 0;
-                            waypointInc++;
-                            currentProgressWaypoint = mapData.nextPoint(currentProgressWaypoint);
-                        }
+        //                        putativePos += shipLength * currentProgressWaypoint.tangent;
+        //                        columnInc++; 
+        //                    }
+        //                    columnInc = 0;
+        //                    waypointInc++;
+        //                    currentProgressWaypoint = mapData.nextPoint(currentProgressWaypoint);
+        //                }
 
-                        Race.currentRaceType.resettingShips.Add(newRC);
+        //                Race.currentRaceType.resettingShips.Add(newRC);
 
-                        Vector3 newShipPosition = newRC.position + currentProgressWaypoint.trackUp*4;
+        //                Vector3 newShipPosition = newRC.position + currentProgressWaypoint.trackUp*4;
 
-                        ShipPosition = newShipPosition;
-                        physicsBody.WorldTransform = Matrix.CreateWorld(newShipPosition, mapData.nextPoint(currentProgressWaypoint).position - newShipPosition, currentProgressWaypoint.trackUp);
+        //                ShipPosition = newShipPosition;
+        //                physicsBody.WorldTransform = Matrix.CreateWorld(newShipPosition, mapData.nextPoint(currentProgressWaypoint).position - newShipPosition, currentProgressWaypoint.trackUp);
 
-                        //resetShipAtLastWaypoint(); //TODO: start some kind of animation, white noise
-                        parentRacer.shipDrawing.spawn.Respawn(parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.DrawOrientation);
-                        despawnShown = false;
-                    }
+        //                //resetShipAtLastWaypoint(); //TODO: start some kind of animation, white noise
+        //                parentRacer.shipDrawing.spawn.Respawn(parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.DrawOrientation);
+        //                despawnShown = false;
+        //            }
 
-                }
+        //        }
 
-            }
-        }
+        //    }
+        //}
 
-        /// <summary>
-        /// Casts rays in given list (the stabilizers) and only applies impulses if they all hit the track
-        /// Does this by calling
-        /// </summary>
-        /// <param name="positionOffsetList"></param>
-        /// <param name="stickLength"></param>
-        /// <param name="power"></param>
-        /// <returns></returns>
-        public Boolean castStabalizerRaysAndApplyImpulses(float stickLength, float power, bool adjustVelocity)
-        {
-            //positionOffsetList = stabilizerRaycastList;
-            float toi;
-            shipRayToTrackTime = 0;
+        ///// <summary>
+        ///// Casts rays in given list (the stabilizers) and only applies impulses if they all hit the track
+        ///// Does this by calling
+        ///// </summary>
+        ///// <param name="positionOffsetList"></param>
+        ///// <param name="stickLength"></param>
+        ///// <param name="power"></param>
+        ///// <returns></returns>
+        //public Boolean castStabalizerRaysAndApplyImpulses(float stickLength, float power, bool adjustVelocity)
+        //{
+        //    //positionOffsetList = stabilizerRaycastList;
+        //    float toi;
+        //    shipRayToTrackTime = 0;
 
-            for (int i = 0; i < rayCount; i++)
-            {
-                cSRAAI_results[i] = castSingleRay(stabilizerRaycastList[i], stickLength, power, out toi, out cSRAAI_rayTruePos[i], out cSRAAI_offsetRayPos[i], out cSRAAI_impulseVector[i], adjustVelocity);
-                shipRayToTrackTime += toi;
-                // Console.WriteLine(shipRayToTrackTime);
-                //if (i == 4) castSingleForwardRayAndApplyImpulse(positionOffsetList.ElementAt(i), stickLength);
-            }
+        //    for (int i = 0; i < rayCount; i++)
+        //    {
+        //        cSRAAI_results[i] = castSingleRay(stabilizerRaycastList[i], stickLength, power, out toi, out cSRAAI_rayTruePos[i], out cSRAAI_offsetRayPos[i], out cSRAAI_impulseVector[i], adjustVelocity);
+        //        shipRayToTrackTime += toi;
+        //        // Console.WriteLine(shipRayToTrackTime);
+        //        //if (i == 4) castSingleForwardRayAndApplyImpulse(positionOffsetList.ElementAt(i), stickLength);
+        //    }
 
-            shipRayToTrackTime *= 0.25f;
+        //    shipRayToTrackTime *= 0.25f;
 
-            //Boolean allRaysHit = result.All((r) => (r == true));
-            bool allRaysHit = true;
-            foreach (bool r in cSRAAI_results)
-            {
-                if (!r)
-                {
-                    allRaysHit = false;
-                    break;
-                }
-            }
+        //    //Boolean allRaysHit = result.All((r) => (r == true));
+        //    bool allRaysHit = true;
+        //    foreach (bool r in cSRAAI_results)
+        //    {
+        //        if (!r)
+        //        {
+        //            allRaysHit = false;
+        //            break;
+        //        }
+        //    }
 
-            if (allRaysHit)
-            {
-                for (int i = 0; i < rayCount; i++)
-                {
-                    physicsBody.ApplyImpulse(cSRAAI_rayTruePos[i], cSRAAI_impulseVector[i]);
-                    //parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = cSRAAI_offsetRayPos[i], dir = rayCastDirection, col = Color.Red.ToVector3() });
-                    //parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = cSRAAI_rayTruePos[i], dir = cSRAAI_impulseVector[i], col = Color.AntiqueWhite.ToVector3() });
-                }
-            }
-            return allRaysHit;
-        }
+        //    if (allRaysHit)
+        //    {
+        //        for (int i = 0; i < rayCount; i++)
+        //        {
+        //            physicsBody.ApplyImpulse(cSRAAI_rayTruePos[i], cSRAAI_impulseVector[i]);
+        //            //parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = cSRAAI_offsetRayPos[i], dir = rayCastDirection, col = Color.Red.ToVector3() });
+        //            //parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = cSRAAI_rayTruePos[i], dir = cSRAAI_impulseVector[i], col = Color.AntiqueWhite.ToVector3() });
+        //        }
+        //    }
+        //    return allRaysHit;
+        //}
 
-        public Boolean castSingleRayAndApplyImpulse(Vector3 positionOffset, float stickLength, float power, bool adjustVelocity)
-        {
-            Vector3 rayTruePos;
-            Vector3 offsetRayPos;
-            Vector3 impulseVector;
-            float timeOfImpact;
-            Boolean result = castSingleRay(positionOffset, stickLength, power, out timeOfImpact, out rayTruePos, out offsetRayPos, out impulseVector, adjustVelocity);
+        //public Boolean castSingleRayAndApplyImpulse(Vector3 positionOffset, float stickLength, float power, bool adjustVelocity)
+        //{
+        //    Vector3 rayTruePos;
+        //    Vector3 offsetRayPos;
+        //    Vector3 impulseVector;
+        //    float timeOfImpact;
+        //    Boolean result = castSingleRay(positionOffset, stickLength, power, out timeOfImpact, out rayTruePos, out offsetRayPos, out impulseVector, adjustVelocity);
 
-            shipRayToTrackTime = timeOfImpact;
+        //    shipRayToTrackTime = timeOfImpact;
 
-            if (result)
-            {
-                physicsBody.ApplyImpulse(rayTruePos, impulseVector);
-                //parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = offsetRayPos, dir = rayCastDirection, col = Color.Red.ToVector3() });
-                //parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = rayTruePos, dir = impulseVector, col = Color.AntiqueWhite.ToVector3() });
-            }
+        //    if (result)
+        //    {
+        //        physicsBody.ApplyImpulse(rayTruePos, impulseVector);
+        //        //parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = offsetRayPos, dir = rayCastDirection, col = Color.Red.ToVector3() });
+        //        //parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = rayTruePos, dir = impulseVector, col = Color.AntiqueWhite.ToVector3() });
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
 
-        // Used to shoot a ray forward and treat the result as if it were a shot from the front sticks
-        void castSingleRayAndApplyImpulseCorrection(float stickLength, float power)
-        {
-            Vector3 rayTruePos;
-            Vector3 impulseVector;
-            float timeOfImpact;
-            Vector3 positionOffset = frontOff;
+        //// Used to shoot a ray forward and treat the result as if it were a shot from the front sticks
+        //void castSingleRayAndApplyImpulseCorrection(float stickLength, float power)
+        //{
+        //    Vector3 rayTruePos;
+        //    Vector3 impulseVector;
+        //    float timeOfImpact;
+        //    Vector3 positionOffset = frontOff;
 
-            Vector3 neck = physicsBody.OrientationMatrix.Backward + physicsBody.OrientationMatrix.Up;
-            neck.Normalize();
+        //    Vector3 neck = physicsBody.OrientationMatrix.Backward + physicsBody.OrientationMatrix.Up;
+        //    neck.Normalize();
 
-            Vector3 rayCastDirection = physicsBody.OrientationMatrix.Forward;//Raycast in opposite direction to trackUp.
-            Boolean result;
-            RayHit rayHit;
-            impulseVector = Vector3.Zero;
+        //    Vector3 rayCastDirection = physicsBody.OrientationMatrix.Forward;//Raycast in opposite direction to trackUp.
+        //    Boolean result;
+        //    RayHit rayHit;
+        //    impulseVector = Vector3.Zero;
 
-            float vOffset = 0f;
-            Vector3 verticalOffset = Vector3.Zero;
+        //    float vOffset = 0f;
+        //    Vector3 verticalOffset = Vector3.Zero;
 
-            //Cast ray from above ship to give leyway.
-            vOffset = 20f;//The distance above the ship to search for the track.
-            verticalOffset = -rayCastDirection;
-            verticalOffset.Normalize();
-            verticalOffset *= vOffset;
-            stickLength += vOffset;
+        //    //Cast ray from above ship to give leyway.
+        //    vOffset = 20f;//The distance above the ship to search for the track.
+        //    verticalOffset = -rayCastDirection;
+        //    verticalOffset.Normalize();
+        //    verticalOffset *= vOffset;
+        //    stickLength += vOffset;
 
 
-            rayTruePos = physicsBody.Position + Vector3.Transform(positionOffset, physicsBody.Orientation);
-            offsetRay.Position = rayTruePos + verticalOffset;
-            offsetRay.Direction = rayCastDirection;
+        //    rayTruePos = physicsBody.Position + Vector3.Transform(positionOffset, physicsBody.Orientation);
+        //    offsetRay.Position = rayTruePos + verticalOffset;
+        //    offsetRay.Direction = rayCastDirection;
          
-            result = Physics.currentTrackFloor.RayCast(offsetRay, stickLength, out rayHit); //make stick length speed dependent
-            timeOfImpact = rayHit.T;
-            float offsetTimeOfImpact = timeOfImpact - vOffset;//Calculate ray from verticle centre of ship, not offset position.
-            float dirtyMultiplier=1;
+        //    result = Physics.currentTrackFloor.RayCast(offsetRay, stickLength, out rayHit); //make stick length speed dependent
+        //    timeOfImpact = rayHit.T;
+        //    float offsetTimeOfImpact = timeOfImpact - vOffset;//Calculate ray from verticle centre of ship, not offset position.
+        //    float dirtyMultiplier=1;
 
-            if (offsetTimeOfImpact > 0)
-            {
-                dirtyMultiplier = (100 / offsetTimeOfImpact);
-            }
+        //    if (offsetTimeOfImpact > 0)
+        //    {
+        //        dirtyMultiplier = (100 / offsetTimeOfImpact);
+        //    }
             
-            if (dirtyMultiplier<1)
-            {
-                dirtyMultiplier = 1;
-            }
+        //    if (dirtyMultiplier<1)
+        //    {
+        //        dirtyMultiplier = 1;
+        //    }
 
 
-            previousDirty = MathHelper.Lerp(previousDirty, dirtyMultiplier, 0.00125f);
+        //    previousDirty = MathHelper.Lerp(previousDirty, dirtyMultiplier, 0.00125f);
 
-            //Console.WriteLine(previousDirty);
+        //    //Console.WriteLine(previousDirty);
 
-            if (result)
-            {
-                impulseVector = physicsBody.OrientationMatrix.Up * power;// (power + (float)Math.Min(1, previousDirty / 2.1));
-            }
+        //    if (result)
+        //    {
+        //        impulseVector = physicsBody.OrientationMatrix.Up * power;// (power + (float)Math.Min(1, previousDirty / 2.1));
+        //    }
 
-            //shipRayToTrackTime = timeOfImpact;
+        //    //shipRayToTrackTime = timeOfImpact;
 
-            if (result)
-            {
-                physicsBody.ApplyImpulse(physicsBody.Position, impulseVector);
-                physicsBody.ApplyImpulse(rayTruePos, physicsBody.OrientationMatrix.Up * Math.Max(0, Math.Min(6, previousDirty)));
+        //    if (result)
+        //    {
+        //        physicsBody.ApplyImpulse(physicsBody.Position, impulseVector);
+        //        physicsBody.ApplyImpulse(rayTruePos, physicsBody.OrientationMatrix.Up * Math.Max(0, Math.Min(6, previousDirty)));
 
-                //parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = offsetRayPos, dir = rayCastDirection, col = Color.Red.ToVector3() });
-                //parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = rayTruePos, dir = impulseVector, col = Color.AntiqueWhite.ToVector3() });
-            }
+        //        //parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = offsetRayPos, dir = rayCastDirection, col = Color.Red.ToVector3() });
+        //        //parentRacer.shipDrawing.drawArrowListRays.Add(new D_Arrow { pos = rayTruePos, dir = impulseVector, col = Color.AntiqueWhite.ToVector3() });
+        //    }
 
-        }
+        //}
 
-        public Boolean castSingleRay(Vector3 positionOffset, float stickLength, float power, out float timeOfImpact, out Vector3 rayTruePos, out Vector3 offsetRayPos, out Vector3 impulseVector,bool adjustVelocity)
-        {
-            //Vector3 rayCastDirection = Matrix.Identity.Down;//Always raycast in gravity direction.
-            //Vector3 rayCastDirection = ship.OrientationMatrix.Down;//Raycast down from ship
-            Vector3 rayCastDirection = -nearestMapPoint.trackUp;//Raycast in opposite direction to trackUp.
-            Boolean result;
-            RayHit rayHit;
-            impulseVector = Vector3.Zero;
+        //public Boolean castSingleRay(Vector3 positionOffset, float stickLength, float power, out float timeOfImpact, out Vector3 rayTruePos, out Vector3 offsetRayPos, out Vector3 impulseVector,bool adjustVelocity)
+        //{
+        //    //Vector3 rayCastDirection = Matrix.Identity.Down;//Always raycast in gravity direction.
+        //    //Vector3 rayCastDirection = ship.OrientationMatrix.Down;//Raycast down from ship
+        //    Vector3 rayCastDirection = -nearestMapPoint.trackUp;//Raycast in opposite direction to trackUp.
+        //    Boolean result;
+        //    RayHit rayHit;
+        //    impulseVector = Vector3.Zero;
 
-            float vOffset = 0f;
-            Vector3 verticalOffset = Vector3.Zero;
+        //    float vOffset = 0f;
+        //    Vector3 verticalOffset = Vector3.Zero;
 
-            //Cast ray from above ship to give leyway.
-            vOffset = 20f;//The distance above the ship to search for the track.
-            verticalOffset = -rayCastDirection;
-            verticalOffset.Normalize();
-            verticalOffset *= vOffset;
-            stickLength += vOffset;
-
-
-            rayTruePos = physicsBody.Position + Vector3.Transform(positionOffset, physicsBody.Orientation);
-            offsetRayPos = rayTruePos + verticalOffset;
-
-            theRay.Direction=rayCastDirection;
-            theRay.Position=offsetRayPos;
-            result = Physics.currentTrackFloor.RayCast(theRay, stickLength, out rayHit);
-            timeOfImpact = rayHit.T;
-            float offsetTimeOfImpact = timeOfImpact - vOffset;//Calculate ray from verticle centre of ship, not offset position.
+        //    //Cast ray from above ship to give leyway.
+        //    vOffset = 20f;//The distance above the ship to search for the track.
+        //    verticalOffset = -rayCastDirection;
+        //    verticalOffset.Normalize();
+        //    verticalOffset *= vOffset;
+        //    stickLength += vOffset;
 
 
-            if (result)
-            {
-                impulseVector = rayCastDirection * (float)calculateImpulseSizeFromRay(offsetTimeOfImpact, rayCastDirection,adjustVelocity) * power;
-            }
-            return result;
-        }
+        //    rayTruePos = physicsBody.Position + Vector3.Transform(positionOffset, physicsBody.Orientation);
+        //    offsetRayPos = rayTruePos + verticalOffset;
 
-        /// <summary>
-        /// Calculates the size and +ve/-ve of the impulse to apply at a position, from the ray's time of impact
-        /// </summary>
-        /// <param name="offsetTimeOfImpact">Time of impact minus the verticle offset from which the rays were cast. Negative if ship below the track.</param>
-        /// <param name="rayDirection">Direction the ray was cast in.</param>
-        /// <returns></returns>
-        public float calculateImpulseSizeFromRay(float offsetTimeOfImpact, Vector3 rayDirection,bool adjustVelocity)
-        {
-            Vector3 impulseDirection = rayDirection;
-            float floatDistance = 1f;
-            offsetTimeOfImpact -= floatDistance;
+        //    theRay.Direction=rayCastDirection;
+        //    theRay.Position=offsetRayPos;
+        //    result = Physics.currentTrackFloor.RayCast(theRay, stickLength, out rayHit);
+        //    timeOfImpact = rayHit.T;
+        //    float offsetTimeOfImpact = timeOfImpact - vOffset;//Calculate ray from verticle centre of ship, not offset position.
 
-            //If below float height above track
-            if (offsetTimeOfImpact < 0f)
-            {
-                offsetTimeOfImpact = -offsetTimeOfImpact;
-                impulseDirection = -impulseDirection;
 
-                //if (adjustVelocity)
-                //{
-                //    float velocityDownwards = Vector3.Dot(physicsBody.LinearVelocity, rayDirection) / rayDirection.Length();
-                //    if (velocityDownwards > 0f)
-                //    {
-                //        //Set velocity in downwards direction to zero by redcuing overall velocity vector
-                //        physicsBody.LinearVelocity -= ((velocityDownwards) * rayDirection) * 0.7f;
+        //    if (result)
+        //    {
+        //        impulseVector = rayCastDirection * (float)calculateImpulseSizeFromRay(offsetTimeOfImpact, rayCastDirection,adjustVelocity) * power;
+        //    }
+        //    return result;
+        //}
 
-                //        //set velocity up/down component to a new value
-                //        float upMotionFloat = 0.2f;
-                //        physicsBody.LinearVelocity += (-rayDirection * upMotionFloat);
-                //    }
-                //}
+        ///// <summary>
+        ///// Calculates the size and +ve/-ve of the impulse to apply at a position, from the ray's time of impact
+        ///// </summary>
+        ///// <param name="offsetTimeOfImpact">Time of impact minus the verticle offset from which the rays were cast. Negative if ship below the track.</param>
+        ///// <param name="rayDirection">Direction the ray was cast in.</param>
+        ///// <returns></returns>
+        //public float calculateImpulseSizeFromRay(float offsetTimeOfImpact, Vector3 rayDirection,bool adjustVelocity)
+        //{
+        //    Vector3 impulseDirection = rayDirection;
+        //    float floatDistance = 1f;
+        //    offsetTimeOfImpact -= floatDistance;
 
-                //if (Globals.TestState == 0)
-                //    return -1 * Math.Max(offsetTimeOfImpact * 15f, 0f);
-                //if (Globals.TestState == 1)
-                //    return -1 * Math.Max(offsetTimeOfImpact * 30f, 0f);
-                //if (Globals.TestState == 2)
-                //    return -1 * Math.Max(offsetTimeOfImpact * 45f, 0f);
-                //if (Globals.TestState == 3)
-                //    return -1 * Math.Max(offsetTimeOfImpact * 60f, 0f);
-                //if (Globals.TestState == 4)
-                    return -1 * Math.Max(offsetTimeOfImpact * 90f, 0f);
-                //if (Globals.TestState == 5)
-                //    return -1 * Math.Max(offsetTimeOfImpact * 150f, 0f);
-                //if (Globals.TestState == 6)
-                //    return -1 * Math.Max(offsetTimeOfImpact * 1500f, 0f);
-                ////return -offsetTimeOfImpact * 1.6f;
-            }
-            else if (offsetTimeOfImpact > 0f)
-            {
-                float downVelocityMagnitude = Vector3.Dot(physicsBody.LinearVelocity, rayDirection) / rayDirection.Length();
+        //    //If below float height above track
+        //    if (offsetTimeOfImpact < 0f)
+        //    {
+        //        offsetTimeOfImpact = -offsetTimeOfImpact;
+        //        impulseDirection = -impulseDirection;
 
-                //if(adjustVelocity)
-                //{
-                //    // Gentle bobbing
-                //    if (downVelocityMagnitude < -25f && offsetTimeOfImpact > 14f)
-                //        physicsBody.LinearVelocity -= (rayDirection) * 0.3f;
+        //        //if (adjustVelocity)
+        //        //{
+        //        //    float velocityDownwards = Vector3.Dot(physicsBody.LinearVelocity, rayDirection) / rayDirection.Length();
+        //        //    if (velocityDownwards > 0f)
+        //        //    {
+        //        //        //Set velocity in downwards direction to zero by redcuing overall velocity vector
+        //        //        physicsBody.LinearVelocity -= ((velocityDownwards) * rayDirection) * 0.7f;
 
-                //    // Stop this thing flying into space if we're far away from the track AND going up
-                //    if (downVelocityMagnitude < -25f && offsetTimeOfImpact > 16f)
-                //        physicsBody.LinearVelocity -= (downVelocityMagnitude * rayDirection * 0.39f);
-                //}
+        //        //        //set velocity up/down component to a new value
+        //        //        float upMotionFloat = 0.2f;
+        //        //        physicsBody.LinearVelocity += (-rayDirection * upMotionFloat);
+        //        //    }
+        //        //}
 
-                // Terminal velocity based on max speed in raycast direction, once going down past terminal velocity only apply small impulses
-                float terminalVelocitySpeed = 25f;
-                if (downVelocityMagnitude >= terminalVelocitySpeed)
-                {
-                    // Setting it to zero would disable stabilizers after a fall.
-                    offsetTimeOfImpact /= 12f;
-                }
+        //        //if (Globals.TestState == 0)
+        //        //    return -1 * Math.Max(offsetTimeOfImpact * 15f, 0f);
+        //        //if (Globals.TestState == 1)
+        //        //    return -1 * Math.Max(offsetTimeOfImpact * 30f, 0f);
+        //        //if (Globals.TestState == 2)
+        //        //    return -1 * Math.Max(offsetTimeOfImpact * 45f, 0f);
+        //        //if (Globals.TestState == 3)
+        //        //    return -1 * Math.Max(offsetTimeOfImpact * 60f, 0f);
+        //        //if (Globals.TestState == 4)
+        //            return -1 * Math.Max(offsetTimeOfImpact * 90f, 0f);
+        //        //if (Globals.TestState == 5)
+        //        //    return -1 * Math.Max(offsetTimeOfImpact * 150f, 0f);
+        //        //if (Globals.TestState == 6)
+        //        //    return -1 * Math.Max(offsetTimeOfImpact * 1500f, 0f);
+        //        ////return -offsetTimeOfImpact * 1.6f;
+        //    }
+        //    else if (offsetTimeOfImpact > 0f)
+        //    {
+        //        float downVelocityMagnitude = Vector3.Dot(physicsBody.LinearVelocity, rayDirection) / rayDirection.Length();
 
-                //// Stop it going thru the floor
-                //if (offsetTimeOfImpact < 6)
-                //{
-                //    offsetTimeOfImpact *= 80 / offsetTimeOfImpact;
-                //}
+        //        //if(adjustVelocity)
+        //        //{
+        //        //    // Gentle bobbing
+        //        //    if (downVelocityMagnitude < -25f && offsetTimeOfImpact > 14f)
+        //        //        physicsBody.LinearVelocity -= (rayDirection) * 0.3f;
 
-                // Calculate impulse
-                float impulse;
-                //if (Globals.TestState == 0)
-                    impulse = (float)Math.Min(offsetTimeOfImpact * 90f, 80f);//Graph of y=x is used //If nearestMapPoint is tagged with Jump, then reduce this max to 30
-                //else if (Globals.TestState == 1)
-                //    impulse = (float)Math.Min(offsetTimeOfImpact * 9f, 30f);//Graph of y=x is used
-                //else if (Globals.TestState == 2)
-                //    impulse = (float)Math.Min(offsetTimeOfImpact * 9f, 60f);//Graph of y=x is used
-                //else if (Globals.TestState == 3)
-                //    impulse = (float)Math.Min(offsetTimeOfImpact * 60f, 100f);//Graph of y=x is used
-                //else if (Globals.TestState == 4)
-                //    impulse = (float)Math.Min(offsetTimeOfImpact * 900f, 70f);//Graph of y=x is used
-                //else if (Globals.TestState == 5)
-                //    impulse = (float)Math.Min(offsetTimeOfImpact * 90f, 3000f);//Graph of y=x is used
-                //else //(Globals.TestState == 6)
-                //    impulse = (float)Math.Min(offsetTimeOfImpact * 90f, 30000f);//Graph of y=x is used
+        //        //    // Stop this thing flying into space if we're far away from the track AND going up
+        //        //    if (downVelocityMagnitude < -25f && offsetTimeOfImpact > 16f)
+        //        //        physicsBody.LinearVelocity -= (downVelocityMagnitude * rayDirection * 0.39f);
+        //        //}
 
-                return impulse;
-            }
+        //        // Terminal velocity based on max speed in raycast direction, once going down past terminal velocity only apply small impulses
+        //        float terminalVelocitySpeed = 25f;
+        //        if (downVelocityMagnitude >= terminalVelocitySpeed)
+        //        {
+        //            // Setting it to zero would disable stabilizers after a fall.
+        //            offsetTimeOfImpact /= 12f;
+        //        }
 
-            // Time of impact was 0 so 0 impulse
-            return 0f;
-        }
+        //        //// Stop it going thru the floor
+        //        //if (offsetTimeOfImpact < 6)
+        //        //{
+        //        //    offsetTimeOfImpact *= 80 / offsetTimeOfImpact;
+        //        //}
 
-        // Return whether the ship is on the track
-        public bool shipNearGround()
-        {
-            float stickLength = 40f;
-            Vector3 rayCastDirection = -nearestMapPoint.trackUp;//Raycast in opposite direction to trackUp.
-            rayCastDirection.Normalize();
-            Boolean result;
-            RayHit rayHit;
-            result = Physics.currentTrackFloor.RayCast(new Ray(physicsBody.Position, rayCastDirection), stickLength, out rayHit);
+        //        // Calculate impulse
+        //        float impulse;
+        //        //if (Globals.TestState == 0)
+        //            impulse = (float)Math.Min(offsetTimeOfImpact * 90f, 80f);//Graph of y=x is used //If nearestMapPoint is tagged with Jump, then reduce this max to 30
+        //        //else if (Globals.TestState == 1)
+        //        //    impulse = (float)Math.Min(offsetTimeOfImpact * 9f, 30f);//Graph of y=x is used
+        //        //else if (Globals.TestState == 2)
+        //        //    impulse = (float)Math.Min(offsetTimeOfImpact * 9f, 60f);//Graph of y=x is used
+        //        //else if (Globals.TestState == 3)
+        //        //    impulse = (float)Math.Min(offsetTimeOfImpact * 60f, 100f);//Graph of y=x is used
+        //        //else if (Globals.TestState == 4)
+        //        //    impulse = (float)Math.Min(offsetTimeOfImpact * 900f, 70f);//Graph of y=x is used
+        //        //else if (Globals.TestState == 5)
+        //        //    impulse = (float)Math.Min(offsetTimeOfImpact * 90f, 3000f);//Graph of y=x is used
+        //        //else //(Globals.TestState == 6)
+        //        //    impulse = (float)Math.Min(offsetTimeOfImpact * 90f, 30000f);//Graph of y=x is used
 
-            return result;
-        }
+        //        return impulse;
+        //    }
+
+        //    // Time of impact was 0 so 0 impulse
+        //    return 0f;
+        //}
+
+        //// Return whether the ship is on the track
+        //public bool shipNearGround()
+        //{
+        //    float stickLength = 40f;
+        //    Vector3 rayCastDirection = -nearestMapPoint.trackUp;//Raycast in opposite direction to trackUp.
+        //    rayCastDirection.Normalize();
+        //    Boolean result;
+        //    RayHit rayHit;
+        //    result = Physics.currentTrackFloor.RayCast(new Ray(physicsBody.Position, rayCastDirection), stickLength, out rayHit);
+
+        //    return result;
+        //}
 
         #endregion
 
@@ -1218,7 +1180,7 @@ namespace BeatShift
                 parentRacer.isRespawning = false;
             }
 
-            Vector3 shipUp = physicsBody.OrientationMatrix.Up;
+            Vector3 shipUp = racerEntity.OrientationMatrix.Up;
             Vector3 trackUp = nearestMapPoint.trackUp;
 
             shipUp.Normalize();
@@ -1229,12 +1191,12 @@ namespace BeatShift
 
         public void removeFromPhysicsEngine()
         {
-            Physics.space.Remove(physicsBody);
+            Physics.space.Remove(bepuV.Vehicle);
         }
 
         public float getForwardSpeed()
         {
-            return Vector3.Dot(physicsBody.LinearVelocity, this.ShipOrientationMatrix.Forward); // physicsBody.OrientationMatrix.Forward);
+            return Vector3.Dot(racerEntity.LinearVelocity, this.ShipOrientationMatrix.Forward); // physicsBody.OrientationMatrix.Forward);
         }
 
         //TODO: finish and rename!
@@ -1246,7 +1208,7 @@ namespace BeatShift
 
                 // Max Roll = arctan(1/3) prbly 1/4 in reality to be sure //TODO: using code below already
                 Vector3 a = Vector3.Up;
-                Vector3 b = physicsBody.BufferedStates.Entity.AngularVelocity;
+                Vector3 b = racerEntity.BufferedStates.Entity.AngularVelocity;
                 float angularSize = Vector3.Dot(a, b);
                 //return -(0.322f * (angularSize) / 3.5f) * 5f * (getForwardSpeed() / maxSpeed);
 
@@ -1257,16 +1219,16 @@ namespace BeatShift
                 return 0f;
         }
 
-        public void counteractPitching()
-        {
-            Vector3 target = Vector3.Cross(nearestMapPoint.tangent, nearestMapPoint.trackUp);
+        //public void counteractPitching()
+        //{
+        //    Vector3 target = Vector3.Cross(nearestMapPoint.tangent, nearestMapPoint.trackUp);
 
-            //Vector3.Lerp(camLastUp, getUp(), 0.1f);
+        //    //Vector3.Lerp(camLastUp, getUp(), 0.1f);
 
-            physicsBody.AngularVelocity -= target * 0.01f * (Vector3.Dot(physicsBody.AngularVelocity, target));
+        //    physicsBody.AngularVelocity -= target * 0.01f * (Vector3.Dot(physicsBody.AngularVelocity, target));
 
-            //Quaternion.Slerp(physicsBody., Quaternion.CreateFromAxisAngle(target, 0f), 0.8f);
+        //    //Quaternion.Slerp(physicsBody., Quaternion.CreateFromAxisAngle(target, 0f), 0.8f);
 
-        }
+        //}
     }
 }

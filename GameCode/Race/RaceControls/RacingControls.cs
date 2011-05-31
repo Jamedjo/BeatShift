@@ -287,7 +287,7 @@ namespace BeatShift.Input
 
                 if (actionPressed(InputAction.Backwards))
                 {
-                    racer.shipPhysics.physicsBody.ApplyImpulse(racer.shipPhysics.physicsBody.Position, racer.shipPhysics.physicsBody.OrientationMatrix.Backward * 100);
+                    racer.shipPhysics.applyImpulseInSurfacePlane(racer.shipPhysics.racerEntity.OrientationMatrix.Backward * 100);
                 }
 
                 //axis*angle*factor*analogueInputFactor
@@ -333,17 +333,17 @@ namespace BeatShift.Input
             float baseSpeed = racer.beatQueue.getSpeedMultiplier();
 
             //Apply impulse
-            racer.shipPhysics.bepuV.Vehicle.Body.ApplyImpulse(racer.shipPhysics.bepuV.Vehicle.Body.Position, racer.shipPhysics.bepuV.Vehicle.Body.OrientationMatrix.Forward * 230 * forwardsValue * baseSpeed);
+            racer.shipPhysics.applyImpulseInSurfacePlane(racer.shipPhysics.bepuV.Vehicle.Body.OrientationMatrix.Forward * 230 * forwardsValue * baseSpeed);
         }
 
         public void Boost(double accuracy)
         {
-            racer.shipPhysics.physicsBody.ApplyImpulse(racer.shipPhysics.physicsBody.Position, racer.shipPhysics.physicsBody.OrientationMatrix.Forward * 1200 * (float)accuracy);
+            racer.shipPhysics.applyImpulseInSurfacePlane(racer.shipPhysics.racerEntity.OrientationMatrix.Forward * 1200 * (float)accuracy);
         }
 
         public void AverageMove(double average)
         {
-            racer.shipPhysics.physicsBody.ApplyImpulse(racer.shipPhysics.physicsBody.Position, racer.shipPhysics.physicsBody.OrientationMatrix.Forward * 70 * (float)average);
+            racer.shipPhysics.applyImpulseInSurfacePlane(racer.shipPhysics.racerEntity.OrientationMatrix.Forward * 70 * (float)average);
         }
         
         public decimal getLastPress()

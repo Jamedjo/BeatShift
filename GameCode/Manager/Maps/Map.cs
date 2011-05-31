@@ -318,7 +318,7 @@ namespace BeatShift
 
                 foreach (BasicEffect currentEffect in mesh.Effects)
                 {
-                    Matrix translation = Matrix.CreateTranslation(camera.racer.shipPhysics.physicsBody.Position);//+upMovement);
+                    Matrix translation = Matrix.CreateTranslation(camera.racer.shipPhysics.ShipPosition);//+upMovement);
                     currentEffect.View = viewMatrix;
                     currentEffect.Projection = projectionMatrix;
 

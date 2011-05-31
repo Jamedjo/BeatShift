@@ -10,6 +10,7 @@ using BEPUphysics.CollisionShapes.ConvexShapes;
 using BEPUphysics.Entities.Prefabs;
 using Microsoft.Xna.Framework.Input;
 using BEPUphysics.Collidables.MobileCollidables;
+using BEPUphysics.PositionUpdating;
 
 namespace BeatShift
 {/// <summary>
@@ -66,6 +67,19 @@ namespace BeatShift
                 var body = new CompoundBody(bodies, 60f);
                 body.CollisionInformation.LocalPosition = new Vector3(0, .5f, 0);
                 body.Position = (position); //At first, just keep it out of the way.
+
+                body.IsAlwaysActive = true;
+
+                //physicsBody.CenterOfMassOffset = new Vector3(0, 0f, 0);//Becareful with this as forces/impulses act from here including raycasts
+                body.LinearDamping = 0.5f;//As there is rarely friction must slow ship down every update
+                body.AngularDamping = 0.94f;
+                body.Material.KineticFriction = 2f;
+
+                body.PositionUpdateMode = PositionUpdateMode.Continuous;
+
+                //body.CollisionInformation.Events.ContactCreated += new ContactCreatedEventHandler<EntityCollidable>(Events_InitialCollisionDetected);
+
+
                 Vehicle = new Vehicle(body);
 
                 #region RaycastWheelShapes
@@ -124,13 +138,12 @@ namespace BeatShift
             /// <summary>
             /// Gives the Vehicle control over the camera and movement input.
             /// </summary>
-            public void Activate(Vector3 newPosition)
+            public void Activate()
             {
                 if (!IsActive)
                 {
                     IsActive = true;
                     //Put the Vehicle where the camera is.
-                    Vehicle.Body.Position = newPosition;
                     Vehicle.Body.LinearVelocity = Vector3.Zero;
                     Vehicle.Body.AngularVelocity = Vector3.Zero;
                     Vehicle.Body.Orientation = Quaternion.Identity;

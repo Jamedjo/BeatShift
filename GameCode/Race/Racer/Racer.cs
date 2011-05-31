@@ -56,7 +56,7 @@ namespace BeatShift
                 if (value)
                 {
                     //shipDrawing.collision.Collision(Vector3.Transform(lastCollisionPoint, Matrix.Invert(shipDrawing.getShipDrawOrientationMatrix())));
-                    shipDrawing.collision.Collision(lastCollisionPoint,shipPhysics.DrawOrientation,shipPhysics.physicsBody.LinearVelocity);
+                    shipDrawing.collision.Collision(lastCollisionPoint, shipPhysics.DrawOrientation, shipPhysics.racerEntity.LinearVelocity);
                 }
                 mColliding = value;
                 //return isColliding;   
@@ -110,7 +110,7 @@ namespace BeatShift
         {
             racerType = newRacerType;
             shipPhysics = new ShipPhysics(this);
-            shipDrawing.setPositionFunctions(new Func<Matrix>(() => shipPhysics.DrawOrientationMatrix), new Func<Vector3>(() => shipPhysics.ShipDrawPosition));
+            shipDrawing.setPositionFunctions(new Func<Matrix>(() => shipPhysics.DrawOrientationMatrix), new Func<Vector3>(() => shipPhysics.ShipPosition));
             setupRacingControls();
         }
 
@@ -208,7 +208,7 @@ namespace BeatShift
             {
                 shipPhysics.checkIfOverturned(gameTime);              
 
-                shipPhysics.UpdateWithRayCasts(gameTime);
+                //shipPhysics.UpdateWithRayCasts(gameTime);
 
             }
 
@@ -230,9 +230,9 @@ namespace BeatShift
             {
                 if (shipDrawing.engineGlow != null)
                 {
-                    shipDrawing.engineGlow.setVelocity(shipPhysics.physicsBody.LinearVelocity);
-                    shipDrawing.engineGlow.SetPosition(shipPhysics.ShipDrawPosition, shipPhysics.DrawOrientation);
-                    shipDrawing.spawn.setPosition(shipPhysics.ShipDrawPosition, shipPhysics.DrawOrientation);
+                    shipDrawing.engineGlow.setVelocity(shipPhysics.racerEntity.LinearVelocity);
+                    shipDrawing.engineGlow.SetPosition(shipPhysics.ShipPosition, shipPhysics.DrawOrientation);
+                    shipDrawing.spawn.setPosition(shipPhysics.ShipPosition, shipPhysics.DrawOrientation);
                 }
                 globalSystems.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
                 visualizationSystems.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);

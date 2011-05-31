@@ -187,7 +187,7 @@ namespace BeatShift.Cameras
 
         protected Vector3 getShipPosition()
         {
-            return racer.shipPhysics.ShipDrawPosition;
+            return racer.shipPhysics.ShipPosition;
         }
 
         protected Quaternion getShipOrientation()

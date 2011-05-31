@@ -100,7 +100,7 @@ namespace BeatShift
                 foreach (Racer r in Race.currentRacers)
                 {
                     if (r.shipPhysics == null) return;
-                    space.Remove(r.shipPhysics.physicsBody);
+                    r.shipPhysics.removeFromPhysicsEngine();// space.Remove(r.shipPhysics.physicsBody);
                 }
                 space.Dispose();
             }
