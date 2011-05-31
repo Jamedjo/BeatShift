@@ -152,8 +152,9 @@ namespace BeatShift
 
         public static void RaceStart(int count)
         {
-            //BeatShift.engine.SetGlobalVariable("Countdown",count);
-            soundBank.PlayCue("countdown");                
+            BeatShift.engine.SetGlobalVariable("Countdown",count);
+            Cue temp = soundBank.GetCue("countdown");
+            temp.Play();         
         }
 
         public static Cue getEngineHum()
