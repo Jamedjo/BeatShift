@@ -416,7 +416,7 @@ namespace BeatShift
                     //"\n Preparing: " + track.IsPreparing + 
                     //"\n Created: " + track.IsCreated;
 #endif
-                if (!track.IsPlaying)
+                //if (!track.IsPlaying)//Sometimes track.IsPlaying is true although track.IsDisposed is also true
                 {
                     track = soundBank.GetCue(currentTrack);
                     track.Play();

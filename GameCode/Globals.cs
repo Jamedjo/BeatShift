@@ -12,7 +12,7 @@ namespace BeatShift
     /// </summary>
     public static class Globals
     {
-        public static bool UpdateRaceWithParallel = true;
+        public static bool UpdateRaceWithParallel = false;
         public static bool DisplayHUD = true;
         public static bool DisplayScenery = true;
         public static bool DisplaySkybox = true;
