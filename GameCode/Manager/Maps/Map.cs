@@ -302,9 +302,10 @@ namespace BeatShift
             }
         }
 
-        //todo call method
         public void DrawSkybox(CameraWrapper camera)
         {
+            if (!Globals.DisplaySkybox) return;
+
             Matrix scale = Matrix.CreateScale(7f);
             Matrix[] skyboxTransforms = new Matrix[skyboxModel.Bones.Count];
             skyboxModel.CopyAbsoluteBoneTransformsTo(skyboxTransforms);

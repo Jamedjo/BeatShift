@@ -241,6 +241,13 @@ namespace BeatShift.GameDebugTools
                 Globals.DisplayScenery = !Globals.DisplayScenery;
             });
 
+            // Command to toggle drawing of skybox
+            RegisterCommand("skybox", "Toggle drawing of map scenery",
+            delegate(IDebugCommandHost host, string command, IList<string> args)
+            {
+                Globals.DisplaySkybox = !Globals.DisplaySkybox;
+            });
+
             // Command to toggle drawing of HUD
             RegisterCommand("hud", "Toggle drawing of HUD",
             delegate(IDebugCommandHost host, string command, IList<string> args)

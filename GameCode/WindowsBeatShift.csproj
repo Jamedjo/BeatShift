@@ -165,7 +165,6 @@
     <Compile Include="Manager\Menus\PauseMenu.cs" />
     <Compile Include="Manager\Menus\ResultsMenu.cs" />
     <Compile Include="Manager\Menus\SplashMenu.cs" />
-    <Compile Include="Manager\Particles\BoostSettings.cs" />
     <Compile Include="Particle Systems\BeatIndicatorParticleSystem.cs" />
     <Compile Include="Particle Systems\BeatRingParticleSystem.cs" />
     <Compile Include="Particle Systems\BeatGlowParticleSystem.cs" />
@@ -206,12 +205,10 @@
     <Compile Include="Race\RaceTypes\EliminationRace.cs" />
     <Compile Include="Race\RaceTypes\IRaceType.cs" />
     <Compile Include="Race\RaceTypes\LappedRace.cs" />
-    <Compile Include="Manager\Particles\ParticleEmitter.cs" />
     <Compile Include="Core\GameLoop.cs" />
     <Compile Include="Utilities &amp; Misc\DebugGraphics\DrawVector.cs" />
     <Compile Include="Utilities &amp; Misc\GameTextures.cs" />
     <Compile Include="Core\HeadsUpDisplay.cs" />
-    <Compile Include="Manager\Particles\ParticleSettings.cs" />
     <Compile Include="Manager\Maps\MapManager.cs" />
     <Compile Include="Race\RaceTypes\TimeTrialRace.cs" />
     <Compile Include="Race\Racer\ShipDrawing.cs" />

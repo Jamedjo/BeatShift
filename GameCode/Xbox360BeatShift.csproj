@@ -119,9 +119,6 @@
     <Compile Include="Manager\Menus\OptionsMenu.cs" />
     <Compile Include="Manager\Menus\RaceSelectMenu.cs" />
     <Compile Include="Manager\Menus\SinglePlayerShipSelect.cs" />
-    <Compile Include="Manager\Particles\BoostSettings.cs" />
-    <Compile Include="Manager\Particles\ParticleEmitter.cs" />
-    <Compile Include="Manager\Particles\ParticleSettings.cs" />
     <Compile Include="Particle Systems\BeatIndicatorParticleSystem.cs" />
     <Compile Include="Particle Systems\CollisionParticleSystem.cs" />
     <Compile Include="Particle Systems\EngineParticleSystem.cs" />

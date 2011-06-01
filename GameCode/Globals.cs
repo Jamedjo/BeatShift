@@ -15,6 +15,7 @@ namespace BeatShift
         public static bool UpdateRaceWithParallel = true;
         public static bool DisplayHUD = true;
         public static bool DisplayScenery = true;
+        public static bool DisplaySkybox = true;
         public static bool EnableParticles = true;
 
         //These are to be used to help position HUD items, without having to recompile
