@@ -186,7 +186,7 @@ namespace BeatShift
                 }
 
                 //Simulate gravity
-                Vehicle.Body.ApplyImpulse(Vehicle.Body.Position, worldDirection * 9.81f);
+                //Vehicle.Body.ApplyImpulse(Vehicle.Body.Position, worldDirection * 9.81f);
 
                 if (IsActive)
                 {
