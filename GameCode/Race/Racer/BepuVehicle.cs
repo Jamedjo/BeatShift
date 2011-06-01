@@ -59,14 +59,15 @@ namespace BeatShift
             /// <param name="owningSpace">Space to add the Vehicle to.</param>
             public BepuVehicle(Vector3 position, List<Vector3> physicsHull)
             {
-
+                ConvexHullShape hull = new ConvexHullShape(physicsHull);
+                hull.CollisionMargin = 0.6f;
                 var bodies = new List<CompoundShapeEntry>()
                 {
-                    new CompoundShapeEntry(new ConvexHullShape(physicsHull), Vector3.Zero, 25f)
+                    new CompoundShapeEntry(hull, Vector3.Zero, 25f)
                 };
 
                 var body = new CompoundBody(bodies, 60f);
-                body.CollisionInformation.LocalPosition = new Vector3(0, .5f, 0);
+                //body.CollisionInformation.LocalPosition = new Vector3(0, .5f, 0);
                 body.Position = (position); //At first, just keep it out of the way.
 
                 body.IsAlwaysActive = true;
@@ -77,7 +78,6 @@ namespace BeatShift
                 body.Material.KineticFriction = 2f;
 
                 body.PositionUpdateMode = PositionUpdateMode.Continuous;
-
 
 
                 Vehicle = new Vehicle(body);
@@ -92,29 +92,30 @@ namespace BeatShift
 
                 float staticFriction = 0.2f;
                 float dynamicFriction = 1.5f;
+                float suspensionLength = 2.2f;//0.8f; //0.2f to test for 'jerky' collision behaviour.
 
 
                 Vehicle.AddWheel(new Wheel(
                                      new RaycastWheelShape(.5f, wheelGraphicRotation),
-                                     new WheelSuspension(2000, 100f, Vector3.Down, .8f, new Vector3(-shipWidth / 2, 0f, shipLength / 2)),
+                                     new WheelSuspension(2000, 100f, Vector3.Down, suspensionLength, new Vector3(-shipWidth / 2, 0f, shipLength / 2)),
                                      new WheelDrivingMotor(3f, 30000, 10000),
                                      new WheelBrake(1.5f, 2, .02f),
                                      new WheelSlidingFriction(dynamicFriction, staticFriction)));
                 Vehicle.AddWheel(new Wheel(
                                      new RaycastWheelShape(.5f, wheelGraphicRotation),
-                                     new WheelSuspension(2000, 100f, Vector3.Down, .8f, new Vector3(-shipWidth / 4, 0f, -shipLength / 2)),
+                                     new WheelSuspension(2000, 100f, Vector3.Down, suspensionLength, new Vector3(-shipWidth / 4, 0f, -shipLength / 2)),
                                      new WheelDrivingMotor(3f, 30000, 10000),
                                      new WheelBrake(1.5f, 2, .02f),
                                      new WheelSlidingFriction(dynamicFriction, staticFriction)));
                 Vehicle.AddWheel(new Wheel(
                                      new RaycastWheelShape(.5f, wheelGraphicRotation),
-                                     new WheelSuspension(2000, 100f, Vector3.Down, .8f, new Vector3(shipWidth / 2, 0f, shipLength / 2)),
+                                     new WheelSuspension(2000, 100f, Vector3.Down, suspensionLength, new Vector3(shipWidth / 2, 0f, shipLength / 2)),
                                      new WheelDrivingMotor(3f, 30000, 10000),
                                      new WheelBrake(1.5f, 2, .02f),
                                      new WheelSlidingFriction(dynamicFriction, staticFriction)));
                 Vehicle.AddWheel(new Wheel(
                                      new RaycastWheelShape(.5f, wheelGraphicRotation),
-                                     new WheelSuspension(2000, 100f, Vector3.Down, .8f, new Vector3(shipWidth / 4, 0f, -shipLength / 2)),
+                                     new WheelSuspension(2000, 100f, Vector3.Down, suspensionLength, new Vector3(shipWidth / 4, 0f, -shipLength / 2)),
                                      new WheelDrivingMotor(3f, 30000, 10000),
                                      new WheelBrake(1.5f, 2, .02f),
                                      new WheelSlidingFriction(dynamicFriction, staticFriction)));

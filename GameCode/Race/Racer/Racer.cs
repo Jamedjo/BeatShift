@@ -208,7 +208,7 @@ namespace BeatShift
             {
                 shipPhysics.checkIfOverturned(gameTime);              
 
-                //shipPhysics.UpdateWithRayCasts(gameTime);
+                shipPhysics.UpdateWithRayCasts(gameTime);
 
             }
 

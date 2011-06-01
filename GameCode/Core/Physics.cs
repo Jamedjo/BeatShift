@@ -175,8 +175,8 @@ namespace BeatShift
                 }
                 if (category == ModelCategory.Track)
                 {
-                    //physicsMesh.Material.Bounciness = 0.3f;
-                    //physicsMesh.Material.KineticFriction = 0.1f;
+                    physicsMesh.Material.Bounciness = 0.3f;
+                    physicsMesh.Material.KineticFriction = 0.1f;
 
                     
                    // physicsMesh.CollisionRules.Personal = CollisionRule.NoSolver;//No collisions with track
