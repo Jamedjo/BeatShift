@@ -576,7 +576,7 @@ namespace BeatShift
         public float calculateImpulseSizeFromRay(float offsetTimeOfImpact, Vector3 rayDirection, bool adjustVelocity)
         {
             Vector3 impulseDirection = rayDirection;
-            float floatDistance = 1f;
+            float floatDistance = 2f;
             offsetTimeOfImpact -= floatDistance;
 
             //If below float height above track
@@ -661,7 +661,7 @@ namespace BeatShift
                 //else //(Globals.TestState == 6)
                 //    impulse = (float)Math.Min(offsetTimeOfImpact * 90f, 30000f);//Graph of y=x is used
 
-                //return impulse;
+                return impulse;
             }
 
             // Time of impact was 0 so 0 impulse
