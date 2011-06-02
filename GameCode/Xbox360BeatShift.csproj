@@ -134,7 +134,6 @@
     <Compile Include="Race\RaceControls\PadInputManager.cs" />
     <Compile Include="Race\RaceControls\RacingControls.cs" />
     <Compile Include="Race\Racer\BeatQueue.cs" />
-    <Compile Include="Race\Racer\BepuVehicle.cs" />
     <Compile Include="Race\Racer\Racer.cs" />
     <Compile Include="Race\Racer\RacerHuman.cs" />
     <Compile Include="Race\Racer\RacerId.cs" />
@@ -145,6 +144,7 @@
     <Compile Include="Race\Racer\ShipFbx.cs" />
     <Compile Include="Race\Racer\ShipPhysics.cs" />
     <Compile Include="Race\Racer\ShipPhysics_CollisionDetected.cs" />
+    <Compile Include="Race\Racer\ShipPhysics_Raycasts.cs" />
     <Compile Include="Race\RaceTypes\PointsRace.cs" />
     <Compile Include="Race\RaceTypes\EliminationRace.cs" />
     <Compile Include="Race\RaceTypes\IRaceType.cs" />

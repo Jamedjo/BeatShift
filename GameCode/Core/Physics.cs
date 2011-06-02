@@ -179,7 +179,7 @@ namespace BeatShift
                     physicsMesh.Material.KineticFriction = 0.1f;
 
                     
-                   // physicsMesh.CollisionRules.Personal = CollisionRule.NoSolver;//No collisions with track
+                    physicsMesh.CollisionRules.Personal = CollisionRule.NoSolver;//No collisions with track
                     //CollisionGroup noSelfCollideGroup = new CollisionGroup();
                     currentTrackFloor = physicsMesh;
                     // currentTrackFloor.Events.InitialCollisionDetected += new BEPUphysics.NarrowPhaseSystems.CollisionInformations.Events.InitialCollisionDetectedEventHandler<Entity>(trackCollisionFn); 
