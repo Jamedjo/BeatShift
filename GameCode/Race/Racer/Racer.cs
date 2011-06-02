@@ -212,11 +212,6 @@ namespace BeatShift
 
             }
 
-            /////////////////////////////////
-            //BEPU VECHICLE//
-            ////////////////////////////////////////////////////////////
-            shipPhysics.bepuV.Update(Physics.space.TimeStepSettings.TimeStepDuration,shipPhysics.nearestMapPoint.trackUp*-1,Keyboard.GetState(),GamePad.GetState(PlayerIndex.One));
-
             //shipPhysics.counteractPitching();
 
             // Update the way points and therefore the current lap

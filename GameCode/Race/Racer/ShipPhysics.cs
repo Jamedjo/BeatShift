@@ -30,12 +30,12 @@ namespace BeatShift
     enum Quadrant { Front, Back, Left, Right, FrontLeft, FrontRight, BackLeft, BackRight };
     public partial class ShipPhysics //This class is split over multiple '.cs' files.
     {
-        //public CompoundBody physicsBody;
-        public Entity racerEntity { get { return bepuV.Vehicle.Body; } }
-        public ConvexHullShape convexHull;
+        public Entity racerEntity { get { return physicsEntityBody; } }
+        private CompoundBody physicsEntityBody;
+
         public Vector3 ShipPosition { get { return racerEntity.Position; /*shipHull.CenterPosition;*/ } set { racerEntity.Position = value; /*shipHull.CenterPosition = value;*/ } }
-        public Matrix DrawOrientationMatrix { get { return Matrix3X3.ToMatrix4X4(bepuV.Vehicle.Body.OrientationMatrix); } } //{ get { var rQ = Quaternion.CreateFromAxisAngle(Vector3.Forward, getRoll()); var oldQ = physicsBody.Orientation; var mulQ = oldQ * rQ; return Matrix.CreateFromQuaternion(mulQ); } }
-        public Quaternion DrawOrientation { get { return bepuV.Vehicle.Body.Orientation; } } //{ get { var rQ = Quaternion.CreateFromAxisAngle(Vector3.Forward, getRoll()); var oldQ = physicsBody.Orientation; return oldQ * rQ;  } }
+        public Matrix DrawOrientationMatrix { get { var rQ = Quaternion.CreateFromAxisAngle(Vector3.Forward, getRoll()); var oldQ = physicsEntityBody.Orientation; var mulQ = oldQ * rQ; return Matrix.CreateFromQuaternion(mulQ); } }
+        public Quaternion DrawOrientation { get { var rQ = Quaternion.CreateFromAxisAngle(Vector3.Forward, getRoll()); var oldQ = physicsEntityBody.Orientation; return oldQ * rQ; } }
         public float ShipSpeed { get { return getForwardSpeed(); } }
         public float radiusForGrip = 100;
         Vector3[] stabilizerRaycastList;
@@ -81,7 +81,6 @@ namespace BeatShift
         private Racer parentRacer;
         public bool wrongWay = false;
 
-        public BepuVehicle bepuV;
 
         //Temporary AI
         int AiSpeed = 250;
@@ -90,13 +89,8 @@ namespace BeatShift
         {
             parentRacer = parent;
             initializeWaypoints();
-            //constructPhysicsBody();
-            //Physics.space.Add(physicsBody);
-            //physicsBody.CollisionInformation.Hierarchy.CollisionInformation.CollisionRules.InitialCollisionDetected += new BEPUphysics.Events.InitialCollisionDetectedEventHandler(alertCollision); TODO: GET COLLISIONS WORKING
-            
-            bepuV = new BepuVehicle(Vector3.Zero,importPhysicsHull());
-            bepuV.Vehicle.Body.CollisionInformation.Events.ContactCreated += new ContactCreatedEventHandler<EntityCollidable>(Events_InitialCollisionDetected);
-            bepuV.Activate();
+            constructPhysicsBody();
+
             placeShipOnStartingGrid(parentRacer.shipNumber);
 
 
@@ -161,6 +155,32 @@ namespace BeatShift
             startPoint += Vector3.Transform(new Vector3(col * 14f, 0, row * 16f), Matrix.CreateWorld(Vector3.Zero, mapData.nextPoint(currentProgressWaypoint).position - startPoint, currentProgressWaypoint.trackUp));//Offset each new ships position by 5
 
             return startPoint;
+        }
+
+        private void constructPhysicsBody()
+        {
+            ConvexHullShape hull = new ConvexHullShape(importPhysicsHull());
+            hull.CollisionMargin = 0.6f;
+            var bodies = new List<CompoundShapeEntry>()
+                {
+                    new CompoundShapeEntry(hull, Vector3.Zero, 25f)
+                };
+
+            physicsEntityBody = new CompoundBody(bodies, 60f);
+            //body.CollisionInformation.LocalPosition = new Vector3(0, .5f, 0);//Moves center of gravity position to adjust stability.
+
+            physicsEntityBody.IsAlwaysActive = true;
+
+            //physicsBody.CenterOfMassOffset = new Vector3(0, 0f, 0);//Becareful with this as forces/impulses act from here including raycasts
+            physicsEntityBody.LinearDamping = 0.5f;//As there is rarely friction must slow ship down every update
+            physicsEntityBody.AngularDamping = 0.94f;
+            physicsEntityBody.Material.KineticFriction = 2f;
+
+            physicsEntityBody.PositionUpdateMode = PositionUpdateMode.Continuous;
+
+            physicsEntityBody.CollisionInformation.Events.ContactCreated += new ContactCreatedEventHandler<EntityCollidable>(Events_InitialCollisionDetected);
+
+            Physics.space.Add(physicsEntityBody);
         }
 
         public void applyImpulseInSurfacePlane(Vector3 impulse)
@@ -729,7 +749,7 @@ namespace BeatShift
 
         public void removeFromPhysicsEngine()
         {
-            Physics.space.Remove(bepuV.Vehicle);
+            Physics.space.Remove(physicsEntityBody);
         }
 
         public float getForwardSpeed()

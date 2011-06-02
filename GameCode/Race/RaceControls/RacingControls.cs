@@ -296,7 +296,7 @@ namespace BeatShift.Input
 
                 //Only apply rotation if the ship doesn't already have a large rotational force
                 Vector3 a = Vector3.Up;
-                Vector3 b = racer.shipPhysics.bepuV.Vehicle.Body.BufferedStates.Entity.AngularVelocity;
+                Vector3 b = racer.shipPhysics.racerEntity.BufferedStates.Entity.AngularVelocity;
                 float angularSize = Vector3.Dot(a, b);
 
                 // Change the impulse direction if we are in reverse
@@ -304,7 +304,7 @@ namespace BeatShift.Input
                 //if (new Random().Next(60) == 0) Console.WriteLine(angularSize);
 
                 // CAUTION: We change reverse direction once we're reversing more than 35f. Plays better when hitting walls head on but weird.
-                float backwardsComponent = Vector3.Dot(racer.shipPhysics.bepuV.Vehicle.Body.LinearVelocity, racer.shipPhysics.bepuV.Vehicle.Body.WorldTransform.Backward);
+                float backwardsComponent = Vector3.Dot(racer.shipPhysics.racerEntity.LinearVelocity, racer.shipPhysics.racerEntity.WorldTransform.Backward);
                 if (backwardsComponent > 20f)
                     reversingMultiplier = -1;
 
@@ -312,14 +312,14 @@ namespace BeatShift.Input
                 {
                     if (angularSize < 3.5f)
                     {
-                        Vector3 leftVector = racer.shipPhysics.bepuV.Vehicle.Body.OrientationMatrix.Up * reversingMultiplier * 105f * (1 + (Math.Abs(angularSize) * 0.12f)) * chosenInput.getActionValue(InputAction.Left);
-                        Physics.ApplyAngularImpulse(ref leftVector, racer.shipPhysics.bepuV.Vehicle.Body);
+                        Vector3 leftVector = racer.shipPhysics.racerEntity.OrientationMatrix.Up * reversingMultiplier * 105f * (1 + (Math.Abs(angularSize) * 0.12f)) * chosenInput.getActionValue(InputAction.Left);
+                        Physics.ApplyAngularImpulse(ref leftVector, racer.shipPhysics.racerEntity);
                     }
 
                     if (angularSize > -3.5f)
                     {
-                        Vector3 rightVector = racer.shipPhysics.bepuV.Vehicle.Body.OrientationMatrix.Up * reversingMultiplier * -105f * (1 + (Math.Abs(angularSize) * 0.12f)) * chosenInput.getActionValue(InputAction.Right);
-                        Physics.ApplyAngularImpulse(ref rightVector, racer.shipPhysics.bepuV.Vehicle.Body);
+                        Vector3 rightVector = racer.shipPhysics.racerEntity.OrientationMatrix.Up * reversingMultiplier * -105f * (1 + (Math.Abs(angularSize) * 0.12f)) * chosenInput.getActionValue(InputAction.Right);
+                        Physics.ApplyAngularImpulse(ref rightVector, racer.shipPhysics.racerEntity);
                     }
                 }
         }
@@ -333,7 +333,7 @@ namespace BeatShift.Input
             float baseSpeed = racer.beatQueue.getSpeedMultiplier();
 
             //Apply impulse
-            racer.shipPhysics.applyImpulseInSurfacePlane(racer.shipPhysics.bepuV.Vehicle.Body.OrientationMatrix.Forward * 230 * forwardsValue * baseSpeed);
+            racer.shipPhysics.applyImpulseInSurfacePlane(racer.shipPhysics.racerEntity.OrientationMatrix.Forward * 230 * forwardsValue * baseSpeed);
         }
 
         public void Boost(double accuracy)
