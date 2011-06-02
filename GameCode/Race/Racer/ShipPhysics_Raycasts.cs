@@ -67,115 +67,156 @@ namespace BeatShift
             castSingleRayAndApplyImpulse(Vector3.Zero, stabalizerStickLength, 0f, true);//Reduce down velocity if below float distance
 
             castSingleRayAndApplyImpulseCorrection(22, 160f * (ShipSpeed/80));
+
+            predictivelyAdaptOrientation();
+
             // Ifne or all of the stabilizers missed the track, or were too short
             if (!stabilizersHit || overturned)
             {
                 bool centreRaycastHit = castSingleRayAndApplyImpulse(Vector3.Zero, 100, 4f, true);
-
-
 
                 if (!centreRaycastHit || overturned)
                 {
                     //Main raycast stick failed too
                     //Ship is either upside-down or not on the track or race has not begun
 
-                    millisecsLeftTillReset -= (BeatShift.singleton.currentTime.ElapsedGameTime.TotalMilliseconds); //* currentDistanceToNearestWaypoint);
-                    //physicsBody.LinearDamping = 0.8f;
-
-                    if (parentRacer.raceTiming.isRacing && millisecsLeftTillReset > 0)//Checked before updatewithraycasts is called
-                    {
-
-                        // Console.WriteLine("RESPAWNING...");
-
-
-                        parentRacer.isRespawning = true;
-                        //TODO: wait a bit 
-                        //currentDistanceToNearestWaypoint = (float)((nextWaypoint.position - ShipPosition).Length()) / 125; //TODO: use actual width of track
-
-                        //physicsBody.LinearDamping = 0.7f; //BUG!!!
-
-                        //Console.WriteLine(currentDistanceToNearestWaypoint);
-                        if (!despawnShown && millisecsLeftTillReset < 700)
-                        {
-                            parentRacer.shipDrawing.spawn.Despawn(parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.DrawOrientation);
-                            despawnShown = true;
-                        }
-
-
-                    }
-                    else
-                    {
-                        parentRacer.isRespawning = false;
-                        millisecsLeftTillReset = 5000;
-                        //public struct ResetColumn { public Vector3 pos; int column; int resetWaypointIncrement; }
-
-                        Vector3 originalPos = currentProgressWaypoint.position;
-                        Vector3 putativePos = currentProgressWaypoint.position; //nearestMapPoint.position;
-
-                        float shipLength = 1.5f;//TODO:don't set manually
-                        int columnInc = 0;
-                        int waypointInc = 0;
-                        bool readyToPlaceOnTrack = false;
-                        ResetColumn newRC = new ResetColumn(putativePos, parentRacer.raceTiming.stopwatch.ElapsedMilliseconds);
-
-                        // On each iteration - 5 horizontal slots
-                        while (!readyToPlaceOnTrack && waypointInc < 8)
-                        {
-                            putativePos -= 2 * shipLength * currentProgressWaypoint.tangent;
-                            // Start at current way point, go left and right to find an empty spot, then start going forward.
-                            if (Race.currentRaceType.resettingShips.Count == 0)
-                            {
-                                readyToPlaceOnTrack = true;
-                                newRC.position = putativePos;
-                                newRC.timeFromReset = parentRacer.raceTiming.stopwatch.ElapsedMilliseconds;
-                            }
-
-                            // Go across 5
-                            while (!readyToPlaceOnTrack && columnInc < 3)
-                            {
-                                foreach (ResetColumn rc in Race.currentRaceType.resettingShips)
-                                {
-                                    if ((rc.position.X - putativePos.X) < shipLength && (rc.position.Y - putativePos.Y) < shipLength && (rc.position.Z - putativePos.Z) < shipLength)
-                                    {
-                                        readyToPlaceOnTrack = false;
-
-                                    }
-                                    else
-                                    {
-                                        // Found a good location to place the ship
-                                        readyToPlaceOnTrack = true;
-                                        newRC.position = putativePos;
-                                        newRC.timeFromReset = parentRacer.raceTiming.stopwatch.ElapsedMilliseconds;
-                                        //newRC.column = columnInc;
-                                        //newRC.resetWaypointIncrement = resetWaypointInc;}
-                                    }
-                                }
-
-                                putativePos += shipLength * currentProgressWaypoint.tangent;
-                                columnInc++;
-                            }
-                            columnInc = 0;
-                            waypointInc++;
-                            currentProgressWaypoint = mapData.nextPoint(currentProgressWaypoint);
-                        }
-
-                        Race.currentRaceType.resettingShips.Add(newRC);
-
-                        Vector3 newShipPosition = newRC.position + currentProgressWaypoint.trackUp * 4;
-
-                        ShipPosition = newShipPosition;
-                        racerEntity.LinearVelocity = Vector3.Zero;
-                        racerEntity.AngularVelocity = Vector3.Zero;
-                        racerEntity.WorldTransform = Matrix.CreateWorld(newShipPosition, mapData.nextPoint(currentProgressWaypoint).position - newShipPosition, currentProgressWaypoint.trackUp);
-
-                        //resetShipAtLastWaypoint(); //TODO: start some kind of animation, white noise
-                        parentRacer.shipDrawing.spawn.Respawn(parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.DrawOrientation);
-                        despawnShown = false;
-                    }
-
+                    dealWithShipOffTrack();
                 }
+            }
+        }
+
+        private void predictivelyAdaptOrientation()
+        {
+            // Raycast diagonally in the direction of motion. (Down*scaleFactor)+(linearVelocity/scaleFactor2),
+            // means that the predictive look-ahead works for any motion direction instead of just forwards.
+            Vector3 downDirection = racerEntity.OrientationMatrix.Down;//-nearestMapPoint.trackUp;
+            Vector3 rayCastDirection = (downDirection * 1f) + (racerEntity.LinearVelocity*0.5f);//Raycast in opposite direction to trackUp.
+            Boolean result;
+            RayHit rayHit;
+
+            float rayLength = rayCastDirection.Length();
+            rayCastDirection.Normalize();
+
+            theRay.Direction = rayCastDirection;
+            theRay.Position = racerEntity.Position;
+            result = Physics.currentTrackFloor.RayCast(theRay, rayLength, out rayHit);
+
+
+
+            if (result)
+            {
+                Globals.EnableParticles = false;
+                //Use normal to calculate angular impulse needed to rotate ship towards a new orientation around the axis defined by the roadSurface vector.
+
+                //Avaliable variables
+                //rayHit.Normal, rayHit.T, rayCastDirection
+                //nearestMapPoint.roadSurface, tangent, trackUp
+                //racerEntity.OrientationMatrix.Up
+
+                //Also at somepoint (here and collision code) we need to reduce velocity towards the track.
+
+                //Also need to add debug graphics for testing this.
+
+                float angle = angleBetween(racerEntity.OrientationMatrix.Up, rayHit.Normal);
+                Vector3 angularImpulse = angle * racerEntity.OrientationMatrix.Right * 15f;//must work out if we should be tilting up or down each time we calculate this (currently only correct when track goes uphill, fails when rayHit detects a downhill, but we could just not do anything when that is the case. Note that up/downhill is based on the motion direction more than the ships orientation)
+
+                Physics.ApplyAngularImpulse(ref angularImpulse, racerEntity);
 
             }
+            else Globals.EnableParticles = true;
+        }
+
+        private void dealWithShipOffTrack()
+        {
+            millisecsLeftTillReset -= (BeatShift.singleton.currentTime.ElapsedGameTime.TotalMilliseconds); //* currentDistanceToNearestWaypoint);
+            //physicsBody.LinearDamping = 0.8f;
+
+            if (parentRacer.raceTiming.isRacing && millisecsLeftTillReset > 0)//Checked before updatewithraycasts is called
+            {
+                parentRacer.isRespawning = true;
+                //TODO: wait a bit 
+                //currentDistanceToNearestWaypoint = (float)((nextWaypoint.position - ShipPosition).Length()) / 125; //TODO: use actual width of track
+                //physicsBody.LinearDamping = 0.7f; //BUG!!!
+                if (!despawnShown && millisecsLeftTillReset < 700)
+                {
+                    parentRacer.shipDrawing.spawn.Despawn(parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.DrawOrientation);
+                    despawnShown = true;
+                }
+            }
+            else
+            {
+                resetShipOnTrack();
+            }
+        }
+
+        private void resetShipOnTrack()
+        {
+            parentRacer.isRespawning = false;
+            millisecsLeftTillReset = 5000;
+            //public struct ResetColumn { public Vector3 pos; int column; int resetWaypointIncrement; }
+
+            Vector3 originalPos = currentProgressWaypoint.position;
+            Vector3 putativePos = currentProgressWaypoint.position; //nearestMapPoint.position;
+
+            float shipLength = 1.5f;//TODO:don't set manually
+            int columnInc = 0;
+            int waypointInc = 0;
+            bool readyToPlaceOnTrack = false;
+            ResetColumn newRC = new ResetColumn(putativePos, parentRacer.raceTiming.stopwatch.ElapsedMilliseconds);
+
+            // On each iteration - 5 horizontal slots
+            while (!readyToPlaceOnTrack && waypointInc < 8)
+            {
+                putativePos -= 2 * shipLength * currentProgressWaypoint.tangent;
+                // Start at current way point, go left and right to find an empty spot, then start going forward.
+                if (Race.currentRaceType.resettingShips.Count == 0)
+                {
+                    readyToPlaceOnTrack = true;
+                    newRC.position = putativePos;
+                    newRC.timeFromReset = parentRacer.raceTiming.stopwatch.ElapsedMilliseconds;
+                }
+
+                // Go across 5
+                while (!readyToPlaceOnTrack && columnInc < 3)
+                {
+                    foreach (ResetColumn rc in Race.currentRaceType.resettingShips)
+                    {
+                        if ((rc.position.X - putativePos.X) < shipLength && (rc.position.Y - putativePos.Y) < shipLength && (rc.position.Z - putativePos.Z) < shipLength)
+                        {
+                            readyToPlaceOnTrack = false;
+
+                        }
+                        else
+                        {
+                            // Found a good location to place the ship
+                            readyToPlaceOnTrack = true;
+                            newRC.position = putativePos;
+                            newRC.timeFromReset = parentRacer.raceTiming.stopwatch.ElapsedMilliseconds;
+                            //newRC.column = columnInc;
+                            //newRC.resetWaypointIncrement = resetWaypointInc;}
+                        }
+                    }
+
+                    putativePos += shipLength * currentProgressWaypoint.tangent;
+                    columnInc++;
+                }
+                columnInc = 0;
+                waypointInc++;
+                currentProgressWaypoint = mapData.nextPoint(currentProgressWaypoint);
+            }
+
+            Race.currentRaceType.resettingShips.Add(newRC);
+
+            Vector3 newShipPosition = newRC.position + currentProgressWaypoint.trackUp * 4;
+
+            ShipPosition = newShipPosition;
+            racerEntity.LinearVelocity = Vector3.Zero;
+            racerEntity.AngularVelocity = Vector3.Zero;
+            racerEntity.WorldTransform = Matrix.CreateWorld(newShipPosition, mapData.nextPoint(currentProgressWaypoint).position - newShipPosition, currentProgressWaypoint.trackUp);
+
+            //resetShipAtLastWaypoint(); //TODO: start some kind of animation, white noise
+            parentRacer.shipDrawing.spawn.Respawn(parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.DrawOrientation);
+            despawnShown = false;
         }
 
         /// <summary>
