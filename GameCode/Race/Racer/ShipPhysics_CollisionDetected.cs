@@ -51,12 +51,12 @@ namespace BeatShift
         private void ReactToTrackHit(ContactData contact)
         {
             // Bounce up a little on collisions
-            //Vector3 rayDirection = -contact.Normal;//-nearestMapPoint.trackUp;
-            //float downVelocityMagnitude = Vector3.Dot(racerEntity.LinearVelocity, rayDirection) / rayDirection.Length();
-            //racerEntity.LinearVelocity -= rayDirection * downVelocityMagnitude;
-            //racerEntity.LinearVelocity -= (rayDirection * 5f);
+            Vector3 hitUpDirection = -contact.Normal;//-nearestMapPoint.trackUp;
+            float downVelocityMagnitude = Vector3.Dot(racerEntity.LinearVelocity, hitUpDirection) / hitUpDirection.Length();
+            racerEntity.LinearVelocity -= hitUpDirection * downVelocityMagnitude;
+            //racerEntity.LinearVelocity -= (hitUpDirection * 5f);
 
-            //racerEntity.ApplyLinearImpulse(-rayDirection * 2.5f);
+            //racerEntity.ApplyLinearImpulse(-hitUpDirection * 2.5f);
 
             //TODO: DISPLAY LOADS OF PARTICLES TO HIDE OUR CRAP PHYSICS!!!
             //BeatShift.emitter = new ParticleEmitter((Func<Vector3>)delegate { return contacts[0].Position; }, BeatShift.settingsb, BeatShift.pEffect);

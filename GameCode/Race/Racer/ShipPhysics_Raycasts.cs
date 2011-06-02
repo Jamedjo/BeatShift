@@ -117,8 +117,9 @@ namespace BeatShift
 
                 //Also need to add debug graphics for testing this.
 
-                float angle = angleBetween(racerEntity.OrientationMatrix.Up, rayHit.Normal);
+                float angle = angleBetween(racerEntity.OrientationMatrix.Up, rayHit.Normal);//Should probably use the Up from the area of track below the ship instead. Atm, if the ship is pointing towards the track on a flat section; this code creates a large angle/impulse.
                 Vector3 angularImpulse = angle * racerEntity.OrientationMatrix.Right * 15f;//must work out if we should be tilting up or down each time we calculate this (currently only correct when track goes uphill, fails when rayHit detects a downhill, but we could just not do anything when that is the case. Note that up/downhill is based on the motion direction more than the ships orientation)
+
 
                 Physics.ApplyAngularImpulse(ref angularImpulse, racerEntity);
 
