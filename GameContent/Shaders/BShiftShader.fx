@@ -1,13 +1,17 @@
-float4x4 wvp_Mx;//WorldViewProjection matrix
-float4x4 world_Mx;
-float4x4 view_Mx;
-//float3 ViewVector;
+float4x4 wvp_Mx      :  WorldViewProjection     < string UIWidget = "None"; >;
+float4x4 world_Mx    :  World                   < string UIWidget = "None"; >;
+float4x4 viewInv_Mx  :  ViewInverse             < string UIWidget = "None"; >;
+float4x4 wit_Mx      :  WorldInverseTranspose   < string UIWidget = "None"; >;
 
-float4x4 wit_Mx;//WorldInverseTranspose matrix
 
-float3 DiffuseLightDirection = float3(1, 2, 0);
-float4 DiffuseColour = float4(1, 1, 1, 1);
-float DiffuseIntensity = 1.0;
+float3 DiffuseLightDirection : POSITION
+<
+    string UIName = "Diffuse Light Direction";
+    string Object = "DirectionalLight";
+    string Space = "World";
+    int refID = 0;
+>  = float3(1, 2, 0);
+
 
 float4 ambientColour = float4(1, 1, 1, 1);
 float ambientIntensity = 0.2;
@@ -68,6 +72,8 @@ struct VertexShaderOutput
     float3 Tangent : TEXCOORD2;
     float3 Binormal : TEXCOORD3;
 	
+	float3 EyeVec :	TEXCOORD4;
+	
 };
 
 VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
@@ -80,6 +86,8 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
     output.Tangent = normalize(mul(input.Tangent, wit_Mx));
     output.Binormal = normalize(mul(input.Binormal, wit_Mx));
 
+	float3 worldPosition 	= mul(input.Position, world_Mx);
+	output.EyeVec = viewInv_Mx[3].xyz - worldPosition;
 
 	//float4 normal = mul(input.Normal, wit_Mx);
 	//float lightintensity = dot(normal, DiffuseLightDirection);
@@ -104,15 +112,17 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 
 	// Specular using new normal: R = 2 * (N.L) * N – L
     float3 R = normalize(2 * lightintensity * newNormal - n_light);
-	float3 viewvec = view_Mx._m13_m23_m33;
-	float3 v = normalize(mul(normalize(viewvec), world_Mx));
-	float specularValue = max(pow(dot(R, v), Shininess),0);
+	float3 EV = normalize(input.EyeVec);
+	
+	float specularValue = max(pow(dot(R, EV), Shininess),0);
 	float4 specular = SpecularIntensity * SpecularColour * specularValue * lightintensity;
 
     float4 textureColour = tex2D(textureSampler, input.TexCoord);
-	textureColour.a= tex2D(alphaSampler, input.TexCoord).r;
 
-    return saturate(lightintensity * textureColour + ambientColour * ambientIntensity + specular);
+	float4 outFloat = saturate(lightintensity * textureColour + ambientColour * ambientIntensity + specular);
+	outFloat.a= tex2D(alphaSampler, input.TexCoord).r;
+	
+    return outFloat;
 }
 
 technique Technique1
