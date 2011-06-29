@@ -45,7 +45,7 @@ namespace BeatShift.Menus
             }));
             addMenuItem("MAIN MENU", (Action)(delegate
             {
-                ((ConfirmationMenu)IMenuStack.Confim).initYesNo("Are you sure you wish to return to the main menu", "Yes", "No",
+                ((ConfirmationMenu)IMenuStack.Confim).initYesNo("WARNING: Finish race and return to the menus?", "Yes", "No",
                     (Action)(delegate
                     {
                         GameLoop.setGameStateAndResetPlayers(GameState.Menu);
