@@ -117,18 +117,18 @@ namespace BeatShift.Menus
             }
             else
             {
-                //l.Add(new HighScoreEntry(retval, time));
+                l.Add(new HighScoreEntry(retval, time));
                 //RESET XBOX SCORES
-                l.Add(new HighScoreEntry("Anonymous", 9999999999));
-                l.Add(new HighScoreEntry("Anonymous", 9999999999));
-                l.Add(new HighScoreEntry("Anonymous", 9999999999));
-                l.Add(new HighScoreEntry("Anonymous", 9999999999));
-                l.Add(new HighScoreEntry("Anonymous", 9999999999));
-                l.Add(new HighScoreEntry("Anonymous", 9999999999));
-                l.Add(new HighScoreEntry("Anonymous", 9999999999));
-                l.Add(new HighScoreEntry("Anonymous", 9999999999));
-                l.Add(new HighScoreEntry("Anonymous", 9999999999));
-                l.Add(new HighScoreEntry("Anonymous", 9999999999));
+                //l.Add(new HighScoreEntry("Anonymous", 150000000));
+                //l.Add(new HighScoreEntry("Anonymous", 150000000));
+                //l.Add(new HighScoreEntry("Anonymous", 150000000));
+                //l.Add(new HighScoreEntry("Anonymous", 150000000));
+                //l.Add(new HighScoreEntry("Anonymous", 150000000));
+                //l.Add(new HighScoreEntry("Anonymous", 150000000));
+                //l.Add(new HighScoreEntry("Anonymous", 150000000));
+                //l.Add(new HighScoreEntry("Anonymous", 150000000));
+                //l.Add(new HighScoreEntry("Anonymous", 150000000));
+                //l.Add(new HighScoreEntry("Anonymous", 150000000));
                 // Do whatever you want with the string you got from the user, which is now stored in retval
             }
             HighScore.getHighScores(MapManager.currentMap.currentMapName, raceType, l);
