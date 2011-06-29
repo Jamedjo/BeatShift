@@ -162,26 +162,29 @@ namespace BeatShift.Menus
 
                 List<HighScoreEntry> tempRes = HighScore.getHighScores(MapManager.currentMap.currentMapName, 0);
                 
-                if(time < tempRes[9].value){
+                // REMOVED FOR DEMO
+                // NEEDS TO BE FIXED
+                // TODO: CASE 71
+                //if(time < tempRes[9].value){
 
 
-                    keyboardShown = false;
-                    if(!Guide.IsVisible) /*CHECK HIGHSCORE*/
-                    {
-                        while( !keyboardShown )
-                        try 
-                        {
-                            Guide.BeginShowKeyboardInput(index, "Player " + (index.ToString()) + " has set a new lap record", "Please enter your name", "", keyboardCallback, (object)"dontcare");
-                        }  
-                        catch 
-                        {
-                            keyboardShown = true;
-                            // create a class bool, initialize it to false, then set it to true here so you know you need to try again because it didn't work the first time,  
-                            // probably because the Guide became visible between when you checked Guide.IsVisible and when you called Guide.BeginShowKeyboardInput  
-                        }  
-                        //ENTER NAME AND TIME INTO HIGH SCORES
-                    }
-                }
+                //    keyboardShown = false;
+                //    if(!Guide.IsVisible) /*CHECK HIGHSCORE*/
+                //    {
+                //        while( !keyboardShown )
+                //        try 
+                //        {
+                //            Guide.BeginShowKeyboardInput(index, "Player " + (index.ToString()) + " has set a new lap record", "Please enter your name", "", keyboardCallback, (object)"dontcare");
+                //        }  
+                //        catch 
+                //        {
+                //            keyboardShown = true;
+                //            // create a class bool, initialize it to false, then set it to true here so you know you need to try again because it didn't work the first time,  
+                //            // probably because the Guide became visible between when you checked Guide.IsVisible and when you called Guide.BeginShowKeyboardInput  
+                //        }  
+                //        //ENTER NAME AND TIME INTO HIGH SCORES
+                //    }
+                //}
             }
             
             //POINTS RACE
@@ -212,12 +215,15 @@ namespace BeatShift.Menus
 
         public override void setupMenuItems()
         {
-            addMenuItem("Highscores", (Action)(delegate
-            {
-                MenuManager.postRaceSystem.setCurrentMenu(MenuPage.HighScore);
-                //MenuManager.setCurrentMenu(MenuPage.HighScore);
+            // REMOVED FOR DEMO
+            // NEEDS TO BE FIXED
+            // TODO: CASE 71
+            //addMenuItem("Highscores", (Action)(delegate
+            //{
+            //    MenuManager.postRaceSystem.setCurrentMenu(MenuPage.HighScore);
+            //    //MenuManager.setCurrentMenu(MenuPage.HighScore);
                 
-            }));
+            //}));
             addMenuItem("Main Menu", (Action)(delegate
             {
                 GameLoop.setGameStateAndResetPlayers(GameState.Menu);

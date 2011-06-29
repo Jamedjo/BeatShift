@@ -29,6 +29,7 @@ namespace BeatShift.Input
         bool justCollided = false;
         bool wasBoostingPreviousUpdate = false;
         bool justJump = false;
+        bool vibrateSequence = false;
         double sequenceNumber;
         int vibrateNumber;
 
@@ -59,6 +60,7 @@ namespace BeatShift.Input
             racer.beatQueue.isLevellingUp = false;
             sequenceNumber = 0;
             vibrateNumber = 0;
+            vibrateSequence = true;
         }
         public RacingControls(Racer myRacer)
             : this(myRacer, new PadInputManager(PlayerIndex.One))
@@ -310,13 +312,13 @@ namespace BeatShift.Input
                 {
                     if (angularSize < 3.5f)
                     {
-                        Vector3 leftVector = racer.shipPhysics.racerEntity.OrientationMatrix.Up * reversingMultiplier * 125f * (1 + (Math.Abs(angularSize) * 0.2f)) * chosenInput.getActionValue(InputAction.Left);
+                        Vector3 leftVector = racer.shipPhysics.racerEntity.OrientationMatrix.Up * reversingMultiplier * 105f * (1 + (Math.Abs(angularSize) * 0.12f)) * chosenInput.getActionValue(InputAction.Left);
                         Physics.ApplyAngularImpulse(ref leftVector, racer.shipPhysics.racerEntity);
                     }
 
                     if (angularSize > -3.5f)
                     {
-                        Vector3 rightVector = racer.shipPhysics.racerEntity.OrientationMatrix.Up * reversingMultiplier * -125f * (1 + (Math.Abs(angularSize) * 0.2f)) * chosenInput.getActionValue(InputAction.Right);
+                        Vector3 rightVector = racer.shipPhysics.racerEntity.OrientationMatrix.Up * reversingMultiplier * -105f * (1 + (Math.Abs(angularSize) * 0.12f)) * chosenInput.getActionValue(InputAction.Right);
                         Physics.ApplyAngularImpulse(ref rightVector, racer.shipPhysics.racerEntity);
                     }
                 }
@@ -331,7 +333,7 @@ namespace BeatShift.Input
             float baseSpeed = racer.beatQueue.getSpeedMultiplier();
 
             //Apply impulse
-            racer.shipPhysics.applyImpulseInSurfacePlane(racer.shipPhysics.racerEntity.OrientationMatrix.Forward * 280 * forwardsValue * baseSpeed);
+            racer.shipPhysics.applyImpulseInSurfacePlane(racer.shipPhysics.racerEntity.OrientationMatrix.Forward * 230 * forwardsValue * baseSpeed);
         }
 
         public void Boost(double accuracy)
