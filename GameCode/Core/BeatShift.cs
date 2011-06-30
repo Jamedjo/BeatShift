@@ -41,7 +41,7 @@ namespace BeatShift
 
         public readonly static String Title = "BeatShift";
 
-        #region variables
+        #region Variables
 
         // Race related variables
         public static ShipSelect shipSelect;

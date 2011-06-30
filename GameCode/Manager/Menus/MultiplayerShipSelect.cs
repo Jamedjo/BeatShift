@@ -173,7 +173,9 @@ namespace BeatShift
             if (!Guide.IsVisible) if (ssarea[i].isActive && (Race.humanRacers[i].shipDrawing.isVisible == false))
                 {
                     if (signedInPlayers[i] == 1)
+                    {
                         Race.humanRacers[i].shipDrawing.isVisible = true;
+                    }
                     else
                         ssarea[i].setActive(false);
                 }
