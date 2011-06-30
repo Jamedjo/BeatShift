@@ -105,7 +105,6 @@ namespace BeatShift
 
             if (result)
             {
-                Globals.EnableParticles = false;
                 //Use normal to calculate angular impulse needed to rotate ship towards a new orientation around the axis defined by the roadSurface vector.
 
                 //Avaliable variables
@@ -113,18 +112,15 @@ namespace BeatShift
                 //nearestMapPoint.roadSurface, tangent, trackUp
                 //racerEntity.OrientationMatrix.Up
 
-                //Also at somepoint (here and collision code) we need to reduce velocity towards the track.
+                //TODO: Also need to add debug graphics for testing this.
 
-                //Also need to add debug graphics for testing this.
-
-                float angle = angleBetween(racerEntity.OrientationMatrix.Up, rayHit.Normal);//Should probably use the Up from the area of track below the ship instead. Atm, if the ship is pointing towards the track on a flat section; this code creates a large angle/impulse.
-                Vector3 angularImpulse = angle * racerEntity.OrientationMatrix.Right * 15f;//must work out if we should be tilting up or down each time we calculate this (currently only correct when track goes uphill, fails when rayHit detects a downhill, but we could just not do anything when that is the case. Note that up/downhill is based on the motion direction more than the ships orientation)
+                float angle = angleBetween(racerEntity.OrientationMatrix.Up, rayHit.Normal);//TODO: Should probably use the Up from the area of track below the ship instead. Atm, if the ship is pointing towards the track on a flat section; this code creates a large angle/impulse.
+                Vector3 angularImpulse = angle * racerEntity.OrientationMatrix.Right * 15f;//TODO: must work out if we should be tilting up or down each time we calculate this (currently only correct when track goes uphill, fails when rayHit detects a downhill, but we could just not do anything when that is the case. Note that up/downhill is based on the motion direction more than the ships orientation)
 
 
                 Physics.ApplyAngularImpulse(ref angularImpulse, racerEntity);
 
             }
-            else Globals.EnableParticles = true;
         }
 
         private void dealWithShipOffTrack()

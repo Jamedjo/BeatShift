@@ -358,11 +358,11 @@ namespace BeatShift
 
         //public void counteractPitching()
         //{
-        //    Vector3 target = Vector3.Cross(nearestMapPoint.tangent, nearestMapPoint.trackUp);
+        //    Vector3 target = Vector3.Cross(nearestMapPoint.tangent, nearestMapPoint.trackUp);//could have just used nearestMapPoint.roadSurface here.
 
         //    //Vector3.Lerp(camLastUp, getUp(), 0.1f);
 
-        //    physicsBody.AngularVelocity -= target * 0.01f * (Vector3.Dot(physicsBody.AngularVelocity, target));
+        //    physicsBody.AngularVelocity -= target * 0.01f * (Vector3.Dot(physicsBody.AngularVelocity, target)); //Takes rotation up/down relative to track direction and reduces it?
 
         //    //Quaternion.Slerp(physicsBody., Quaternion.CreateFromAxisAngle(target, 0f), 0.8f);
 

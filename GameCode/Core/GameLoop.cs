@@ -375,7 +375,7 @@ namespace BeatShift
             Rectangle viewArea = new Rectangle(0, 0, BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height);
             
             //Clear screen to black
-            BeatShift.graphics.GraphicsDevice.Clear(Color.Black);
+            BeatShift.graphics.GraphicsDevice.Clear(Color.SteelBlue);
 
             if (BeatShift.shipSelect.Visible && !( paused || Guide.IsVisible ) )
             {
