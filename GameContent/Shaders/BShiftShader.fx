@@ -12,6 +12,10 @@ float3 DiffuseLightDirection : POSITION
     int refID = 0;
 >  = float3(1, 2, 0);
 
+bool useAlphaMap
+<
+    string UIName = "Use a texture for alpha values?";
+> = false;
 
 float4 ambientColour = float4(1, 1, 1, 1);
 float ambientIntensity = 0.2;
@@ -21,7 +25,6 @@ float4 SpecularColour = float4(1, 1, 1, 0.2);
 float SpecularIntensity = 0.5;
 
 float bumpMagnitude = 3.5;
-
 
 texture diffuseTex;
 sampler2D textureSampler = sampler_state {
@@ -120,7 +123,8 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     float4 textureColour = tex2D(textureSampler, input.TexCoord);
 
 	float4 outFloat = saturate(lightintensity * textureColour + ambientColour * ambientIntensity + specular);
-	outFloat.a= tex2D(alphaSampler, input.TexCoord).r;
+	outFloat.a =1;
+	if(useAlphaMap) outFloat.a= tex2D(alphaSampler, input.TexCoord).r;
 	
     return outFloat;
 }

@@ -98,22 +98,13 @@ namespace BeatShift
         void setupBShiftEffect(Matrix view, Matrix proj, Matrix worldTransform)//, Vector3 viewVector)
         {
             bshiftEffect.Parameters["world_Mx"].SetValue(worldTransform);
-            bshiftEffect.Parameters["view_Mx"].SetValue(view);
-            //bshiftEffect.Parameters["ViewVector"].SetValue(viewVector);
             bshiftEffect.Parameters["wvp_Mx"].SetValue(worldTransform * view * proj);
 
             Matrix worldInverseTranspose = Matrix.Transpose(Matrix.Invert(worldTransform));
             bshiftEffect.Parameters["wit_Mx"].SetValue(worldInverseTranspose);
 
-
-            if (currentMapName == MapName.SpaceMap)
-                bshiftEffect.Parameters["ambientColour"].SetValue(Color.DodgerBlue.ToVector4());
-            else if (currentMapName == MapName.CityMap)
-                bshiftEffect.Parameters["ambientColour"].SetValue(Color.PapayaWhip.ToVector4());
-            else if (currentMapName == MapName.DesertMap)
-                bshiftEffect.Parameters["ambientColour"].SetValue(Color.PapayaWhip.ToVector4());
-
-            bshiftEffect.Parameters["ambientIntensity"].SetValue(0.2f);
+            Matrix viewInverse = Matrix.Invert(view);
+            bshiftEffect.Parameters["viewInv_Mx"].SetValue(viewInverse);
         }
 
         // Used to modify the effects in a mesh
@@ -165,16 +156,18 @@ namespace BeatShift
             if ((!Globals.DisplayScenery) && modelObject.category.Equals(ModelCategory.Scenery)) return;//If scenery should not be displayed, don't draw scenry
 
             RasterizerState cull = BeatShift.graphics.GraphicsDevice.RasterizerState;
-            //if (modelObject.category == ModelCategory.Track && currentMapName == MapName.SpaceMap)
-            //{
-            //    BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-            //    drawWithBShiftEffect(modelObject.model, modelObject.transforms, camera);
-            //}
-            //else
-            //{
+
+            //Draw both sides of track
             if (modelObject.category == ModelCategory.Track) BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+
+            if (modelObject.category == ModelCategory.Track && currentMapName == MapName.SpaceMap)
+            {
+                drawWithBShiftEffect(modelObject.model, modelObject.transforms, camera);
+            }
+            else
+            {
                 drawWithBasicEffect(modelObject, camera);
-            //}
+            }
             BeatShift.graphics.GraphicsDevice.RasterizerState = cull;
         }
 
@@ -210,7 +203,6 @@ namespace BeatShift
 
         void drawWithBShiftEffect(Model model, Matrix[] transforms, CameraWrapper camera)
         {
-            Vector3 viewVector = camera.ViewVector;
             Matrix viewMatrix = camera.View;
             Matrix projectionMatrix = camera.Projection;
             bshiftEffect.Parameters["diffuseTex"].SetValue(mapTrackTexture);
