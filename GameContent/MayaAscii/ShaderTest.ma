@@ -1,6 +1,6 @@
 //Maya ASCII 2011 scene
 //Name: ShaderTest.ma
-//Last modified: Mon, Jul 25, 2011 11:02:29 PM
+//Last modified: Mon, Jul 25, 2011 11:27:26 PM
 //Codeset: 1252
 requires maya "2011";
 requires "hlslShader" "1.0";
@@ -13,12 +13,12 @@ fileInfo "osv" "Microsoft Windows 7 Business Edition, 64-bit Windows 7  (Build 7
 fileInfo "license" "student";
 createNode transform -s -n "persp";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" -9.3222640839106052 16.754164343596219 -21.376017989988306 ;
-	setAttr ".r" -type "double3" -41.738352733595491 219.80000000152464 0 ;
+	setAttr ".t" -type "double3" -9.543553662437148 11.261771530396611 -14.145150235643168 ;
+	setAttr ".r" -type "double3" -30.938352737092487 -117.40000000019697 0 ;
 createNode camera -s -n "perspShape" -p "persp";
 	setAttr -k off ".v" no;
 	setAttr ".fl" 34.999999999999986;
-	setAttr ".coi" 20.504087125722936;
+	setAttr ".coi" 13.326366621580767;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
@@ -84,7 +84,7 @@ createNode mesh -n "pPlaneShape1" -p "pPlane1";
 	setAttr ".covm[0]"  0 1 1;
 	setAttr ".cdvm[0]"  0 1 1;
 createNode transform -n "directionalLight1";
-	setAttr ".t" -type "double3" -3.1032137545305467 4.7678687366095849 -2.6722317570665983 ;
+	setAttr ".t" -type "double3" -3.1032137545305467 4.094276343704073 -5.0898529576750953 ;
 	setAttr -av ".tx";
 	setAttr -av ".ty";
 	setAttr -av ".tz";
@@ -107,6 +107,30 @@ createNode mesh -n "pSphereShape1" -p "pSphere1";
 	setAttr ".dcc" -type "string" "Ambient+Diffuse";
 	setAttr ".covm[0]"  0 1 1;
 	setAttr ".cdvm[0]"  0 1 1;
+createNode transform -n "directionalLight2";
+	setAttr ".t" -type "double3" -3.1032137545305467 -0.38133217661371432 7.5509124227428952 ;
+	setAttr -av ".tx";
+	setAttr -av ".ty";
+	setAttr -av ".tz";
+	setAttr ".r" -type "double3" -64.652529018979976 150.03557564468582 -37.856171824464795 ;
+	setAttr -av ".rx";
+	setAttr -av ".ry";
+	setAttr -av ".rz";
+createNode directionalLight -n "directionalLightShape2" -p "directionalLight2";
+	setAttr -k off ".v";
+	setAttr ".us" no;
+createNode transform -n "directionalLight3";
+	setAttr ".t" -type "double3" 11.766435073150609 -4.4493320489584516 -3.1064180586974048 ;
+	setAttr -av ".tx";
+	setAttr -av ".ty";
+	setAttr -av ".tz";
+	setAttr ".r" -type "double3" -64.652529018979976 150.03557564468582 -37.856171824464795 ;
+	setAttr -av ".rx";
+	setAttr -av ".ry";
+	setAttr -av ".rz";
+createNode directionalLight -n "directionalLightShape3" -p "directionalLight3";
+	setAttr -k off ".v";
+	setAttr ".us" no;
 createNode lightLinker -s -n "lightLinker1";
 	setAttr -s 3 ".lnk";
 	setAttr -s 3 ".slnk";
@@ -173,12 +197,6 @@ createNode hlslShader -n "hlslShader1";
 	addAttr -is true -ci true -sn "useAlphaMap_Name" -ln "useAlphaMap_Name" -dt "string";
 	addAttr -is true -ci true -sn "useAlphaMap_Type" -ln "useAlphaMap_Type" -dt "string";
 	addAttr -is true -ci true -sn "useAlphaMap" -ln "useAlphaMap" -min 0 -max 1 -at "bool";
-	addAttr -is true -ci true -sn "DiffuseLightDirection_Name" -ln "DiffuseLightDirection_Name" 
-		-dt "string";
-	addAttr -is true -ci true -sn "DiffuseLightDirection_Type" -ln "DiffuseLightDirection_Type" 
-		-dt "string";
-	addAttr -is true -ci true -sn "DiffuseLightDirection" -ln "DiffuseLightDirection" 
-		-at "matrix";
 	addAttr -is true -ci true -sn "ambientColour_1_Name" -ln "ambientColour_1_Name" 
 		-dt "string";
 	addAttr -is true -ci true -sn "ambientColour_1_Type" -ln "ambientColour_1_Type" 
@@ -201,16 +219,61 @@ createNode hlslShader -n "hlslShader1";
 		-p "SpecularColour";
 	addAttr -is true -ci true -sn "SpecularColourB" -ln "SpecularColourB" -at "float" 
 		-p "SpecularColour";
+	addAttr -is true -ci true -sn "LightDirection_0_Name" -ln "LightDirection_0_Name" 
+		-dt "string";
+	addAttr -is true -ci true -sn "LightDirection_0_Type" -ln "LightDirection_0_Type" 
+		-dt "string";
+	addAttr -is true -ci true -sn "LightDirection_0" -ln "LightDirection_0" -at "matrix";
+	addAttr -is true -ci true -sn "LightColour_0_Name" -ln "LightColour_0_Name" -dt "string";
+	addAttr -is true -ci true -sn "LightColour_0_Type" -ln "LightColour_0_Type" -dt "string";
+	addAttr -is true -ci true -uac -sn "LightColour_0" -ln "LightColour_0" -at "float3" 
+		-nc 3;
+	addAttr -is true -ci true -sn "LightColour_0R" -ln "LightColour_0R" -at "float" 
+		-p "LightColour_0";
+	addAttr -is true -ci true -sn "LightColour_0G" -ln "LightColour_0G" -at "float" 
+		-p "LightColour_0";
+	addAttr -is true -ci true -sn "LightColour_0B" -ln "LightColour_0B" -at "float" 
+		-p "LightColour_0";
+	addAttr -is true -ci true -sn "LightDirection_1_Name" -ln "LightDirection_1_Name" 
+		-dt "string";
+	addAttr -is true -ci true -sn "LightDirection_1_Type" -ln "LightDirection_1_Type" 
+		-dt "string";
+	addAttr -is true -ci true -sn "LightDirection_1" -ln "LightDirection_1" -at "matrix";
+	addAttr -is true -ci true -sn "LightColour_1_Name" -ln "LightColour_1_Name" -dt "string";
+	addAttr -is true -ci true -sn "LightColour_1_Type" -ln "LightColour_1_Type" -dt "string";
+	addAttr -is true -ci true -uac -sn "LightColour_1" -ln "LightColour_1" -at "float3" 
+		-nc 3;
+	addAttr -is true -ci true -sn "LightColour_1R" -ln "LightColour_1R" -at "float" 
+		-p "LightColour_1";
+	addAttr -is true -ci true -sn "LightColour_1G" -ln "LightColour_1G" -at "float" 
+		-p "LightColour_1";
+	addAttr -is true -ci true -sn "LightColour_1B" -ln "LightColour_1B" -at "float" 
+		-p "LightColour_1";
+	addAttr -is true -ci true -sn "LightDirection_2_Name" -ln "LightDirection_2_Name" 
+		-dt "string";
+	addAttr -is true -ci true -sn "LightDirection_2_Type" -ln "LightDirection_2_Type" 
+		-dt "string";
+	addAttr -is true -ci true -sn "LightDirection_2" -ln "LightDirection_2" -at "matrix";
+	addAttr -is true -ci true -sn "LightColour_2_Name" -ln "LightColour_2_Name" -dt "string";
+	addAttr -is true -ci true -sn "LightColour_2_Type" -ln "LightColour_2_Type" -dt "string";
+	addAttr -is true -ci true -uac -sn "LightColour_2" -ln "LightColour_2" -at "float3" 
+		-nc 3;
+	addAttr -is true -ci true -sn "LightColour_2R" -ln "LightColour_2R" -at "float" 
+		-p "LightColour_2";
+	addAttr -is true -ci true -sn "LightColour_2G" -ln "LightColour_2G" -at "float" 
+		-p "LightColour_2";
+	addAttr -is true -ci true -sn "LightColour_2B" -ln "LightColour_2B" -at "float" 
+		-p "LightColour_2";
 	setAttr ".vpar" -type "stringArray" 4 "Position" "Normal" "Tangent0" "UV0"  ;
-	setAttr ".upar" -type "stringArray" 10 "DiffuseLightDirection" "useAlphaMap" "ambientColour_1" "ambientIntensity" "Shininess" "SpecularColour" "bumpMagnitude" "diffuseTex" "alphaTex" "normalTex"  ;
+	setAttr ".upar" -type "stringArray" 15 "LightDirection_0" "LightColour_0" "LightDirection_1" "LightColour_1" "LightDirection_2" "LightColour_2" "useAlphaMap" "ambientColour_1" "ambientIntensity" "Shininess" "SpecularColour" "bumpMagnitude" "diffuseTex" "alphaTex" "normalTex"  ;
 	setAttr ".s" -type "string" "Shaders/BShiftShader.fx";
 	setAttr ".t" -type "string" "Technique1";
 	setAttr ".ambientIntensity_Name" -type "string" "ambientIntensity";
 	setAttr ".ambientIntensity_Type" -type "string" "float";
-	setAttr ".ambientIntensity" 0.30000001192092896;
+	setAttr ".ambientIntensity" 0;
 	setAttr ".Shininess_Name" -type "string" "Shininess";
 	setAttr ".Shininess_Type" -type "string" "float";
-	setAttr ".Shininess" 16.599662780761719;
+	setAttr ".Shininess" 27.653614044189453;
 	setAttr ".bumpMagnitude_Name" -type "string" "bumpMagnitude";
 	setAttr ".bumpMagnitude_Type" -type "string" "float";
 	setAttr ".bumpMagnitude" 1.6203746795654297;
@@ -234,17 +297,36 @@ createNode hlslShader -n "hlslShader1";
 	setAttr ".useAlphaMap_Name" -type "string" "useAlphaMap";
 	setAttr ".useAlphaMap_Type" -type "string" "bool";
 	setAttr ".useAlphaMap" no;
-	setAttr ".DiffuseLightDirection_Name" -type "string" "DiffuseLightDirection";
-	setAttr ".DiffuseLightDirection_Type" -type "string" "matrix1x3";
-	setAttr ".DiffuseLightDirection" -type "matrix" -0.68401859413899579 0.53165411279227037 -0.49946217797064085 0
-		 -0.093666052073405351 0.61501561795663318 0.78293196406737864 0 0.72342603876353129 0.58232267173834529 -0.37088417655438111 0
-		 -3.1032137545305467 4.7678687366095849 -2.6722317570665983 1;
 	setAttr ".ambientColour_1_Name" -type "string" "ambientColour";
 	setAttr ".ambientColour_1_Type" -type "string" "color1x3";
 	setAttr ".ambientColour_1" -type "float3" 1 1 1 ;
 	setAttr ".SpecularColour_Name" -type "string" "SpecularColour";
 	setAttr ".SpecularColour_Type" -type "string" "color1x3";
-	setAttr ".SpecularColour" -type "float3" 0.81927216 0.81927216 0.81927216 ;
+	setAttr ".SpecularColour" -type "float3" 0.76144046 0.6282292 0.58562601 ;
+	setAttr ".LightDirection_0_Name" -type "string" "LightDirection_0";
+	setAttr ".LightDirection_0_Type" -type "string" "matrix1x3";
+	setAttr ".LightDirection_0" -type "matrix" -0.68401859413899579 0.53165411279227037 -0.49946217797064085 0
+		 -0.093666052073405351 0.61501561795663318 0.78293196406737864 0 0.72342603876353129 0.58232267173834529 -0.37088417655438111 0
+		 -3.1032137545305467 4.094276343704073 -5.0898529576750953 1;
+	setAttr ".LightColour_0_Name" -type "string" "LightColour_0";
+	setAttr ".LightColour_0_Type" -type "string" "color1x3";
+	setAttr ".LightColour_0" -type "float3" 0.87469292 0.87469292 0.87469292 ;
+	setAttr ".LightDirection_1_Name" -type "string" "LightDirection_1";
+	setAttr ".LightDirection_1_Type" -type "string" "matrix1x3";
+	setAttr ".LightDirection_1" -type "matrix" -0.68401859413899579 0.53165411279227037 -0.49946217797064085 0
+		 -0.093666052073405351 0.61501561795663318 0.78293196406737864 0 0.72342603876353129 0.58232267173834529 -0.37088417655438111 0
+		 -3.1032137545305467 -0.38133217661371432 7.5509124227428952 1;
+	setAttr ".LightColour_1_Name" -type "string" "LightColour_1";
+	setAttr ".LightColour_1_Type" -type "string" "color1x3";
+	setAttr ".LightColour_1" -type "float3" 0.34457922 0.34457922 0.34457922 ;
+	setAttr ".LightDirection_2_Name" -type "string" "LightDirection_2";
+	setAttr ".LightDirection_2_Type" -type "string" "matrix1x3";
+	setAttr ".LightDirection_2" -type "matrix" -0.68401859413899579 0.53165411279227037 -0.49946217797064085 0
+		 -0.093666052073405351 0.61501561795663318 0.78293196406737864 0 0.72342603876353129 0.58232267173834529 -0.37088417655438111 0
+		 11.766435073150609 -4.4493320489584516 -3.1064180586974048 1;
+	setAttr ".LightColour_2_Name" -type "string" "LightColour_2";
+	setAttr ".LightColour_2_Type" -type "string" "color1x3";
+	setAttr ".LightColour_2" -type "float3" 0.40000001 0.40000001 0.40000001 ;
 createNode shadingEngine -n "hlslShader1SG";
 	setAttr ".ihi" 0;
 	setAttr -s 2 ".dsm";
@@ -417,6 +499,7 @@ select -ne :defaultShaderList1;
 select -ne :defaultTextureList1;
 	setAttr -s 3 ".tx";
 select -ne :lightList1;
+	setAttr -s 3 ".l";
 select -ne :postProcessList1;
 	setAttr -s 2 ".p";
 select -ne :defaultRenderUtilityList1;
@@ -427,6 +510,7 @@ select -ne :defaultRenderGlobals;
 select -ne :defaultResolution;
 	setAttr ".pa" 1;
 select -ne :defaultLightSet;
+	setAttr -s 3 ".dsm";
 select -ne :hardwareRenderGlobals;
 	setAttr ".ehql" no;
 	setAttr ".eams" no;
@@ -466,7 +550,9 @@ connectAttr "renderLayerManager.rlmi[0]" "defaultRenderLayer.rlid";
 connectAttr "file1.oc" "hlslShader1.diffuseTex";
 connectAttr "file2.oc" "hlslShader1.alphaTex";
 connectAttr "file3.oc" "hlslShader1.normalTex";
-connectAttr "directionalLight1.wm" "hlslShader1.DiffuseLightDirection";
+connectAttr "directionalLight1.wm" "hlslShader1.LightDirection_0";
+connectAttr "directionalLight2.wm" "hlslShader1.LightDirection_1";
+connectAttr "directionalLight3.wm" "hlslShader1.LightDirection_2";
 connectAttr "hlslShader1.oc" "hlslShader1SG.ss";
 connectAttr "pPlaneShape1.iog" "hlslShader1SG.dsm" -na;
 connectAttr "pSphereShape1.iog" "hlslShader1SG.dsm" -na;
@@ -532,8 +618,12 @@ connectAttr "file1.msg" ":defaultTextureList1.tx" -na;
 connectAttr "file2.msg" ":defaultTextureList1.tx" -na;
 connectAttr "file3.msg" ":defaultTextureList1.tx" -na;
 connectAttr "directionalLightShape1.ltd" ":lightList1.l" -na;
+connectAttr "directionalLightShape2.ltd" ":lightList1.l" -na;
+connectAttr "directionalLightShape3.ltd" ":lightList1.l" -na;
 connectAttr "place2dTexture1.msg" ":defaultRenderUtilityList1.u" -na;
 connectAttr "place2dTexture2.msg" ":defaultRenderUtilityList1.u" -na;
 connectAttr "place2dTexture3.msg" ":defaultRenderUtilityList1.u" -na;
 connectAttr "directionalLight1.iog" ":defaultLightSet.dsm" -na;
+connectAttr "directionalLight2.iog" ":defaultLightSet.dsm" -na;
+connectAttr "directionalLight3.iog" ":defaultLightSet.dsm" -na;
 // End of ShaderTest.ma

@@ -4,13 +4,32 @@ float4x4 viewInv_Mx  :  ViewInverse             < string UIWidget = "None"; >;
 float4x4 wit_Mx      :  WorldInverseTranspose   < string UIWidget = "None"; >;
 
 
-float3 DiffuseLightDirection : POSITION
+float3 LightDirection_0 : POSITION
 <
-    string UIName = "Diffuse Light Direction";
+    string UIName = "Light 0 Direction";
     string Object = "DirectionalLight";
     string Space = "World";
     int refID = 0;
->  = float3(1, 2, 0);
+>  = float3(-0.52,-0.57,-0.62);
+float3 LightColour_0 = float3(1, 0.96, 0.81);
+
+float3 LightDirection_1 : POSITION
+<
+    string UIName = "Light 0 Direction";
+    string Object = "DirectionalLight";
+    string Space = "World";
+    int refID = 0;
+>  = float3(0.71, 0.34, 0.60);
+float3 LightColour_1 = float3(0.96,0.76,0.40);
+
+float3 LightDirection_2 : POSITION
+<
+    string UIName = "Light 0 Direction";
+    string Object = "DirectionalLight";
+    string Space = "World";
+    int refID = 0;
+>  = float3(0.45, -0.76, 0.45);
+float3 LightColour_2 = float3(0.32,0.36,0.39);
 
 bool useAlphaMap
 <
@@ -75,8 +94,10 @@ struct VertexShaderOutput
     //float3 Tangent : TEXCOORD2;
     //float3 Binormal : TEXCOORD3;
 	
-	float3 Light : TEXCOORD1;
-	float3 View : TEXCOORD2;
+	float3 Light0 : TEXCOORD1;
+	float3 Light1 : TEXCOORD2;
+	float3 Light2 : TEXCOORD3;
+	float3 View : TEXCOORD4;
 	
 	//float3 EyeVec :	TEXCOORD4;
 	
@@ -93,7 +114,10 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
     worldToTangentSpace[1] = mul(cross(input.Tangent,input.Normal),world_Mx);
     worldToTangentSpace[2] = mul(input.Normal,world_Mx);
 
-	output.Light = mul(worldToTangentSpace,DiffuseLightDirection);
+	output.Light0 = mul(worldToTangentSpace,LightDirection_0);
+	output.Light1 = mul(worldToTangentSpace,LightDirection_1);
+	output.Light2 = mul(worldToTangentSpace,LightDirection_2);
+	
 	//float3 halfAngle = normalize(DiffuseLightDirection) + normalize( viewInv_Mx[3].xyz - worldPosition.xyz );
 	//output.EyeVec = viewInv_Mx[3].xyz - worldPosition;
 	//output.halfAngle = mul(halfAngle, worldToTangentSpace);
@@ -131,8 +155,12 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	//Use bumpMagnitude to scale bump effect
 	normal = float3(normal.x * bumpMagnitude, normal.y * bumpMagnitude, normal.z);
 
-	float3 lambert_1 = lambert(input.Light,normal);
-	float3 specular_1 = specular(input.Light,normal,input.View,Shininess);
+	float3 lambert_0 = lambert(input.Light0,normal);
+	float3 specular_0 = specular(input.Light0,normal,input.View,Shininess);
+	float3 lambert_1 = lambert(input.Light1,normal);
+	float3 specular_1 = specular(input.Light1,normal,input.View,Shininess);
+	float3 lambert_2 = lambert(input.Light2,normal);
+	float3 specular_2 = specular(input.Light2,normal,input.View,Shininess);
 
 
 	//// Specular using new Phong: R = 2 * (N.L) * N – L
@@ -142,8 +170,8 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	
 	
     float3 textureColour = tex2D(textureSampler, input.TexCoord).xyz;
-	float3 lambertSum = lambert_1 * textureColour;
-	float3 specularSum = SpecularColour.xyz * specular_1;
+	float3 lambertSum = (lambert_0*LightColour_0+lambert_1*LightColour_1+lambert_2*LightColour_2) * textureColour;
+	float3 specularSum = SpecularColour.xyz * (specular_0+specular_1+specular_2);
 
 	float Ambient = ambientColour * textureColour * ambientIntensity;
 	
