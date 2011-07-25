@@ -1,6 +1,6 @@
 //Maya ASCII 2011 scene
 //Name: ShaderTest.ma
-//Last modified: Mon, Jul 25, 2011 10:23:53 PM
+//Last modified: Mon, Jul 25, 2011 10:32:07 PM
 //Codeset: 1252
 requires maya "2011";
 requires "hlslShader" "1.0";
@@ -13,12 +13,12 @@ fileInfo "osv" "Microsoft Windows 7 Business Edition, 64-bit Windows 7  (Build 7
 fileInfo "license" "student";
 createNode transform -s -n "persp";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" -8.5066363089879484 10.655048676149582 -12.565580989339027 ;
-	setAttr ".r" -type "double3" 332.06164726702082 -472.99999999848984 359.99999999977973 ;
+	setAttr ".t" -type "double3" -9.9904980292804719 11.158893670730304 -15.139033682711933 ;
+	setAttr ".r" -type "double3" 332.06164726684329 -496.59999999840272 359.99999999984243 ;
 createNode camera -s -n "perspShape" -p "persp";
 	setAttr -k off ".v" no;
 	setAttr ".fl" 34.999999999999986;
-	setAttr ".coi" 12.188771392105874;
+	setAttr ".coi" 7.9219345509939831;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
@@ -84,7 +84,7 @@ createNode mesh -n "pPlaneShape1" -p "pPlane1";
 	setAttr ".covm[0]"  0 1 1;
 	setAttr ".cdvm[0]"  0 1 1;
 createNode transform -n "directionalLight1";
-	setAttr ".t" -type "double3" -3.1032137545305467 5.1239814732688354 -2.6722317570665983 ;
+	setAttr ".t" -type "double3" -3.1032137545305467 4.8767948508496897 -2.6722317570665983 ;
 	setAttr -av ".tx";
 	setAttr -av ".ty";
 	setAttr -av ".tz";
@@ -216,10 +216,10 @@ createNode hlslShader -n "hlslShader1";
 	setAttr ".ambientIntensity" 0;
 	setAttr ".Shininess_Name" -type "string" "Shininess";
 	setAttr ".Shininess_Type" -type "string" "float";
-	setAttr ".Shininess" 10.593103408813477;
+	setAttr ".Shininess" 18.555864334106445;
 	setAttr ".bumpMagnitude_Name" -type "string" "bumpMagnitude";
 	setAttr ".bumpMagnitude_Type" -type "string" "float";
-	setAttr ".bumpMagnitude" 1.5980974435806274;
+	setAttr ".bumpMagnitude" 1.4926348924636841;
 	setAttr ".diffuseTex_Name" -type "string" "diffuseTex";
 	setAttr ".diffuseTex_Type" -type "string" "texture";
 	setAttr ".diffuseTex" -type "float3" 0 0 0 ;
@@ -239,19 +239,19 @@ createNode hlslShader -n "hlslShader1";
 	setAttr ".UV0_Source" -type "string" "uv:map1";
 	setAttr ".useAlphaMap_Name" -type "string" "useAlphaMap";
 	setAttr ".useAlphaMap_Type" -type "string" "bool";
-	setAttr ".useAlphaMap" no;
+	setAttr ".useAlphaMap" yes;
 	setAttr ".DiffuseLightDirection_Name" -type "string" "DiffuseLightDirection";
 	setAttr ".DiffuseLightDirection_Type" -type "string" "matrix1x3";
 	setAttr ".DiffuseLightDirection" -type "matrix" -0.68401859413899579 0.53165411279227037 -0.49946217797064085 0
 		 -0.093666052073405351 0.61501561795663318 0.78293196406737864 0 0.72342603876353129 0.58232267173834529 -0.37088417655438111 0
-		 -3.1032137545305467 5.1239814732688354 -2.6722317570665983 1;
+		 -3.1032137545305467 4.8767948508496897 -2.6722317570665983 1;
 	setAttr ".ambientColour_Name" -type "string" "ambientColour";
 	setAttr ".ambientColour_Type" -type "string" "color1x4";
 	setAttr ".ambientColourRGB" -type "float3" 1 1 1 ;
 	setAttr ".ambientColourA" 1;
 	setAttr ".SpecularColour_Name" -type "string" "SpecularColour";
 	setAttr ".SpecularColour_Type" -type "string" "color1x4";
-	setAttr ".SpecularColourRGB" -type "float3" 1 0.82499999 0.76899999 ;
+	setAttr ".SpecularColourRGB" -type "float3" 0.972 0.81400001 0.80900002 ;
 	setAttr ".SpecularColourA" 0;
 createNode shadingEngine -n "hlslShader1SG";
 	setAttr ".ihi" 0;

@@ -113,7 +113,9 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
 	//Bump in range -1 to 1 instead of 0-1
-	float3 normal = (2 * (tex2D(normalSampler,input.TexCoord))) - 1.0;
+	float3 normal = tex2D(normalSampler,input.TexCoord.xy).xyz * 2.0 - 1.0;
+	normal = float3(normal.x * bumpMagnitude, normal.y * bumpMagnitude, normal.z);
+
 	//normal = normalize( normal );
 
 	
