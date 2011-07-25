@@ -1,6 +1,6 @@
 //Maya ASCII 2011 scene
 //Name: ShaderTest.ma
-//Last modified: Mon, Jul 25, 2011 10:32:07 PM
+//Last modified: Mon, Jul 25, 2011 11:02:29 PM
 //Codeset: 1252
 requires maya "2011";
 requires "hlslShader" "1.0";
@@ -13,16 +13,16 @@ fileInfo "osv" "Microsoft Windows 7 Business Edition, 64-bit Windows 7  (Build 7
 fileInfo "license" "student";
 createNode transform -s -n "persp";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" -9.9904980292804719 11.158893670730304 -15.139033682711933 ;
-	setAttr ".r" -type "double3" 332.06164726684329 -496.59999999840272 359.99999999984243 ;
+	setAttr ".t" -type "double3" -9.3222640839106052 16.754164343596219 -21.376017989988306 ;
+	setAttr ".r" -type "double3" -41.738352733595491 219.80000000152464 0 ;
 createNode camera -s -n "perspShape" -p "persp";
 	setAttr -k off ".v" no;
 	setAttr ".fl" 34.999999999999986;
-	setAttr ".coi" 7.9219345509939831;
+	setAttr ".coi" 20.504087125722936;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
-	setAttr ".tp" -type "double3" -2.8478702449728139 5.3893299678148905 -4.5089725804761569 ;
+	setAttr ".tp" -type "double3" -0.65072339440886351 5.8577068540946886 -10.828876202670918 ;
 	setAttr ".hc" -type "string" "viewSet -p %camera";
 createNode transform -s -n "top";
 	setAttr ".v" no;
@@ -84,7 +84,7 @@ createNode mesh -n "pPlaneShape1" -p "pPlane1";
 	setAttr ".covm[0]"  0 1 1;
 	setAttr ".cdvm[0]"  0 1 1;
 createNode transform -n "directionalLight1";
-	setAttr ".t" -type "double3" -3.1032137545305467 4.8767948508496897 -2.6722317570665983 ;
+	setAttr ".t" -type "double3" -3.1032137545305467 4.7678687366095849 -2.6722317570665983 ;
 	setAttr -av ".tx";
 	setAttr -av ".ty";
 	setAttr -av ".tz";
@@ -179,47 +179,41 @@ createNode hlslShader -n "hlslShader1";
 		-dt "string";
 	addAttr -is true -ci true -sn "DiffuseLightDirection" -ln "DiffuseLightDirection" 
 		-at "matrix";
-	addAttr -is true -ci true -sn "ambientColour_Name" -ln "ambientColour_Name" -dt "string";
-	addAttr -is true -ci true -sn "ambientColour_Type" -ln "ambientColour_Type" -dt "string";
-	addAttr -is true -ci true -sn "ambientColour" -ln "ambientColour" -at "compound" 
-		-nc 2;
-	addAttr -is true -ci true -uac -sn "ambientColourRGB" -ln "ambientColourRGB" -at "float3" 
-		-p "ambientColour" -nc 3;
-	addAttr -is true -ci true -sn "ambientColourR" -ln "ambientColourR" -at "float" 
-		-p "ambientColourRGB";
-	addAttr -is true -ci true -sn "ambientColourG" -ln "ambientColourG" -at "float" 
-		-p "ambientColourRGB";
-	addAttr -is true -ci true -sn "ambientColourB" -ln "ambientColourB" -at "float" 
-		-p "ambientColourRGB";
-	addAttr -is true -ci true -sn "ambientColourA" -ln "ambientColourA" -smn 0 -smx 
-		1 -at "float" -p "ambientColour";
+	addAttr -is true -ci true -sn "ambientColour_1_Name" -ln "ambientColour_1_Name" 
+		-dt "string";
+	addAttr -is true -ci true -sn "ambientColour_1_Type" -ln "ambientColour_1_Type" 
+		-dt "string";
+	addAttr -is true -ci true -uac -sn "ambientColour_1" -ln "ambientColour_1" -at "float3" 
+		-nc 3;
+	addAttr -is true -ci true -sn "ambientColour_1R" -ln "ambientColour_1R" -at "float" 
+		-p "ambientColour_1";
+	addAttr -is true -ci true -sn "ambientColour_1G" -ln "ambientColour_1G" -at "float" 
+		-p "ambientColour_1";
+	addAttr -is true -ci true -sn "ambientColour_1B" -ln "ambientColour_1B" -at "float" 
+		-p "ambientColour_1";
 	addAttr -is true -ci true -sn "SpecularColour_Name" -ln "SpecularColour_Name" -dt "string";
 	addAttr -is true -ci true -sn "SpecularColour_Type" -ln "SpecularColour_Type" -dt "string";
-	addAttr -is true -ci true -sn "SpecularColour" -ln "SpecularColour" -at "compound" 
-		-nc 2;
-	addAttr -is true -ci true -uac -sn "SpecularColourRGB" -ln "SpecularColourRGB" -at "float3" 
-		-p "SpecularColour" -nc 3;
+	addAttr -is true -ci true -uac -sn "SpecularColour" -ln "SpecularColour" -at "float3" 
+		-nc 3;
 	addAttr -is true -ci true -sn "SpecularColourR" -ln "SpecularColourR" -at "float" 
-		-p "SpecularColourRGB";
+		-p "SpecularColour";
 	addAttr -is true -ci true -sn "SpecularColourG" -ln "SpecularColourG" -at "float" 
-		-p "SpecularColourRGB";
+		-p "SpecularColour";
 	addAttr -is true -ci true -sn "SpecularColourB" -ln "SpecularColourB" -at "float" 
-		-p "SpecularColourRGB";
-	addAttr -is true -ci true -sn "SpecularColourA" -ln "SpecularColourA" -smn 0 -smx 
-		1 -at "float" -p "SpecularColour";
+		-p "SpecularColour";
 	setAttr ".vpar" -type "stringArray" 4 "Position" "Normal" "Tangent0" "UV0"  ;
-	setAttr ".upar" -type "stringArray" 10 "DiffuseLightDirection" "useAlphaMap" "ambientColour" "ambientIntensity" "Shininess" "SpecularColour" "bumpMagnitude" "diffuseTex" "alphaTex" "normalTex"  ;
+	setAttr ".upar" -type "stringArray" 10 "DiffuseLightDirection" "useAlphaMap" "ambientColour_1" "ambientIntensity" "Shininess" "SpecularColour" "bumpMagnitude" "diffuseTex" "alphaTex" "normalTex"  ;
 	setAttr ".s" -type "string" "Shaders/BShiftShader.fx";
 	setAttr ".t" -type "string" "Technique1";
 	setAttr ".ambientIntensity_Name" -type "string" "ambientIntensity";
 	setAttr ".ambientIntensity_Type" -type "string" "float";
-	setAttr ".ambientIntensity" 0;
+	setAttr ".ambientIntensity" 0.30000001192092896;
 	setAttr ".Shininess_Name" -type "string" "Shininess";
 	setAttr ".Shininess_Type" -type "string" "float";
-	setAttr ".Shininess" 18.555864334106445;
+	setAttr ".Shininess" 16.599662780761719;
 	setAttr ".bumpMagnitude_Name" -type "string" "bumpMagnitude";
 	setAttr ".bumpMagnitude_Type" -type "string" "float";
-	setAttr ".bumpMagnitude" 1.4926348924636841;
+	setAttr ".bumpMagnitude" 1.6203746795654297;
 	setAttr ".diffuseTex_Name" -type "string" "diffuseTex";
 	setAttr ".diffuseTex_Type" -type "string" "texture";
 	setAttr ".diffuseTex" -type "float3" 0 0 0 ;
@@ -239,20 +233,18 @@ createNode hlslShader -n "hlslShader1";
 	setAttr ".UV0_Source" -type "string" "uv:map1";
 	setAttr ".useAlphaMap_Name" -type "string" "useAlphaMap";
 	setAttr ".useAlphaMap_Type" -type "string" "bool";
-	setAttr ".useAlphaMap" yes;
+	setAttr ".useAlphaMap" no;
 	setAttr ".DiffuseLightDirection_Name" -type "string" "DiffuseLightDirection";
 	setAttr ".DiffuseLightDirection_Type" -type "string" "matrix1x3";
 	setAttr ".DiffuseLightDirection" -type "matrix" -0.68401859413899579 0.53165411279227037 -0.49946217797064085 0
 		 -0.093666052073405351 0.61501561795663318 0.78293196406737864 0 0.72342603876353129 0.58232267173834529 -0.37088417655438111 0
-		 -3.1032137545305467 4.8767948508496897 -2.6722317570665983 1;
-	setAttr ".ambientColour_Name" -type "string" "ambientColour";
-	setAttr ".ambientColour_Type" -type "string" "color1x4";
-	setAttr ".ambientColourRGB" -type "float3" 1 1 1 ;
-	setAttr ".ambientColourA" 1;
+		 -3.1032137545305467 4.7678687366095849 -2.6722317570665983 1;
+	setAttr ".ambientColour_1_Name" -type "string" "ambientColour";
+	setAttr ".ambientColour_1_Type" -type "string" "color1x3";
+	setAttr ".ambientColour_1" -type "float3" 1 1 1 ;
 	setAttr ".SpecularColour_Name" -type "string" "SpecularColour";
-	setAttr ".SpecularColour_Type" -type "string" "color1x4";
-	setAttr ".SpecularColourRGB" -type "float3" 0.972 0.81400001 0.80900002 ;
-	setAttr ".SpecularColourA" 0;
+	setAttr ".SpecularColour_Type" -type "string" "color1x3";
+	setAttr ".SpecularColour" -type "float3" 0.81927216 0.81927216 0.81927216 ;
 createNode shadingEngine -n "hlslShader1SG";
 	setAttr ".ihi" 0;
 	setAttr -s 2 ".dsm";

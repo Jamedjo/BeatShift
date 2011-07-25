@@ -17,14 +17,14 @@ bool useAlphaMap
     string UIName = "Use a texture for alpha values?";
 > = false;
 
-float4 ambientColour = float4(1, 1, 1, 1);
-float ambientIntensity = 0.05;
+float3 ambientColour = float3(1, 1, 1);
+float ambientIntensity = 0.3;
 
-float Shininess = 6;
+float Shininess = 16;
 
-float4 SpecularColour = float4(1, 1, 1, 0.9); //Alpha doubles as SpecularIntensity
+float3 SpecularColour = float3(1, 1, 1); //Darkness doubles as SpecularIntensity
 
-float bumpMagnitude = 0.63;
+float bumpMagnitude = 1.6;
 
 texture diffuseTex;
 sampler2D textureSampler = sampler_state {
@@ -110,43 +110,47 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 	return output;
 }
 
+float3 lambert(float3 lDir,float3 normal){
+	//Diffuse lighting now calculated per pixel in pixel shader
+	float3 LightDir = normalize(lDir);
+	return saturate(dot(normal,LightDir));
+}
+	
+float3 specular(float3 lDir,float3 normal,float3 View,float exponent){
+	//Specular using Blinn-Phong = Ks * exp(N.H, a) * lightintensity
+	float3 LightDir = normalize(lDir);
+	float3 halfway = normalize(LightDir + normalize(View));
+	float spec=saturate(dot(normal, halfway));
+	return pow(spec,exponent);
+}
+
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
-	//Bump in range -1 to 1 instead of 0-1
+	//Bump in range -1 to 1 from normal texture
 	float3 normal = tex2D(normalSampler,input.TexCoord.xy).xyz * 2.0 - 1.0;
+	//Use bumpMagnitude to scale bump effect
 	normal = float3(normal.x * bumpMagnitude, normal.y * bumpMagnitude, normal.z);
 
-	//normal = normalize( normal );
+	float3 lambert_1 = lambert(input.Light,normal);
+	float3 specular_1 = specular(input.Light,normal,input.View,Shininess);
 
-	
-	//Diffuse lighting now calculated per pixel in pixel shader
-	float3 LightDir = normalize(input.Light);
-	float lambertValue = saturate(dot(normal,LightDir));
-
-//float3 newNormal = input.Normal + (bump.x * input.Tangent + bump.y * input.Binormal);
-//	float lightintensity = dot(LightDir, newNormal);
-//	if(lightintensity<0) lightintensity=0;
-	
-
-
-	
-	//Specular using Blinn-Phong = Ks * exp(N.H, a) * lightintensity
-	float3 halfway = normalize(LightDir + normalize(input.View));
-	float spec=saturate(dot(normal, halfway));
-	float specularValue = pow(spec,Shininess);
 
 	//// Specular using new Phong: R = 2 * (N.L) * N – L
     //float3 R = normalize(2 * lightintensity * newNormal - n_light);
 	//float3 EV = normalize(input.EyeVec);
 	//float specularValue = max(pow(dot(R, EV), Shininess),0);
 	
-	float4 specular = SpecularColour * specularValue;// * lightintensity;
+	
+    float3 textureColour = tex2D(textureSampler, input.TexCoord).xyz;
+	float3 lambertSum = lambert_1 * textureColour;
+	float3 specularSum = SpecularColour.xyz * specular_1;
 
-    float4 textureColour = tex2D(textureSampler, input.TexCoord);
-
-	float Ambient = ambientColour * ambientIntensity;
-	float4 outFloat = saturate(lambertValue * textureColour + Ambient + specular);//float4(lambertValue,lambertValue,lambertValue,1.0);
-	outFloat.a =1;
+	float Ambient = ambientColour * textureColour * ambientIntensity;
+	
+	float3 colour = saturate(Ambient + lambertSum + specularSum);
+	float4 outFloat = float4(colour,1.0);//outFloat.a =1;
+	//float4(lambert_1,lambert_1,lambert_1,1.0);
+	
 	if(useAlphaMap) outFloat.a= tex2D(alphaSampler, input.TexCoord).r;
 	
     return outFloat;
