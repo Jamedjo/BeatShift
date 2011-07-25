@@ -354,14 +354,13 @@ namespace BeatShift
 
             //full screen option
 #if WINDOWS
-            // NO
             //F4 press triggers fullscreen
-            //if (Keyboard.GetState().IsKeyDown(Keys.F4)) wasF4pressed = true;
-            //if (wasF4pressed) if (Keyboard.GetState().IsKeyUp(Keys.F4))
-            //    {
-            //        wasF4pressed = false;
-            //        BeatShift.graphics.ToggleFullScreen();
-            //    }
+            if (Keyboard.GetState().IsKeyDown(Keys.F4)) wasF4pressed = true;
+            if (wasF4pressed) if (Keyboard.GetState().IsKeyUp(Keys.F4))
+                {
+                    wasF4pressed = false;
+                    BeatShift.graphics.ToggleFullScreen();
+                }
 #endif
             //music.Wait();
 
