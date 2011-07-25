@@ -21,8 +21,8 @@ float4 ambientColour = float4(1, 1, 1, 1);
 float ambientIntensity = 0.05;
 
 float Shininess = 6;
-float4 SpecularColour = float4(1, 1, 1, 0.2);    
-float SpecularIntensity = 0.5;
+
+float4 SpecularColour = float4(1, 1, 1, 0.9); //Alpha doubles as SpecularIntensity
 
 float bumpMagnitude = 0.63;
 
@@ -60,7 +60,7 @@ struct VertexShaderInput
 
 	float3 Normal : NORMAL0;
     float3 Tangent : TANGENT0;
-    float3 Binormal : BINORMAL0;
+    //float3 Binormal : BINORMAL0;
 
 	float2 TexCoord : TEXCOORD0;
 };
@@ -71,30 +71,39 @@ struct VertexShaderOutput
     float2 TexCoord : TEXCOORD0;
 
 	//float4 Colour : COLOR0;
-	float3 Normal : TEXCOORD1;
-    float3 Tangent : TEXCOORD2;
-    float3 Binormal : TEXCOORD3;
+	//float3 Normal : TEXCOORD1;
+    //float3 Tangent : TEXCOORD2;
+    //float3 Binormal : TEXCOORD3;
 	
-	float3 EyeVec :	TEXCOORD4;
+	float3 Light : TEXCOORD1;
+	float3 View : TEXCOORD2;
+	
+	//float3 EyeVec :	TEXCOORD4;
 	
 };
 
 VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 {
-    VertexShaderOutput output;
-
+    VertexShaderOutput output = (VertexShaderOutput)0;
     output.Position = mul(input.Position, wvp_Mx);
-
-    output.Normal = normalize(mul(input.Normal, wit_Mx));
-    output.Tangent = normalize(mul(input.Tangent, wit_Mx));
-    output.Binormal = normalize(mul(input.Binormal, wit_Mx));
-
 	float3 worldPosition 	= mul(input.Position, world_Mx);
-	output.EyeVec = viewInv_Mx[3].xyz - worldPosition;
 
-	//float4 normal = mul(input.Normal, wit_Mx);
-	//float lightintensity = dot(normal, DiffuseLightDirection);
-	//output.Colour = saturate(DiffuseColour * DiffuseIntensity *lightintensity);
+	float3x3 worldToTangentSpace;
+	worldToTangentSpace[0] = mul(input.Tangent,world_Mx);
+    worldToTangentSpace[1] = mul(cross(input.Tangent,input.Normal),world_Mx);
+    worldToTangentSpace[2] = mul(input.Normal,world_Mx);
+
+	output.Light = mul(worldToTangentSpace,DiffuseLightDirection);
+	//float3 halfAngle = normalize(DiffuseLightDirection) + normalize( viewInv_Mx[3].xyz - worldPosition.xyz );
+	//output.EyeVec = viewInv_Mx[3].xyz - worldPosition;
+	//output.halfAngle = mul(halfAngle, worldToTangentSpace);
+	output.View = mul(worldToTangentSpace, viewInv_Mx[3].xyz - worldPosition);
+
+	
+    //output.Normal = normalize(mul(input.Normal, wit_Mx));
+    //output.Tangent = normalize(mul(input.Tangent, wit_Mx));
+    //output.Binormal = normalize(mul(input.Binormal, wit_Mx));
+
 
 	output.TexCoord = input.TexCoord;
     
@@ -103,26 +112,38 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
-	//Bump in range -0.5 to 0.5 instead of 0-1
-	float3 bump = (2*bumpMagnitude * (tex2D(normalSampler,input.TexCoord))-1.0);
-	float3 newNormal = input.Normal + (bump.x * input.Tangent + bump.y * input.Binormal);//TODO: check this line
-	newNormal = normalize(newNormal);
+	//Bump in range -1 to 1 instead of 0-1
+	float3 normal = (2 * (tex2D(normalSampler,input.TexCoord))) - 1.0;
+	//normal = normalize( normal );
 
-	//Diffuse lighting now calculated per pixel in pixel shader
-	float3 n_light = normalize(DiffuseLightDirection);
-	float lightintensity = dot(n_light, newNormal);
-	if(lightintensity<0) lightintensity=0;
-
-	// Specular using new normal: R = 2 * (N.L) * N – L
-    float3 R = normalize(2 * lightintensity * newNormal - n_light);
-	float3 EV = normalize(input.EyeVec);
 	
-	float specularValue = max(pow(dot(R, EV), Shininess),0);
-	float4 specular = SpecularIntensity * SpecularColour * specularValue * lightintensity;
+	//Diffuse lighting now calculated per pixel in pixel shader
+	float3 LightDir = normalize(input.Light);
+	float lambertValue = saturate(dot(normal,LightDir));
+
+//float3 newNormal = input.Normal + (bump.x * input.Tangent + bump.y * input.Binormal);
+//	float lightintensity = dot(LightDir, newNormal);
+//	if(lightintensity<0) lightintensity=0;
+	
+
+
+	
+	//Specular using Blinn-Phong = Ks * exp(N.H, a) * lightintensity
+	float3 halfway = normalize(LightDir + normalize(input.View));
+	float spec=saturate(dot(normal, halfway));
+	float specularValue = pow(spec,Shininess);
+
+	//// Specular using new Phong: R = 2 * (N.L) * N – L
+    //float3 R = normalize(2 * lightintensity * newNormal - n_light);
+	//float3 EV = normalize(input.EyeVec);
+	//float specularValue = max(pow(dot(R, EV), Shininess),0);
+	
+	float4 specular = SpecularColour * specularValue;// * lightintensity;
 
     float4 textureColour = tex2D(textureSampler, input.TexCoord);
 
-	float4 outFloat = saturate(lightintensity * textureColour + ambientColour * ambientIntensity + specular);
+	float Ambient = ambientColour * ambientIntensity;
+	float4 outFloat = saturate(lambertValue * textureColour + Ambient + specular);//float4(lambertValue,lambertValue,lambertValue,1.0);
 	outFloat.a =1;
 	if(useAlphaMap) outFloat.a= tex2D(alphaSampler, input.TexCoord).r;
 	
