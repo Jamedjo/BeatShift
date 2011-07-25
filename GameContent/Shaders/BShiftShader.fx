@@ -18,13 +18,13 @@ bool useAlphaMap
 > = false;
 
 float4 ambientColour = float4(1, 1, 1, 1);
-float ambientIntensity = 0.2;
+float ambientIntensity = 0.05;
 
-float Shininess = 10;
+float Shininess = 6;
 float4 SpecularColour = float4(1, 1, 1, 0.2);    
 float SpecularIntensity = 0.5;
 
-float bumpMagnitude = 3.5;
+float bumpMagnitude = 0.63;
 
 texture diffuseTex;
 sampler2D textureSampler = sampler_state {
@@ -104,7 +104,7 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
 	//Bump in range -0.5 to 0.5 instead of 0-1
-	float3 bump = bumpMagnitude * (tex2D(normalSampler,input.TexCoord)-(0.5,0.5,0.5));
+	float3 bump = (2*bumpMagnitude * (tex2D(normalSampler,input.TexCoord))-1.0);
 	float3 newNormal = input.Normal + (bump.x * input.Tangent + bump.y * input.Binormal);//TODO: check this line
 	newNormal = normalize(newNormal);
 
