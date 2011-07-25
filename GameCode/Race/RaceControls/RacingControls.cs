@@ -67,11 +67,6 @@ namespace BeatShift.Input
         {
             //Use first Controler as default.
         }
-        public Boolean actionPressed(InputAction action)
-        {
-            //Change this? If forward and beat is not being kept then no?
-            return chosenInput.actionPressed(action);
-        }
 
         public void setChosenInput(IInputManager newInputManager)
         {
@@ -285,7 +280,7 @@ namespace BeatShift.Input
           //  if (racer.shipPhysics.shipNearGround())
           //  {
 
-                if (actionPressed(InputAction.Backwards))
+                if (chosenInput.actionPressed(InputAction.Backwards))
                 {
                     racer.shipPhysics.applyImpulseInSurfacePlane(racer.shipPhysics.racerEntity.OrientationMatrix.Backward * 100);
                 }
@@ -359,7 +354,7 @@ namespace BeatShift.Input
         void BoostControl()
         {
             applyForwardMotionFromAnalogue();
-                
+
             if (chosenInput.actionTapped(InputAction.Green))
             {
                 racer.beatQueue.BeatTap(Buttons.A);

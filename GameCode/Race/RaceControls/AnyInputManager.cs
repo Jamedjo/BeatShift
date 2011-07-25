@@ -70,27 +70,28 @@ namespace BeatShift.Input
 
         #endregion
 
-        public IInputManager getIInputManager(ControllerType type)
+        public IInputManager getNewIInputManager(ControllerType type)
         {
             switch (type)
             {
                 case ControllerType.PadOne:
-                    return padOneInput;
+                    return new PadInputManager(PlayerIndex.One);
                 case ControllerType.PadTwo:
-                    return padTwoInput;
+                    return new PadInputManager(PlayerIndex.Two);
                 case ControllerType.PadThree:
-                    return padThreeInput;
+                    return new PadInputManager(PlayerIndex.Three);
                 case ControllerType.PadFour:
-                    return padFourInput;
+                    return new PadInputManager(PlayerIndex.Four);
+
                 case ControllerType.Keyboard:
                 default:
-                    return keyInput;
+                    return new KeyInputManager();
             }
         }
 
-        public IInputManager getLastInputTapped()
+        public IInputManager useLastInputTappedToCreateNewIInputManager()
         {
-            return getIInputManager(lastControllerTapped);
+            return getNewIInputManager(lastControllerTapped);
         }
     }
 

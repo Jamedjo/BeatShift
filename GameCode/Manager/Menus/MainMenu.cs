@@ -22,7 +22,7 @@ namespace BeatShift.Menus
                 RaceSetupInformation.isSinglePlayer = true;
                 MenuManager.mainMenuSystem.setCurrentMenu(MenuPage.RaceSelect);
             }));
-            addMenuItem("MULTIPLAYER RACE", (Action)(delegate
+            addMenuItem("MULTIPLAYER", (Action)(delegate
             {
                 RaceSetupInformation.isSinglePlayer = false;
                 MenuManager.mainMenuSystem.setCurrentMenu(MenuPage.RaceSelect);
