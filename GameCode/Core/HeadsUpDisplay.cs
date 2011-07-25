@@ -132,18 +132,18 @@ namespace BeatShift
                     DrawMessageColour(BeatShift.volterfont, (racer.beatQueue.getLayer() + 1).ToString(), viewportWidth - 136, vOffset - 3, 0.8f, Color.PapayaWhip);
                 }
 
-                ////////////////////////
-                ///// COMBO COUNT //////
-                ////////////////////////
+                //////////////////////////
+                /////// COMBO COUNT //////
+                //////////////////////////
 
-                if (viewportWidth > 700)
-                {
-                    DrawMessageColour(BeatShift.volterfont, racer.beatQueue.getCombo().ToString()+"x", viewportWidth - 240, vOffset - 73, 3f, Color.Black);
-                }
-                else
-                {
-                    DrawMessageColour(BeatShift.volterfont, racer.beatQueue.getCombo().ToString() + "x", viewportWidth - 143, vOffset - 42, 2.4f, Color.Black);
-                }
+                //if (viewportWidth > 700)
+                //{
+                //    DrawMessageColour(BeatShift.volterfont, racer.beatQueue.getCombo().ToString()+"x", viewportWidth - 240, vOffset - 73, 3f, Color.Black);
+                //}
+                //else
+                //{
+                //    DrawMessageColour(BeatShift.volterfont, racer.beatQueue.getCombo().ToString() + "x", viewportWidth - 143, vOffset - 42, 2.4f, Color.Black);
+                //}
 
                 ////////////////////////
                 /////// SPEED //////////
