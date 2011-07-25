@@ -17,7 +17,14 @@ namespace BeatShift.Menus
 
         public override void setupMenuItems()
         {
-            addMenuItem("RACE", (Action)(delegate{
+            addMenuItem("SINGLE PLAYER", (Action)(delegate
+            {
+                RaceSetupInformation.isSinglePlayer = true;
+                MenuManager.mainMenuSystem.setCurrentMenu(MenuPage.RaceSelect);
+            }));
+            addMenuItem("MULTIPLAYER RACE", (Action)(delegate
+            {
+                RaceSetupInformation.isSinglePlayer = false;
                 MenuManager.mainMenuSystem.setCurrentMenu(MenuPage.RaceSelect);
             }));
             //addMenuItem("START CO-OP RACE", (Action)(delegate

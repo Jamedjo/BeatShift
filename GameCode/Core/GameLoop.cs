@@ -39,7 +39,7 @@ namespace BeatShift
 
         public static bool raceComplete = false;
 
-        private static bool[] activeControllers = new bool[4];
+        private static bool[] activeControllers = new bool[4];//Array to show which controllers should be active. Game pauses if any of these are unplugged.
 
         public static void playTitle()
         {

@@ -145,6 +145,7 @@
     <Compile Include="Race\Racer\ShipPhysics.cs" />
     <Compile Include="Race\Racer\ShipPhysics_CollisionDetected.cs" />
     <Compile Include="Race\Racer\ShipPhysics_Raycasts.cs" />
+    <Compile Include="Race\RaceSetupInformation.cs" />
     <Compile Include="Race\RaceTypes\PointsRace.cs" />
     <Compile Include="Race\RaceTypes\EliminationRace.cs" />
     <Compile Include="Race\RaceTypes\IRaceType.cs" />

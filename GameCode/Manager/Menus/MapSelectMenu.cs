@@ -33,25 +33,26 @@ namespace BeatShift.Menus
             {
                 MapManager.mapToLoad = MapName.CityMap;
                 SoundManager.trackToLoad = "City";
-                GameLoop.setGameState(GameState.MultiplayerShipSelect);
+                goToNextMenu();
             }));
             addMenuItem("DESERT MAP", (Action)(delegate
             {
                 MapManager.mapToLoad = MapName.DesertMap;
                 SoundManager.trackToLoad = "Desert";
-                GameLoop.setGameState(GameState.MultiplayerShipSelect);
-                //if (isSinglePlayer()) MenuManager.setCurrentMenu(MenuPage.SinglePlayerShipSelect);
-                //else GameLoop.setGameState(GameState.MultiplayerShipSelect);
+                goToNextMenu();
             }));
             addMenuItem("SPACE MAP", (Action)(delegate
             {
                 MapManager.mapToLoad = MapName.SpaceMap;
                 SoundManager.trackToLoad = "Space";
-                //if (isSinglePlayer()) 
-                //    MenuManager.setCurrentMenu(MenuPage.SinglePlayerShipSelect);
-                //else
-                GameLoop.setGameState(GameState.MultiplayerShipSelect);
+                goToNextMenu();
             }));
+        }
+
+        private void goToNextMenu()
+        {
+            if (RaceSetupInformation.isSinglePlayer) MenuManager.mainMenuSystem.setCurrentMenu(MenuPage.SinglePlayerShipSelect);
+            else GameLoop.setGameState(GameState.MultiplayerShipSelect);
         }
 
         //public bool isSinglePlayer()

@@ -14,6 +14,8 @@ namespace BeatShift.Input
         IInputManager padThreeInput = new PadInputManager(PlayerIndex.Three);
         IInputManager padFourInput = new PadInputManager(PlayerIndex.Four);
 
+        ControllerType lastControllerTapped = ControllerType.PadOne;
+
         //TODO: //KonamiCode track //Track input state during update for a sequence of presses, also used for combo distance.
 
         #region IInputManager Interface
@@ -24,7 +26,32 @@ namespace BeatShift.Input
         }
         Boolean IInputManager.actionTapped(InputAction action)
         {
-            return keyInput.actionTapped(action) || padOneInput.actionTapped(action) || padTwoInput.actionTapped(action) || padThreeInput.actionTapped(action) || padFourInput.actionTapped(action);
+            if(keyInput.actionTapped(action))
+            {
+                lastControllerTapped = ControllerType.Keyboard;
+                return true;
+            }
+            if(padOneInput.actionTapped(action))
+            {
+                lastControllerTapped = ControllerType.PadOne;
+                return true;
+            }
+            if(padTwoInput.actionTapped(action))
+            {
+                lastControllerTapped = ControllerType.PadTwo;
+                return true;
+            }
+            if(padThreeInput.actionTapped(action))
+            {
+                lastControllerTapped = ControllerType.PadThree;
+                return true;
+            }
+            if(padFourInput.actionTapped(action))
+            {
+                lastControllerTapped = ControllerType.PadFour;
+                return true;
+            }
+            return false;
         }
 
         float IInputManager.getActionValue(InputAction action)
@@ -42,5 +69,30 @@ namespace BeatShift.Input
         }
 
         #endregion
+
+        public IInputManager getIInputManager(ControllerType type)
+        {
+            switch (type)
+            {
+                case ControllerType.PadOne:
+                    return padOneInput;
+                case ControllerType.PadTwo:
+                    return padTwoInput;
+                case ControllerType.PadThree:
+                    return padThreeInput;
+                case ControllerType.PadFour:
+                    return padFourInput;
+                case ControllerType.Keyboard:
+                default:
+                    return keyInput;
+            }
+        }
+
+        public IInputManager getLastInputTapped()
+        {
+            return getIInputManager(lastControllerTapped);
+        }
     }
+
+    enum ControllerType { PadOne, PadTwo, PadThree, PadFour, Keyboard }
 }

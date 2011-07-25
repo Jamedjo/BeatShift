@@ -148,6 +148,7 @@ namespace BeatShift.Menus
 
         private void startSinglePlayerGame()
         {
+            Race.humanRacers[0].setupRacingControls(((AnyInputManager)MenuManager.anyInput).getLastInputTapped());
             SoundManager.PlayShipName(Race.humanRacers[0].shipName);
             GameLoop.setActiveControllers(true, 0);
             //BeatShift.bgm.play();
