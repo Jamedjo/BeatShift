@@ -4,46 +4,39 @@ float4x4 viewInv_Mx  :  ViewInverse             < string UIWidget = "None"; >;
 //float4x4 wit_Mx      :  WorldInverseTranspose   < string UIWidget = "None"; >;
 
 
-float3 LightDirection_0 : POSITION
+float3 LightDirection_0 : DIRECTION
 <
     string UIName = "Light 0 Direction";
-    string Object = "DirectionalLight";
-    string Space = "World";
     int refID = 0;
 >  = float3(-0.52,-0.57,-0.62);
-float3 LightColour_0 = float3(1, 0.96, 0.81);
+float3 LightColour_0 = float3(0.586, 0.563, 0.474);
 
-float3 LightDirection_1 : POSITION
+float3 LightDirection_1 : DIRECTION
 <
-    string UIName = "Light 0 Direction";
-    string Object = "DirectionalLight";
-    string Space = "World";
-    int refID = 0;
->  = float3(0.71, 0.34, 0.60);
-float3 LightColour_1 = float3(0.96,0.76,0.40);
+    string UIName = "Light 1 Direction";
+    int refID = 1;
+>  = float3(0.71,0.34,0.60);
+float3 LightColour_1 = float3(0.708,0.604,0.627);
 
-float3 LightDirection_2 : POSITION
+float3 LightDirection_2 : DIRECTION
 <
-    string UIName = "Light 0 Direction";
-    string Object = "DirectionalLight";
-    string Space = "World";
-    int refID = 0;
+    string UIName = "Light 2 Direction";
+    int refID = 2;
 >  = float3(0.45, -0.76, 0.45);
-float3 LightColour_2 = float3(0.32,0.36,0.39);
+float3 LightColour_2 = float3(0.538,0.605,0.655);
 
 bool useAlphaMap
 <
     string UIName = "Use a texture for alpha values?";
 > = false;
 
-float3 ambientColour = float3(1, 1, 1);
-float ambientIntensity = 0.3;
+float3 ambientColour = float3(0.231, 0.225, 0.172);
 
-float Shininess = 16;
+float Shininess = 20;
 
-float3 SpecularColour = float3(1, 1, 1); //Darkness doubles as SpecularIntensity
+float3 SpecularColour = float3(0.7, 0.7, 0.7); //Darkness doubles as SpecularIntensity
 
-float bumpMagnitude = 1.6;
+float bumpMagnitude = 0.43;
 
 texture diffuseTex;
 sampler2D textureSampler = sampler_state {
@@ -151,7 +144,7 @@ float3 specular(float3 lDir,float3 normal,float3 View,float exponent){
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
 	//Bump in range -1 to 1 from normal texture
-	float3 normal = tex2D(normalSampler,input.TexCoord.xy).xyz * 2.0 - 1.0;
+	float3 normal = tex2D(normalSampler,input.TexCoord.xy).xyz * 2.0 - 1.0;//float3(0.5,1,0.1);//
 	//Use bumpMagnitude to scale bump effect
 	normal = float3(normal.x * bumpMagnitude, normal.y * bumpMagnitude, normal.z);
 
@@ -173,7 +166,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	float3 lambertSum = (lambert_0*LightColour_0+lambert_1*LightColour_1+lambert_2*LightColour_2) * textureColour;
 	float3 specularSum = SpecularColour.xyz * (specular_0+specular_1+specular_2);
 
-	float3 Ambient = ambientColour * textureColour * ambientIntensity;
+	float3 Ambient = ambientColour * textureColour;
 	
 	float3 colour = saturate(Ambient + lambertSum + specularSum);
 	float4 outFloat = float4(colour,1.0);//outFloat.a =1;

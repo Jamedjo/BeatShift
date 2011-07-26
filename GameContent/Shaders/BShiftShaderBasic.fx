@@ -3,7 +3,38 @@ float4x4 world_Mx    :  World                   < string UIWidget = "None"; >;
 float4x4 viewInv_Mx  :  ViewInverse             < string UIWidget = "None"; >;
 //float4x4 wit_Mx      :  WorldInverseTranspose   < string UIWidget = "None"; >;
 
-float Shininess = 7;
+
+float3 LightDirection_0 : DIRECTION
+<
+    string UIName = "Light 0 Direction";
+    int refID = 0;
+>  = float3(-0.52,-0.57,-0.62);
+float3 LightColour_0 = float3(0.586, 0.563, 0.474);
+
+float3 LightDirection_1 : DIRECTION
+<
+    string UIName = "Light 1 Direction";
+    int refID = 1;
+>  = float3(0.71,0.34,0.60);
+float3 LightColour_1 = float3(0.708,0.604,0.627);
+
+float3 LightDirection_2 : DIRECTION
+<
+    string UIName = "Light 2 Direction";
+    int refID = 2;
+>  = float3(0.45, -0.76, 0.45);
+float3 LightColour_2 = float3(0.538,0.605,0.655);
+
+bool useAlphaMap
+<
+    string UIName = "Use a texture for alpha values?";
+> = false;
+
+float3 ambientColour = float3(0.231, 0.225, 0.172);
+
+float Shininess = 20;
+
+float3 SpecularColour = float3(0.7, 0.7, 0.7); //Darkness doubles as SpecularIntensity
 
 float bumpMagnitude = 0.43;
 
@@ -16,14 +47,14 @@ sampler2D textureSampler = sampler_state {
     AddressV = Wrap;
 };
 
-//texture alphaTex;
-//sampler2D alphaSampler = sampler_state {
-//    Texture = (alphaTex);
-//    MagFilter = Linear;
-//    MinFilter = Linear;
-//    AddressU = Wrap;
-//    AddressV = Wrap;
-//};
+texture alphaTex;
+sampler2D alphaSampler = sampler_state {
+    Texture = (alphaTex);
+    MagFilter = Linear;
+    MinFilter = Linear;
+    AddressU = Wrap;
+    AddressV = Wrap;
+};
 
 
 texture normalTex;
@@ -76,9 +107,9 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
     worldToTangentSpace[1] = mul(cross(input.Tangent,input.Normal),world_Mx);
     worldToTangentSpace[2] = mul(input.Normal,world_Mx);
 
-	output.Light0 = mul(worldToTangentSpace,float3(-0.52,-0.57,-0.62));
-	output.Light1 = mul(worldToTangentSpace,float3(0.71, 0.34, 0.60));
-	output.Light2 = mul(worldToTangentSpace,float3(0.45, -0.76, 0.45));
+	output.Light0 = mul(worldToTangentSpace,LightDirection_0);
+	output.Light1 = mul(worldToTangentSpace,LightDirection_1);
+	output.Light2 = mul(worldToTangentSpace,LightDirection_2);
 	
 	//float3 halfAngle = normalize(DiffuseLightDirection) + normalize( viewInv_Mx[3].xyz - worldPosition.xyz );
 	//output.EyeVec = viewInv_Mx[3].xyz - worldPosition;
@@ -132,16 +163,16 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	
 	
     float3 textureColour = tex2D(textureSampler, input.TexCoord).xyz;
-	float3 lambertSum = (lambert_0*float3(1, 0.96, 0.81)+lambert_1*float3(0.96,0.82,0.85)+lambert_2*float3(0.32,0.36,0.39)) * textureColour;
-	float3 specularSum = float3(0.7,0.7,0.7) * (specular_0+specular_1+specular_2);
+	float3 lambertSum = (lambert_0*LightColour_0+lambert_1*LightColour_1+lambert_2*LightColour_2) * textureColour;
+	float3 specularSum = SpecularColour.xyz * (specular_0+specular_1+specular_2);
 
-	float3 Ambient = float3(0.1,0.1,0.1) * textureColour;//ambientColour * textureColour * ambientIntensity;
+	float3 Ambient = ambientColour * textureColour;
 	
 	float3 colour = saturate(Ambient + lambertSum + specularSum);
 	float4 outFloat = float4(colour,1.0);//outFloat.a =1;
 	//float4(lambert_1,lambert_1,lambert_1,1.0);
 	
-	//if(useAlphaMap) outFloat.a= tex2D(alphaSampler, input.TexCoord).r;
+	if(useAlphaMap) outFloat.a= tex2D(alphaSampler, input.TexCoord).r;
 	
     return outFloat;
 }
