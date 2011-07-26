@@ -1,6 +1,6 @@
 //Maya ASCII 2011 scene
 //Name: ShaderTest.ma
-//Last modified: Mon, Jul 25, 2011 11:27:26 PM
+//Last modified: Tue, Jul 26, 2011 12:47:57 AM
 //Codeset: 1252
 requires maya "2011";
 requires "hlslShader" "1.0";
@@ -13,12 +13,12 @@ fileInfo "osv" "Microsoft Windows 7 Business Edition, 64-bit Windows 7  (Build 7
 fileInfo "license" "student";
 createNode transform -s -n "persp";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" -9.543553662437148 11.261771530396611 -14.145150235643168 ;
+	setAttr ".t" -type "double3" -15.009372488190522 14.951948966375346 -16.978361609778048 ;
 	setAttr ".r" -type "double3" -30.938352737092487 -117.40000000019697 0 ;
 createNode camera -s -n "perspShape" -p "persp";
 	setAttr -k off ".v" no;
 	setAttr ".fl" 34.999999999999986;
-	setAttr ".coi" 13.326366621580767;
+	setAttr ".coi" 20.504087125716612;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";

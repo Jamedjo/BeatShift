@@ -1,7 +1,7 @@
 float4x4 wvp_Mx      :  WorldViewProjection     < string UIWidget = "None"; >;
 float4x4 world_Mx    :  World                   < string UIWidget = "None"; >;
 float4x4 viewInv_Mx  :  ViewInverse             < string UIWidget = "None"; >;
-float4x4 wit_Mx      :  WorldInverseTranspose   < string UIWidget = "None"; >;
+//float4x4 wit_Mx      :  WorldInverseTranspose   < string UIWidget = "None"; >;
 
 
 float3 LightDirection_0 : POSITION
