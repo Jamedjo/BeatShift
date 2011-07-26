@@ -115,18 +115,31 @@ namespace BeatShift
             //shipClasses[(int)currentShip].shipRenderer.DiffuseColor = shipColour.ToVector3();
             //shipClasses[(int)currentShip].shipRenderer.DirectionalLight0.DiffuseColor = shipColour.ToVector3();
 
-            shipClasses[(int)currentShip].shipRenderer.View = viewMatrix;
-            shipClasses[(int)currentShip].shipRenderer.Projection = projectionMatrix;
+            //shipClasses[(int)currentShip].shipRenderer.View = viewMatrix;
+            //shipClasses[(int)currentShip].shipRenderer.Projection = projectionMatrix;
 
             //world uses SRT matrix for scale rotation and translation of ship
             Matrix worldMatrix = getShipDrawOrientationMatrix();
             worldMatrix.Translation = getShipPosition();
-            shipClasses[(int)currentShip].shipRenderer.World = worldMatrix;
+            //shipClasses[(int)currentShip].shipRenderer.World = worldMatrix;
 
             if (((camera.ShouldDrawOwnShip || !isThisTheCamerasShip) && GameLoop.getCurrentState() == GameState.LocalGame) || isThisTheCamerasShip)
             {
+                
+
                 foreach (ModelMesh mesh in shipClasses[(int)currentShip].model.Meshes)
                 {
+                    if(this.currentShip.Equals(ShipName.Flux)) foreach (Effect effect in mesh.Effects)
+                    {
+                        effect.Parameters["world_Mx"].SetValue(worldMatrix);
+                        effect.Parameters["wvp_Mx"].SetValue(worldMatrix * viewMatrix * projectionMatrix);
+
+                        //Matrix worldInverseTranspose = Matrix.Transpose(Matrix.Invert(worldTransform));
+                        //effect.Parameters["wit_Mx"].SetValue(worldInverseTranspose);
+
+                        Matrix viewInverse = Matrix.Invert(viewMatrix);
+                        effect.Parameters["viewInv_Mx"].SetValue(viewInverse);
+                    }
                     mesh.Draw();
                 }
             }

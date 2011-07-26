@@ -1,6 +1,6 @@
 //Maya ASCII 2011 scene
-//Name: Flux.ma
-//Last modified: Tue, Jul 26, 2011 04:19:11 AM
+//Name: Flux2.ma
+//Last modified: Tue, Jul 26, 2011 05:53:05 PM
 //Codeset: 1252
 requires maya "2011";
 requires "hlslShader" "1.0";
@@ -14,13 +14,13 @@ fileInfo "osv" "Microsoft Windows 7 Business Edition, 64-bit Windows 7  (Build 7
 fileInfo "license" "student";
 createNode transform -s -n "persp";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" 3.7012347600388531 7.5465215190210735 19.307937941414632 ;
-	setAttr ".r" -type "double3" -19.538266392571174 10.999999999748519 0 ;
+	setAttr ".t" -type "double3" -5.3680312096372056 9.429233810294086 17.343914154959037 ;
+	setAttr ".r" -type "double3" -29.138266392595998 0.99999999999973266 -4.9703737017760717e-016 ;
 createNode camera -s -n "perspShape" -p "persp";
 	setAttr -k off ".v" no;
 	setAttr ".fl" 34.999999999999986;
 	setAttr ".fcp" 1000;
-	setAttr ".coi" 20.582781237247858;
+	setAttr ".coi" 20.582781237246927;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
@@ -499,6 +499,16 @@ createNode transform -n "pSphere1";
 	setAttr ".t" -type "double3" -9.5094349919768906 0 -3.2983019890024714 ;
 createNode mesh -n "pSphereShape1" -p "pSphere1";
 	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+createNode mesh -n "polySurfaceShape1" -p "pSphere1";
+	setAttr -k off ".v";
+	setAttr ".io" yes;
 	setAttr ".vir" yes;
 	setAttr ".vif" yes;
 	setAttr ".uvst[0].uvsn" -type "string" "map1";
@@ -11048,7 +11058,7 @@ createNode lightLinker -s -n "lightLinker1";
 createNode displayLayerManager -n "layerManager";
 	setAttr ".cdl" 5;
 	setAttr -s 7 ".dli[1:6]"  1 2 3 4 5 6;
-	setAttr -s 3 ".dli";
+	setAttr -s 2 ".dli";
 createNode displayLayer -n "defaultLayer";
 createNode renderLayerManager -n "renderLayerManager";
 createNode renderLayer -n "defaultRenderLayer";
@@ -11119,8 +11129,8 @@ createNode script -n "uiConfigurationScriptNode";
 		+ "                -imageEnabled 0\n                -graphType \"DAG\" \n                -heatMapDisplay 0\n                -updateSelection 1\n                -updateNodeAdded 1\n                -useDrawOverrideColor 0\n                -limitGraphTraversal -1\n                -range 0 0 \n                -iconSize \"smallIcons\" \n                -showCachedConnections 0\n                $editorName;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Hypergraph Hierarchy\")) -mbv $menusOkayInPanels  $panelName;\n\n\t\t\t$editorName = ($panelName+\"HyperGraphEd\");\n            hyperGraph -e \n                -graphLayoutStyle \"hierarchicalLayout\" \n                -orientation \"horiz\" \n                -mergeConnections 0\n                -zoom 1\n                -animateTransition 0\n                -showRelationships 1\n                -showShapes 0\n                -showDeformers 0\n                -showExpressions 0\n                -showConstraints 0\n                -showUnderworld 0\n                -showInvisible 0\n"
 		+ "                -transitionFrames 1\n                -opaqueContainers 0\n                -freeform 0\n                -imagePosition 0 0 \n                -imageScale 1\n                -imageEnabled 0\n                -graphType \"DAG\" \n                -heatMapDisplay 0\n                -updateSelection 1\n                -updateNodeAdded 1\n                -useDrawOverrideColor 0\n                -limitGraphTraversal -1\n                -range 0 0 \n                -iconSize \"smallIcons\" \n                -showCachedConnections 0\n                $editorName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"hyperShadePanel\" (localizedPanelLabel(\"Hypershade\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"hyperShadePanel\" -l (localizedPanelLabel(\"Hypershade\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Hypershade\")) -mbv $menusOkayInPanels  $panelName;\n"
 		+ "\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\tif ($useSceneConfig) {\n\t\tscriptedPanel -e -to $panelName;\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"visorPanel\" (localizedPanelLabel(\"Visor\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"visorPanel\" -l (localizedPanelLabel(\"Visor\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Visor\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"polyTexturePlacementPanel\" (localizedPanelLabel(\"UV Texture Editor\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"polyTexturePlacementPanel\" -l (localizedPanelLabel(\"UV Texture Editor\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"UV Texture Editor\")) -mbv $menusOkayInPanels  $panelName;\n"
-		+ "\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\tif ($useSceneConfig) {\n\t\tscriptedPanel -e -to $panelName;\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"renderWindowPanel\" (localizedPanelLabel(\"Render View\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"renderWindowPanel\" -l (localizedPanelLabel(\"Render View\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Render View\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextPanel \"blendShapePanel\" (localizedPanelLabel(\"Blend Shape\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\tblendShapePanel -unParent -l (localizedPanelLabel(\"Blend Shape\")) -mbv $menusOkayInPanels ;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tblendShapePanel -edit -l (localizedPanelLabel(\"Blend Shape\")) -mbv $menusOkayInPanels  $panelName;\n"
-		+ "\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"dynRelEdPanel\" (localizedPanelLabel(\"Dynamic Relationships\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"dynRelEdPanel\" -l (localizedPanelLabel(\"Dynamic Relationships\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Dynamic Relationships\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"relationshipPanel\" (localizedPanelLabel(\"Relationship Editor\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"relationshipPanel\" -l (localizedPanelLabel(\"Relationship Editor\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Relationship Editor\")) -mbv $menusOkayInPanels  $panelName;\n"
+		+ "\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"renderWindowPanel\" (localizedPanelLabel(\"Render View\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"renderWindowPanel\" -l (localizedPanelLabel(\"Render View\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Render View\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextPanel \"blendShapePanel\" (localizedPanelLabel(\"Blend Shape\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\tblendShapePanel -unParent -l (localizedPanelLabel(\"Blend Shape\")) -mbv $menusOkayInPanels ;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tblendShapePanel -edit -l (localizedPanelLabel(\"Blend Shape\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n"
+		+ "\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"dynRelEdPanel\" (localizedPanelLabel(\"Dynamic Relationships\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"dynRelEdPanel\" -l (localizedPanelLabel(\"Dynamic Relationships\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Dynamic Relationships\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"relationshipPanel\" (localizedPanelLabel(\"Relationship Editor\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"relationshipPanel\" -l (localizedPanelLabel(\"Relationship Editor\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Relationship Editor\")) -mbv $menusOkayInPanels  $panelName;\n"
 		+ "\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"referenceEditorPanel\" (localizedPanelLabel(\"Reference Editor\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"referenceEditorPanel\" -l (localizedPanelLabel(\"Reference Editor\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Reference Editor\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"componentEditorPanel\" (localizedPanelLabel(\"Component Editor\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"componentEditorPanel\" -l (localizedPanelLabel(\"Component Editor\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Component Editor\")) -mbv $menusOkayInPanels  $panelName;\n"
 		+ "\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"dynPaintScriptedPanelType\" (localizedPanelLabel(\"Paint Effects\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"dynPaintScriptedPanelType\" -l (localizedPanelLabel(\"Paint Effects\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Paint Effects\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"scriptEditorPanel\" (localizedPanelLabel(\"Script Editor\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"scriptEditorPanel\" -l (localizedPanelLabel(\"Script Editor\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Script Editor\")) -mbv $menusOkayInPanels  $panelName;\n"
 		+ "\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"Stereo\" (localizedPanelLabel(\"Stereo\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"Stereo\" -l (localizedPanelLabel(\"Stereo\")) -mbv $menusOkayInPanels `;\nstring $editorName = ($panelName+\"Editor\");\n            stereoCameraView -e \n                -camera \"persp\" \n                -useInteractiveMode 0\n                -displayLights \"default\" \n                -displayAppearance \"wireframe\" \n                -activeOnly 0\n                -ignorePanZoom 0\n                -wireframeOnShaded 0\n                -headsUpDisplay 1\n                -selectionHiliteDisplay 1\n                -useDefaultMaterial 0\n                -bufferMode \"double\" \n                -twoSidedLighting 1\n                -backfaceCulling 0\n                -xray 0\n                -jointXray 0\n                -activeComponentsXray 0\n                -displayTextures 0\n"
@@ -11141,107 +11151,32 @@ createNode shadingEngine -n "blinn3SG";
 	setAttr ".ihi" 0;
 	setAttr ".ro" yes;
 createNode materialInfo -n "materialInfo4";
-createNode place2dTexture -n "place2dTexture1";
-	setAttr ".re" -type "float2" 32 32 ;
 createNode groupId -n "groupId31";
 	setAttr ".ihi" 0;
 createNode displayLayer -n "LowPoly";
 	setAttr ".c" 1;
 	setAttr ".do" 1;
-createNode displayLayer -n "HighPoly";
-	setAttr ".v" no;
-	setAttr ".c" 13;
-	setAttr ".do" 2;
 createNode materialInfo -n "shipExporter1:materialInfo2";
 createNode shadingEngine -n "shipExporter1:blinn1SG";
 	setAttr ".ihi" 0;
 	setAttr ".ro" yes;
-createNode polyBridgeEdge -n "polyBridgeEdge67";
-	setAttr ".c[0]"  0 1 1;
-	setAttr ".dv" 0;
 createNode shadingEngine -n "blinn4SG";
 	setAttr ".ihi" 0;
 	setAttr ".ro" yes;
 createNode materialInfo -n "materialInfo5";
-createNode place2dTexture -n "place2dTexture2";
+createNode shadingEngine -n "hlslShader1SG";
+	setAttr ".ihi" 0;
+	setAttr -s 2 ".dsm";
+	setAttr ".ro" yes;
+createNode materialInfo -n "materialInfo6";
+createNode file -n "file2";
+	setAttr ".ftn" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent//Textures/fluxTexture.png";
+createNode file -n "file4";
+	setAttr ".ftn" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent//Textures/Track2_Normal.tga";
 createNode hlslShader -n "hlslShader1";
-	addAttr -is true -ci true -sn "LightDirection_0_Name" -ln "LightDirection_0_Name" 
-		-dt "string";
-	addAttr -is true -ci true -sn "LightDirection_0_Type" -ln "LightDirection_0_Type" 
-		-dt "string";
-	addAttr -is true -ci true -sn "LightDirection_0" -ln "LightDirection_0" -at "matrix";
-	addAttr -is true -ci true -sn "LightColour_0_Name" -ln "LightColour_0_Name" -dt "string";
-	addAttr -is true -ci true -sn "LightColour_0_Type" -ln "LightColour_0_Type" -dt "string";
-	addAttr -is true -ci true -uac -sn "LightColour_0" -ln "LightColour_0" -at "float3" 
-		-nc 3;
-	addAttr -is true -ci true -sn "LightColour_0R" -ln "LightColour_0R" -at "float" 
-		-p "LightColour_0";
-	addAttr -is true -ci true -sn "LightColour_0G" -ln "LightColour_0G" -at "float" 
-		-p "LightColour_0";
-	addAttr -is true -ci true -sn "LightColour_0B" -ln "LightColour_0B" -at "float" 
-		-p "LightColour_0";
-	addAttr -is true -ci true -sn "LightDirection_1_Name" -ln "LightDirection_1_Name" 
-		-dt "string";
-	addAttr -is true -ci true -sn "LightDirection_1_Type" -ln "LightDirection_1_Type" 
-		-dt "string";
-	addAttr -is true -ci true -sn "LightDirection_1" -ln "LightDirection_1" -at "matrix";
-	addAttr -is true -ci true -sn "LightColour_1_Name" -ln "LightColour_1_Name" -dt "string";
-	addAttr -is true -ci true -sn "LightColour_1_Type" -ln "LightColour_1_Type" -dt "string";
-	addAttr -is true -ci true -uac -sn "LightColour_1" -ln "LightColour_1" -at "float3" 
-		-nc 3;
-	addAttr -is true -ci true -sn "LightColour_1R" -ln "LightColour_1R" -at "float" 
-		-p "LightColour_1";
-	addAttr -is true -ci true -sn "LightColour_1G" -ln "LightColour_1G" -at "float" 
-		-p "LightColour_1";
-	addAttr -is true -ci true -sn "LightColour_1B" -ln "LightColour_1B" -at "float" 
-		-p "LightColour_1";
-	addAttr -is true -ci true -sn "LightDirection_2_Name" -ln "LightDirection_2_Name" 
-		-dt "string";
-	addAttr -is true -ci true -sn "LightDirection_2_Type" -ln "LightDirection_2_Type" 
-		-dt "string";
-	addAttr -is true -ci true -sn "LightDirection_2" -ln "LightDirection_2" -at "matrix";
-	addAttr -is true -ci true -sn "LightColour_2_Name" -ln "LightColour_2_Name" -dt "string";
-	addAttr -is true -ci true -sn "LightColour_2_Type" -ln "LightColour_2_Type" -dt "string";
-	addAttr -is true -ci true -uac -sn "LightColour_2" -ln "LightColour_2" -at "float3" 
-		-nc 3;
-	addAttr -is true -ci true -sn "LightColour_2R" -ln "LightColour_2R" -at "float" 
-		-p "LightColour_2";
-	addAttr -is true -ci true -sn "LightColour_2G" -ln "LightColour_2G" -at "float" 
-		-p "LightColour_2";
-	addAttr -is true -ci true -sn "LightColour_2B" -ln "LightColour_2B" -at "float" 
-		-p "LightColour_2";
-	addAttr -is true -ci true -sn "useAlphaMap_Name" -ln "useAlphaMap_Name" -dt "string";
-	addAttr -is true -ci true -sn "useAlphaMap_Type" -ln "useAlphaMap_Type" -dt "string";
-	addAttr -is true -ci true -sn "useAlphaMap" -ln "useAlphaMap" -min 0 -max 1 -at "bool";
-	addAttr -is true -ci true -sn "ambientColour_Name" -ln "ambientColour_Name" -dt "string";
-	addAttr -is true -ci true -sn "ambientColour_Type" -ln "ambientColour_Type" -dt "string";
-	addAttr -is true -ci true -uac -sn "ambientColour" -ln "ambientColour" -at "float3" 
-		-nc 3;
-	addAttr -is true -ci true -sn "ambientColourR" -ln "ambientColourR" -at "float" 
-		-p "ambientColour";
-	addAttr -is true -ci true -sn "ambientColourG" -ln "ambientColourG" -at "float" 
-		-p "ambientColour";
-	addAttr -is true -ci true -sn "ambientColourB" -ln "ambientColourB" -at "float" 
-		-p "ambientColour";
-	addAttr -is true -ci true -sn "ambientIntensity_Name" -ln "ambientIntensity_Name" 
-		-dt "string";
-	addAttr -is true -ci true -sn "ambientIntensity_Type" -ln "ambientIntensity_Type" 
-		-dt "string";
-	addAttr -is true -ci true -sn "ambientIntensity" -ln "ambientIntensity" -smn 0 -smx 
-		1 -at "float";
 	addAttr -is true -ci true -sn "Shininess_Name" -ln "Shininess_Name" -dt "string";
 	addAttr -is true -ci true -sn "Shininess_Type" -ln "Shininess_Type" -dt "string";
 	addAttr -is true -ci true -sn "Shininess" -ln "Shininess" -smn 0 -smx 1 -at "float";
-	addAttr -is true -ci true -sn "SpecularColour_Name" -ln "SpecularColour_Name" -dt "string";
-	addAttr -is true -ci true -sn "SpecularColour_Type" -ln "SpecularColour_Type" -dt "string";
-	addAttr -is true -ci true -uac -sn "SpecularColour" -ln "SpecularColour" -at "float3" 
-		-nc 3;
-	addAttr -is true -ci true -sn "SpecularColourR" -ln "SpecularColourR" -at "float" 
-		-p "SpecularColour";
-	addAttr -is true -ci true -sn "SpecularColourG" -ln "SpecularColourG" -at "float" 
-		-p "SpecularColour";
-	addAttr -is true -ci true -sn "SpecularColourB" -ln "SpecularColourB" -at "float" 
-		-p "SpecularColour";
 	addAttr -is true -ci true -sn "bumpMagnitude_Name" -ln "bumpMagnitude_Name" -dt "string";
 	addAttr -is true -ci true -sn "bumpMagnitude_Type" -ln "bumpMagnitude_Type" -dt "string";
 	addAttr -is true -ci true -sn "bumpMagnitude" -ln "bumpMagnitude" -smn 0 -smx 1 
@@ -11253,23 +11188,13 @@ createNode hlslShader -n "hlslShader1";
 	addAttr -is true -ci true -sn "diffuseTexR" -ln "diffuseTexR" -at "float" -p "diffuseTex";
 	addAttr -is true -ci true -sn "diffuseTexG" -ln "diffuseTexG" -at "float" -p "diffuseTex";
 	addAttr -is true -ci true -sn "diffuseTexB" -ln "diffuseTexB" -at "float" -p "diffuseTex";
-	addAttr -is true -ci true -sn "alphaTex_Name" -ln "alphaTex_Name" -dt "string";
-	addAttr -is true -ci true -sn "alphaTex_Type" -ln "alphaTex_Type" -dt "string";
-	addAttr -is true -ci true -uac -sn "alphaTex" -ln "alphaTex" -at "float3" -nc 3;
-	addAttr -is true -ci true -sn "alphaTexR" -ln "alphaTexR" -at "float" -p "alphaTex";
-	addAttr -is true -ci true -sn "alphaTexG" -ln "alphaTexG" -at "float" -p "alphaTex";
-	addAttr -is true -ci true -sn "alphaTexB" -ln "alphaTexB" -at "float" -p "alphaTex";
-	addAttr -is true -ci true -sn "normalTex_Name" -ln "normalTex_Name" -dt "string";
-	addAttr -is true -ci true -sn "normalTex_Type" -ln "normalTex_Type" -dt "string";
-	addAttr -is true -ci true -uac -sn "normalTex" -ln "normalTex" -at "float3" -nc 
-		3;
-	addAttr -is true -ci true -sn "normalTexR" -ln "normalTexR" -at "float" -p "normalTex";
-	addAttr -is true -ci true -sn "normalTexG" -ln "normalTexG" -at "float" -p "normalTex";
-	addAttr -is true -ci true -sn "normalTexB" -ln "normalTexB" -at "float" -p "normalTex";
 	addAttr -ci true -sn "Position" -ln "Position" -at "compound" -nc 2;
 	addAttr -is true -ci true -sn "Position_Name" -ln "Position_Name" -dt "string" -p "Position";
 	addAttr -is true -ci true -sn "Position_Source" -ln "Position_Source" -dt "string" 
 		-p "Position";
+	addAttr -ci true -sn "UV0" -ln "UV0" -at "compound" -nc 2;
+	addAttr -is true -ci true -sn "UV0_Name" -ln "UV0_Name" -dt "string" -p "UV0";
+	addAttr -is true -ci true -sn "UV0_Source" -ln "UV0_Source" -dt "string" -p "UV0";
 	addAttr -ci true -sn "Normal" -ln "Normal" -at "compound" -nc 2;
 	addAttr -is true -ci true -sn "Normal_Name" -ln "Normal_Name" -dt "string" -p "Normal";
 	addAttr -is true -ci true -sn "Normal_Source" -ln "Normal_Source" -dt "string" -p "Normal";
@@ -11277,100 +11202,62 @@ createNode hlslShader -n "hlslShader1";
 	addAttr -is true -ci true -sn "Tangent0_Name" -ln "Tangent0_Name" -dt "string" -p "Tangent0";
 	addAttr -is true -ci true -sn "Tangent0_Source" -ln "Tangent0_Source" -dt "string" 
 		-p "Tangent0";
-	addAttr -ci true -sn "UV0" -ln "UV0" -at "compound" -nc 2;
-	addAttr -is true -ci true -sn "UV0_Name" -ln "UV0_Name" -dt "string" -p "UV0";
-	addAttr -is true -ci true -sn "UV0_Source" -ln "UV0_Source" -dt "string" -p "UV0";
+	addAttr -is true -ci true -sn "normalTex_Name" -ln "normalTex_Name" -dt "string";
+	addAttr -is true -ci true -sn "normalTex_Type" -ln "normalTex_Type" -dt "string";
+	addAttr -is true -ci true -uac -sn "normalTex" -ln "normalTex" -at "float3" -nc 
+		3;
+	addAttr -is true -ci true -sn "normalTexR" -ln "normalTexR" -at "float" -p "normalTex";
+	addAttr -is true -ci true -sn "normalTexG" -ln "normalTexG" -at "float" -p "normalTex";
+	addAttr -is true -ci true -sn "normalTexB" -ln "normalTexB" -at "float" -p "normalTex";
 	setAttr ".vpar" -type "stringArray" 4 "Position" "Normal" "Tangent0" "UV0"  ;
-	setAttr ".upar" -type "stringArray" 15 "LightDirection_0" "LightColour_0" "LightDirection_1" "LightColour_1" "LightDirection_2" "LightColour_2" "useAlphaMap" "ambientColour" "ambientIntensity" "Shininess" "SpecularColour" "bumpMagnitude" "diffuseTex" "alphaTex" "normalTex"  ;
-	setAttr ".s" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent/Shaders/BShiftShader.fx";
+	setAttr ".upar" -type "stringArray" 4 "Shininess" "bumpMagnitude" "diffuseTex" "normalTex"  ;
+	setAttr ".s" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent/Shaders/BShiftShaderBasic.fx";
 	setAttr ".t" -type "string" "Technique1";
-	setAttr ".LightDirection_0_Name" -type "string" "LightDirection_0";
-	setAttr ".LightDirection_0_Type" -type "string" "matrix1x3";
-	setAttr ".LightDirection_0" -type "matrix" 1 0 0 0 0 1 0 0 0 0 1 0 -0.48995593623664391 -0.51515306169911246 -0.59999999999999998 1;
-	setAttr ".LightColour_0_Name" -type "string" "LightColour_0";
-	setAttr ".LightColour_0_Type" -type "string" "color1x3";
-	setAttr ".LightColour_0" -type "float3" 1 0.95999998 0.81 ;
-	setAttr ".LightDirection_1_Name" -type "string" "LightDirection_1";
-	setAttr ".LightDirection_1_Type" -type "string" "matrix1x3";
-	setAttr ".LightDirection_1" -type "matrix" 1 0 0 0 0 1 0 0 0 0 1 0 0.71004406376335605 0.20559760879805949 0.59999999999999998 1;
-	setAttr ".LightColour_1_Name" -type "string" "LightColour_1";
-	setAttr ".LightColour_1_Type" -type "string" "color1x3";
-	setAttr ".LightColour_1" -type "float3" 0.95999998 0.921 0.85299999 ;
-	setAttr ".LightDirection_2_Name" -type "string" "LightDirection_2";
-	setAttr ".LightDirection_2_Type" -type "string" "matrix1x3";
-	setAttr ".LightDirection_2" -type "matrix" 1 0 0 0 0 1 0 0 0 0 1 0 0.4600440637633561 -0.77515306169911247 0.45000000000000001 1;
-	setAttr ".LightColour_2_Name" -type "string" "LightColour_2";
-	setAttr ".LightColour_2_Type" -type "string" "color1x3";
-	setAttr ".LightColour_2" -type "float3" 0.31999999 0.36000001 0.38999999 ;
-	setAttr ".useAlphaMap_Name" -type "string" "useAlphaMap";
-	setAttr ".useAlphaMap_Type" -type "string" "bool";
-	setAttr ".useAlphaMap" no;
-	setAttr ".ambientColour_Name" -type "string" "ambientColour";
-	setAttr ".ambientColour_Type" -type "string" "color1x3";
-	setAttr ".ambientColour" -type "float3" 1 1 1 ;
-	setAttr ".ambientIntensity_Name" -type "string" "ambientIntensity";
-	setAttr ".ambientIntensity_Type" -type "string" "float";
-	setAttr ".ambientIntensity" 0.10158013552427292;
 	setAttr ".Shininess_Name" -type "string" "Shininess";
 	setAttr ".Shininess_Type" -type "string" "float";
 	setAttr ".Shininess" 7.2234764099121094;
-	setAttr ".SpecularColour_Name" -type "string" "SpecularColour";
-	setAttr ".SpecularColour_Type" -type "string" "color1x3";
-	setAttr ".SpecularColour" -type "float3" 0.727718 0.727718 0.727718 ;
 	setAttr ".bumpMagnitude_Name" -type "string" "bumpMagnitude";
 	setAttr ".bumpMagnitude_Type" -type "string" "float";
 	setAttr ".bumpMagnitude" 0.42979687452316284;
 	setAttr ".diffuseTex_Name" -type "string" "diffuseTex";
 	setAttr ".diffuseTex_Type" -type "string" "texture";
 	setAttr ".diffuseTex" -type "float3" 0 0 0 ;
-	setAttr ".alphaTex_Name" -type "string" "alphaTex";
-	setAttr ".alphaTex_Type" -type "string" "texture";
-	setAttr ".alphaTex" -type "float3" 0 0 0 ;
-	setAttr ".normalTex_Name" -type "string" "normalTex";
-	setAttr ".normalTex_Type" -type "string" "texture";
-	setAttr ".normalTex" -type "float3" 0 0 0 ;
 	setAttr ".Position_Name" -type "string" "Position";
 	setAttr ".Position_Source" -type "string" "position";
+	setAttr ".UV0_Name" -type "string" "UV0";
+	setAttr ".UV0_Source" -type "string" "uv:map1";
 	setAttr ".Normal_Name" -type "string" "Normal";
 	setAttr ".Normal_Source" -type "string" "normal";
 	setAttr ".Tangent0_Name" -type "string" "Tangent0";
 	setAttr ".Tangent0_Source" -type "string" "tangent:map1";
-	setAttr ".UV0_Name" -type "string" "UV0";
-	setAttr ".UV0_Source" -type "string" "uv:map1";
-createNode shadingEngine -n "hlslShader1SG";
-	setAttr ".ihi" 0;
-	setAttr ".ro" yes;
-createNode materialInfo -n "materialInfo6";
-createNode file -n "file2";
-	setAttr ".ftn" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent//Textures/fluxTexture.png";
-createNode place2dTexture -n "place2dTexture3";
-createNode place2dTexture -n "place2dTexture4";
-createNode file -n "file4";
-	setAttr ".ftn" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent//Textures/Track2_Normal.tga";
-createNode place2dTexture -n "place2dTexture5";
-createNode file -n "file5";
-	setAttr ".ftn" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent//Textures/1pxWhite.tga";
-createNode place2dTexture -n "place2dTexture6";
+	setAttr ".normalTex_Name" -type "string" "normalTex";
+	setAttr ".normalTex_Type" -type "string" "texture";
+	setAttr ".normalTex" -type "float3" 0 0 0 ;
+createNode polyAutoProj -n "polyAutoProj1";
+	setAttr ".uopa" yes;
+	setAttr ".ics" -type "componentList" 1 "f[0:399]";
+	setAttr ".ix" -type "matrix" 1 0 0 0 0 1 0 0 0 0 1 0 -9.5094349919768906 0 -3.2983019890024714 1;
+	setAttr ".s" -type "double3" 4.3880074024200439 4.3880074024200439 4.3880074024200439 ;
+	setAttr ".ps" 0.20000000298023224;
+	setAttr ".dl" yes;
 select -ne :time1;
 	setAttr ".o" 1;
 	setAttr ".unw" 1;
 select -ne :renderPartition;
 	setAttr -s 11 ".st";
 select -ne :initialShadingGroup;
-	setAttr -s 3 ".dsm";
+	setAttr -s 2 ".dsm";
 	setAttr ".ro" yes;
 select -ne :initialParticleSE;
 	setAttr ".ro" yes;
 select -ne :defaultShaderList1;
 	setAttr -s 3 ".s";
 select -ne :defaultTextureList1;
-	setAttr -s 3 ".tx";
+	setAttr -s 2 ".tx";
 select -ne :lightList1;
 	setAttr -s 3 ".l";
 select -ne :postProcessList1;
 	setAttr -s 2 ".p";
-select -ne :defaultRenderUtilityList1;
-	setAttr -s 6 ".u";
 select -ne :renderGlobalsList1;
 select -ne :defaultRenderGlobals;
 	setAttr ".outf" 3;
@@ -11395,11 +11282,12 @@ select -ne :defaultHardwareRenderGlobals;
 	setAttr ".fn" -type "string" "im";
 	setAttr ".res" -type "string" "ntsc_4d 646 485 1.333";
 select -ne :ikSystem;
-	setAttr -s 4 ".sol";
+	setAttr -s 3 ".sol";
 connectAttr "LowPoly.di" "pasted__curve4.do";
 connectAttr "LowPoly.di" "pasted__curve5.do";
 connectAttr "LowPoly.di" "pasted__curve6.do";
 connectAttr "LowPoly.di" "curve1.do";
+connectAttr "polyAutoProj1.out" "pSphereShape1.i";
 connectAttr "LowPoly.di" "Flux_Low.do";
 relationship "link" ":lightLinker1" ":initialShadingGroup.message" ":defaultLightSet.message";
 relationship "link" ":lightLinker1" ":initialParticleSE.message" ":defaultLightSet.message";
@@ -11433,74 +11321,18 @@ connectAttr "shipExporter:mi_car_paint_phen1SG.msg" "shipExporter:materialInfo1.
 connectAttr "shipExporter:blinn1SG.msg" "shipExporter:materialInfo2.sg";
 connectAttr "blinn3SG.msg" "materialInfo4.sg";
 connectAttr "layerManager.dli[3]" "LowPoly.id";
-connectAttr "layerManager.dli[4]" "HighPoly.id";
 connectAttr "shipExporter1:blinn1SG.msg" "shipExporter1:materialInfo2.sg";
 connectAttr "blinn4SG.msg" "materialInfo5.sg";
-connectAttr "file2.oc" "hlslShader1.diffuseTex";
-connectAttr "file4.oc" "hlslShader1.normalTex";
-connectAttr "directionalLight3.wm" "hlslShader1.LightDirection_2";
-connectAttr "directionalLight2.wm" "hlslShader1.LightDirection_1";
-connectAttr "directionalLight1.wm" "hlslShader1.LightDirection_0";
-connectAttr "file5.oc" "hlslShader1.alphaTex";
 connectAttr "hlslShader1.oc" "hlslShader1SG.ss";
+connectAttr "Flux_LowShape.iog" "hlslShader1SG.dsm" -na;
 connectAttr "pSphereShape1.iog" "hlslShader1SG.dsm" -na;
 connectAttr "hlslShader1SG.msg" "materialInfo6.sg";
 connectAttr "hlslShader1.msg" "materialInfo6.m";
 connectAttr "file2.msg" "materialInfo6.t" -na;
-connectAttr "place2dTexture3.c" "file2.c";
-connectAttr "place2dTexture3.tf" "file2.tf";
-connectAttr "place2dTexture3.rf" "file2.rf";
-connectAttr "place2dTexture3.mu" "file2.mu";
-connectAttr "place2dTexture3.mv" "file2.mv";
-connectAttr "place2dTexture3.s" "file2.s";
-connectAttr "place2dTexture3.wu" "file2.wu";
-connectAttr "place2dTexture3.wv" "file2.wv";
-connectAttr "place2dTexture3.re" "file2.re";
-connectAttr "place2dTexture3.of" "file2.of";
-connectAttr "place2dTexture3.r" "file2.ro";
-connectAttr "place2dTexture3.n" "file2.n";
-connectAttr "place2dTexture3.vt1" "file2.vt1";
-connectAttr "place2dTexture3.vt2" "file2.vt2";
-connectAttr "place2dTexture3.vt3" "file2.vt3";
-connectAttr "place2dTexture3.vc1" "file2.vc1";
-connectAttr "place2dTexture3.o" "file2.uv";
-connectAttr "place2dTexture3.ofs" "file2.fs";
-connectAttr "place2dTexture5.c" "file4.c";
-connectAttr "place2dTexture5.tf" "file4.tf";
-connectAttr "place2dTexture5.rf" "file4.rf";
-connectAttr "place2dTexture5.mu" "file4.mu";
-connectAttr "place2dTexture5.mv" "file4.mv";
-connectAttr "place2dTexture5.s" "file4.s";
-connectAttr "place2dTexture5.wu" "file4.wu";
-connectAttr "place2dTexture5.wv" "file4.wv";
-connectAttr "place2dTexture5.re" "file4.re";
-connectAttr "place2dTexture5.of" "file4.of";
-connectAttr "place2dTexture5.r" "file4.ro";
-connectAttr "place2dTexture5.n" "file4.n";
-connectAttr "place2dTexture5.vt1" "file4.vt1";
-connectAttr "place2dTexture5.vt2" "file4.vt2";
-connectAttr "place2dTexture5.vt3" "file4.vt3";
-connectAttr "place2dTexture5.vc1" "file4.vc1";
-connectAttr "place2dTexture5.o" "file4.uv";
-connectAttr "place2dTexture5.ofs" "file4.fs";
-connectAttr "place2dTexture6.c" "file5.c";
-connectAttr "place2dTexture6.tf" "file5.tf";
-connectAttr "place2dTexture6.rf" "file5.rf";
-connectAttr "place2dTexture6.mu" "file5.mu";
-connectAttr "place2dTexture6.mv" "file5.mv";
-connectAttr "place2dTexture6.s" "file5.s";
-connectAttr "place2dTexture6.wu" "file5.wu";
-connectAttr "place2dTexture6.wv" "file5.wv";
-connectAttr "place2dTexture6.re" "file5.re";
-connectAttr "place2dTexture6.of" "file5.of";
-connectAttr "place2dTexture6.r" "file5.ro";
-connectAttr "place2dTexture6.n" "file5.n";
-connectAttr "place2dTexture6.vt1" "file5.vt1";
-connectAttr "place2dTexture6.vt2" "file5.vt2";
-connectAttr "place2dTexture6.vt3" "file5.vt3";
-connectAttr "place2dTexture6.vc1" "file5.vc1";
-connectAttr "place2dTexture6.o" "file5.uv";
-connectAttr "place2dTexture6.ofs" "file5.fs";
+connectAttr "file2.oc" "hlslShader1.diffuseTex";
+connectAttr "file4.oc" "hlslShader1.normalTex";
+connectAttr "polySurfaceShape1.o" "polyAutoProj1.ip";
+connectAttr "pSphereShape1.wm" "polyAutoProj1.mp";
 connectAttr "blinn1SG.pa" ":renderPartition.st" -na;
 connectAttr "lambert2SG.pa" ":renderPartition.st" -na;
 connectAttr "blinn2SG.pa" ":renderPartition.st" -na;
@@ -11512,21 +11344,13 @@ connectAttr "blinn4SG.pa" ":renderPartition.st" -na;
 connectAttr "hlslShader1SG.pa" ":renderPartition.st" -na;
 connectAttr "FluxPhysicsShape.iog" ":initialShadingGroup.dsm" -na;
 connectAttr "ShipPhysicsShape.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "Flux_LowShape.iog" ":initialShadingGroup.dsm" -na;
 connectAttr "hlslShader1.msg" ":defaultShaderList1.s" -na;
 connectAttr "file2.msg" ":defaultTextureList1.tx" -na;
 connectAttr "file4.msg" ":defaultTextureList1.tx" -na;
-connectAttr "file5.msg" ":defaultTextureList1.tx" -na;
 connectAttr "directionalLightShape1.ltd" ":lightList1.l" -na;
 connectAttr "directionalLightShape2.ltd" ":lightList1.l" -na;
 connectAttr "directionalLightShape3.ltd" ":lightList1.l" -na;
-connectAttr "place2dTexture1.msg" ":defaultRenderUtilityList1.u" -na;
-connectAttr "place2dTexture2.msg" ":defaultRenderUtilityList1.u" -na;
-connectAttr "place2dTexture3.msg" ":defaultRenderUtilityList1.u" -na;
-connectAttr "place2dTexture4.msg" ":defaultRenderUtilityList1.u" -na;
-connectAttr "place2dTexture5.msg" ":defaultRenderUtilityList1.u" -na;
-connectAttr "place2dTexture6.msg" ":defaultRenderUtilityList1.u" -na;
 connectAttr "directionalLight1.iog" ":defaultLightSet.dsm" -na;
 connectAttr "directionalLight2.iog" ":defaultLightSet.dsm" -na;
 connectAttr "directionalLight3.iog" ":defaultLightSet.dsm" -na;
-// End of Flux.ma
+// End of Flux2.ma

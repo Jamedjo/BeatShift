@@ -676,6 +676,7 @@
       <Name>Flux</Name>
       <Importer>FbxImporter</Importer>
       <Processor>BShiftAdvancedModelProcessor</Processor>
+      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
     </Compile>
     <Compile Include="Models\Ships\Omicron.fbx">
       <Name>Omicron</Name>
@@ -936,6 +937,11 @@
       <Name>skyboxCity</Name>
       <Importer>XImporter</Importer>
       <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Shaders\BShiftShaderBasic.fx">
+      <Name>BShiftShaderBasic</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
