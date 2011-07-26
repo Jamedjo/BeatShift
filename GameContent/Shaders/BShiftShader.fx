@@ -144,9 +144,11 @@ float3 specular(float3 lDir,float3 normal,float3 View,float exponent){
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
 	//Bump in range -1 to 1 from normal texture
-	float3 normal = tex2D(normalSampler,input.TexCoord.xy).xyz * 2.0 - 1.0;//float3(0.5,1,0.1);//
+	float3 normal = normalize(2.0 * tex2D(normalSampler,input.TexCoord.xy).rgb - 1.0);//float3(0.5,1,0.1);//
 	//Use bumpMagnitude to scale bump effect
+	//float3 specularNormal = normal * bumpMagnitude;
 	normal = float3(normal.x * bumpMagnitude, normal.y * bumpMagnitude, normal.z);
+	
 
 	float3 lambert_0 = lambert(input.Light0,normal);
 	float3 specular_0 = specular(input.Light0,normal,input.View,Shininess);

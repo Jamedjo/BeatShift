@@ -105,7 +105,7 @@ namespace BeatShift
             //Set display states
             BeatShift.graphics.GraphicsDevice.BlendState = BlendState.Opaque;
             BeatShift.graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-            BeatShift.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
+            BeatShift.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;//.LinearWrap;
 
             Matrix viewMatrix = camera.View;
             Matrix projectionMatrix = camera.Projection;
@@ -125,11 +125,10 @@ namespace BeatShift
 
             if (((camera.ShouldDrawOwnShip || !isThisTheCamerasShip) && GameLoop.getCurrentState() == GameState.LocalGame) || isThisTheCamerasShip)
             {
-                
-
+                //Draw ship using bShiftEffect.fx as instructed by the fbx file
                 foreach (ModelMesh mesh in shipClasses[(int)currentShip].model.Meshes)
                 {
-                    if(this.currentShip.Equals(ShipName.Flux)) foreach (Effect effect in mesh.Effects)
+                    foreach (Effect effect in mesh.Effects)
                     {
                         effect.Parameters["world_Mx"].SetValue(worldMatrix);
                         effect.Parameters["wvp_Mx"].SetValue(worldMatrix * viewMatrix * projectionMatrix);
