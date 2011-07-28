@@ -107,9 +107,9 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
     worldToTangentSpace[1] = mul(cross(input.Tangent,input.Normal),world_Mx);
     worldToTangentSpace[2] = mul(input.Normal,world_Mx);
 
-	output.Light0 = mul(worldToTangentSpace,LightDirection_0);
-	output.Light1 = mul(worldToTangentSpace,LightDirection_1);
-	output.Light2 = mul(worldToTangentSpace,LightDirection_2);
+	output.Light0 = mul(worldToTangentSpace,-LightDirection_0);
+	output.Light1 = mul(worldToTangentSpace,-LightDirection_1);
+	output.Light2 = mul(worldToTangentSpace,-LightDirection_2);
 	
 	//float3 halfAngle = normalize(DiffuseLightDirection) + normalize( viewInv_Mx[3].xyz - worldPosition.xyz );
 	//output.EyeVec = viewInv_Mx[3].xyz - worldPosition;
@@ -144,7 +144,7 @@ float3 specular(float3 lDir,float3 normal,float3 View,float exponent){
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
 	//Bump in range -1 to 1 from normal texture
-	float3 normal = normalize(2.0 * tex2D(normalSampler,input.TexCoord.xy).rgb - 1.0);//float3(0.5,1,0.1);//
+	float3 normal = 2.0 * tex2D(normalSampler,input.TexCoord.xy).rgb - 1.0;//float3(0.5,1,0.1);//
 	//Use bumpMagnitude to scale bump effect
 	//float3 specularNormal = normal * bumpMagnitude;
 	normal = float3(normal.x * bumpMagnitude, normal.y * bumpMagnitude, normal.z);
@@ -165,12 +165,12 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	
 	
     float3 textureColour = tex2D(textureSampler, input.TexCoord).xyz;
-	float3 lambertSum = (lambert_0*LightColour_0+lambert_1*LightColour_1+lambert_2*LightColour_2) * textureColour;
+	float3 lambertSum = lambert_0*LightColour_0+lambert_1*LightColour_1+lambert_2*LightColour_2;
 	float3 specularSum = SpecularColour.xyz * (specular_0+specular_1+specular_2);
 
-	float3 Ambient = ambientColour * textureColour;
+	float3 baseColour = (lambertSum+ambientColour) * textureColour;
 	
-	float3 colour = saturate(Ambient + lambertSum + specularSum);
+	float3 colour = saturate(baseColour + specularSum);
 	float4 outFloat = float4(colour,1.0);//outFloat.a =1;
 	//float4(lambert_1,lambert_1,lambert_1,1.0);
 	

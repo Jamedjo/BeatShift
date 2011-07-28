@@ -29,7 +29,6 @@ namespace BeatShift
 
         protected List<FbxModel> modelList = new List<FbxModel>();
         protected FbxModel sphere;
-        Effect bshiftEffect;
 
         protected Texture2D mapTrackTexture;
         protected Texture2D mapTrackAlphaTexture;
@@ -56,9 +55,6 @@ namespace BeatShift
             sphere = new FbxModel("Sphere", MapContent, MapName.All, ModelCategory.Scenery);
             //Order the modelList so transparency is drawn in correct order
             modelList = modelList.OrderBy((m) => m.category).ToList();
-            //load shader
-            bshiftEffect = MapContent.Load<Effect>("Shaders/BShiftShader");
-
         }
 
         //Add physics to current map
@@ -95,16 +91,16 @@ namespace BeatShift
         #region Drawing Related Methods
 
         // Used to modify the effects in a mesh
-        void setupBShiftEffect(Matrix view, Matrix proj, Matrix worldTransform)//, Vector3 viewVector)
+        void setupBShiftEffect(Effect effect, Matrix view, Matrix proj, Matrix worldTransform)//, Vector3 viewVector)
         {
-            bshiftEffect.Parameters["world_Mx"].SetValue(worldTransform);
-            bshiftEffect.Parameters["wvp_Mx"].SetValue(worldTransform * view * proj);
+            effect.Parameters["world_Mx"].SetValue(worldTransform);
+            effect.Parameters["wvp_Mx"].SetValue(worldTransform * view * proj);
 
-            Matrix worldInverseTranspose = Matrix.Transpose(Matrix.Invert(worldTransform));
-            bshiftEffect.Parameters["wit_Mx"].SetValue(worldInverseTranspose);
+            //Matrix worldInverseTranspose = Matrix.Transpose(Matrix.Invert(worldTransform));
+            //effect.Parameters["wit_Mx"].SetValue(worldInverseTranspose);
 
             Matrix viewInverse = Matrix.Invert(view);
-            bshiftEffect.Parameters["viewInv_Mx"].SetValue(viewInverse);
+            effect.Parameters["viewInv_Mx"].SetValue(viewInverse);
         }
 
         // Used to modify the effects in a mesh
@@ -130,7 +126,7 @@ namespace BeatShift
             //Set display states
             BeatShift.graphics.GraphicsDevice.BlendState = BlendState.Opaque;
             BeatShift.graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-            BeatShift.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
+            BeatShift.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.AnisotropicWrap;
 
 
             if (Options.DrawTrackNormals) //Draw track normals.
@@ -160,7 +156,7 @@ namespace BeatShift
             //Draw both sides of track
             if (modelObject.category == ModelCategory.Track) BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
 
-            if (modelObject.category == ModelCategory.Track && currentMapName == MapName.SpaceMap)
+            if (modelObject.category == ModelCategory.Track )
             {
                 drawWithBShiftEffect(modelObject.model, modelObject.transforms, camera);
             }
@@ -205,16 +201,15 @@ namespace BeatShift
         {
             Matrix viewMatrix = camera.View;
             Matrix projectionMatrix = camera.Projection;
-            bshiftEffect.Parameters["diffuseTex"].SetValue(mapTrackTexture);
-            bshiftEffect.Parameters["alphaTex"].SetValue(mapTrackAlphaTexture);
-            bshiftEffect.Parameters["normalTex"].SetValue(mapTrackNormalTexture);
+
+            
 
             foreach (ModelMesh mesh in model.Meshes)
             {
                 foreach (ModelMeshPart mmPart in mesh.MeshParts)
                 {
-                    mmPart.Effect = bshiftEffect;
-                    setupBShiftEffect(viewMatrix, projectionMatrix, transforms[mesh.ParentBone.Index]);//, viewVector);
+                   // mmPart.Effect = bshiftEffect;
+                    setupBShiftEffect(mmPart.Effect, viewMatrix, projectionMatrix, transforms[mesh.ParentBone.Index]);//, viewVector);
                 }
                 mesh.Draw();
             }
