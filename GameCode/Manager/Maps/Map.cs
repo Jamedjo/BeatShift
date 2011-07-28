@@ -126,7 +126,7 @@ namespace BeatShift
             //Set display states
             BeatShift.graphics.GraphicsDevice.BlendState = BlendState.Opaque;
             BeatShift.graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-            BeatShift.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.AnisotropicWrap;
+            BeatShift.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
 
 
             if (Options.DrawTrackNormals) //Draw track normals.
@@ -176,7 +176,7 @@ namespace BeatShift
                 foreach (BasicEffect beffect in mesh.Effects)
                 {
                     //setupEffect(beffect, viewMatrix, projectionMatrix, fbxModel.transforms[mesh.ParentBone.Index]);
-
+                    
                     beffect.View = viewMatrix;
                     beffect.Projection = projectionMatrix;
                     beffect.World = fbxModel.transforms[mesh.ParentBone.Index];

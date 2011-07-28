@@ -135,8 +135,7 @@ float3 lambert(float3 lDir,float3 normal){
 	
 float3 specular(float3 lDir,float3 normal,float3 View,float exponent){
 	//Specular using Blinn-Phong = Ks * exp(N.H, a) * lightintensity
-	float3 LightDir = normalize(lDir);
-	float3 halfway = normalize(LightDir + normalize(View));
+	float3 halfway = normalize(normalize(lDir) + normalize(View));
 	float spec=saturate(dot(normal, halfway));
 	return pow(spec,exponent);
 }
@@ -144,10 +143,10 @@ float3 specular(float3 lDir,float3 normal,float3 View,float exponent){
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
 	//Bump in range -1 to 1 from normal texture
-	float3 normal = 2.0 * tex2D(normalSampler,input.TexCoord.xy).rgb - 1.0;//float3(0.5,1,0.1);//
+	float3 normal = 2.0 * tex2D(normalSampler,input.TexCoord.xy).xyz - 1.0;//float3(0.5,1,0.1);//
 	//Use bumpMagnitude to scale bump effect
 	//float3 specularNormal = normal * bumpMagnitude;
-	normal = float3(normal.x * bumpMagnitude, normal.y * bumpMagnitude, normal.z);
+	normal = normalize(float3(normal.x * bumpMagnitude, normal.y * bumpMagnitude, normal.z));
 	
 
 	float3 lambert_0 = lambert(input.Light0,normal);
