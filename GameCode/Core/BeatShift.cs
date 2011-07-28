@@ -118,8 +118,8 @@ namespace BeatShift
 
 #if DEBUG
             DebugSystem.Initialize(this, "FontA");
-            DebugSystem.Instance.FpsCounter.Visible = true;
-            DebugSystem.Instance.TimeRuler.Visible = true;
+            //DebugSystem.Instance.FpsCounter.Visible = false;
+            //DebugSystem.Instance.TimeRuler.Visible = false;
             DebugSystem.Instance.TimeRuler.ShowLog = true;
 #endif
 

@@ -80,11 +80,11 @@ namespace BeatShift.GameDebugTools
             if (host != null)
             {
                 host.RegisterCommand("fps", "FPS Counter", this.CommandExecute);
-#if DEBUG
-                Visible = true;
-#else
+//#if DEBUG
+//                Visible = true;
+//#else
                 Visible = false;
-#endif
+//#endif
             }
 
             // Initialize parameters.
