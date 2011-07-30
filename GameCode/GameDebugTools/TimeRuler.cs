@@ -281,11 +281,11 @@ namespace BeatShift.GameDebugTools
             if (host != null)
             {
                 host.RegisterCommand("tr", "TimeRuler", this.CommandExecute);
-#if DEBUG
-                this.Visible = true;
-#else
+//#if DEBUG
+//                this.Visible = true;
+//#else
                 this.Visible = false;
-#endif
+//#endif
             }
 
             // Initialize Parameters.

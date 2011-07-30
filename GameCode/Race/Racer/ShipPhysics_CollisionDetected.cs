@@ -105,7 +105,7 @@ namespace BeatShift
                     else if ((oFL_BR == Quadrant.BackRight) && (oFR_BL == Quadrant.BackLeft)) opponentQuadrant = Quadrant.Back;
                     else if ((oFL_BR == Quadrant.FrontLeft) && (oFR_BL == Quadrant.BackLeft)) opponentQuadrant = Quadrant.Left;
                     else if ((oFL_BR == Quadrant.BackRight) && (oFR_BL == Quadrant.FrontRight)) opponentQuadrant = Quadrant.Right;
-
+                    
                     /////////////////////
                     //Find local quadrant
                     /////////////////////

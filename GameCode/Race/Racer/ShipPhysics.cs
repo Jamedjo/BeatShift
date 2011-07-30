@@ -341,15 +341,11 @@ namespace BeatShift
         {
             if (Race.currentRaceType.raceProcedureBegun)
             {
-                
-
-                // Max Roll = arctan(1/3) prbly 1/4 in reality to be sure //TODO: using code below already
                 Vector3 a = Vector3.Up;
                 Vector3 b = racerEntity.BufferedStates.Entity.AngularVelocity;
                 float angularSize = Vector3.Dot(a, b);
-                //return -(0.322f * (angularSize) / 3.5f) * 5f * (getForwardSpeed() / maxSpeed);
 
-                parentRacer.raceTiming.previousRoll = Math.Min(5f, MathHelper.Lerp(parentRacer.raceTiming.previousRoll, -(0.322f * (angularSize) / 3.5f) * 6f * (getForwardSpeed() / maxSpeed), 0.08f));
+                parentRacer.raceTiming.previousRoll = Math.Max(-0.65f,Math.Min(0.65f, MathHelper.Lerp(parentRacer.raceTiming.previousRoll, -(0.322f * (angularSize) / 3.5f) * 6f * (getForwardSpeed() / maxSpeed), 0.08f)));
                 return parentRacer.raceTiming.previousRoll;
             }
             else
