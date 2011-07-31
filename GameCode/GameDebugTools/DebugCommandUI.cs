@@ -277,6 +277,43 @@ namespace BeatShift.GameDebugTools
                     Echo("   particles disabled");
             });
 
+            RegisterCommand("ambient", "Toggle shader ambient colour",
+            delegate(IDebugCommandHost host, string command, IList<string> args)
+            {
+                Globals.useAmbient = !Globals.useAmbient;
+                if (Globals.useAmbient)
+                    Echo("   ambient enabled");
+                else
+                    Echo("   ambient disabled");
+            });
+            RegisterCommand("lambert", "Toggle shader lambert colour",
+            delegate(IDebugCommandHost host, string command, IList<string> args)
+            {
+                Globals.useLambert = !Globals.useLambert;
+                if (Globals.useLambert)
+                    Echo("   lambert enabled");
+                else
+                    Echo("   lambert disabled");
+            });
+            RegisterCommand("specular", "Toggle shader specular colour",
+            delegate(IDebugCommandHost host, string command, IList<string> args)
+            {
+                Globals.useSpecular = !Globals.useSpecular;
+                if (Globals.useSpecular)
+                    Echo("   specular enabled");
+                else
+                    Echo("   specular disabled");
+            });
+            RegisterCommand("normals", "Get shader to draw normal values instead of texture",
+            delegate(IDebugCommandHost host, string command, IList<string> args)
+            {
+                Globals.drawNormals = !Globals.drawNormals;
+                if (Globals.drawNormals)
+                    Echo("   drawNormals enabled");
+                else
+                    Echo("   drawNormals disabled");
+            });
+
             // Command to toggle between test states to create live code changes.
             RegisterCommand("teststate", "Toggle between custom test states",
             delegate(IDebugCommandHost host, string command, IList<string> args)
@@ -329,6 +366,12 @@ namespace BeatShift.GameDebugTools
             //Command to reset all debug settings and high-scores for release?
 
 
+        }
+
+        public bool isClosed()
+        {
+            if (state.Equals(State.Closed)) return true;
+            return false;
         }
 
         /// <summary>
@@ -584,6 +627,7 @@ namespace BeatShift.GameDebugTools
                                 cursorIndex++;
                             break;
                         case Keys.Enter:
+                        case Keys.Insert:
                             // Run the command.
                             ExecuteCommand(commandLine);
                             commandLine = string.Empty;

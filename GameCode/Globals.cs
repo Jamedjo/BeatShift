@@ -18,6 +18,12 @@ namespace BeatShift
         public static bool DisplaySkybox = true;
         public static bool EnableParticles = true;
 
+
+        public static bool useSpecular = true;
+        public static bool useAmbient = true;
+        public static bool useLambert = true;
+        public static bool drawNormals = false;
+
         //These are to be used to help position HUD items, without having to recompile
         //Before a commit is made, these should be reset to how they were found and chosen coordinates used
         //These can be set using the 'pos' command from the ingame console

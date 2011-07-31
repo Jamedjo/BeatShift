@@ -101,6 +101,11 @@ namespace BeatShift
 
             Matrix viewInverse = Matrix.Invert(view);
             effect.Parameters["viewInv_Mx"].SetValue(viewInverse);
+
+            effect.Parameters["useAmbient"].SetValue(Globals.useAmbient);
+            effect.Parameters["useLambert"].SetValue(Globals.useLambert);
+            effect.Parameters["useSpecular"].SetValue(Globals.useSpecular);
+            effect.Parameters["drawNormals"].SetValue(Globals.drawNormals);
         }
 
         // Used to modify the effects in a mesh
@@ -156,7 +161,7 @@ namespace BeatShift
             //Draw both sides of track
             if (modelObject.category == ModelCategory.Track) BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
 
-            if (modelObject.category == ModelCategory.Track )
+            if (currentMapName.Equals(MapName.CityMap) || modelObject.category == ModelCategory.Track )
             {
                 drawWithBShiftEffect(modelObject.model, modelObject.transforms, camera);
             }

@@ -30,6 +30,11 @@ bool useAlphaMap
     string UIName = "Use a texture for alpha values?";
 > = false;
 
+bool useSpecular = true;
+bool useAmbient = true;
+bool useLambert= true;
+bool drawNormals= false;
+
 float3 ambientColour = float3(0.231, 0.225, 0.172);
 
 float Shininess = 20;
@@ -41,8 +46,8 @@ float bumpMagnitude = 0.43;
 texture diffuseTex;
 sampler2D textureSampler = sampler_state {
     Texture = (diffuseTex);
-    MagFilter = Linear;
-    MinFilter = Linear;
+    MagFilter = ANISOTROPIC;
+    MinFilter = ANISOTROPIC;
     AddressU = Wrap;
     AddressV = Wrap;
 };
@@ -60,8 +65,8 @@ sampler2D alphaSampler = sampler_state {
 texture normalTex;
 sampler2D normalSampler = sampler_state {
     Texture = (normalTex);
-    MagFilter = Linear;
-    MinFilter = Linear;
+    MagFilter = ANISOTROPIC;
+    MinFilter = ANISOTROPIC;
     AddressU = Wrap;
     AddressV = Wrap;
 };
@@ -143,9 +148,10 @@ float3 specular(float3 lDir,float3 normal,float3 View,float exponent){
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
 	//Bump in range -1 to 1 from normal texture
-	float3 normal = 2.0 * tex2D(normalSampler,input.TexCoord.xy).xyz - 1.0;//float3(0.5,1,0.1);//
+	float3 normal = 2.0 * tex2D(normalSampler,input.TexCoord).xyz - 1.0;//float3(0.5,1,0.1);//
 	//Use bumpMagnitude to scale bump effect
 	//float3 specularNormal = normal * bumpMagnitude;
+	//normal = normalize(normal);
 	normal = normalize(float3(normal.x * bumpMagnitude, normal.y * bumpMagnitude, normal.z));
 	
 
@@ -166,10 +172,16 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     float3 textureColour = tex2D(textureSampler, input.TexCoord).xyz;
 	float3 lambertSum = lambert_0*LightColour_0+lambert_1*LightColour_1+lambert_2*LightColour_2;
 	float3 specularSum = SpecularColour.xyz * (specular_0+specular_1+specular_2);
-
-	float3 baseColour = (lambertSum+ambientColour) * textureColour;
+	
+	if(!useSpecular) specularSum = float3(0,0,0);
+	if(!useLambert) lambertSum = float3(0,0,0);
+	float3 ambient = float3(0,0,0);
+	if(useAmbient) ambient = ambientColour;
+	
+	float3 baseColour = (lambertSum+ambient) * textureColour;
 	
 	float3 colour = saturate(baseColour + specularSum);
+	if(drawNormals) colour = normal;
 	float4 outFloat = float4(colour,1.0);//outFloat.a =1;
 	//float4(lambert_1,lambert_1,lambert_1,1.0);
 	

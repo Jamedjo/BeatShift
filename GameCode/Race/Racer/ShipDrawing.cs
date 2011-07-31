@@ -138,6 +138,12 @@ namespace BeatShift
 
                         Matrix viewInverse = Matrix.Invert(viewMatrix);
                         effect.Parameters["viewInv_Mx"].SetValue(viewInverse);
+
+
+                        effect.Parameters["useAmbient"].SetValue(Globals.useAmbient);
+                        effect.Parameters["useLambert"].SetValue(Globals.useLambert);
+                        effect.Parameters["useSpecular"].SetValue(Globals.useSpecular);
+                        effect.Parameters["drawNormals"].SetValue(Globals.drawNormals);
                     }
                     mesh.Draw();
                 }
