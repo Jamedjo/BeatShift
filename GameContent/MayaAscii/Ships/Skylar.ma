@@ -1,6 +1,6 @@
 //Maya ASCII 2011 scene
 //Name: Skylar.ma
-//Last modified: Tue, Jul 26, 2011 10:37:52 PM
+//Last modified: Sun, Jul 31, 2011 03:02:33 AM
 //Codeset: 1252
 requires maya "2011";
 requires "hlslShader" "1.0";
@@ -14,15 +14,15 @@ fileInfo "osv" "Microsoft Windows 7 Business Edition, 64-bit Windows 7  (Build 7
 fileInfo "license" "student";
 createNode transform -s -n "persp";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" -8.8760267193903211 8.0040862719526427 13.022556501499478 ;
-	setAttr ".r" -type "double3" -28.538223917544851 691.40000000050281 359.99999999965314 ;
+	setAttr ".t" -type "double3" -3.8651019615312925 8.9458064494423439 14.001323624386412 ;
+	setAttr ".r" -type "double3" -32.738223917680479 714.20000000048731 359.99999999968406 ;
 	setAttr ".rp" -type "double3" -2.7408630920433552e-016 5.8581611783736776e-014 0 ;
 	setAttr ".rpt" -type "double3" -2.158921875316336e-014 -4.2411932198608071e-015 
 		-1.0327866796532625e-015 ;
 createNode camera -s -n "perspShape" -p "persp";
 	setAttr -k off ".v" no;
 	setAttr ".fl" 34.999999999999979;
-	setAttr ".coi" 14.934508250286946;
+	setAttr ".coi" 14.934508250286584;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
@@ -8181,6 +8181,18 @@ createNode hlslShader -n "pasted__hlslShader1";
 		-p "LightColour_2";
 	addAttr -is true -ci true -sn "LightColour_2B" -ln "LightColour_2B" -at "float" 
 		-p "LightColour_2";
+	addAttr -is true -ci true -sn "useSpecular_Name" -ln "useSpecular_Name" -dt "string";
+	addAttr -is true -ci true -sn "useSpecular_Type" -ln "useSpecular_Type" -dt "string";
+	addAttr -is true -ci true -sn "useSpecular" -ln "useSpecular" -min 0 -max 1 -at "bool";
+	addAttr -is true -ci true -sn "useAmbient_Name" -ln "useAmbient_Name" -dt "string";
+	addAttr -is true -ci true -sn "useAmbient_Type" -ln "useAmbient_Type" -dt "string";
+	addAttr -is true -ci true -sn "useAmbient" -ln "useAmbient" -min 0 -max 1 -at "bool";
+	addAttr -is true -ci true -sn "useLambert_Name" -ln "useLambert_Name" -dt "string";
+	addAttr -is true -ci true -sn "useLambert_Type" -ln "useLambert_Type" -dt "string";
+	addAttr -is true -ci true -sn "useLambert" -ln "useLambert" -min 0 -max 1 -at "bool";
+	addAttr -is true -ci true -sn "drawNormals_Name" -ln "drawNormals_Name" -dt "string";
+	addAttr -is true -ci true -sn "drawNormals_Type" -ln "drawNormals_Type" -dt "string";
+	addAttr -is true -ci true -sn "drawNormals" -ln "drawNormals" -min 0 -max 1 -at "bool";
 	addAttr -is true -ci true -sn "ambientColour_Name" -ln "ambientColour_Name" -dt "string";
 	addAttr -is true -ci true -sn "ambientColour_Type" -ln "ambientColour_Type" -dt "string";
 	addAttr -is true -ci true -uac -sn "ambientColour" -ln "ambientColour" -at "float3" 
@@ -8202,7 +8214,7 @@ createNode hlslShader -n "pasted__hlslShader1";
 	addAttr -is true -ci true -sn "SpecularColourB" -ln "SpecularColourB" -at "float" 
 		-p "SpecularColour";
 	setAttr ".vpar" -type "stringArray" 4 "Position" "Normal" "Tangent0" "UV0"  ;
-	setAttr ".upar" -type "stringArray" 14 "LightDirection_0" "LightColour_0" "LightDirection_1" "LightColour_1" "LightDirection_2" "LightColour_2" "useAlphaMap" "ambientColour" "Shininess" "SpecularColour" "bumpMagnitude" "diffuseTex" "alphaTex" "normalTex"  ;
+	setAttr ".upar" -type "stringArray" 18 "LightDirection_0" "LightColour_0" "LightDirection_1" "LightColour_1" "LightDirection_2" "LightColour_2" "useAlphaMap" "useSpecular" "useAmbient" "useLambert" "drawNormals" "ambientColour" "Shininess" "SpecularColour" "bumpMagnitude" "diffuseTex" "alphaTex" "normalTex"  ;
 	setAttr ".s" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent/Shaders/BShiftShader.fx";
 	setAttr ".t" -type "string" "Technique1";
 	setAttr ".Shininess_Name" -type "string" "Shininess";
@@ -8254,14 +8266,26 @@ createNode hlslShader -n "pasted__hlslShader1";
 	setAttr ".LightColour_2_Name" -type "string" "LightColour_2";
 	setAttr ".LightColour_2_Type" -type "string" "color1x3";
 	setAttr ".LightColour_2" -type "float3" 0.5378195 0.60523385 0.65542078 ;
+	setAttr ".useSpecular_Name" -type "string" "useSpecular";
+	setAttr ".useSpecular_Type" -type "string" "bool";
+	setAttr ".useSpecular" yes;
+	setAttr ".useAmbient_Name" -type "string" "useAmbient";
+	setAttr ".useAmbient_Type" -type "string" "bool";
+	setAttr ".useAmbient" yes;
+	setAttr ".useLambert_Name" -type "string" "useLambert";
+	setAttr ".useLambert_Type" -type "string" "bool";
+	setAttr ".useLambert" yes;
+	setAttr ".drawNormals_Name" -type "string" "drawNormals";
+	setAttr ".drawNormals_Type" -type "string" "bool";
+	setAttr ".drawNormals" no;
 	setAttr ".ambientColour_Name" -type "string" "ambientColour";
 	setAttr ".ambientColour_Type" -type "string" "color1x3";
 	setAttr ".ambientColour" -type "float3" 0.20241092 0.19681087 0.15068284 ;
 	setAttr ".SpecularColour_Name" -type "string" "SpecularColour";
 	setAttr ".SpecularColour_Type" -type "string" "color1x3";
 	setAttr ".SpecularColour" -type "float3" 0.41445029 0.41445029 0.41445029 ;
-createNode file -n "pasted__file2";
-	setAttr ".ftn" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent//Textures/skylarTexture.png";
+createNode file -n "diffuse";
+	setAttr ".ftn" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent//Textures/Skylar_Diffuse.dds";
 createNode file -n "pasted__file4";
 	setAttr ".ftn" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent//Textures/Track2_Normal.tga";
 createNode file -n "pasted__file5";
@@ -8283,7 +8307,6 @@ select -ne :defaultTextureList1;
 	setAttr -s 5 ".tx";
 select -ne :lightList1;
 	setAttr -s 3 ".l";
-select -ne :lambert1;
 select -ne :postProcessList1;
 	setAttr -s 2 ".p";
 select -ne :defaultRenderUtilityList1;
@@ -8372,11 +8395,11 @@ connectAttr "place2dTexture2.o" "file1.uv";
 connectAttr "place2dTexture2.ofs" "file1.fs";
 connectAttr "pasted__hlslShader1SG.msg" "pasted__materialInfo6.sg";
 connectAttr "pasted__hlslShader1.msg" "pasted__materialInfo6.m";
-connectAttr "pasted__file2.msg" "pasted__materialInfo6.t" -na;
+connectAttr "diffuse.msg" "pasted__materialInfo6.t" -na;
 connectAttr "pasted__hlslShader1.oc" "pasted__hlslShader1SG.ss";
 connectAttr "pasted__pSphereShape1.iog" "pasted__hlslShader1SG.dsm" -na;
 connectAttr "Skylar_LowShape.iog" "pasted__hlslShader1SG.dsm" -na;
-connectAttr "pasted__file2.oc" "pasted__hlslShader1.diffuseTex";
+connectAttr "diffuse.oc" "pasted__hlslShader1.diffuseTex";
 connectAttr "pasted__file4.oc" "pasted__hlslShader1.normalTex";
 connectAttr "pasted__directionalLight1.wm" "pasted__hlslShader1.LightDirection_0"
 		;
@@ -8417,7 +8440,7 @@ connectAttr "blinn1.msg" ":defaultShaderList1.s" -na;
 connectAttr "pasted__hlslShader1.msg" ":defaultShaderList1.s" -na;
 connectAttr "checker1.msg" ":defaultTextureList1.tx" -na;
 connectAttr "file1.msg" ":defaultTextureList1.tx" -na;
-connectAttr "pasted__file2.msg" ":defaultTextureList1.tx" -na;
+connectAttr "diffuse.msg" ":defaultTextureList1.tx" -na;
 connectAttr "pasted__file4.msg" ":defaultTextureList1.tx" -na;
 connectAttr "pasted__file5.msg" ":defaultTextureList1.tx" -na;
 connectAttr "pasted__directionalLightShape1.ltd" ":lightList1.l" -na;
