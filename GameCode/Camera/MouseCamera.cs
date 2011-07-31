@@ -68,18 +68,25 @@ namespace BeatShift.Cameras
         {
             Vector3 moveVector = new Vector3(0, 0, 0);
             KeyboardState keyState = Keyboard.GetState();
+
+            float mouseSpeed = 0.8f;
+            if(keyState.IsKeyDown(Keys.RightShift)) mouseSpeed = 0.3f;
+            if(keyState.IsKeyDown(Keys.RightControl)) mouseSpeed = 2.2f;
+
+
             if (keyState.IsKeyDown(Keys.U))
-                moveVector += new Vector3(0, 0, -1);
+                moveVector += new Vector3(0, 0, -mouseSpeed);
             if (keyState.IsKeyDown(Keys.J))
-                moveVector += new Vector3(0, 0, 1);
+                moveVector += new Vector3(0, 0, mouseSpeed);
             if (keyState.IsKeyDown(Keys.K))
-                moveVector += new Vector3(1, 0, 0);
+                moveVector += new Vector3(mouseSpeed, 0, 0);
             if (keyState.IsKeyDown(Keys.H))
-                moveVector += new Vector3(-1, 0, 0);
+                moveVector += new Vector3(-mouseSpeed, 0, 0);
+
             if (keyState.IsKeyDown(Keys.Y))
-                moveVector += new Vector3(0, 1, 0);
+                moveVector += new Vector3(0, -mouseSpeed, 0);
             if (keyState.IsKeyDown(Keys.I))
-                moveVector += new Vector3(0, -1, 0);
+                moveVector += new Vector3(0, mouseSpeed, 0);
 
             MouseState currentMouseState = Mouse.GetState();
             if (currentMouseState != originalMouseState)

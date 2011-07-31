@@ -65,6 +65,10 @@ namespace BeatShift.GameDebugTools
         /// Gets the DebugCommandUI for the system.
         /// </summary>
         public DebugCommandUI DebugCommandUI { get; private set; }
+        public static bool isConsoleClosed()
+        {
+            return singletonInstance.DebugCommandUI.isClosed();
+        }
 
         /// <summary>
         /// Gets the FpsCounter for the system.

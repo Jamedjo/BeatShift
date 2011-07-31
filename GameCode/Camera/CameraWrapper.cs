@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using BeatShift.GameDebugTools;
 
 namespace BeatShift.Cameras
 {
@@ -233,26 +234,29 @@ namespace BeatShift.Cameras
                     break;
                 case CameraStage.Racing:
 #if WINDOWS
-                    KeyboardState keyboardState = Keyboard.GetState();
-                    if (keyboardState.IsKeyDown(Keys.M) != mouseCameraPressed)
+                    if (DebugSystem.isConsoleClosed())
                     {
-                        mouseCameraPressed = !mouseCameraPressed;
-                        if (mouseCameraPressed)
+                        KeyboardState keyboardState = Keyboard.GetState();
+                        if (keyboardState.IsKeyDown(Keys.M) != mouseCameraPressed)
                         {
-                            mouseCameraInUse = !mouseCameraInUse;
-                            if (mouseCameraInUse)
+                            mouseCameraPressed = !mouseCameraPressed;
+                            if (mouseCameraPressed)
                             {
-                                currentCamera = mouseCamera;
-                            }
-                            else
-                            {
-                                currentCamera = cameraList[cameraID];
+                                mouseCameraInUse = !mouseCameraInUse;
+                                if (mouseCameraInUse)
+                                {
+                                    currentCamera = mouseCamera;
+                                }
+                                else
+                                {
+                                    currentCamera = cameraList[cameraID];
+                                }
                             }
                         }
-                    }
-                    if (mouseCameraInUse)
-                    {
-                        mouseCamera.Update(gameTime);
+                        if (mouseCameraInUse)
+                        {
+                            mouseCamera.Update(gameTime);
+                        }
                     }
 #endif
                     foreach (ICameraType cam in cameraList)
