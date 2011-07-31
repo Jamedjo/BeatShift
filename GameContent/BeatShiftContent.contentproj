@@ -714,7 +714,8 @@
     <Compile Include="Models\Maps\CityMap_scenery.fbx">
       <Name>CityMap_scenery</Name>
       <Importer>FbxImporter</Importer>
-      <Processor>BShiftModelProcessor</Processor>
+      <Processor>BShiftAdvancedModelProcessor</Processor>
+      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
     </Compile>
     <Compile Include="Models\Maps\CityMap_track.fbx">
       <Name>CityMap_track</Name>
@@ -724,7 +725,8 @@
     <Compile Include="Models\Maps\CityMap_walls.fbx">
       <Name>CityMap_walls</Name>
       <Importer>FbxImporter</Importer>
-      <Processor>BShiftModelProcessor</Processor>
+      <Processor>BShiftAdvancedModelProcessor</Processor>
+      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
     </Compile>
     <Compile Include="Models\Maps\SpaceMap_scenery.fbx">
       <Name>SpaceMap_scenery</Name>
