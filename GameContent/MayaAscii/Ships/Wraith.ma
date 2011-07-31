@@ -1,6 +1,6 @@
 //Maya ASCII 2011 scene
 //Name: Wraith.ma
-//Last modified: Tue, Jul 26, 2011 10:14:29 PM
+//Last modified: Sat, Jul 30, 2011 07:02:53 PM
 //Codeset: 1252
 requires maya "2011";
 requires "hlslShader" "1.0";
@@ -14,13 +14,13 @@ fileInfo "osv" "Microsoft Windows 7 Business Edition, 64-bit Windows 7  (Build 7
 fileInfo "license" "student";
 createNode transform -s -n "persp";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" 9.3953009687444169 11.247603870168824 11.844919386906401 ;
-	setAttr ".r" -type "double3" 323.66177556963328 -320.20000000025755 359.99999999997772 ;
+	setAttr ".t" -type "double3" -0.13093837258707697 10.634452383284216 23.488978254929336 ;
+	setAttr ".r" -type "double3" 335.06177556946875 -360.19999999974448 360.0000000001063 ;
 createNode camera -s -n "perspShape" -p "persp";
 	setAttr -k off ".v" no;
 	setAttr ".fl" 34.999999999999986;
 	setAttr ".fcp" 1000;
-	setAttr ".coi" 18.7178023327467;
+	setAttr ".coi" 23.945645543017264;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
@@ -8257,7 +8257,7 @@ createNode transform -n "group";
 	setAttr ".sp" -type "double3" -5.7766613166686902 2.1010941859731442 -0.30283508415013216 ;
 createNode transform -n "pasted__directionalLight1" -p "group";
 	setAttr ".t" -type "double3" -6.8372933532403479 1.3036974631263012 6.6777836270059661 ;
-	setAttr ".r" -type "double3" -42.585126288845601 0 0 ;
+	setAttr ".r" -type "double3" -121.22723344425776 2.566324781280148 5.234113929677803 ;
 	setAttr ".s" -type "double3" 0.56899756150042313 0.56899756150042313 0.56899756150042313 ;
 	setAttr ".rp" -type "double3" -0.20892799269864515 0.12599065390423059 -6.6135305174715153 ;
 	setAttr ".sp" -type "double3" -0.20892799269864515 0.12599065390423059 -6.6135305174715153 ;
@@ -8273,7 +8273,7 @@ createNode directionalLight -n "pasted__directionalLightShape2" -p "pasted__dire
 	setAttr -k off ".v";
 createNode transform -n "pasted__directionalLight3" -p "group";
 	setAttr ".t" -type "double3" -6.8372933532403479 1.3036974631263012 6.6777836270059661 ;
-	setAttr ".r" -type "double3" 18.770640486609103 -176.61647546966628 0 ;
+	setAttr ".r" -type "double3" -215.78401699386569 -168.12913928942584 -16.532222371898161 ;
 	setAttr ".s" -type "double3" 0.56899756150042313 0.56899756150042313 0.56899756150042313 ;
 	setAttr ".rp" -type "double3" -0.19087232102684837 0.15970136801902246 -6.6082663895947373 ;
 	setAttr ".sp" -type "double3" -0.19087232102684837 0.15970136801902246 -6.6082663895947373 ;
@@ -8282,6 +8282,10 @@ createNode directionalLight -n "pasted__directionalLightShape3" -p "pasted__dire
 createNode transform -n "pasted__pSphere1" -p "group";
 	setAttr ".t" -type "double3" -7.0539090059156617 1.6021818102253391 0.061206462407980666 ;
 createNode mesh -n "pasted__pSphereShape1" -p "pasted__pSphere1";
+	addAttr -ci true -sn "mso" -ln "miShadingSamplesOverride" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "msh" -ln "miShadingSamples" -min 0 -smx 8 -at "float";
+	addAttr -ci true -sn "mdo" -ln "miMaxDisplaceOverride" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "mmd" -ln "miMaxDisplace" -min 0 -smx 1 -at "float";
 	setAttr -k off ".v";
 	setAttr ".vir" yes;
 	setAttr ".vif" yes;
@@ -8406,7 +8410,7 @@ createNode shadingEngine -n "pasted__hlslShader1SG";
 	setAttr ".ihi" 0;
 	setAttr -s 2 ".dsm";
 	setAttr ".ro" yes;
-createNode hlslShader -n "pasted__hlslShader1";
+createNode hlslShader -n "hlslShader1";
 	addAttr -is true -ci true -sn "Shininess_Name" -ln "Shininess_Name" -dt "string";
 	addAttr -is true -ci true -sn "Shininess_Type" -ln "Shininess_Type" -dt "string";
 	addAttr -is true -ci true -sn "Shininess" -ln "Shininess" -smn 0 -smx 1 -at "float";
@@ -8522,10 +8526,10 @@ createNode hlslShader -n "pasted__hlslShader1";
 	setAttr ".t" -type "string" "Technique1";
 	setAttr ".Shininess_Name" -type "string" "Shininess";
 	setAttr ".Shininess_Type" -type "string" "float";
-	setAttr ".Shininess" 40.269329071044922;
+	setAttr ".Shininess" 64.430923461914062;
 	setAttr ".bumpMagnitude_Name" -type "string" "bumpMagnitude";
 	setAttr ".bumpMagnitude_Type" -type "string" "float";
-	setAttr ".bumpMagnitude" 0.37246048450469971;
+	setAttr ".bumpMagnitude" 0.40689656138420105;
 	setAttr ".diffuseTex_Name" -type "string" "diffuseTex";
 	setAttr ".diffuseTex_Type" -type "string" "texture";
 	setAttr ".diffuseTex" -type "float3" 0 0 0 ;
@@ -8548,11 +8552,12 @@ createNode hlslShader -n "pasted__hlslShader1";
 	setAttr ".alphaTex" -type "float3" 0 0 0 ;
 	setAttr ".LightDirection_0_Name" -type "string" "LightDirection_0";
 	setAttr ".LightDirection_0_Type" -type "string" "matrix1x3";
-	setAttr ".LightDirection_0" -type "matrix" 0.56899756150042313 0 0 0 0 0.41893741419391528 -0.38503203500740518 0
-		 0 0.38503203500740518 0.41893741419391528 0 -6.9273418275642857 3.9233270319969282 2.8834189210811729 1;
+	setAttr ".LightDirection_0" -type "matrix" 0.56605669787246049 0.051855035295855001 -0.025477344869893764 0
+		 0.0052150857410638149 -0.29574483724304346 -0.48607203079196709 0 -0.0575399223832221 0.48332625787554651 -0.29469155192095581 0
+		 -7.3091553410159413 4.6742761272544975 -1.8287808598547526 1;
 	setAttr ".LightColour_0_Name" -type "string" "LightColour_0";
 	setAttr ".LightColour_0_Type" -type "string" "color1x3";
-	setAttr ".LightColour_0" -type "float3" 0.58554971 0.56273746 0.47426566 ;
+	setAttr ".LightColour_0" -type "float3" 0.59829098 0.59829098 0.59829098 ;
 	setAttr ".LightDirection_1_Name" -type "string" "LightDirection_1";
 	setAttr ".LightDirection_1_Type" -type "string" "matrix1x3";
 	setAttr ".LightDirection_1" -type "matrix" 0.016104447738548244 1.9741068554166826e-018 -0.56876961219501188 0
@@ -8560,23 +8565,23 @@ createNode hlslShader -n "pasted__hlslShader1";
 		 -3.317056550984975 1.2165948404200071 0.04851653264052315 1;
 	setAttr ".LightColour_1_Name" -type "string" "LightColour_1";
 	setAttr ".LightColour_1_Type" -type "string" "color1x3";
-	setAttr ".LightColour_1" -type "float3" 0.80000001 0.68256658 0.70786601 ;
+	setAttr ".LightColour_1" -type "float3" 0.34187838 0.29164568 0.30247959 ;
 	setAttr ".LightDirection_2_Name" -type "string" "LightDirection_2";
 	setAttr ".LightDirection_2_Type" -type "string" "matrix1x3";
-	setAttr ".LightDirection_2" -type "matrix" -0.56800570786579552 9.8705342770834128e-019 0.033581852618706033 0
-		 -0.010805987702906408 0.53873501154621251 -0.18277320087336318 0 -0.031795777315063854 -0.18309236010202642 -0.53779591036993635 0
-		 -7.3449714776272632 0.16743902334785177 -3.4487824251775199 1;
+	setAttr ".LightDirection_2" -type "matrix" -0.53380944219154502 0.15844816308367757 0.11704650373243837 0
+		 -0.19695784787016168 -0.42302899691075507 -0.32559529930338749 0 -0.0036483671599286211 -0.34597524822090453 0.45171455813265265 0
+		 -7.1227100658172544 -0.72509609513599127 3.1289063221646773 1;
 	setAttr ".LightColour_2_Name" -type "string" "LightColour_2";
 	setAttr ".LightColour_2_Type" -type "string" "color1x3";
-	setAttr ".LightColour_2" -type "float3" 0.64856946 0.7298848 0.79035628 ;
+	setAttr ".LightColour_2" -type "float3" 0.59615475 0.67090869 0.72649729 ;
 	setAttr ".ambientColour_Name" -type "string" "ambientColour";
 	setAttr ".ambientColour_Type" -type "string" "color1x3";
-	setAttr ".ambientColour" -type "float3" 0.48915845 0.47516593 0.3645533 ;
+	setAttr ".ambientColour" -type "float3" 0.15384147 0.15384147 0.15384147 ;
 	setAttr ".SpecularColour_Name" -type "string" "SpecularColour";
 	setAttr ".SpecularColour_Type" -type "string" "color1x3";
-	setAttr ".SpecularColour" -type "float3" 0.39215687 0.34499371 0.31526336 ;
+	setAttr ".SpecularColour" -type "float3" 0.54700541 0.48122376 0.43971923 ;
 createNode file -n "pasted__file2";
-	setAttr ".ftn" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent//Textures/wraithTexture.png";
+	setAttr ".ftn" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent//Textures/Wraith_Diffuse.dds";
 createNode file -n "pasted__file4";
 	setAttr ".ftn" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent//Textures/Track2_Normal.tga";
 createNode file -n "pasted__file5";
@@ -8680,20 +8685,17 @@ connectAttr "place2dTexture1.vc1" "file1.vc1";
 connectAttr "place2dTexture1.o" "file1.uv";
 connectAttr "place2dTexture1.ofs" "file1.fs";
 connectAttr "pasted__hlslShader1SG.msg" "pasted__materialInfo6.sg";
-connectAttr "pasted__hlslShader1.msg" "pasted__materialInfo6.m";
+connectAttr "hlslShader1.msg" "pasted__materialInfo6.m";
 connectAttr "pasted__file2.msg" "pasted__materialInfo6.t" -na;
-connectAttr "pasted__hlslShader1.oc" "pasted__hlslShader1SG.ss";
+connectAttr "hlslShader1.oc" "pasted__hlslShader1SG.ss";
 connectAttr "pasted__pSphereShape1.iog" "pasted__hlslShader1SG.dsm" -na;
 connectAttr "Wraith_LowShape.iog" "pasted__hlslShader1SG.dsm" -na;
-connectAttr "pasted__file2.oc" "pasted__hlslShader1.diffuseTex";
-connectAttr "pasted__file4.oc" "pasted__hlslShader1.normalTex";
-connectAttr "pasted__directionalLight1.wm" "pasted__hlslShader1.LightDirection_0"
-		;
-connectAttr "pasted__directionalLight2.wm" "pasted__hlslShader1.LightDirection_1"
-		;
-connectAttr "pasted__directionalLight3.wm" "pasted__hlslShader1.LightDirection_2"
-		;
-connectAttr "pasted__file5.oc" "pasted__hlslShader1.alphaTex";
+connectAttr "pasted__file2.oc" "hlslShader1.diffuseTex";
+connectAttr "pasted__file4.oc" "hlslShader1.normalTex";
+connectAttr "pasted__directionalLight1.wm" "hlslShader1.LightDirection_0";
+connectAttr "pasted__directionalLight2.wm" "hlslShader1.LightDirection_1";
+connectAttr "pasted__directionalLight3.wm" "hlslShader1.LightDirection_2";
+connectAttr "pasted__file5.oc" "hlslShader1.alphaTex";
 connectAttr "pasted__place2dTexture1.c" "pasted__file5.c";
 connectAttr "pasted__place2dTexture1.tf" "pasted__file5.tf";
 connectAttr "pasted__place2dTexture1.rf" "pasted__file5.rf";
@@ -8722,7 +8724,7 @@ connectAttr "ShipPhysicsShape.iog" ":initialShadingGroup.dsm" -na;
 connectAttr "WraithPhysicsShape.iog" ":initialShadingGroup.dsm" -na;
 connectAttr "blinn1.msg" ":defaultShaderList1.s" -na;
 connectAttr "blinn3.msg" ":defaultShaderList1.s" -na;
-connectAttr "pasted__hlslShader1.msg" ":defaultShaderList1.s" -na;
+connectAttr "hlslShader1.msg" ":defaultShaderList1.s" -na;
 connectAttr "file1.msg" ":defaultTextureList1.tx" -na;
 connectAttr "pasted__file2.msg" ":defaultTextureList1.tx" -na;
 connectAttr "pasted__file4.msg" ":defaultTextureList1.tx" -na;

@@ -1,6 +1,6 @@
 //Maya ASCII 2011 scene
 //Name: Flux.ma
-//Last modified: Thu, Jul 28, 2011 12:49:03 PM
+//Last modified: Sat, Jul 30, 2011 05:04:53 AM
 //Codeset: 1252
 requires maya "2011";
 requires "hlslShader" "1.0";
@@ -14,13 +14,13 @@ fileInfo "osv" "Microsoft Windows 7 Business Edition, 64-bit Windows 7  (Build 7
 fileInfo "license" "student";
 createNode transform -s -n "persp";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" 2.2222488302177137 5.0812050909945894 11.749480524887495 ;
-	setAttr ".r" -type "double3" -24.938266384211325 -348.59999999983489 359.99999999998778 ;
+	setAttr ".t" -type "double3" 9.7457311530563651 4.7262808607847253 12.881079268007847 ;
+	setAttr ".r" -type "double3" -14.738266383556279 38.59999999994151 -1.0174252606643356e-015 ;
 createNode camera -s -n "perspShape" -p "persp";
 	setAttr -k off ".v" no;
 	setAttr ".fl" 34.999999999999986;
 	setAttr ".fcp" 1000;
-	setAttr ".coi" 12.130550330488417;
+	setAttr ".coi" 16.597458763950009;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
@@ -10054,7 +10054,7 @@ createNode hlslShader -n "hlslShader1";
 	setAttr ".t" -type "string" "Technique1";
 	setAttr ".Shininess_Name" -type "string" "Shininess";
 	setAttr ".Shininess_Type" -type "string" "float";
-	setAttr ".Shininess" 20.695259094238281;
+	setAttr ".Shininess" 41.390518188476562;
 	setAttr ".bumpMagnitude_Name" -type "string" "bumpMagnitude";
 	setAttr ".bumpMagnitude_Type" -type "string" "float";
 	setAttr ".bumpMagnitude" 0.740406334400177;
@@ -10084,7 +10084,7 @@ createNode hlslShader -n "hlslShader1";
 		 0 0.38503203500740518 0.41893741419391528 0 -6.9273418275642857 4.0625512988291597 2.8834189210811729 1;
 	setAttr ".LightColour_0_Name" -type "string" "LightColour_0";
 	setAttr ".LightColour_0_Type" -type "string" "color1x3";
-	setAttr ".LightColour_0" -type "float3" 0.58554971 0.56273746 0.47426566 ;
+	setAttr ".LightColour_0" -type "float3" 0.41025406 0.39426261 0.33231097 ;
 	setAttr ".LightDirection_1_Name" -type "string" "LightDirection_1";
 	setAttr ".LightDirection_1_Type" -type "string" "matrix1x3";
 	setAttr ".LightDirection_1" -type "matrix" 0.016104447738548244 1.9741068554166826e-018 -0.56876961219501188 0
@@ -10092,7 +10092,7 @@ createNode hlslShader -n "hlslShader1";
 		 -3.317056550984975 1.3558191072522385 0.04851653264052315 1;
 	setAttr ".LightColour_1_Name" -type "string" "LightColour_1";
 	setAttr ".LightColour_1_Type" -type "string" "color1x3";
-	setAttr ".LightColour_1" -type "float3" 0.70843059 0.6043641 0.62685585 ;
+	setAttr ".LightColour_1" -type "float3" 0.5640955 0.48123902 0.49913788 ;
 	setAttr ".LightDirection_2_Name" -type "string" "LightDirection_2";
 	setAttr ".LightDirection_2_Type" -type "string" "matrix1x3";
 	setAttr ".LightDirection_2" -type "matrix" -0.56800570786579552 9.8705342770834128e-019 0.033581852618706033 0
@@ -10100,10 +10100,10 @@ createNode hlslShader -n "hlslShader1";
 		 -7.3449714776272632 0.3066632901800832 -3.4487824251775199 1;
 	setAttr ".LightColour_2_Name" -type "string" "LightColour_2";
 	setAttr ".LightColour_2_Type" -type "string" "color1x3";
-	setAttr ".LightColour_2" -type "float3" 0.5378195 0.60523385 0.65542078 ;
+	setAttr ".LightColour_2" -type "float3" 0.42084381 0.47354847 0.51282519 ;
 	setAttr ".ambientColour_Name" -type "string" "ambientColour";
 	setAttr ".ambientColour_Type" -type "string" "color1x3";
-	setAttr ".ambientColour" -type "float3" 0.23132677 0.22476539 0.17239644 ;
+	setAttr ".ambientColour" -type "float3" 0.17949188 0.17441063 0.13376059 ;
 	setAttr ".SpecularColour_Name" -type "string" "SpecularColour";
 	setAttr ".SpecularColour_Type" -type "string" "color1x3";
 	setAttr ".SpecularColour" -type "float3" 0.71325248 0.71325248 0.71325248 ;
