@@ -585,12 +585,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Textures\skylarTexture.png">
-      <Name>skylarTexture</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <ProcessorParameters_TextureFormat>DxtCompressed</ProcessorParameters_TextureFormat>
-    </Compile>
     <Compile Include="Images\tutorial_screen.png">
       <Name>tutorial_screen</Name>
       <Importer>TextureImporter</Importer>
