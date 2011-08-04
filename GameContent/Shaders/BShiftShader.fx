@@ -45,7 +45,7 @@ float bumpMagnitude = 0.43;
 
 float reflectivity = 0.0f;
 
-texture diffuseTex;
+texture2D diffuseTex;
 sampler2D textureSampler = sampler_state {
     Texture = (diffuseTex);
     MagFilter = ANISOTROPIC;
@@ -54,7 +54,7 @@ sampler2D textureSampler = sampler_state {
     AddressV = Wrap;
 };
 
-texture alphaTex;
+texture2D alphaTex;
 sampler2D alphaSampler = sampler_state {
     Texture = (alphaTex);
     MagFilter = Linear;
@@ -64,7 +64,7 @@ sampler2D alphaSampler = sampler_state {
 };
 
 
-texture normalTex;
+texture2D normalTex;
 sampler2D normalSampler = sampler_state {
     Texture = (normalTex);
     MagFilter = ANISOTROPIC;
@@ -74,7 +74,7 @@ sampler2D normalSampler = sampler_state {
 };
 
 
-texture reflectionTexture; 
+texture2D reflectionTexture; 
 samplerCUBE reflectionSampler = sampler_state { 
    texture = <reflectionTexture>; 
    magfilter = LINEAR; 
