@@ -71,3 +71,7 @@ glob:Vocal Beatshift/Bounces/Race Complete.wav
 glob:GameCode/Race/Racer/Racer.cs.orig
 glob:GameCode/Race/Racer/ShipPhysics.cs.orig
 glob:**.mayaSwatches**
+glob:GameContent/BeatShiftContent.contentproj.orig
+glob:GameCode/Particle Systems/BeatRingParticleSystem.cs.rej
+glob:GameCode/Particle Systems/EngineParticleSystem.cs.rej
+glob:GameCode/Race/Race.cs.orig
