@@ -43,6 +43,8 @@ float3 SpecularColour = float3(0.7, 0.7, 0.7); //Darkness doubles as SpecularInt
 
 float bumpMagnitude = 0.43;
 
+float reflectivity = 0.0f;
+
 texture diffuseTex;
 sampler2D textureSampler = sampler_state {
     Texture = (diffuseTex);
@@ -69,6 +71,17 @@ sampler2D normalSampler = sampler_state {
     MinFilter = ANISOTROPIC;
     AddressU = Wrap;
     AddressV = Wrap;
+};
+
+
+texture reflectionTexture; 
+samplerCUBE reflectionSampler = sampler_state { 
+   texture = <reflectionTexture>; 
+   magfilter = LINEAR; 
+   minfilter = LINEAR; 
+   mipfilter = LINEAR; 
+   AddressU = Mirror; 
+   AddressV = Mirror; 
 };
 
 struct VertexShaderInput
@@ -140,7 +153,7 @@ float3 lambert(float3 lDir,float3 normal){
 	
 float3 specular(float3 lDir,float3 normal,float3 View,float exponent){
 	//Specular using Blinn-Phong = Ks * exp(N.H, a) * lightintensity
-	float3 halfway = normalize(normalize(lDir) + normalize(View));
+	float3 halfway = normalize(normalize(lDir) + View);
 	float spec=saturate(dot(normal, halfway));
 	return pow(spec,exponent);
 }
@@ -153,14 +166,15 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	//float3 specularNormal = normal * bumpMagnitude;
 	//normal = normalize(normal);
 	normal = normalize(float3(normal.x * bumpMagnitude, normal.y * bumpMagnitude, normal.z));
-	
+
+	float3 nView = normalize(input.View);
 
 	float3 lambert_0 = lambert(input.Light0,normal);
-	float3 specular_0 = specular(input.Light0,normal,input.View,Shininess);
+	float3 specular_0 = specular(input.Light0,normal,nView,Shininess);
 	float3 lambert_1 = lambert(input.Light1,normal);
-	float3 specular_1 = specular(input.Light1,normal,input.View,Shininess);
+	float3 specular_1 = specular(input.Light1,normal,nView,Shininess);
 	float3 lambert_2 = lambert(input.Light2,normal);
-	float3 specular_2 = specular(input.Light2,normal,input.View,Shininess);
+	float3 specular_2 = specular(input.Light2,normal,nView,Shininess);
 
 
 	//// Specular using new Phong: R = 2 * (N.L) * N – L
@@ -173,15 +187,21 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	float3 lambertSum = lambert_0*LightColour_0+lambert_1*LightColour_1+lambert_2*LightColour_2;
 	float3 specularSum = SpecularColour.xyz * (specular_0+specular_1+specular_2);
 	
-	if(!useSpecular) specularSum = float3(0,0,0);
-	if(!useLambert) lambertSum = float3(0,0,0);
+	if(reflectivity>0.0) {
+	float3 reflectDir = reflect(-nView, normal);
+	float3 reflectTex = texCUBE(reflectionSampler, normalize(reflectDir));
+	textureColour = textureColour*(1-reflectivity)+reflectivity*reflectTex;//Value now between 0,0,0 and 2,2,2
+	}
+	
+	//if(!useSpecular) specularSum = float3(0,0,0);
+	//if(!useLambert) lambertSum = float3(0,0,0);
 	float3 ambient = float3(0,0,0);
 	if(useAmbient) ambient = ambientColour;
 	
 	float3 baseColour = (lambertSum+ambient) * textureColour;
 	
 	float3 colour = saturate(baseColour + specularSum);
-	if(drawNormals) colour = normal;
+	//if(drawNormals) colour = normal;
 	float4 outFloat = float4(colour,1.0);//outFloat.a =1;
 	//float4(lambert_1,lambert_1,lambert_1,1.0);
 	
