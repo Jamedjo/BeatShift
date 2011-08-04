@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework;
 using System.Xml;
 
-namespace BeatShift.Util
+namespace BeatShift
 {
     public struct HighScoreEntry
     {

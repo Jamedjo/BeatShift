@@ -10,7 +10,6 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using BeatShift.Input;
 using BeatShift.Menus;
-using BeatShift.Util;
 
 
 namespace BeatShift

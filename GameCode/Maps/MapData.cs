@@ -12,7 +12,6 @@ using System.Collections;
 using Microsoft.Xna.Framework.Storage;
 using System.IO;
 using System.Diagnostics;
-using BeatShift.Manager.Maps;
 
 
 namespace BeatShift

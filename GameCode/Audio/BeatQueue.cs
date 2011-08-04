@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BeatShift.Utilities___Misc;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using DPSF;

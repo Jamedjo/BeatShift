@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 
-namespace BeatShift.Utilities___Misc
+namespace BeatShift
 {
     /// <summary>
     /// Timer which only keeps track of time while game is not paused.

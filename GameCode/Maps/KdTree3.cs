@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 
-namespace BeatShift.Manager.Maps
+namespace BeatShift
 {
     public class KdTree3
     {

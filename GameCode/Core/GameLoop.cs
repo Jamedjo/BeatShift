@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using BeatShift.Input;
 using Microsoft.Xna.Framework.GamerServices;
-using BeatShift.Utilities___Misc;
 using Microsoft.Xna.Framework.Audio;
 using ParallelTasks;
 using DPSF.ParticleSystems;

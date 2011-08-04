@@ -13,10 +13,8 @@ using Microsoft.Xna.Framework.Storage;
 using BEPUphysics;
 using BeatShift.Menus;
 using BeatShift.GameDebugTools;
-using BeatShift.Util.Random;
 using DPSF.ParticleSystems;
 using DPSF;
-using BeatShift.Util;
 
 namespace BeatShift
 {

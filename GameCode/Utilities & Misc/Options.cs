@@ -8,7 +8,7 @@ using System.Xml.Linq;
 using System.Xml.Schema;
 using System.Collections.Generic;
 
-namespace BeatShift.Util
+namespace BeatShift
 {
     public static class Options
     {

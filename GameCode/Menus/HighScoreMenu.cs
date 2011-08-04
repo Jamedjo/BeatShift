@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 using BeatShift.Input;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
-using BeatShift.Util;
 
 namespace BeatShift.Menus
 {

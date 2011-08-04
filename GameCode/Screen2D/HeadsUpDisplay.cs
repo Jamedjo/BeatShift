@@ -5,7 +5,6 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using BeatShift.Cameras;
-using BeatShift.Utilities___Misc;
 
 namespace BeatShift
 {

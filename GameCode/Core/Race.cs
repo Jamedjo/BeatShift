@@ -13,7 +13,6 @@ using System.Collections;
 using BeatShift.Menus;
 using BeatShift.Cameras;
 using ParallelTasks;
-using BeatShift.Util;
 using BeatShift.Input;
 
 namespace BeatShift

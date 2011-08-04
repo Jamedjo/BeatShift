@@ -1,6 +1,6 @@
 using System;
 
-namespace BeatShift.Util.Random
+namespace BeatShift
 {
     /// <summary>
     /// SimpleRNG is a simple random number generator based on 

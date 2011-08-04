@@ -15,8 +15,6 @@ using BEPUphysics.Collidables;
 using BEPUphysics.NarrowPhaseSystems.Pairs;
 using BEPUphysics.CollisionTests;
 using BEPUphysics.CollisionRuleManagement;
-using BeatShift.Util.Random;
-using BeatShift.Util;
 using BeatShift.Cameras;
 using Microsoft.Xna.Framework.Graphics;
 
