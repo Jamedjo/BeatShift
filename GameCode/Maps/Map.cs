@@ -124,7 +124,9 @@ namespace BeatShift
         {
             BeatShift.graphics.GraphicsDevice.Viewport = camera.Viewport;
 
+            //Skybox has no depthStencil to keep it behind everything else, Clamp to avoid texture seams.
             BeatShift.graphics.GraphicsDevice.DepthStencilState = DepthStencilState.None;
+            BeatShift.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.AnisotropicClamp;
             DrawSkybox(camera);
 
             //Set display states
