@@ -42,6 +42,7 @@ namespace BeatShift.Menus
         public IMenuStack(MenuPage rootPage, Boolean drawBackground)
         {
             rootMenu = rootPage;
+            MenuTrail.Push(rootMenu);
             currentPage = getIMenuPageFromEnum(rootMenu);
             DrawBackground = drawBackground;
         }
