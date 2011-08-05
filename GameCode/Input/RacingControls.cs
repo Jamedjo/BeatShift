@@ -28,7 +28,7 @@ namespace BeatShift.Input
         bool justCollided = false;
         bool wasBoostingPreviousUpdate = false;
         bool justJump = false;
-        bool vibrateSequence = false;
+        //bool vibrateSequence = false;
         double sequenceNumber;
         int vibrateNumber;
 
@@ -59,7 +59,7 @@ namespace BeatShift.Input
             racer.beatQueue.isLevellingUp = false;
             sequenceNumber = 0;
             vibrateNumber = 0;
-            vibrateSequence = true;
+            //vibrateSequence = true;
         }
         public RacingControls(Racer myRacer)
             : this(myRacer, new PadInputManager(PlayerIndex.One))

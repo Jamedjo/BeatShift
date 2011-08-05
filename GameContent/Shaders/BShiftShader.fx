@@ -44,6 +44,7 @@ float3 SpecularColour = float3(0.7, 0.7, 0.7); //Darkness doubles as SpecularInt
 float bumpMagnitude = 0.43;
 
 float reflectivity = 0.0f;
+float reflectOverride = 0.0f;
 
 texture2D diffuseTex;
 sampler2D textureSampler = sampler_state {
@@ -158,52 +159,82 @@ float3 specular(float3 lDir,float3 normal,float3 View,float exponent){
 	return pow(spec,exponent);
 }
 
-float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
+struct BasicInfo
 {
+	float3 normal;
+	float3 nView;
+	
+    float3 textureColour;
+	float3 lambertSum;
+	float3 specularSum;
+};
+
+BasicInfo BasePixelShaderFunction(VertexShaderOutput input)
+{
+	BasicInfo b;
+	
 	//Bump in range -1 to 1 from normal texture
-	float3 normal = 2.0 * tex2D(normalSampler,input.TexCoord).xyz - 1.0;//float3(0.5,1,0.1);//
+	b.normal = 2.0 * tex2D(normalSampler,input.TexCoord).xyz - 1.0;//float3(0.5,1,0.1);//
 	//Use bumpMagnitude to scale bump effect
 	//float3 specularNormal = normal * bumpMagnitude;
 	//normal = normalize(normal);
-	normal = normalize(float3(normal.x * bumpMagnitude, normal.y * bumpMagnitude, normal.z));
+	b.normal = normalize(float3(b.normal.x * bumpMagnitude, b.normal.y * bumpMagnitude, b.normal.z));
 
-	float3 nView = normalize(input.View);
+	b.nView = normalize(input.View);
 
-	float3 lambert_0 = lambert(input.Light0,normal);
-	float3 specular_0 = specular(input.Light0,normal,nView,Shininess);
-	float3 lambert_1 = lambert(input.Light1,normal);
-	float3 specular_1 = specular(input.Light1,normal,nView,Shininess);
-	float3 lambert_2 = lambert(input.Light2,normal);
-	float3 specular_2 = specular(input.Light2,normal,nView,Shininess);
+	float3 lambert_0 = lambert(input.Light0,b.normal);
+	float3 specular_0 = specular(input.Light0,b.normal,b.nView,Shininess);
+	float3 lambert_1 = lambert(input.Light1,b.normal);
+	float3 specular_1 = specular(input.Light1,b.normal,b.nView,Shininess);
+	float3 lambert_2 = lambert(input.Light2,b.normal);
+	float3 specular_2 = specular(input.Light2,b.normal,b.nView,Shininess);
 
-
-	//// Specular using new Phong: R = 2 * (N.L) * N – L
-    //float3 R = normalize(2 * lightintensity * newNormal - n_light);
-	//float3 EV = normalize(input.EyeVec);
-	//float specularValue = max(pow(dot(R, EV), Shininess),0);
 	
+    b.textureColour = tex2D(textureSampler, input.TexCoord).xyz;
+	b.lambertSum = lambert_0*LightColour_0+lambert_1*LightColour_1+lambert_2*LightColour_2;
+	b.specularSum = SpecularColour.xyz * (specular_0+specular_1+specular_2);
 	
-    float3 textureColour = tex2D(textureSampler, input.TexCoord).xyz;
-	float3 lambertSum = lambert_0*LightColour_0+lambert_1*LightColour_1+lambert_2*LightColour_2;
-	float3 specularSum = SpecularColour.xyz * (specular_0+specular_1+specular_2);
+	return b;
+}
+
+float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
+{
+	BasicInfo b;
+	b = BasePixelShaderFunction(input);
 	
-	if(reflectivity>0.0) {
-	float3 reflectDir = reflect(-nView, normal);
+	float r = reflectivity+reflectOverride;
+	if(r>1.0) r=1.0;
+	if(r>0.0) {
+	float3 reflectDir = reflect(-b.nView, b.normal);
 	float3 reflectTex = texCUBE(reflectionSampler, normalize(reflectDir));
-	textureColour = textureColour*(1-reflectivity)+reflectivity*reflectTex;//Value now between 0,0,0 and 2,2,2
+	b.textureColour = b.textureColour*(1-r)+r*reflectTex;//Value now between 0,0,0 and 2,2,2
 	}
 	
-	//if(!useSpecular) specularSum = float3(0,0,0);
-	//if(!useLambert) lambertSum = float3(0,0,0);
+	float3 ambient = ambientColour;
+	float3 baseColour = (b.lambertSum+ambient) * b.textureColour;
+	float3 colour = saturate(baseColour + b.specularSum);
+	float4 outFloat = float4(colour,1.0);
+	
+	if(useAlphaMap) outFloat.a= tex2D(alphaSampler, input.TexCoord).r;
+	
+    return outFloat;
+}
+
+float4 NoReflect_PS(VertexShaderOutput input) : COLOR0
+{
+	BasicInfo b;
+	b = BasePixelShaderFunction(input);
+	
+	if(!useSpecular) b.specularSum = float3(0,0,0);
+	if(!useLambert) b.lambertSum = float3(0,0,0);
 	float3 ambient = float3(0,0,0);
 	if(useAmbient) ambient = ambientColour;
 	
-	float3 baseColour = (lambertSum+ambient) * textureColour;
+	float3 baseColour = (b.lambertSum+ambient) * b.textureColour;
 	
-	float3 colour = saturate(baseColour + specularSum);
-	//if(drawNormals) colour = normal;
-	float4 outFloat = float4(colour,1.0);//outFloat.a =1;
-	//float4(lambert_1,lambert_1,lambert_1,1.0);
+	float3 colour = saturate(baseColour + b.specularSum);
+	if(drawNormals) colour = b.normal;
+	float4 outFloat = float4(colour,1.0);
 	
 	if(useAlphaMap) outFloat.a= tex2D(alphaSampler, input.TexCoord).r;
 	
@@ -219,5 +250,17 @@ technique Technique1
         SrcBlend = SRCALPHA;
         VertexShader = compile vs_2_0 VertexShaderFunction();
         PixelShader = compile ps_2_0 PixelShaderFunction();
+    }
+}
+
+technique NoReflect
+{
+    pass Pass1
+    {
+        AlphaBlendEnable = TRUE;
+        DestBlend = INVSRCALPHA;
+        SrcBlend = SRCALPHA;
+        VertexShader = compile vs_2_0 VertexShaderFunction();
+        PixelShader = compile ps_2_0 NoReflect_PS();
     }
 }

@@ -17,8 +17,6 @@ namespace BeatShift
         {
             model = BeatShift.contentManager.Load<Model>("Models/Ships/" + modelName);
             GC.Collect();
-            //var normalmap = BeatShift.contentManager.Load<Texture2D>("Models/skylarnormal.png");
-
             transforms = new Matrix[model.Bones.Count];
             model.CopyAbsoluteBoneTransformsTo(transforms);
 

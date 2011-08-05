@@ -21,6 +21,7 @@ namespace BeatShift
         public ShipName currentShip = ShipName.Skylar;
         //BasicEffect shipPhysicsModelEffect;
         public Boolean isVisible = true;
+        float reflectOverride = 0.0f;//Used to turn ship shiny silver at Lvl5
 
         //Physics delegate functions
         public Func<Matrix> getShipDrawOrientationMatrix;
@@ -124,6 +125,11 @@ namespace BeatShift
 
             if (((camera.ShouldDrawOwnShip || !isThisTheCamerasShip) && GameLoop.getCurrentState() == GameState.LocalGame) || isThisTheCamerasShip)
             {
+
+                if (parentRacer.beatQueue.getLayer() == 4) {
+                    reflectOverride = MathHelper.Lerp(reflectOverride, 1.0f,0.05f); }
+                else reflectOverride = MathHelper.Lerp(reflectOverride, 0.0f, 0.2f);
+
                 //Draw ship using bShiftEffect.fx as instructed by the fbx file
                 foreach (ModelMesh mesh in shipClasses[(int)currentShip].model.Meshes)
                 {
@@ -143,6 +149,7 @@ namespace BeatShift
                         effect.Parameters["useLambert"].SetValue(Globals.useLambert);
                         effect.Parameters["useSpecular"].SetValue(Globals.useSpecular);
                         effect.Parameters["drawNormals"].SetValue(Globals.drawNormals);
+                        effect.Parameters["reflectOverride"].SetValue(reflectOverride);
                     }
                     mesh.Draw();
                 }

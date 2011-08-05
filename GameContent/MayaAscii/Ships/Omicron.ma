@@ -1,6 +1,6 @@
 //Maya ASCII 2011 scene
 //Name: Omicron.ma
-//Last modified: Fri, Aug 05, 2011 03:04:35 AM
+//Last modified: Fri, Aug 05, 2011 09:49:37 AM
 //Codeset: 1252
 requires maya "2011";
 requires "Mayatomr" "2011.0m - 3.8.1.26 ";
@@ -15,12 +15,12 @@ fileInfo "osv" "Microsoft Windows 7 Business Edition, 64-bit Windows 7 Service P
 fileInfo "license" "student";
 createNode transform -s -n "persp";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" 0.85375855047401017 4.4295505370189954 13.41680053746226 ;
-	setAttr ".r" -type "double3" -18.338150771025646 13.399999999991289 -359.99999999995856 ;
+	setAttr ".t" -type "double3" 5.594787021145069 5.2318267521257775 10.826426076053218 ;
+	setAttr ".r" -type "double3" -21.9381507710034 37.7999999999914 -359.99999999994725 ;
 createNode camera -s -n "perspShape" -p "persp";
 	setAttr -k off ".v" no;
 	setAttr ".fl" 34.999999999999986;
-	setAttr ".coi" 13.60229659827335;
+	setAttr ".coi" 13.602296598273517;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
@@ -4898,8 +4898,14 @@ createNode hlslShader -n "hlslShader1";
 		-p "SpecularColour";
 	addAttr -is true -ci true -sn "SpecularColourB" -ln "SpecularColourB" -at "float" 
 		-p "SpecularColour";
+	addAttr -is true -ci true -sn "reflectOverride_Name" -ln "reflectOverride_Name" 
+		-dt "string";
+	addAttr -is true -ci true -sn "reflectOverride_Type" -ln "reflectOverride_Type" 
+		-dt "string";
+	addAttr -is true -ci true -sn "reflectOverride" -ln "reflectOverride" -smn 0 -smx 
+		1 -at "float";
 	setAttr ".vpar" -type "stringArray" 4 "Position" "Normal" "Tangent0" "UV0"  ;
-	setAttr ".upar" -type "stringArray" 20 "LightDirection_0" "LightColour_0" "LightDirection_1" "LightColour_1" "LightDirection_2" "LightColour_2" "useAlphaMap" "useSpecular" "useAmbient" "useLambert" "drawNormals" "ambientColour" "Shininess" "SpecularColour" "bumpMagnitude" "reflectivity" "diffuseTex" "alphaTex" "normalTex" "reflectionTexture"  ;
+	setAttr ".upar" -type "stringArray" 21 "LightDirection_0" "LightColour_0" "LightDirection_1" "LightColour_1" "LightDirection_2" "LightColour_2" "useAlphaMap" "useSpecular" "useAmbient" "useLambert" "drawNormals" "ambientColour" "Shininess" "SpecularColour" "bumpMagnitude" "reflectivity" "reflectOverride" "diffuseTex" "alphaTex" "normalTex" "reflectionTexture"  ;
 	setAttr ".s" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent/Shaders/BShiftShader.fx";
 	setAttr ".t" -type "string" "Technique1";
 	setAttr ".Shininess_Name" -type "string" "Shininess";
@@ -4975,6 +4981,9 @@ createNode hlslShader -n "hlslShader1";
 	setAttr ".SpecularColour_Name" -type "string" "SpecularColour";
 	setAttr ".SpecularColour_Type" -type "string" "color1x3";
 	setAttr ".SpecularColour" -type "float3" 0.69639122 0.69639122 0.69639122 ;
+	setAttr ".reflectOverride_Name" -type "string" "reflectOverride";
+	setAttr ".reflectOverride_Type" -type "string" "float";
+	setAttr ".reflectOverride" 0;
 createNode file -n "diffuse";
 	setAttr ".ftn" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent//Textures/Omicron_Diffuse.dds";
 createNode file -n "normalmap";
