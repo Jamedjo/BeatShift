@@ -233,7 +233,7 @@ namespace BeatShift.Cameras
                     revolveCamera.Update(gameTime);
                     break;
                 case CameraStage.Racing:
-#if WINDOWS
+#if (WINDOWS && DEBUG)
                     if (DebugSystem.isConsoleClosed())
                     {
                         KeyboardState keyboardState = Keyboard.GetState();

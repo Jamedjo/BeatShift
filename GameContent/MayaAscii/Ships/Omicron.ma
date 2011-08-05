@@ -1,8 +1,9 @@
 //Maya ASCII 2011 scene
 //Name: Omicron.ma
-//Last modified: Thu, Aug 04, 2011 07:19:44 PM
+//Last modified: Fri, Aug 05, 2011 03:04:35 AM
 //Codeset: 1252
 requires maya "2011";
+requires "Mayatomr" "2011.0m - 3.8.1.26 ";
 requires "hlslShader" "1.0";
 requires "stereoCamera" "10.0";
 currentUnit -l centimeter -a degree -t film;
@@ -14,18 +15,18 @@ fileInfo "osv" "Microsoft Windows 7 Business Edition, 64-bit Windows 7 Service P
 fileInfo "license" "student";
 createNode transform -s -n "persp";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" 2.9138287659623834 4.9376611661421048 14.371010186865936 ;
-	setAttr ".r" -type "double3" -17.138150769669846 373.39999999948202 0 ;
+	setAttr ".t" -type "double3" 0.85375855047401017 4.4295505370189954 13.41680053746226 ;
+	setAttr ".r" -type "double3" -18.338150771025646 13.399999999991289 -359.99999999995856 ;
 createNode camera -s -n "perspShape" -p "persp";
 	setAttr -k off ".v" no;
-	setAttr ".pze" yes;
 	setAttr ".fl" 34.999999999999986;
-	setAttr ".coi" 13.339930197419129;
+	setAttr ".coi" 13.60229659827335;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
 	setAttr ".tp" -type "double3" 0 0.51877039670944214 -0.06869196891784668 ;
 	setAttr ".hc" -type "string" "viewSet -p %camera";
+	setAttr ".col" -type "float3" 1 1 1 ;
 createNode transform -s -n "top";
 	setAttr ".v" no;
 	setAttr ".t" -type "double3" 0 101.49680419512615 -0.068691968917824253 ;
@@ -69,6 +70,8 @@ createNode camera -s -n "sideShape" -p "side";
 	setAttr ".o" yes;
 createNode transform -n "SHIPS";
 createNode transform -n "Omicron_High" -p "SHIPS";
+	addAttr -ci true -sn "miLabel" -ln "miLabel" -dv 5 -at "short";
+	setAttr ".miLabel" 0;
 createNode mesh -n "Omicron_HighShape" -p "Omicron_High";
 	addAttr -ci true -sn "mso" -ln "miShadingSamplesOverride" -min 0 -max 1 -at "bool";
 	addAttr -ci true -sn "msh" -ln "miShadingSamples" -min 0 -smx 8 -at "float";
@@ -4630,8 +4633,8 @@ createNode mesh -n "pasted__pSphereShape1" -p "pasted__pSphere1";
 	setAttr ".covm[0]"  0 1 1;
 	setAttr ".cdvm[0]"  0 1 1;
 createNode lightLinker -s -n "lightLinker1";
-	setAttr -s 9 ".lnk";
-	setAttr -s 9 ".slnk";
+	setAttr -s 16 ".lnk";
+	setAttr -s 16 ".slnk";
 createNode displayLayerManager -n "layerManager";
 	setAttr ".cdl" 3;
 	setAttr -s 4 ".dli[1:3]"  1 2 3;
@@ -4743,8 +4746,6 @@ createNode objectSet -n "textureEditorIsolateSelectSet";
 createNode displayLayer -n "HighPoly";
 	setAttr ".c" 13;
 	setAttr ".do" 2;
-createNode groupId -n "groupId1";
-	setAttr ".ihi" 0;
 createNode blinn -n "blinn3";
 createNode shadingEngine -n "blinn3SG";
 	setAttr ".ihi" 0;
@@ -4805,6 +4806,33 @@ createNode hlslShader -n "hlslShader1";
 	addAttr -is true -ci true -sn "alphaTexR" -ln "alphaTexR" -at "float" -p "alphaTex";
 	addAttr -is true -ci true -sn "alphaTexG" -ln "alphaTexG" -at "float" -p "alphaTex";
 	addAttr -is true -ci true -sn "alphaTexB" -ln "alphaTexB" -at "float" -p "alphaTex";
+	addAttr -is true -ci true -sn "useSpecular_Name" -ln "useSpecular_Name" -dt "string";
+	addAttr -is true -ci true -sn "useSpecular_Type" -ln "useSpecular_Type" -dt "string";
+	addAttr -is true -ci true -sn "useSpecular" -ln "useSpecular" -min 0 -max 1 -at "bool";
+	addAttr -is true -ci true -sn "useAmbient_Name" -ln "useAmbient_Name" -dt "string";
+	addAttr -is true -ci true -sn "useAmbient_Type" -ln "useAmbient_Type" -dt "string";
+	addAttr -is true -ci true -sn "useAmbient" -ln "useAmbient" -min 0 -max 1 -at "bool";
+	addAttr -is true -ci true -sn "useLambert_Name" -ln "useLambert_Name" -dt "string";
+	addAttr -is true -ci true -sn "useLambert_Type" -ln "useLambert_Type" -dt "string";
+	addAttr -is true -ci true -sn "useLambert" -ln "useLambert" -min 0 -max 1 -at "bool";
+	addAttr -is true -ci true -sn "drawNormals_Name" -ln "drawNormals_Name" -dt "string";
+	addAttr -is true -ci true -sn "drawNormals_Type" -ln "drawNormals_Type" -dt "string";
+	addAttr -is true -ci true -sn "drawNormals" -ln "drawNormals" -min 0 -max 1 -at "bool";
+	addAttr -is true -ci true -sn "reflectivity_Name" -ln "reflectivity_Name" -dt "string";
+	addAttr -is true -ci true -sn "reflectivity_Type" -ln "reflectivity_Type" -dt "string";
+	addAttr -is true -ci true -sn "reflectivity" -ln "reflectivity" -smn 0 -smx 1 -at "float";
+	addAttr -is true -ci true -sn "reflectionTexture_Name" -ln "reflectionTexture_Name" 
+		-dt "string";
+	addAttr -is true -ci true -sn "reflectionTexture_Type" -ln "reflectionTexture_Type" 
+		-dt "string";
+	addAttr -is true -ci true -uac -sn "reflectionTexture" -ln "reflectionTexture" -at "float3" 
+		-nc 3;
+	addAttr -is true -ci true -sn "reflectionTextureR" -ln "reflectionTextureR" -at "float" 
+		-p "reflectionTexture";
+	addAttr -is true -ci true -sn "reflectionTextureG" -ln "reflectionTextureG" -at "float" 
+		-p "reflectionTexture";
+	addAttr -is true -ci true -sn "reflectionTextureB" -ln "reflectionTextureB" -at "float" 
+		-p "reflectionTexture";
 	addAttr -is true -ci true -sn "LightDirection_0_Name" -ln "LightDirection_0_Name" 
 		-dt "string";
 	addAttr -is true -ci true -sn "LightDirection_0_Type" -ln "LightDirection_0_Type" 
@@ -4850,18 +4878,6 @@ createNode hlslShader -n "hlslShader1";
 		-p "LightColour_2";
 	addAttr -is true -ci true -sn "LightColour_2B" -ln "LightColour_2B" -at "float" 
 		-p "LightColour_2";
-	addAttr -is true -ci true -sn "useSpecular_Name" -ln "useSpecular_Name" -dt "string";
-	addAttr -is true -ci true -sn "useSpecular_Type" -ln "useSpecular_Type" -dt "string";
-	addAttr -is true -ci true -sn "useSpecular" -ln "useSpecular" -min 0 -max 1 -at "bool";
-	addAttr -is true -ci true -sn "useAmbient_Name" -ln "useAmbient_Name" -dt "string";
-	addAttr -is true -ci true -sn "useAmbient_Type" -ln "useAmbient_Type" -dt "string";
-	addAttr -is true -ci true -sn "useAmbient" -ln "useAmbient" -min 0 -max 1 -at "bool";
-	addAttr -is true -ci true -sn "useLambert_Name" -ln "useLambert_Name" -dt "string";
-	addAttr -is true -ci true -sn "useLambert_Type" -ln "useLambert_Type" -dt "string";
-	addAttr -is true -ci true -sn "useLambert" -ln "useLambert" -min 0 -max 1 -at "bool";
-	addAttr -is true -ci true -sn "drawNormals_Name" -ln "drawNormals_Name" -dt "string";
-	addAttr -is true -ci true -sn "drawNormals_Type" -ln "drawNormals_Type" -dt "string";
-	addAttr -is true -ci true -sn "drawNormals" -ln "drawNormals" -min 0 -max 1 -at "bool";
 	addAttr -is true -ci true -sn "ambientColour_Name" -ln "ambientColour_Name" -dt "string";
 	addAttr -is true -ci true -sn "ambientColour_Type" -ln "ambientColour_Type" -dt "string";
 	addAttr -is true -ci true -uac -sn "ambientColour" -ln "ambientColour" -at "float3" 
@@ -4882,21 +4898,6 @@ createNode hlslShader -n "hlslShader1";
 		-p "SpecularColour";
 	addAttr -is true -ci true -sn "SpecularColourB" -ln "SpecularColourB" -at "float" 
 		-p "SpecularColour";
-	addAttr -is true -ci true -sn "reflectivity_Name" -ln "reflectivity_Name" -dt "string";
-	addAttr -is true -ci true -sn "reflectivity_Type" -ln "reflectivity_Type" -dt "string";
-	addAttr -is true -ci true -sn "reflectivity" -ln "reflectivity" -smn 0 -smx 1 -at "float";
-	addAttr -is true -ci true -sn "reflectionTexture_Name" -ln "reflectionTexture_Name" 
-		-dt "string";
-	addAttr -is true -ci true -sn "reflectionTexture_Type" -ln "reflectionTexture_Type" 
-		-dt "string";
-	addAttr -is true -ci true -uac -sn "reflectionTexture" -ln "reflectionTexture" -at "float3" 
-		-nc 3;
-	addAttr -is true -ci true -sn "reflectionTextureR" -ln "reflectionTextureR" -at "float" 
-		-p "reflectionTexture";
-	addAttr -is true -ci true -sn "reflectionTextureG" -ln "reflectionTextureG" -at "float" 
-		-p "reflectionTexture";
-	addAttr -is true -ci true -sn "reflectionTextureB" -ln "reflectionTextureB" -at "float" 
-		-p "reflectionTexture";
 	setAttr ".vpar" -type "stringArray" 4 "Position" "Normal" "Tangent0" "UV0"  ;
 	setAttr ".upar" -type "stringArray" 20 "LightDirection_0" "LightColour_0" "LightDirection_1" "LightColour_1" "LightDirection_2" "LightColour_2" "useAlphaMap" "useSpecular" "useAmbient" "useLambert" "drawNormals" "ambientColour" "Shininess" "SpecularColour" "bumpMagnitude" "reflectivity" "diffuseTex" "alphaTex" "normalTex" "reflectionTexture"  ;
 	setAttr ".s" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent/Shaders/BShiftShader.fx";
@@ -4906,7 +4907,7 @@ createNode hlslShader -n "hlslShader1";
 	setAttr ".Shininess" 41.390518188476562;
 	setAttr ".bumpMagnitude_Name" -type "string" "bumpMagnitude";
 	setAttr ".bumpMagnitude_Type" -type "string" "float";
-	setAttr ".bumpMagnitude" 0.52413791418075562;
+	setAttr ".bumpMagnitude" 0.4482758641242981;
 	setAttr ".diffuseTex_Name" -type "string" "diffuseTex";
 	setAttr ".diffuseTex_Type" -type "string" "texture";
 	setAttr ".diffuseTex" -type "float3" 0 0 0 ;
@@ -4927,6 +4928,24 @@ createNode hlslShader -n "hlslShader1";
 	setAttr ".alphaTex_Name" -type "string" "alphaTex";
 	setAttr ".alphaTex_Type" -type "string" "texture";
 	setAttr ".alphaTex" -type "float3" 0 0 0 ;
+	setAttr ".useSpecular_Name" -type "string" "useSpecular";
+	setAttr ".useSpecular_Type" -type "string" "bool";
+	setAttr ".useSpecular" yes;
+	setAttr ".useAmbient_Name" -type "string" "useAmbient";
+	setAttr ".useAmbient_Type" -type "string" "bool";
+	setAttr ".useAmbient" yes;
+	setAttr ".useLambert_Name" -type "string" "useLambert";
+	setAttr ".useLambert_Type" -type "string" "bool";
+	setAttr ".useLambert" yes;
+	setAttr ".drawNormals_Name" -type "string" "drawNormals";
+	setAttr ".drawNormals_Type" -type "string" "bool";
+	setAttr ".drawNormals" no;
+	setAttr ".reflectivity_Name" -type "string" "reflectivity";
+	setAttr ".reflectivity_Type" -type "string" "float";
+	setAttr ".reflectivity" 0.15000000596046448;
+	setAttr ".reflectionTexture_Name" -type "string" "reflectionTexture";
+	setAttr ".reflectionTexture_Type" -type "string" "texture";
+	setAttr ".reflectionTexture" -type "float3" 0 0 0 ;
 	setAttr ".LightDirection_0_Name" -type "string" "LightDirection_0";
 	setAttr ".LightDirection_0_Type" -type "string" "matrix1x3";
 	setAttr ".LightDirection_0" -type "matrix" 0.56899756150042313 0 0 0 0 0.41893741419391528 -0.38503203500740518 0
@@ -4950,54 +4969,348 @@ createNode hlslShader -n "hlslShader1";
 	setAttr ".LightColour_2_Name" -type "string" "LightColour_2";
 	setAttr ".LightColour_2_Type" -type "string" "color1x3";
 	setAttr ".LightColour_2" -type "float3" 0.37872893 0.42619973 0.46153963 ;
-	setAttr ".useSpecular_Name" -type "string" "useSpecular";
-	setAttr ".useSpecular_Type" -type "string" "bool";
-	setAttr ".useSpecular" yes;
-	setAttr ".useAmbient_Name" -type "string" "useAmbient";
-	setAttr ".useAmbient_Type" -type "string" "bool";
-	setAttr ".useAmbient" yes;
-	setAttr ".useLambert_Name" -type "string" "useLambert";
-	setAttr ".useLambert_Type" -type "string" "bool";
-	setAttr ".useLambert" yes;
-	setAttr ".drawNormals_Name" -type "string" "drawNormals";
-	setAttr ".drawNormals_Type" -type "string" "bool";
-	setAttr ".drawNormals" no;
 	setAttr ".ambientColour_Name" -type "string" "ambientColour";
 	setAttr ".ambientColour_Type" -type "string" "color1x3";
 	setAttr ".ambientColour" -type "float3" 0.21367209 0.207599 0.15924315 ;
 	setAttr ".SpecularColour_Name" -type "string" "SpecularColour";
 	setAttr ".SpecularColour_Type" -type "string" "color1x3";
 	setAttr ".SpecularColour" -type "float3" 0.69639122 0.69639122 0.69639122 ;
-	setAttr ".reflectivity_Name" -type "string" "reflectivity";
-	setAttr ".reflectivity_Type" -type "string" "float";
-	setAttr ".reflectivity" 0.10000000149011612;
-	setAttr ".reflectionTexture_Name" -type "string" "reflectionTexture";
-	setAttr ".reflectionTexture_Type" -type "string" "texture";
-	setAttr ".reflectionTexture" -type "float3" 0 0 0 ;
-createNode file -n "pasted__file2";
-	setAttr ".ftn" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent//Textures/omicronTexture.png";
-createNode file -n "pasted__file4";
-	setAttr ".ftn" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent//Textures/sci-fitekstura_normal.jpg";
+createNode file -n "diffuse";
+	setAttr ".ftn" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent//Textures/Omicron_Diffuse.dds";
+createNode file -n "normalmap";
+	setAttr ".ftn" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent//Textures/Omicron_Normal.dds";
 createNode file -n "pasted__file5";
 	setAttr ".ftn" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent//Textures/1pxWhite.tga";
 createNode place2dTexture -n "pasted__place2dTexture1";
 createNode file -n "file2";
 	setAttr ".ftn" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent//Skyboxes/nwo512_left.jpg";
 createNode place2dTexture -n "place2dTexture3";
+createNode mentalrayItemsList -s -n "mentalrayItemsList";
+	setAttr -s 17 ".opt";
+createNode mentalrayGlobals -s -n "mentalrayGlobals";
+	addAttr -ci true -h true -sn "sunAndSkyShader" -ln "sunAndSkyShader" -at "message";
+	setAttr ".rvb" 3;
+	setAttr ".ivb" no;
+createNode mentalrayOptions -s -n "miDefaultOptions";
+	addAttr -ci true -m -sn "stringOptions" -ln "stringOptions" -at "compound" -nc 
+		3;
+	addAttr -ci true -sn "name" -ln "name" -dt "string" -p "stringOptions";
+	addAttr -ci true -sn "value" -ln "value" -dt "string" -p "stringOptions";
+	addAttr -ci true -sn "type" -ln "type" -dt "string" -p "stringOptions";
+	setAttr ".minsp" 0;
+	setAttr ".maxsp" 2;
+	setAttr ".fil" 4;
+	setAttr ".maxr" 2;
+	setAttr -s 28 ".stringOptions";
+	setAttr ".stringOptions[0].name" -type "string" "rast motion factor";
+	setAttr ".stringOptions[0].value" -type "string" "1.0";
+	setAttr ".stringOptions[0].type" -type "string" "scalar";
+	setAttr ".stringOptions[1].name" -type "string" "rast transparency depth";
+	setAttr ".stringOptions[1].value" -type "string" "8";
+	setAttr ".stringOptions[1].type" -type "string" "integer";
+	setAttr ".stringOptions[2].name" -type "string" "rast useopacity";
+	setAttr ".stringOptions[2].value" -type "string" "true";
+	setAttr ".stringOptions[2].type" -type "string" "boolean";
+	setAttr ".stringOptions[3].name" -type "string" "importon";
+	setAttr ".stringOptions[3].value" -type "string" "false";
+	setAttr ".stringOptions[3].type" -type "string" "boolean";
+	setAttr ".stringOptions[4].name" -type "string" "importon density";
+	setAttr ".stringOptions[4].value" -type "string" "1.0";
+	setAttr ".stringOptions[4].type" -type "string" "scalar";
+	setAttr ".stringOptions[5].name" -type "string" "importon merge";
+	setAttr ".stringOptions[5].value" -type "string" "0.0";
+	setAttr ".stringOptions[5].type" -type "string" "scalar";
+	setAttr ".stringOptions[6].name" -type "string" "importon trace depth";
+	setAttr ".stringOptions[6].value" -type "string" "0";
+	setAttr ".stringOptions[6].type" -type "string" "integer";
+	setAttr ".stringOptions[7].name" -type "string" "importon traverse";
+	setAttr ".stringOptions[7].value" -type "string" "true";
+	setAttr ".stringOptions[7].type" -type "string" "boolean";
+	setAttr ".stringOptions[8].name" -type "string" "shadowmap pixel samples";
+	setAttr ".stringOptions[8].value" -type "string" "3";
+	setAttr ".stringOptions[8].type" -type "string" "integer";
+	setAttr ".stringOptions[9].name" -type "string" "ambient occlusion";
+	setAttr ".stringOptions[9].value" -type "string" "false";
+	setAttr ".stringOptions[9].type" -type "string" "boolean";
+	setAttr ".stringOptions[10].name" -type "string" "ambient occlusion rays";
+	setAttr ".stringOptions[10].value" -type "string" "256";
+	setAttr ".stringOptions[10].type" -type "string" "integer";
+	setAttr ".stringOptions[11].name" -type "string" "ambient occlusion cache";
+	setAttr ".stringOptions[11].value" -type "string" "false";
+	setAttr ".stringOptions[11].type" -type "string" "boolean";
+	setAttr ".stringOptions[12].name" -type "string" "ambient occlusion cache density";
+	setAttr ".stringOptions[12].value" -type "string" "1.0";
+	setAttr ".stringOptions[12].type" -type "string" "scalar";
+	setAttr ".stringOptions[13].name" -type "string" "ambient occlusion cache points";
+	setAttr ".stringOptions[13].value" -type "string" "64";
+	setAttr ".stringOptions[13].type" -type "string" "integer";
+	setAttr ".stringOptions[14].name" -type "string" "irradiance particles";
+	setAttr ".stringOptions[14].value" -type "string" "false";
+	setAttr ".stringOptions[14].type" -type "string" "boolean";
+	setAttr ".stringOptions[15].name" -type "string" "irradiance particles rays";
+	setAttr ".stringOptions[15].value" -type "string" "256";
+	setAttr ".stringOptions[15].type" -type "string" "integer";
+	setAttr ".stringOptions[16].name" -type "string" "irradiance particles interpolate";
+	setAttr ".stringOptions[16].value" -type "string" "1";
+	setAttr ".stringOptions[16].type" -type "string" "integer";
+	setAttr ".stringOptions[17].name" -type "string" "irradiance particles interppoints";
+	setAttr ".stringOptions[17].value" -type "string" "64";
+	setAttr ".stringOptions[17].type" -type "string" "integer";
+	setAttr ".stringOptions[18].name" -type "string" "irradiance particles indirect passes";
+	setAttr ".stringOptions[18].value" -type "string" "0";
+	setAttr ".stringOptions[18].type" -type "string" "integer";
+	setAttr ".stringOptions[19].name" -type "string" "irradiance particles scale";
+	setAttr ".stringOptions[19].value" -type "string" "1.0";
+	setAttr ".stringOptions[19].type" -type "string" "scalar";
+	setAttr ".stringOptions[20].name" -type "string" "irradiance particles env";
+	setAttr ".stringOptions[20].value" -type "string" "true";
+	setAttr ".stringOptions[20].type" -type "string" "boolean";
+	setAttr ".stringOptions[21].name" -type "string" "irradiance particles env rays";
+	setAttr ".stringOptions[21].value" -type "string" "256";
+	setAttr ".stringOptions[21].type" -type "string" "integer";
+	setAttr ".stringOptions[22].name" -type "string" "irradiance particles env scale";
+	setAttr ".stringOptions[22].value" -type "string" "1";
+	setAttr ".stringOptions[22].type" -type "string" "integer";
+	setAttr ".stringOptions[23].name" -type "string" "irradiance particles rebuild";
+	setAttr ".stringOptions[23].value" -type "string" "true";
+	setAttr ".stringOptions[23].type" -type "string" "boolean";
+	setAttr ".stringOptions[24].name" -type "string" "irradiance particles file";
+	setAttr ".stringOptions[24].value" -type "string" "";
+	setAttr ".stringOptions[24].type" -type "string" "string";
+	setAttr ".stringOptions[25].name" -type "string" "geom displace motion factor";
+	setAttr ".stringOptions[25].value" -type "string" "1.0";
+	setAttr ".stringOptions[25].type" -type "string" "scalar";
+	setAttr ".stringOptions[26].name" -type "string" "contrast all buffers";
+	setAttr ".stringOptions[26].value" -type "string" "true";
+	setAttr ".stringOptions[26].type" -type "string" "boolean";
+	setAttr ".stringOptions[27].name" -type "string" "finalgather normal tolerance";
+	setAttr ".stringOptions[27].value" -type "string" "25.842";
+	setAttr ".stringOptions[27].type" -type "string" "scalar";
+createNode mentalrayFramebuffer -s -n "miDefaultFramebuffer";
+createNode mentalrayOptions -s -n "surfaceSamplingMiOptionsNode";
+	setAttr ".minsp" 0;
+	setAttr ".maxsp" 2;
+	setAttr ".fil" 4;
+	setAttr ".maxr" 2;
+createNode shadingEngine -n "surfaceShader1SG";
+	setAttr ".ihi" 0;
+	setAttr ".ro" yes;
+createNode materialInfo -n "materialInfo3";
+createNode shadingEngine -n "surfaceShader2SG";
+	setAttr ".ihi" 0;
+	setAttr ".ro" yes;
+createNode materialInfo -n "materialInfo4";
+createNode groupId -n "groupId1";
+	setAttr ".ihi" 0;
+createNode shadingEngine -n "surfaceShader3SG";
+	setAttr ".ihi" 0;
+	setAttr ".ro" yes;
+createNode materialInfo -n "materialInfo5";
+createNode mentalrayOptions -s -n "miContourPreset";
+createNode mentalrayOptions -s -n "Draft";
+	setAttr ".maxr" 2;
+createNode mentalrayOptions -s -n "DraftMotionBlur";
+	setAttr ".maxr" 2;
+	setAttr ".mb" 1;
+	setAttr ".tconr" 1;
+	setAttr ".tcong" 1;
+	setAttr ".tconb" 1;
+	setAttr ".tcona" 1;
+createNode mentalrayOptions -s -n "DraftRapidMotion";
+	setAttr ".scan" 3;
+	setAttr ".rapc" 1;
+	setAttr ".raps" 0.25;
+	setAttr ".maxr" 2;
+	setAttr ".mb" 1;
+	setAttr ".tconr" 1;
+	setAttr ".tcong" 1;
+	setAttr ".tconb" 1;
+	setAttr ".tcona" 1;
+createNode mentalrayOptions -s -n "Preview";
+	setAttr ".minsp" -1;
+	setAttr ".maxsp" 1;
+	setAttr ".fil" 1;
+	setAttr ".rflr" 2;
+	setAttr ".rfrr" 2;
+	setAttr ".maxr" 4;
+createNode mentalrayOptions -s -n "PreviewMotionblur";
+	setAttr ".minsp" -1;
+	setAttr ".maxsp" 1;
+	setAttr ".fil" 1;
+	setAttr ".rflr" 2;
+	setAttr ".rfrr" 2;
+	setAttr ".maxr" 4;
+	setAttr ".mb" 1;
+	setAttr ".tconr" 0.5;
+	setAttr ".tcong" 0.5;
+	setAttr ".tconb" 0.5;
+	setAttr ".tcona" 0.5;
+createNode mentalrayOptions -s -n "PreviewRapidMotion";
+	setAttr ".minsp" -1;
+	setAttr ".maxsp" 1;
+	setAttr ".fil" 1;
+	setAttr ".scan" 3;
+	setAttr ".rapc" 3;
+	setAttr ".rflr" 2;
+	setAttr ".rfrr" 2;
+	setAttr ".maxr" 4;
+	setAttr ".mb" 1;
+	setAttr ".tconr" 0.5;
+	setAttr ".tcong" 0.5;
+	setAttr ".tconb" 0.5;
+	setAttr ".tcona" 0.5;
+createNode mentalrayOptions -s -n "PreviewCaustics";
+	setAttr ".minsp" -1;
+	setAttr ".maxsp" 1;
+	setAttr ".fil" 1;
+	setAttr ".rflr" 2;
+	setAttr ".rfrr" 2;
+	setAttr ".maxr" 4;
+	setAttr ".ca" yes;
+	setAttr ".cc" 1;
+	setAttr ".cr" 1;
+createNode mentalrayOptions -s -n "PreviewGlobalIllum";
+	setAttr ".minsp" -1;
+	setAttr ".maxsp" 1;
+	setAttr ".fil" 1;
+	setAttr ".rflr" 2;
+	setAttr ".rfrr" 2;
+	setAttr ".maxr" 4;
+	setAttr ".gi" yes;
+	setAttr ".gc" 1;
+	setAttr ".gr" 1;
+createNode mentalrayOptions -s -n "PreviewFinalGather";
+	setAttr ".minsp" -1;
+	setAttr ".maxsp" 1;
+	setAttr ".fil" 1;
+	setAttr ".rflr" 2;
+	setAttr ".rfrr" 2;
+	setAttr ".maxr" 4;
+	setAttr ".fg" yes;
+createNode mentalrayOptions -s -n "Production";
+	setAttr ".minsp" 0;
+	setAttr ".maxsp" 2;
+	setAttr ".fil" 2;
+	setAttr ".rflr" 10;
+	setAttr ".rfrr" 10;
+	setAttr ".maxr" 20;
+createNode mentalrayOptions -s -n "ProductionMotionblur";
+	setAttr ".minsp" 0;
+	setAttr ".maxsp" 2;
+	setAttr ".fil" 2;
+	setAttr ".rflr" 10;
+	setAttr ".rfrr" 10;
+	setAttr ".maxr" 20;
+	setAttr ".mb" 2;
+createNode mentalrayOptions -s -n "ProductionRapidMotion";
+	setAttr ".minsp" 0;
+	setAttr ".maxsp" 2;
+	setAttr ".fil" 2;
+	setAttr ".scan" 3;
+	setAttr ".rapc" 8;
+	setAttr ".raps" 2;
+	setAttr ".rflr" 10;
+	setAttr ".rfrr" 10;
+	setAttr ".maxr" 20;
+	setAttr ".mb" 2;
+createNode mentalrayOptions -s -n "ProductionFineTrace";
+	setAttr ".conr" 0.019999999552965164;
+	setAttr ".cong" 0.019999999552965164;
+	setAttr ".conb" 0.019999999552965164;
+	setAttr ".minsp" 1;
+	setAttr ".maxsp" 2;
+	setAttr ".fil" 1;
+	setAttr ".filw" 0.75;
+	setAttr ".filh" 0.75;
+	setAttr ".jit" yes;
+	setAttr ".scan" 0;
+createNode mentalrayOptions -s -n "ProductionRapidFur";
+	setAttr ".conr" 0.039999999105930328;
+	setAttr ".cong" 0.029999999329447746;
+	setAttr ".conb" 0.070000000298023224;
+	setAttr ".minsp" 0;
+	setAttr ".maxsp" 2;
+	setAttr ".fil" 1;
+	setAttr ".filw" 1.1449999809265137;
+	setAttr ".filh" 1.1449999809265137;
+	setAttr ".jit" yes;
+	setAttr ".scan" 3;
+	setAttr ".rapc" 3;
+	setAttr ".raps" 0.25;
+	setAttr ".ray" no;
+	setAttr ".shmth" 3;
+	setAttr ".shmap" 3;
+	setAttr ".mbsm" no;
+	setAttr ".bism" 0.019999999552965164;
+createNode mentalrayOptions -s -n "ProductionRapidHair";
+	setAttr ".conr" 0.039999999105930328;
+	setAttr ".cong" 0.029999999329447746;
+	setAttr ".conb" 0.070000000298023224;
+	setAttr ".minsp" 0;
+	setAttr ".maxsp" 2;
+	setAttr ".fil" 1;
+	setAttr ".filw" 1.1449999809265137;
+	setAttr ".filh" 1.1449999809265137;
+	setAttr ".jit" yes;
+	setAttr ".scan" 3;
+	setAttr ".rapc" 6;
+	setAttr ".ray" no;
+	setAttr ".shmth" 3;
+	setAttr ".shmap" 3;
+	setAttr ".mbsm" no;
+	setAttr ".bism" 0.019999999552965164;
+createNode surfaceShader -n "surfaceShader4";
+createNode shadingEngine -n "surfaceShader4SG";
+	setAttr ".ihi" 0;
+	setAttr ".ro" yes;
+createNode materialInfo -n "materialInfo6";
+createNode mib_amb_occlusion -n "mib_amb_occlusion1";
+	setAttr ".S00" 256;
+	setAttr ".S03" 1.5;
+createNode shadingEngine -n "surfaceShader5SG";
+	setAttr ".ihi" 0;
+	setAttr ".ro" yes;
+createNode materialInfo -n "materialInfo7";
+createNode textureBakeSet -n "initialTextureBakeSet";
+createNode partition -n "textureBakePartition";
+createNode vertexBakeSet -n "initialVertexBakeSet";
+	addAttr -ci true -sn "fs" -ln "filterSize" -min -1 -at "double";
+	addAttr -ci true -sn "fns" -ln "filterNormalTolerance" -min 0 -max 180 -at "double";
+	setAttr ".fs" 0.001;
+	setAttr ".fns" 5;
+createNode partition -n "vertexBakePartition";
+createNode shadingEngine -n "bakedAO_surfaceShader4SG_Omicron_HighSG";
+	setAttr ".ihi" 0;
+	setAttr ".ro" yes;
+createNode materialInfo -n "materialInfo8";
+createNode lambert -n "lambert2";
+	setAttr ".c" -type "float3" 0 0 0 ;
+createNode file -n "bakedAO_surfaceShader4SG_Omicron_High_fnbake1";
+	setAttr ".ftn" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent//renderData/mentalray/lightMap/bakedAO-surfaceShader4SG-Omicron_High.tif";
+createNode place2dTexture -n "place2dTexture4";
+createNode shadingEngine -n "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_HighSG";
+	setAttr ".ihi" 0;
+	setAttr ".ro" yes;
+createNode materialInfo -n "materialInfo9";
+createNode lambert -n "lambert3";
+	setAttr ".c" -type "float3" 0 0 0 ;
+createNode file -n "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_High_fnbake1";
+	setAttr ".ftn" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent//renderData/mentalray/lightMap/bakedAO-bakedAO_surfaceShader4SG_Omicron_HighSG-Omicron_High.tif";
+createNode place2dTexture -n "place2dTexture5";
 select -ne :time1;
 	setAttr ".o" 4;
 	setAttr ".unw" 4;
 select -ne :renderPartition;
-	setAttr -s 9 ".st";
+	setAttr -s 16 ".st";
 select -ne :initialShadingGroup;
 	setAttr -s 2 ".dsm";
 	setAttr ".ro" yes;
 select -ne :initialParticleSE;
 	setAttr ".ro" yes;
 select -ne :defaultShaderList1;
-	setAttr -s 6 ".s";
+	setAttr -s 9 ".s";
 select -ne :defaultTextureList1;
-	setAttr -s 6 ".tx";
+	setAttr -s 9 ".tx";
 select -ne :lightList1;
 	setAttr -s 3 ".l";
 select -ne :postProcessList1;
@@ -5006,6 +5319,7 @@ select -ne :defaultRenderUtilityList1;
 	setAttr -s 4 ".u";
 select -ne :renderGlobalsList1;
 select -ne :defaultRenderGlobals;
+	setAttr ".ren" -type "string" "mentalRay";
 	setAttr ".outf" 3;
 select -ne :defaultRenderQuality;
 	setAttr ".rfl" 10;
@@ -5041,6 +5355,13 @@ relationship "link" ":lightLinker1" "shipExporter1:blinn1SG.message" ":defaultLi
 relationship "link" ":lightLinker1" "blinn2SG.message" ":defaultLightSet.message";
 relationship "link" ":lightLinker1" "blinn3SG.message" ":defaultLightSet.message";
 relationship "link" ":lightLinker1" "pasted__hlslShader1SG.message" ":defaultLightSet.message";
+relationship "link" ":lightLinker1" "surfaceShader1SG.message" ":defaultLightSet.message";
+relationship "link" ":lightLinker1" "surfaceShader2SG.message" ":defaultLightSet.message";
+relationship "link" ":lightLinker1" "surfaceShader3SG.message" ":defaultLightSet.message";
+relationship "link" ":lightLinker1" "surfaceShader4SG.message" ":defaultLightSet.message";
+relationship "link" ":lightLinker1" "surfaceShader5SG.message" ":defaultLightSet.message";
+relationship "link" ":lightLinker1" "bakedAO_surfaceShader4SG_Omicron_HighSG.message" ":defaultLightSet.message";
+relationship "link" ":lightLinker1" "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_HighSG.message" ":defaultLightSet.message";
 relationship "shadowLink" ":lightLinker1" ":initialShadingGroup.message" ":defaultLightSet.message";
 relationship "shadowLink" ":lightLinker1" ":initialParticleSE.message" ":defaultLightSet.message";
 relationship "shadowLink" ":lightLinker1" "shipExporter:mi_car_paint_phen1SG.message" ":defaultLightSet.message";
@@ -5050,6 +5371,13 @@ relationship "shadowLink" ":lightLinker1" "shipExporter1:blinn1SG.message" ":def
 relationship "shadowLink" ":lightLinker1" "blinn2SG.message" ":defaultLightSet.message";
 relationship "shadowLink" ":lightLinker1" "blinn3SG.message" ":defaultLightSet.message";
 relationship "shadowLink" ":lightLinker1" "pasted__hlslShader1SG.message" ":defaultLightSet.message";
+relationship "shadowLink" ":lightLinker1" "surfaceShader1SG.message" ":defaultLightSet.message";
+relationship "shadowLink" ":lightLinker1" "surfaceShader2SG.message" ":defaultLightSet.message";
+relationship "shadowLink" ":lightLinker1" "surfaceShader3SG.message" ":defaultLightSet.message";
+relationship "shadowLink" ":lightLinker1" "surfaceShader4SG.message" ":defaultLightSet.message";
+relationship "shadowLink" ":lightLinker1" "surfaceShader5SG.message" ":defaultLightSet.message";
+relationship "shadowLink" ":lightLinker1" "bakedAO_surfaceShader4SG_Omicron_HighSG.message" ":defaultLightSet.message";
+relationship "shadowLink" ":lightLinker1" "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_HighSG.message" ":defaultLightSet.message";
 connectAttr "layerManager.dli[0]" "defaultLayer.id";
 connectAttr "renderLayerManager.rlmi[0]" "defaultRenderLayer.rlid";
 connectAttr "shipExporter:mi_car_paint_phen1SG.msg" "shipExporter:materialInfo1.sg"
@@ -5096,12 +5424,12 @@ connectAttr "place2dTexture2.o" "file1.uv";
 connectAttr "place2dTexture2.ofs" "file1.fs";
 connectAttr "pasted__hlslShader1SG.msg" "pasted__materialInfo6.sg";
 connectAttr "hlslShader1.msg" "pasted__materialInfo6.m";
-connectAttr "pasted__file2.msg" "pasted__materialInfo6.t" -na;
+connectAttr "diffuse.msg" "pasted__materialInfo6.t" -na;
 connectAttr "hlslShader1.oc" "pasted__hlslShader1SG.ss";
 connectAttr "pasted__pSphereShape1.iog" "pasted__hlslShader1SG.dsm" -na;
 connectAttr "Omicron_HighShape.iog" "pasted__hlslShader1SG.dsm" -na;
-connectAttr "pasted__file2.oc" "hlslShader1.diffuseTex";
-connectAttr "pasted__file4.oc" "hlslShader1.normalTex";
+connectAttr "diffuse.oc" "hlslShader1.diffuseTex";
+connectAttr "normalmap.oc" "hlslShader1.normalTex";
 connectAttr "pasted__directionalLight1.wm" "hlslShader1.LightDirection_0";
 connectAttr "pasted__directionalLight2.wm" "hlslShader1.LightDirection_1";
 connectAttr "pasted__directionalLight3.wm" "hlslShader1.LightDirection_2";
@@ -5143,6 +5471,129 @@ connectAttr "place2dTexture3.vt3" "file2.vt3";
 connectAttr "place2dTexture3.vc1" "file2.vc1";
 connectAttr "place2dTexture3.o" "file2.uv";
 connectAttr "place2dTexture3.ofs" "file2.fs";
+connectAttr ":mentalrayGlobals.msg" ":mentalrayItemsList.glb";
+connectAttr ":miDefaultOptions.msg" ":mentalrayItemsList.opt" -na;
+connectAttr ":miContourPreset.msg" ":mentalrayItemsList.opt" -na;
+connectAttr ":Draft.msg" ":mentalrayItemsList.opt" -na;
+connectAttr ":DraftMotionBlur.msg" ":mentalrayItemsList.opt" -na;
+connectAttr ":DraftRapidMotion.msg" ":mentalrayItemsList.opt" -na;
+connectAttr ":Preview.msg" ":mentalrayItemsList.opt" -na;
+connectAttr ":PreviewMotionblur.msg" ":mentalrayItemsList.opt" -na;
+connectAttr ":PreviewRapidMotion.msg" ":mentalrayItemsList.opt" -na;
+connectAttr ":PreviewCaustics.msg" ":mentalrayItemsList.opt" -na;
+connectAttr ":PreviewGlobalIllum.msg" ":mentalrayItemsList.opt" -na;
+connectAttr ":PreviewFinalGather.msg" ":mentalrayItemsList.opt" -na;
+connectAttr ":Production.msg" ":mentalrayItemsList.opt" -na;
+connectAttr ":ProductionMotionblur.msg" ":mentalrayItemsList.opt" -na;
+connectAttr ":ProductionRapidMotion.msg" ":mentalrayItemsList.opt" -na;
+connectAttr ":ProductionFineTrace.msg" ":mentalrayItemsList.opt" -na;
+connectAttr ":ProductionRapidFur.msg" ":mentalrayItemsList.opt" -na;
+connectAttr ":ProductionRapidHair.msg" ":mentalrayItemsList.opt" -na;
+connectAttr ":miDefaultFramebuffer.msg" ":mentalrayItemsList.fb" -na;
+connectAttr ":miDefaultOptions.msg" ":mentalrayGlobals.opt";
+connectAttr ":miDefaultFramebuffer.msg" ":mentalrayGlobals.fb";
+connectAttr "surfaceShader1SG.msg" "materialInfo3.sg";
+connectAttr "surfaceShader2SG.msg" "materialInfo4.sg";
+connectAttr "surfaceShader3SG.msg" "materialInfo5.sg";
+connectAttr "mib_amb_occlusion1.S11" "surfaceShader4.oc";
+connectAttr "surfaceShader4.oc" "surfaceShader4SG.ss";
+connectAttr "surfaceShader4SG.msg" "materialInfo6.sg";
+connectAttr "surfaceShader4.msg" "materialInfo6.m";
+connectAttr "surfaceShader4.msg" "materialInfo6.t" -na;
+connectAttr "surfaceShader5SG.msg" "materialInfo7.sg";
+connectAttr "initialTextureBakeSet.pa" "textureBakePartition.st" -na;
+connectAttr "initialVertexBakeSet.pa" "vertexBakePartition.st" -na;
+connectAttr "lambert2.oc" "bakedAO_surfaceShader4SG_Omicron_HighSG.ss";
+connectAttr "bakedAO_surfaceShader4SG_Omicron_HighSG.msg" "materialInfo8.sg";
+connectAttr "lambert2.msg" "materialInfo8.m";
+connectAttr "bakedAO_surfaceShader4SG_Omicron_High_fnbake1.msg" "materialInfo8.t"
+		 -na;
+connectAttr "bakedAO_surfaceShader4SG_Omicron_High_fnbake1.oc" "materialInfo8.tc"
+		;
+connectAttr "bakedAO_surfaceShader4SG_Omicron_High_fnbake1.oc" "lambert2.ic";
+connectAttr "place2dTexture4.o" "bakedAO_surfaceShader4SG_Omicron_High_fnbake1.uv"
+		;
+connectAttr "place2dTexture4.ofs" "bakedAO_surfaceShader4SG_Omicron_High_fnbake1.fs"
+		;
+connectAttr "place2dTexture4.c" "bakedAO_surfaceShader4SG_Omicron_High_fnbake1.c"
+		;
+connectAttr "place2dTexture4.tf" "bakedAO_surfaceShader4SG_Omicron_High_fnbake1.tf"
+		;
+connectAttr "place2dTexture4.rf" "bakedAO_surfaceShader4SG_Omicron_High_fnbake1.rf"
+		;
+connectAttr "place2dTexture4.mu" "bakedAO_surfaceShader4SG_Omicron_High_fnbake1.mu"
+		;
+connectAttr "place2dTexture4.mv" "bakedAO_surfaceShader4SG_Omicron_High_fnbake1.mv"
+		;
+connectAttr "place2dTexture4.s" "bakedAO_surfaceShader4SG_Omicron_High_fnbake1.s"
+		;
+connectAttr "place2dTexture4.wu" "bakedAO_surfaceShader4SG_Omicron_High_fnbake1.wu"
+		;
+connectAttr "place2dTexture4.wv" "bakedAO_surfaceShader4SG_Omicron_High_fnbake1.wv"
+		;
+connectAttr "place2dTexture4.re" "bakedAO_surfaceShader4SG_Omicron_High_fnbake1.re"
+		;
+connectAttr "place2dTexture4.vt1" "bakedAO_surfaceShader4SG_Omicron_High_fnbake1.vt1"
+		;
+connectAttr "place2dTexture4.vt2" "bakedAO_surfaceShader4SG_Omicron_High_fnbake1.vt2"
+		;
+connectAttr "place2dTexture4.vt3" "bakedAO_surfaceShader4SG_Omicron_High_fnbake1.vt3"
+		;
+connectAttr "place2dTexture4.vc1" "bakedAO_surfaceShader4SG_Omicron_High_fnbake1.vc1"
+		;
+connectAttr "place2dTexture4.n" "bakedAO_surfaceShader4SG_Omicron_High_fnbake1.n"
+		;
+connectAttr "place2dTexture4.of" "bakedAO_surfaceShader4SG_Omicron_High_fnbake1.of"
+		;
+connectAttr "place2dTexture4.r" "bakedAO_surfaceShader4SG_Omicron_High_fnbake1.ro"
+		;
+connectAttr "lambert3.oc" "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_HighSG.ss"
+		;
+connectAttr "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_HighSG.msg" "materialInfo9.sg"
+		;
+connectAttr "lambert3.msg" "materialInfo9.m";
+connectAttr "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_High_fnbake1.msg" "materialInfo9.t"
+		 -na;
+connectAttr "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_High_fnbake1.oc" "materialInfo9.tc"
+		;
+connectAttr "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_High_fnbake1.oc" "lambert3.ic"
+		;
+connectAttr "place2dTexture5.o" "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_High_fnbake1.uv"
+		;
+connectAttr "place2dTexture5.ofs" "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_High_fnbake1.fs"
+		;
+connectAttr "place2dTexture5.c" "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_High_fnbake1.c"
+		;
+connectAttr "place2dTexture5.tf" "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_High_fnbake1.tf"
+		;
+connectAttr "place2dTexture5.rf" "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_High_fnbake1.rf"
+		;
+connectAttr "place2dTexture5.mu" "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_High_fnbake1.mu"
+		;
+connectAttr "place2dTexture5.mv" "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_High_fnbake1.mv"
+		;
+connectAttr "place2dTexture5.s" "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_High_fnbake1.s"
+		;
+connectAttr "place2dTexture5.wu" "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_High_fnbake1.wu"
+		;
+connectAttr "place2dTexture5.wv" "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_High_fnbake1.wv"
+		;
+connectAttr "place2dTexture5.re" "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_High_fnbake1.re"
+		;
+connectAttr "place2dTexture5.vt1" "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_High_fnbake1.vt1"
+		;
+connectAttr "place2dTexture5.vt2" "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_High_fnbake1.vt2"
+		;
+connectAttr "place2dTexture5.vt3" "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_High_fnbake1.vt3"
+		;
+connectAttr "place2dTexture5.vc1" "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_High_fnbake1.vc1"
+		;
+connectAttr "place2dTexture5.n" "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_High_fnbake1.n"
+		;
+connectAttr "place2dTexture5.of" "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_High_fnbake1.of"
+		;
+connectAttr "place2dTexture5.r" "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_High_fnbake1.ro"
+		;
 connectAttr "shipExporter:mi_car_paint_phen1SG.pa" ":renderPartition.st" -na;
 connectAttr "shipExporter:blinn1SG.pa" ":renderPartition.st" -na;
 connectAttr "shipExporter1:mi_car_paint_phen1SG.pa" ":renderPartition.st" -na;
@@ -5150,18 +5601,35 @@ connectAttr "shipExporter1:blinn1SG.pa" ":renderPartition.st" -na;
 connectAttr "blinn2SG.pa" ":renderPartition.st" -na;
 connectAttr "blinn3SG.pa" ":renderPartition.st" -na;
 connectAttr "pasted__hlslShader1SG.pa" ":renderPartition.st" -na;
+connectAttr "surfaceShader1SG.pa" ":renderPartition.st" -na;
+connectAttr "surfaceShader2SG.pa" ":renderPartition.st" -na;
+connectAttr "surfaceShader3SG.pa" ":renderPartition.st" -na;
+connectAttr "surfaceShader4SG.pa" ":renderPartition.st" -na;
+connectAttr "surfaceShader5SG.pa" ":renderPartition.st" -na;
+connectAttr "bakedAO_surfaceShader4SG_Omicron_HighSG.pa" ":renderPartition.st" -na
+		;
+connectAttr "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_HighSG.pa" ":renderPartition.st"
+		 -na;
 connectAttr "ShipPhysicsShape.iog" ":initialShadingGroup.dsm" -na;
 connectAttr "OmicronPhysicsShape.iog" ":initialShadingGroup.dsm" -na;
 connectAttr "blinn1.msg" ":defaultShaderList1.s" -na;
 connectAttr "checker_test.msg" ":defaultShaderList1.s" -na;
 connectAttr "blinn3.msg" ":defaultShaderList1.s" -na;
 connectAttr "hlslShader1.msg" ":defaultShaderList1.s" -na;
+connectAttr "surfaceShader4.msg" ":defaultShaderList1.s" -na;
+connectAttr "lambert2.msg" ":defaultShaderList1.s" -na;
+connectAttr "lambert3.msg" ":defaultShaderList1.s" -na;
 connectAttr "checker1.msg" ":defaultTextureList1.tx" -na;
 connectAttr "file1.msg" ":defaultTextureList1.tx" -na;
-connectAttr "pasted__file2.msg" ":defaultTextureList1.tx" -na;
-connectAttr "pasted__file4.msg" ":defaultTextureList1.tx" -na;
+connectAttr "diffuse.msg" ":defaultTextureList1.tx" -na;
+connectAttr "normalmap.msg" ":defaultTextureList1.tx" -na;
 connectAttr "pasted__file5.msg" ":defaultTextureList1.tx" -na;
 connectAttr "file2.msg" ":defaultTextureList1.tx" -na;
+connectAttr "mib_amb_occlusion1.msg" ":defaultTextureList1.tx" -na;
+connectAttr "bakedAO_surfaceShader4SG_Omicron_High_fnbake1.msg" ":defaultTextureList1.tx"
+		 -na;
+connectAttr "bakedAO_bakedAO_surfaceShader4SG_Omicron_HighSG_Omicron_High_fnbake1.msg" ":defaultTextureList1.tx"
+		 -na;
 connectAttr "pasted__directionalLightShape1.ltd" ":lightList1.l" -na;
 connectAttr "pasted__directionalLightShape2.ltd" ":lightList1.l" -na;
 connectAttr "pasted__directionalLightShape3.ltd" ":lightList1.l" -na;
