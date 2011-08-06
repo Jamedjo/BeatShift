@@ -3,6 +3,11 @@ float4x4 world_Mx    :  World                   < string UIWidget = "None"; >;
 float4x4 viewInv_Mx  :  ViewInverse             < string UIWidget = "None"; >;
 //float4x4 wit_Mx      :  WorldInverseTranspose   < string UIWidget = "None"; >;
 
+// Maximum number of bone matrices we can render using shader 2.0 in a single pass.
+// If you change this, update SkinnedModelProcessor.cs to match.
+#define MaxBones 59
+float4x4 Bones[MaxBones];
+
 
 float3 LightDirection_0 : DIRECTION
 <
@@ -88,43 +93,48 @@ samplerCUBE reflectionSampler = sampler_state {
 struct VertexShaderInput
 {
     float4 Position : POSITION0;
-
 	float3 Normal : NORMAL0;
     float3 Tangent : TANGENT0;
-    //float3 Binormal : BINORMAL0;
-
 	float2 TexCoord : TEXCOORD0;
+	
+    float4 BoneIndices : BLENDINDICES0;
+    float4 BoneWeights : BLENDWEIGHT0;
 };
 
 struct VertexShaderOutput
 {
     float4 Position : POSITION0;
     float2 TexCoord : TEXCOORD0;
-
-	//float4 Colour : COLOR0;
-	//float3 Normal : TEXCOORD1;
-    //float3 Tangent : TEXCOORD2;
-    //float3 Binormal : TEXCOORD3;
 	
 	float3 Light0 : TEXCOORD1;
 	float3 Light1 : TEXCOORD2;
 	float3 Light2 : TEXCOORD3;
-	float3 View : TEXCOORD4;
-	
-	//float3 EyeVec :	TEXCOORD4;
-	
+	float3 View : TEXCOORD4;	
 };
 
 VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 {
     VertexShaderOutput output = (VertexShaderOutput)0;
-    output.Position = mul(input.Position, wvp_Mx);
-	float3 worldPosition 	= mul(input.Position, world_Mx);
+	
+	
+    // Blend between the weighted bone matrices.
+    float4x4 skinTransform = 0;
+    skinTransform += Bones[input.BoneIndices.x] * input.BoneWeights.x;
+    skinTransform += Bones[input.BoneIndices.y] * input.BoneWeights.y;
+    skinTransform += Bones[input.BoneIndices.z] * input.BoneWeights.z;
+    skinTransform += Bones[input.BoneIndices.w] * input.BoneWeights.w;
+    
+    // Skin the vertex position, normal ant tangent.
+    float4 nPosition = mul(input.Position, skinTransform);
+	float4 nNormal = mul(input.Normal, skinTransform);
+	float4 nTangent = mul(input.Tangent, skinTransform);
+    output.Position = mul(nPosition, wvp_Mx);
+	float3 worldPosition 	= mul(nPosition, world_Mx);
 
 	float3x3 worldToTangentSpace;
-	worldToTangentSpace[0] = mul(input.Tangent,world_Mx);
-    worldToTangentSpace[1] = mul(cross(input.Tangent,input.Normal),world_Mx);
-    worldToTangentSpace[2] = mul(input.Normal,world_Mx);
+	worldToTangentSpace[0] = mul(nTangent,world_Mx);
+    worldToTangentSpace[1] = mul(cross(nTangent,nNormal),world_Mx);
+    worldToTangentSpace[2] = mul(nNormal,world_Mx);
 
 	output.Light0 = mul(worldToTangentSpace,-LightDirection_0);
 	output.Light1 = mul(worldToTangentSpace,-LightDirection_1);
