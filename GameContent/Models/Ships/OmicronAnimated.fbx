@@ -17,10 +17,10 @@ FBXHeaderExtension:  {
         Year: 2011
         Month: 8
         Day: 7
-        Hour: 1
-        Minute: 38
+        Hour: 14
+        Minute: 26
         Second: 27
-        Millisecond: 207
+        Millisecond: 513
     }
     Creator: "FBX SDK/FBX Plugins version 2011.1"
 }
@@ -2058,14 +2058,14 @@ Objects:  {
             Property: "Original|ApplicationVendor", "KString", "", "Autodesk"
             Property: "Original|ApplicationName", "KString", "", "Maya"
             Property: "Original|ApplicationVersion", "KString", "", "2011.1"
-            Property: "Original|DateTime_GMT", "DateTime", "", "07/08/2011 00:38:27.206"
+            Property: "Original|DateTime_GMT", "DateTime", "", "07/08/2011 13:26:27.511"
             Property: "Original|FileName", "KString", "", "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent/Models/Ships/OmicronAnimated.fbx"
              
             Property: "LastSaved", "Compound", ""
             Property: "LastSaved|ApplicationVendor", "KString", "", "Autodesk"
             Property: "LastSaved|ApplicationName", "KString", "", "Maya"
             Property: "LastSaved|ApplicationVersion", "KString", "", "2011.1"
-            Property: "LastSaved|DateTime_GMT", "DateTime", "", "07/08/2011 00:38:27.206"
+            Property: "LastSaved|DateTime_GMT", "DateTime", "", "07/08/2011 13:26:27.511"
         }
     }
     Pose: "Pose::Omicron_High_ncl1_2", "BindPose" {
@@ -2141,17 +2141,23 @@ Objects:  {
             Property: "Maya|reflectionTexture|reflectionTextureG", "float", "",0
             Property: "Maya|reflectionTexture|reflectionTextureB", "float", "",0
             Property: "Maya|reflectOverride", "float", "",0
-            Property: "Maya|LightDirection_0", "matrix4x4", "",1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1
+            Property: "Maya|UseSkinning", "float", "",0
+            Property: "Maya|LightDirection_0", "matrix4x4", "",0.568997561500423,0,0,-5.38112048162529,0,0.418937414193915,0.385032035007405
+             ,3.92332703199693,0,-0.385032035007405,0.418937414193915,-2.18083418845328,0,0,0,1
             Property: "Maya|LightColour_0", "Vector3D", "",0.585549712181091,0.562737464904785,0.474265664815903
             Property: "Maya|LightColour_0|LightColour_0R", "float", "",0.58555
             Property: "Maya|LightColour_0|LightColour_0G", "float", "",0.562737
             Property: "Maya|LightColour_0|LightColour_0B", "float", "",0.474266
-            Property: "Maya|LightDirection_1", "matrix4x4", "",1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1
+            Property: "Maya|LightDirection_1", "matrix4x4", "",0.0161044477385482,0.0315086452146067,0.567896185084214,-1.75339027989234
+             ,1.97410685541668e-018,0.568123784340856,-0.0315212731286814,1.21659484042001,-0.568769612195012,0.000892152673580447
+             ,0.0160797170550559,-5.02277374416372,0,0,0,1
             Property: "Maya|LightColour_1", "Vector3D", "",0.606836020946503,0.51767760515213,0.536964952945709
             Property: "Maya|LightColour_1|LightColour_1R", "float", "",0.606836
             Property: "Maya|LightColour_1|LightColour_1G", "float", "",0.517678
             Property: "Maya|LightColour_1|LightColour_1B", "float", "",0.536965
-            Property: "Maya|LightDirection_2", "matrix4x4", "",1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1
+            Property: "Maya|LightDirection_2", "matrix4x4", "",-0.568005707865796,-0.0108059877029064,-0.0317957773150639,-5.81680580336007
+             ,9.87053427708341e-019,0.538735011546213,-0.183092360102026,0.167439023347852,0.033581852618706,-0.182773200873363
+             ,-0.537795910369936,-8.51829966258875,0,0,0,1
             Property: "Maya|LightColour_2", "Vector3D", "",0.378728926181793,0.426199734210968,0.461539626121521
             Property: "Maya|LightColour_2|LightColour_2R", "float", "",0.378729
             Property: "Maya|LightColour_2|LightColour_2G", "float", "",0.4262
@@ -2164,7 +2170,6 @@ Objects:  {
             Property: "Maya|SpecularColour|SpecularColourR", "float", "",0.696391
             Property: "Maya|SpecularColour|SpecularColourG", "float", "",0.696391
             Property: "Maya|SpecularColour|SpecularColourB", "float", "",0.696391
-            Property: "Maya|UseSkinning", "float", "",0
         }
     }
     Deformer: "Deformer::Skin Omicron_High", "Skin" {
@@ -2362,9 +2367,7 @@ Objects:  {
         Mode: "Additive"
         UserData: "Maya_ClusterHint", "RigidBind"
         Indexes: 31,32,33,34,168,169,170,171,176,177,178,179,184,185
-        Weights: 1.00026738643646,1.00026738643646,1.00026738643646,1.00026738643646,1.00019490718842,1.00034368038177,1.00034368038177
-        ,1.00034368038177,1.00034368038177,1.00034368038177,1.00034368038177,1.00034368038177,1.00034368038177,1.00034368038177
-        
+        Weights: 1,1,1,1,1,1,1,1,1,1,1,1,1,1
         Transform: -0.894427190999916,1.77232549741156e-016,-0.447213595499958,0,1.09535739652841e-016,1,1.77232549741156e-016,0,0.447213595499958
         ,1.09535739652841e-016,-0.894427190999916,0,-2.68328157299975,-6.27583943467883e-017,2.01246117974981,1
         TransformLink: -0.894427190999916,1.09535739652841e-016,0.447213595499958,0,1.77232549741156e-016,1,1.09535739652841e-016,0,-0.447213595499958
@@ -2397,8 +2400,7 @@ Objects:  {
         Mode: "Additive"
         UserData: "Maya_ClusterHint", "RigidBind"
         Indexes: 35,36,37,38,164,165,166,167,172,173,174,175,187,188
-        Weights: 0.999703824520111,0.999703824520111,0.999703824520111,0.999703824520111,1,0.999703824520111,0.999703824520111,0.999703824520111
-        ,1,0.999703824520111,0.999703824520111,0.999703824520111,0.999703824520111,0.999703824520111
+        Weights: 1,1,1,1,1,1,1,1,1,1,1,1,1,1
         Transform: 0.948683298050514,0,-0.316227766016838,0,0,1,0,0,0.316227766016838,-0,0.948683298050514,0,-2.37170824512628,0,-2.37170824512629
         ,1
         TransformLink: 0.948683298050514,0,0.316227766016838,0,-0,1,0,0,-0.316227766016838,-0,0.948683298050514,0,1.5,0,3,1
@@ -2653,7 +2655,7 @@ Objects:  {
             Property: "Constants", "Compound", ""
         }
     }
-    BindingTable: "BindingTable::root 19", "" {
+    BindingTable: "BindingTable::root 4", "" {
         Version: 100
         Properties60:  {
             Property: "TargetName", "KString", "", "root"
@@ -2689,7 +2691,7 @@ Objects:  {
         Entry: "Maya|LightColour_0", "KFbxPropertyEntry", "LightColour_0", "FbxSemanticEntry"
         Entry: "Maya|useSpecular", "KFbxPropertyEntry", "useSpecular", "FbxSemanticEntry"
     }
-    BindingOperator: "BindingOperator::NodeDirectionConvert 55", "" {
+    BindingOperator: "BindingOperator::NodeDirectionConvert 10", "" {
         Version: 100
         Properties60:  {
             Property: "FunctionName", "KString", "", "NodeDirection"
@@ -2697,7 +2699,7 @@ Objects:  {
         }
         Entry: "Maya|LightDirection_0", "KFbxPropertyEntry", "NodeDirection", "FbxUnknownEntry"
     }
-    BindingOperator: "BindingOperator::NodeDirectionConvert 56", "" {
+    BindingOperator: "BindingOperator::NodeDirectionConvert 11", "" {
         Version: 100
         Properties60:  {
             Property: "FunctionName", "KString", "", "NodeDirection"
@@ -2705,7 +2707,7 @@ Objects:  {
         }
         Entry: "Maya|LightDirection_2", "KFbxPropertyEntry", "NodeDirection", "FbxUnknownEntry"
     }
-    BindingOperator: "BindingOperator::NodeDirectionConvert 57", "" {
+    BindingOperator: "BindingOperator::NodeDirectionConvert 12", "" {
         Version: 100
         Properties60:  {
             Property: "FunctionName", "KString", "", "NodeDirection"
@@ -2730,22 +2732,22 @@ Objects:  {
             Property: "DefaultCamera", "KString", "", "Producer Perspective"
             Property: "TimeMode", "enum", "",11
             Property: "TimeSpanStart", "KTime", "",1924423250
-            Property: "TimeSpanStop", "KTime", "",192442325000
+            Property: "TimeSpanStop", "KTime", "",76976930000
         }
     }
-    BindingOperator: "BindingOperator::NodeDirectionConvert 55", "" {
+    BindingOperator: "BindingOperator::NodeDirectionConvert 10", "" {
         Properties60:  {
             Property: "FunctionName", "KString", "", "NodeDirection"
             Property: "TargetName", "KString", "", "NodeDirectionConvert"
         }
     }
-    BindingOperator: "BindingOperator::NodeDirectionConvert 56", "" {
+    BindingOperator: "BindingOperator::NodeDirectionConvert 11", "" {
         Properties60:  {
             Property: "FunctionName", "KString", "", "NodeDirection"
             Property: "TargetName", "KString", "", "NodeDirectionConvert"
         }
     }
-    BindingOperator: "BindingOperator::NodeDirectionConvert 57", "" {
+    BindingOperator: "BindingOperator::NodeDirectionConvert 12", "" {
         Properties60:  {
             Property: "FunctionName", "KString", "", "NodeDirection"
             Property: "TargetName", "KString", "", "NodeDirectionConvert"
@@ -2798,10 +2800,10 @@ Connections:  {
     Connect: "OP", "Texture::pasted__file5", "Material::hlslShader1", "Maya|alphaTex"
     Connect: "OP", "Texture::file2", "Material::hlslShader1", "Maya|reflectionTexture"
     Connect: "OO", "Material::hlslShader1", "Implementation::hlslShader1_Implementation"
-    Connect: "OO", "BindingTable::root 19", "Implementation::hlslShader1_Implementation"
-    Connect: "OO", "BindingOperator::NodeDirectionConvert 55", "Implementation::hlslShader1_Implementation"
-    Connect: "OO", "BindingOperator::NodeDirectionConvert 56", "Implementation::hlslShader1_Implementation"
-    Connect: "OO", "BindingOperator::NodeDirectionConvert 57", "Implementation::hlslShader1_Implementation"
+    Connect: "OO", "BindingTable::root 4", "Implementation::hlslShader1_Implementation"
+    Connect: "OO", "BindingOperator::NodeDirectionConvert 10", "Implementation::hlslShader1_Implementation"
+    Connect: "OO", "BindingOperator::NodeDirectionConvert 11", "Implementation::hlslShader1_Implementation"
+    Connect: "OO", "BindingOperator::NodeDirectionConvert 12", "Implementation::hlslShader1_Implementation"
     Connect: "OO", "Video::normalmap", "Texture::normalmap"
     Connect: "OO", "Video::pasted__file5", "Texture::pasted__file5"
     Connect: "OO", "Video::diffuse", "Texture::diffuse"
@@ -2870,8 +2872,8 @@ Takes:  {
     Current: "Take 001"
     Take: "Take 001" {
         FileName: "Take_001.tak"
-        LocalTime: 1924423250,96221162500
-        ReferenceTime: 1924423250,96221162500
+        LocalTime: 1924423250,76976930000
+        ReferenceTime: 1924423250,76976930000
         
         ;Models animation
         ;----------------------------------------------------
@@ -2880,7 +2882,7 @@ Takes:  {
             Channel: "Visibility" {
                 Default: 1
                 KeyVer: 4005
-                KeyCount: 50
+                KeyCount: 40
                 Key: 1924423250,1,U,s,0,0,n,3848846500,1,U,s,0,0,n,5773269750,1,U,s,0,0,n,7697693000,1,U,s,0,0,n,9622116250
                     ,1,U,s,0,0,n,11546539500,1,U,s,0,0,n,13470962750,1,U,s,0,0,n,15395386000,1,U,s,0,0,n,17319809250,1,U,s
                     ,0,0,n,19244232500,1,U,s,0,0,n,21168655750,1,U,s,0,0,n,23093079000,1,U,s,0,0,n,25017502250,1,U,s,0,0,n
@@ -2890,9 +2892,7 @@ Takes:  {
                     ,51959427750,1,U,s,0,0,n,53883851000,1,U,s,0,0,n,55808274250,1,U,s,0,0,n,57732697500,1,U,s,0,0,n,59657120750
                     ,1,U,s,0,0,n,61581544000,1,U,s,0,0,n,63505967250,1,U,s,0,0,n,65430390500,1,U,s,0,0,n,67354813750,1,U,s
                     ,0,0,n,69279237000,1,U,s,0,0,n,71203660250,1,U,s,0,0,n,73128083500,1,U,s,0,0,n,75052506750,1,U,s,0,0,n
-                    ,76976930000,1,U,s,0,0,n,78901353250,1,U,s,0,0,n,80825776500,1,U,s,0,0,n,82750199750,1,U,s,0,0,n,84674623000
-                    ,1,U,s,0,0,n,86599046250,1,U,s,0,0,n,88523469500,1,U,s,0,0,n,90447892750,1,U,s,0,0,n,92372316000,1,U,s
-                    ,0,0,n,94296739250,1,U,s,0,0,n,96221162500,1,U,s,0,0,n
+                    ,76976930000,1,U,s,0,0,n
                 Post-Extrapolation:  {
                     Type: C
                     Repetition: 1
@@ -2907,7 +2907,7 @@ Takes:  {
                     Channel: "X" {
                         Default: 0
                         KeyVer: 4005
-                        KeyCount: 50
+                        KeyCount: 40
                         Key: 1924423250,0,U,s,0,0,n,3848846500,0,U,s,0,0,n,5773269750,0,U,s,0,0,n,7697693000,0
                                         ,U,s,0,0,n,9622116250,0,U,s,0,0,n,11546539500,0,U,s,0,0,n,13470962750,0,U,s,0,0,n
                                         ,15395386000,0,U,s,0,0,n,17319809250,0,U,s,0,0,n,19244232500,0,U,s,0,0,n,21168655750
@@ -2919,10 +2919,7 @@ Takes:  {
                                         ,n,55808274250,0,U,s,0,0,n,57732697500,0,U,s,0,0,n,59657120750,0,U,s,0,0,n,61581544000
                                         ,0,U,s,0,0,n,63505967250,0,U,s,0,0,n,65430390500,0,U,s,0,0,n,67354813750,0,U,s,0,0
                                         ,n,69279237000,0,U,s,0,0,n,71203660250,0,U,s,0,0,n,73128083500,0,U,s,0,0,n,75052506750
-                                        ,0,U,s,0,0,n,76976930000,0,U,s,0,0,n,78901353250,0,U,s,0,0,n,80825776500,0,U,s,0,0
-                                        ,n,82750199750,0,U,s,0,0,n,84674623000,0,U,s,0,0,n,86599046250,0,U,s,0,0,n,88523469500
-                                        ,0,U,s,0,0,n,90447892750,0,U,s,0,0,n,92372316000,0,U,s,0,0,n,94296739250,0,U,s,0,0
-                                        ,n,96221162500,0,U,s,0,0,n
+                                        ,0,U,s,0,0,n,76976930000,0,U,s,0,0,n
                         Post-Extrapolation:  {
                             Type: C
                             Repetition: 1
@@ -2932,7 +2929,7 @@ Takes:  {
                     Channel: "Y" {
                         Default: 0
                         KeyVer: 4005
-                        KeyCount: 50
+                        KeyCount: 40
                         Key: 1924423250,0,U,s,0,0,n,3848846500,0,U,s,0,0,n,5773269750,0,U,s,0,0,n,7697693000,0
                                         ,U,s,0,0,n,9622116250,0,U,s,0,0,n,11546539500,0,U,s,0,0,n,13470962750,0,U,s,0,0,n
                                         ,15395386000,0,U,s,0,0,n,17319809250,0,U,s,0,0,n,19244232500,0,U,s,0,0,n,21168655750
@@ -2944,10 +2941,7 @@ Takes:  {
                                         ,n,55808274250,0,U,s,0,0,n,57732697500,0,U,s,0,0,n,59657120750,0,U,s,0,0,n,61581544000
                                         ,0,U,s,0,0,n,63505967250,0,U,s,0,0,n,65430390500,0,U,s,0,0,n,67354813750,0,U,s,0,0
                                         ,n,69279237000,0,U,s,0,0,n,71203660250,0,U,s,0,0,n,73128083500,0,U,s,0,0,n,75052506750
-                                        ,0,U,s,0,0,n,76976930000,0,U,s,0,0,n,78901353250,0,U,s,0,0,n,80825776500,0,U,s,0,0
-                                        ,n,82750199750,0,U,s,0,0,n,84674623000,0,U,s,0,0,n,86599046250,0,U,s,0,0,n,88523469500
-                                        ,0,U,s,0,0,n,90447892750,0,U,s,0,0,n,92372316000,0,U,s,0,0,n,94296739250,0,U,s,0,0
-                                        ,n,96221162500,0,U,s,0,0,n
+                                        ,0,U,s,0,0,n,76976930000,0,U,s,0,0,n
                         Post-Extrapolation:  {
                             Type: C
                             Repetition: 1
@@ -2957,7 +2951,7 @@ Takes:  {
                     Channel: "Z" {
                         Default: 3.5
                         KeyVer: 4005
-                        KeyCount: 50
+                        KeyCount: 40
                         Key: 1924423250,3.5,U,s,0,0,n,3848846500,3.5,U,s,0,0,n,5773269750,3.5,U,s,0,0,n,7697693000
                                         ,3.5,U,s,0,0,n,9622116250,3.5,U,s,0,0,n,11546539500,3.5,U,s,0,0,n,13470962750,3.5
                                         ,U,s,0,0,n,15395386000,3.5,U,s,0,0,n,17319809250,3.5,U,s,0,0,n,19244232500,3.5,U,s
@@ -2970,10 +2964,7 @@ Takes:  {
                                         ,3.5,U,s,0,0,n,59657120750,3.5,U,s,0,0,n,61581544000,3.5,U,s,0,0,n,63505967250,3.5
                                         ,U,s,0,0,n,65430390500,3.5,U,s,0,0,n,67354813750,3.5,U,s,0,0,n,69279237000,3.5,U,s
                                         ,0,0,n,71203660250,3.5,U,s,0,0,n,73128083500,3.5,U,s,0,0,n,75052506750,3.5,U,s,0,0
-                                        ,n,76976930000,3.5,U,s,0,0,n,78901353250,3.5,U,s,0,0,n,80825776500,3.5,U,s,0,0,n,82750199750
-                                        ,3.5,U,s,0,0,n,84674623000,3.5,U,s,0,0,n,86599046250,3.5,U,s,0,0,n,88523469500,3.5
-                                        ,U,s,0,0,n,90447892750,3.5,U,s,0,0,n,92372316000,3.5,U,s,0,0,n,94296739250,3.5,U,s
-                                        ,0,0,n,96221162500,3.5,U,s,0,0,n
+                                        ,n,76976930000,3.5,U,s,0,0,n
                         Post-Extrapolation:  {
                             Type: C
                             Repetition: 1
@@ -2986,7 +2977,7 @@ Takes:  {
                     Channel: "X" {
                         Default: 0
                         KeyVer: 4005
-                        KeyCount: 50
+                        KeyCount: 40
                         Key: 1924423250,0,U,s,0,0,n,3848846500,0,U,s,0,0,n,5773269750,0,U,s,0,0,n,7697693000,0
                                         ,U,s,0,0,n,9622116250,0,U,s,0,0,n,11546539500,0,U,s,0,0,n,13470962750,0,U,s,0,0,n
                                         ,15395386000,0,U,s,0,0,n,17319809250,0,U,s,0,0,n,19244232500,0,U,s,0,0,n,21168655750
@@ -2998,10 +2989,7 @@ Takes:  {
                                         ,n,55808274250,0,U,s,0,0,n,57732697500,0,U,s,0,0,n,59657120750,0,U,s,0,0,n,61581544000
                                         ,0,U,s,0,0,n,63505967250,0,U,s,0,0,n,65430390500,0,U,s,0,0,n,67354813750,0,U,s,0,0
                                         ,n,69279237000,0,U,s,0,0,n,71203660250,0,U,s,0,0,n,73128083500,0,U,s,0,0,n,75052506750
-                                        ,0,U,s,0,0,n,76976930000,0,U,s,0,0,n,78901353250,0,U,s,0,0,n,80825776500,0,U,s,0,0
-                                        ,n,82750199750,0,U,s,0,0,n,84674623000,0,U,s,0,0,n,86599046250,0,U,s,0,0,n,88523469500
-                                        ,0,U,s,0,0,n,90447892750,0,U,s,0,0,n,92372316000,0,U,s,0,0,n,94296739250,0,U,s,0,0
-                                        ,n,96221162500,0,U,s,0,0,n
+                                        ,0,U,s,0,0,n,76976930000,0,U,s,0,0,n
                         Post-Extrapolation:  {
                             Type: C
                             Repetition: 1
@@ -3011,7 +2999,7 @@ Takes:  {
                     Channel: "Y" {
                         Default: 0
                         KeyVer: 4005
-                        KeyCount: 50
+                        KeyCount: 40
                         Key: 1924423250,0,U,s,0,0,n,3848846500,0,U,s,0,0,n,5773269750,0,U,s,0,0,n,7697693000,0
                                         ,U,s,0,0,n,9622116250,0,U,s,0,0,n,11546539500,0,U,s,0,0,n,13470962750,0,U,s,0,0,n
                                         ,15395386000,0,U,s,0,0,n,17319809250,0,U,s,0,0,n,19244232500,0,U,s,0,0,n,21168655750
@@ -3023,10 +3011,7 @@ Takes:  {
                                         ,n,55808274250,0,U,s,0,0,n,57732697500,0,U,s,0,0,n,59657120750,0,U,s,0,0,n,61581544000
                                         ,0,U,s,0,0,n,63505967250,0,U,s,0,0,n,65430390500,0,U,s,0,0,n,67354813750,0,U,s,0,0
                                         ,n,69279237000,0,U,s,0,0,n,71203660250,0,U,s,0,0,n,73128083500,0,U,s,0,0,n,75052506750
-                                        ,0,U,s,0,0,n,76976930000,0,U,s,0,0,n,78901353250,0,U,s,0,0,n,80825776500,0,U,s,0,0
-                                        ,n,82750199750,0,U,s,0,0,n,84674623000,0,U,s,0,0,n,86599046250,0,U,s,0,0,n,88523469500
-                                        ,0,U,s,0,0,n,90447892750,0,U,s,0,0,n,92372316000,0,U,s,0,0,n,94296739250,0,U,s,0,0
-                                        ,n,96221162500,0,U,s,0,0,n
+                                        ,0,U,s,0,0,n,76976930000,0,U,s,0,0,n
                         Post-Extrapolation:  {
                             Type: C
                             Repetition: 1
@@ -3036,7 +3021,7 @@ Takes:  {
                     Channel: "Z" {
                         Default: 0
                         KeyVer: 4005
-                        KeyCount: 50
+                        KeyCount: 40
                         Key: 1924423250,0,U,s,0,0,n,3848846500,0,U,s,0,0,n,5773269750,0,U,s,0,0,n,7697693000,0
                                         ,U,s,0,0,n,9622116250,0,U,s,0,0,n,11546539500,0,U,s,0,0,n,13470962750,0,U,s,0,0,n
                                         ,15395386000,0,U,s,0,0,n,17319809250,0,U,s,0,0,n,19244232500,0,U,s,0,0,n,21168655750
@@ -3048,10 +3033,7 @@ Takes:  {
                                         ,n,55808274250,0,U,s,0,0,n,57732697500,0,U,s,0,0,n,59657120750,0,U,s,0,0,n,61581544000
                                         ,0,U,s,0,0,n,63505967250,0,U,s,0,0,n,65430390500,0,U,s,0,0,n,67354813750,0,U,s,0,0
                                         ,n,69279237000,0,U,s,0,0,n,71203660250,0,U,s,0,0,n,73128083500,0,U,s,0,0,n,75052506750
-                                        ,0,U,s,0,0,n,76976930000,0,U,s,0,0,n,78901353250,0,U,s,0,0,n,80825776500,0,U,s,0,0
-                                        ,n,82750199750,0,U,s,0,0,n,84674623000,0,U,s,0,0,n,86599046250,0,U,s,0,0,n,88523469500
-                                        ,0,U,s,0,0,n,90447892750,0,U,s,0,0,n,92372316000,0,U,s,0,0,n,94296739250,0,U,s,0,0
-                                        ,n,96221162500,0,U,s,0,0,n
+                                        ,0,U,s,0,0,n,76976930000,0,U,s,0,0,n
                         Post-Extrapolation:  {
                             Type: C
                             Repetition: 1
@@ -3064,7 +3046,7 @@ Takes:  {
                     Channel: "X" {
                         Default: 1
                         KeyVer: 4005
-                        KeyCount: 50
+                        KeyCount: 40
                         Key: 1924423250,1,U,s,0,0,n,3848846500,1,U,s,0,0,n,5773269750,1,U,s,0,0,n,7697693000,1
                                         ,U,s,0,0,n,9622116250,1,U,s,0,0,n,11546539500,1,U,s,0,0,n,13470962750,1,U,s,0,0,n
                                         ,15395386000,1,U,s,0,0,n,17319809250,1,U,s,0,0,n,19244232500,1,U,s,0,0,n,21168655750
@@ -3076,10 +3058,7 @@ Takes:  {
                                         ,n,55808274250,1,U,s,0,0,n,57732697500,1,U,s,0,0,n,59657120750,1,U,s,0,0,n,61581544000
                                         ,1,U,s,0,0,n,63505967250,1,U,s,0,0,n,65430390500,1,U,s,0,0,n,67354813750,1,U,s,0,0
                                         ,n,69279237000,1,U,s,0,0,n,71203660250,1,U,s,0,0,n,73128083500,1,U,s,0,0,n,75052506750
-                                        ,1,U,s,0,0,n,76976930000,1,U,s,0,0,n,78901353250,1,U,s,0,0,n,80825776500,1,U,s,0,0
-                                        ,n,82750199750,1,U,s,0,0,n,84674623000,1,U,s,0,0,n,86599046250,1,U,s,0,0,n,88523469500
-                                        ,1,U,s,0,0,n,90447892750,1,U,s,0,0,n,92372316000,1,U,s,0,0,n,94296739250,1,U,s,0,0
-                                        ,n,96221162500,1,U,s,0,0,n
+                                        ,1,U,s,0,0,n,76976930000,1,U,s,0,0,n
                         Post-Extrapolation:  {
                             Type: C
                             Repetition: 1
@@ -3089,7 +3068,7 @@ Takes:  {
                     Channel: "Y" {
                         Default: 1
                         KeyVer: 4005
-                        KeyCount: 50
+                        KeyCount: 40
                         Key: 1924423250,1,U,s,0,0,n,3848846500,1,U,s,0,0,n,5773269750,1,U,s,0,0,n,7697693000,1
                                         ,U,s,0,0,n,9622116250,1,U,s,0,0,n,11546539500,1,U,s,0,0,n,13470962750,1,U,s,0,0,n
                                         ,15395386000,1,U,s,0,0,n,17319809250,1,U,s,0,0,n,19244232500,1,U,s,0,0,n,21168655750
@@ -3101,10 +3080,7 @@ Takes:  {
                                         ,n,55808274250,1,U,s,0,0,n,57732697500,1,U,s,0,0,n,59657120750,1,U,s,0,0,n,61581544000
                                         ,1,U,s,0,0,n,63505967250,1,U,s,0,0,n,65430390500,1,U,s,0,0,n,67354813750,1,U,s,0,0
                                         ,n,69279237000,1,U,s,0,0,n,71203660250,1,U,s,0,0,n,73128083500,1,U,s,0,0,n,75052506750
-                                        ,1,U,s,0,0,n,76976930000,1,U,s,0,0,n,78901353250,1,U,s,0,0,n,80825776500,1,U,s,0,0
-                                        ,n,82750199750,1,U,s,0,0,n,84674623000,1,U,s,0,0,n,86599046250,1,U,s,0,0,n,88523469500
-                                        ,1,U,s,0,0,n,90447892750,1,U,s,0,0,n,92372316000,1,U,s,0,0,n,94296739250,1,U,s,0,0
-                                        ,n,96221162500,1,U,s,0,0,n
+                                        ,1,U,s,0,0,n,76976930000,1,U,s,0,0,n
                         Post-Extrapolation:  {
                             Type: C
                             Repetition: 1
@@ -3114,7 +3090,7 @@ Takes:  {
                     Channel: "Z" {
                         Default: 1
                         KeyVer: 4005
-                        KeyCount: 50
+                        KeyCount: 40
                         Key: 1924423250,1,U,s,0,0,n,3848846500,1,U,s,0,0,n,5773269750,1,U,s,0,0,n,7697693000,1
                                         ,U,s,0,0,n,9622116250,1,U,s,0,0,n,11546539500,1,U,s,0,0,n,13470962750,1,U,s,0,0,n
                                         ,15395386000,1,U,s,0,0,n,17319809250,1,U,s,0,0,n,19244232500,1,U,s,0,0,n,21168655750
@@ -3126,10 +3102,7 @@ Takes:  {
                                         ,n,55808274250,1,U,s,0,0,n,57732697500,1,U,s,0,0,n,59657120750,1,U,s,0,0,n,61581544000
                                         ,1,U,s,0,0,n,63505967250,1,U,s,0,0,n,65430390500,1,U,s,0,0,n,67354813750,1,U,s,0,0
                                         ,n,69279237000,1,U,s,0,0,n,71203660250,1,U,s,0,0,n,73128083500,1,U,s,0,0,n,75052506750
-                                        ,1,U,s,0,0,n,76976930000,1,U,s,0,0,n,78901353250,1,U,s,0,0,n,80825776500,1,U,s,0,0
-                                        ,n,82750199750,1,U,s,0,0,n,84674623000,1,U,s,0,0,n,86599046250,1,U,s,0,0,n,88523469500
-                                        ,1,U,s,0,0,n,90447892750,1,U,s,0,0,n,92372316000,1,U,s,0,0,n,94296739250,1,U,s,0,0
-                                        ,n,96221162500,1,U,s,0,0,n
+                                        ,1,U,s,0,0,n,76976930000,1,U,s,0,0,n
                         Post-Extrapolation:  {
                             Type: C
                             Repetition: 1
@@ -3142,7 +3115,7 @@ Takes:  {
             Channel: "Visibility" {
                 Default: 1
                 KeyVer: 4005
-                KeyCount: 50
+                KeyCount: 40
                 Key: 1924423250,1,U,s,0,0,n,3848846500,1,U,s,0,0,n,5773269750,1,U,s,0,0,n,7697693000,1,U,s,0,0,n,9622116250
                     ,1,U,s,0,0,n,11546539500,1,U,s,0,0,n,13470962750,1,U,s,0,0,n,15395386000,1,U,s,0,0,n,17319809250,1,U,s
                     ,0,0,n,19244232500,1,U,s,0,0,n,21168655750,1,U,s,0,0,n,23093079000,1,U,s,0,0,n,25017502250,1,U,s,0,0,n
@@ -3152,9 +3125,7 @@ Takes:  {
                     ,51959427750,1,U,s,0,0,n,53883851000,1,U,s,0,0,n,55808274250,1,U,s,0,0,n,57732697500,1,U,s,0,0,n,59657120750
                     ,1,U,s,0,0,n,61581544000,1,U,s,0,0,n,63505967250,1,U,s,0,0,n,65430390500,1,U,s,0,0,n,67354813750,1,U,s
                     ,0,0,n,69279237000,1,U,s,0,0,n,71203660250,1,U,s,0,0,n,73128083500,1,U,s,0,0,n,75052506750,1,U,s,0,0,n
-                    ,76976930000,1,U,s,0,0,n,78901353250,1,U,s,0,0,n,80825776500,1,U,s,0,0,n,82750199750,1,U,s,0,0,n,84674623000
-                    ,1,U,s,0,0,n,86599046250,1,U,s,0,0,n,88523469500,1,U,s,0,0,n,90447892750,1,U,s,0,0,n,92372316000,1,U,s
-                    ,0,0,n,94296739250,1,U,s,0,0,n,96221162500,1,U,s,0,0,n
+                    ,76976930000,1,U,s,0,0,n
                 Post-Extrapolation:  {
                     Type: C
                     Repetition: 1
@@ -3887,7 +3858,7 @@ Version5:  {
         SnapOnFrames: 0
         ReferenceTimeIndex: -1
         TimeLineStartTime: 1924423250
-        TimeLineStopTime: 192442325000
+        TimeLineStopTime: 76976930000
     }
     RendererSetting:  {
         DefaultCamera: "Producer Perspective"

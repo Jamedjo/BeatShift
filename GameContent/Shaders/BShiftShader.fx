@@ -132,8 +132,8 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 		
 		// Skin the vertex position, normal ant tangent.
 		nPosition = mul(input.Position, skinTransform);
-		nNormal = mul(float4(input.Normal, 0), skinTransform);
-		nTangent = mul(float4(input.Tangent, 0), skinTransform);
+		nNormal = normalize(mul(float4(input.Normal, 0), skinTransform));
+		nTangent = normalize(mul(float4(input.Tangent, 0), skinTransform));
 	}
 	else {
 		nPosition = input.Position;
