@@ -7,6 +7,7 @@ float4x4 viewInv_Mx  :  ViewInverse             < string UIWidget = "None"; >;
 // If you change this, update SkinnedModelProcessor.cs to match.
 #define MaxBones 59
 float4x4 Bones[MaxBones];
+float UseSkinning = 0;
 
 
 float3 LightDirection_0 : DIRECTION
@@ -116,19 +117,31 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 {
     VertexShaderOutput output = (VertexShaderOutput)0;
 	
+	float4 nPosition = 0;
+	float3 nNormal = 0;
+	float3 nTangent = 0;
 	
-    // Blend between the weighted bone matrices.
-    float4x4 skinTransform = 0;
-    skinTransform += Bones[input.BoneIndices.x] * input.BoneWeights.x;
-    skinTransform += Bones[input.BoneIndices.y] * input.BoneWeights.y;
-    skinTransform += Bones[input.BoneIndices.z] * input.BoneWeights.z;
-    skinTransform += Bones[input.BoneIndices.w] * input.BoneWeights.w;
-    
-    // Skin the vertex position, normal ant tangent.
-    float4 nPosition = mul(input.Position, skinTransform);
-	float4 nNormal = mul(input.Normal, skinTransform);
-	float4 nTangent = mul(input.Tangent, skinTransform);
-    output.Position = mul(nPosition, wvp_Mx);
+	if (UseSkinning == 1)
+	{
+		// Blend between the weighted bone matrices.
+		float4x4 skinTransform = 0;
+		skinTransform += Bones[input.BoneIndices.x] * input.BoneWeights.x;
+		skinTransform += Bones[input.BoneIndices.y] * input.BoneWeights.y;
+		skinTransform += Bones[input.BoneIndices.z] * input.BoneWeights.z;
+		skinTransform += Bones[input.BoneIndices.w] * input.BoneWeights.w;
+		
+		// Skin the vertex position, normal ant tangent.
+		nPosition = mul(input.Position, skinTransform);
+		nNormal = mul(float4(input.Normal, 0), skinTransform);
+		nTangent = mul(float4(input.Tangent, 0), skinTransform);
+	}
+	else {
+		nPosition = input.Position;
+		nNormal = input.Normal;
+		nTangent = input.Tangent;
+	}
+	
+	output.Position = mul(nPosition, wvp_Mx);
 	float3 worldPosition 	= mul(nPosition, world_Mx);
 
 	float3x3 worldToTangentSpace;
