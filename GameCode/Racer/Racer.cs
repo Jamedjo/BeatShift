@@ -238,6 +238,9 @@ namespace BeatShift
             racerPoints.pointsPopupManager.Update(gameTime);
             messagePopupManager.Update(gameTime);
 
+            //Update ship animation
+            shipDrawing.Update(gameTime);
+
             OtherUpdate(gameTime);
         }
 

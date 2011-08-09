@@ -64,6 +64,10 @@
       <XnaReferenceType>Content</XnaReferenceType>
       <Project>{7E9D60DA-D2B4-41E0-B5EE-3F1EFA30D1CB}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\lib\SkinnedModel\SkinnedModelXbox.csproj">
+      <Project>{33670229-CE14-4705-A4C2-CAE8FEF5F520}</Project>
+      <Name>SkinnedModelXbox</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Audio\Beat.cs" />

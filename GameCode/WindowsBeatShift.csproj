@@ -274,6 +274,10 @@
       <XnaReferenceType>Content</XnaReferenceType>
       <Project>{7E9D60DA-D2B4-41E0-B5EE-3F1EFA30D1CB}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\lib\SkinnedModel\SkinnedModelWindows.csproj">
+      <Project>{0D41E29B-829F-4255-BCA5-64DC2677DA6D}</Project>
+      <Name>SkinnedModelWindows</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">

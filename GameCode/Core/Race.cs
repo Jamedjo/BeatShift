@@ -69,6 +69,12 @@ namespace BeatShift
                     racer.localCamera.Update(gameTime);
                 }
                 );
+
+                foreach (Racer racer in currentRacers)
+                {
+                    //Update ship animatiions
+                    racer.shipDrawing.Update(gameTime);
+                }
             }
         }
 

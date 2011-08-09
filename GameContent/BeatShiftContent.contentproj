@@ -675,7 +675,9 @@
     <Compile Include="Models\Ships\Omicron.fbx">
       <Name>Omicron</Name>
       <Importer>FbxImporter</Importer>
-      <Processor>BShiftAdvancedModelProcessor</Processor>
+      <Processor>AnimatedShipModelProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>False</ProcessorParameters_GenerateMipmaps>
+      <ProcessorParameters_TextureFormat>NoChange</ProcessorParameters_TextureFormat>
       <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
     </Compile>
     <Compile Include="Models\Ships\Skylar.fbx">

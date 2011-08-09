@@ -160,6 +160,7 @@ namespace BeatShift
             {
                 invinciEndtime = BeatShift.bgm.songTick() + 3000;
                 myLayer--;
+                parentRacer.shipDrawing.playDownClip(myLayer);
                 BeatShift.bgm.MusicDown(myLayer);
                 boostBar = 98;
                 visualisation.Clear();
@@ -179,6 +180,7 @@ namespace BeatShift
             {
                 invinciEndtime = BeatShift.bgm.songTick() + 3000;
                 myLayer++;
+                parentRacer.shipDrawing.playUpClip(myLayer);
                 BeatShift.bgm.MusicUp(myLayer);
                 boostBar = 2;
                 visualisation.Clear();

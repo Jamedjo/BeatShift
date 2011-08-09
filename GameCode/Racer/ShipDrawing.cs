@@ -93,6 +93,58 @@ namespace BeatShift
             shipClasses.Add(new ShipFbx("Flux"));
         }
 
+        public void Update(GameTime gameTime)
+        {
+            ShipFbx ship = shipClasses[(int)currentShip];
+            if(ship.isAnimated) ship.clipPlayer.Update(gameTime,Matrix.Identity);
+        }
+
+        public void playUpClip(int newLevel)
+        {
+            if (!shipClasses[(int)currentShip].isAnimated) return;
+            switch (newLevel)
+            {
+                case 1://Leveled up from 1 to 2
+                    shipClasses[(int)currentShip].clipPlayer.play(1, 9, false);
+                    break;
+                case 2:
+                    shipClasses[(int)currentShip].clipPlayer.play(9, 19, false);
+                    break;
+                case 3:
+                    shipClasses[(int)currentShip].clipPlayer.play(19, 29, false);
+                    break;
+                case 4://Leveled up from 4 to 5
+                    shipClasses[(int)currentShip].clipPlayer.play(29, 39, false);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        public void playDownClip(int newLevel)
+        {
+            if (!shipClasses[(int)currentShip].isAnimated) return;
+            switch (newLevel)
+            {
+                case 0: //Leveled down from 2 to 1
+                    shipClasses[(int)currentShip].clipPlayer.play(9, 1, false);//As 50 frames used for 4 animations, frame is ((50/4)*lvl), should have used 40,60 or 80 frames not 50
+                    break;
+                case 1:
+                    shipClasses[(int)currentShip].clipPlayer.play(19, 9, false);
+                    break;
+                case 2:
+                    shipClasses[(int)currentShip].clipPlayer.play(29, 19, false);
+                    break;
+                case 3: //Leveled down from 5 to 4
+                    shipClasses[(int)currentShip].clipPlayer.play(39, 29, false);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
         #region Draw
 
         public void Draw(GameTime gameTime, CameraWrapper camera, Boolean isThisTheCamerasShip)
@@ -131,10 +183,17 @@ namespace BeatShift
                 else reflectOverride = MathHelper.Lerp(reflectOverride, 0.0f, 0.2f);
 
                 //Draw ship using bShiftEffect.fx as instructed by the fbx file
-                foreach (ModelMesh mesh in shipClasses[(int)currentShip].model.Meshes)
+                ShipFbx shipFbx = shipClasses[(int)currentShip];
+                foreach (ModelMesh mesh in shipFbx.model.Meshes)
                 {
                     foreach (Effect effect in mesh.Effects)
                     {
+                        if (shipFbx.isAnimated)
+                        {
+                            effect.CurrentTechnique = effect.Techniques["SkinnedShip"];
+                            effect.Parameters["Bones"].SetValue(shipFbx.Bones);
+                        }
+
                         effect.Parameters["world_Mx"].SetValue(worldMatrix);
                         effect.Parameters["wvp_Mx"].SetValue(worldMatrix * viewMatrix * projectionMatrix);
 
