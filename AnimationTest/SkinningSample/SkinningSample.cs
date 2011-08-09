@@ -119,16 +119,16 @@ namespace SkinningSample
             switch (newLevel)
             {
                 case 2:
-                    clipPlayer.play(0, 10, false);
+                    clipPlayer.play(0, 9, false);
                     break;
                 case 3:
-                    clipPlayer.play(10, 20, false);
+                    clipPlayer.play(9, 19, false);
                     break;
                 case 4:
-                    clipPlayer.play(20, 30, false);
+                    clipPlayer.play(19, 29, false);
                     break;
                 case 5:
-                    clipPlayer.play(30, 40, false);
+                    clipPlayer.play(29, 39, false);
                     break;
 
                 default:
@@ -141,16 +141,16 @@ namespace SkinningSample
             switch (newLevel)
             {
                 case 1:
-                    clipPlayer.play(10, 1, false);//As 50 frames used for 4 animations, frame is ((50/4)*lvl), should have used 40,60 or 80 frames not 50
+                    clipPlayer.play(9, 0, false);//As 50 frames used for 4 animations, frame is ((50/4)*lvl), should have used 40,60 or 80 frames not 50
                     break;
                 case 2:
-                    clipPlayer.play(20, 10, false);
+                    clipPlayer.play(19, 9, false);
                     break;
                 case 3:
-                    clipPlayer.play(30, 20, false);
+                    clipPlayer.play(29, 19, false);
                     break;
                 case 4:
-                    clipPlayer.play(40, 30, false);
+                    clipPlayer.play(39, 29, false);
                     break;
 
                 default:

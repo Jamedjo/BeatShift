@@ -77,3 +77,11 @@ glob:GameCode/Particle Systems/EngineParticleSystem.cs.rej
 glob:GameCode/Race/Race.cs.orig
 glob:GameContent/renderData/mentalray/*
 glob:GameContent/tmp/Omicron.tif
+glob:AnimationTest/SkinnedModel/bin/x86/Debug/**
+glob:AnimationTest/SkinnedModel/obj/x86/Debug/**
+glob:AnimationTest/SkinnedModelPipeline/bin/x86/**
+glob:AnimationTest/SkinnedModelPipeline/obj/x86/**
+glob:AnimationTest/SkinningSample/Content/obj/**
+glob:AnimationTest/SkinningSample/bin/x86/**
+glob:AnimationTest/SkinningSample/obj/x86/**
+glob:*.suo
