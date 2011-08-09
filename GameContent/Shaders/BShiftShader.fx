@@ -7,7 +7,6 @@ float4x4 viewInv_Mx  :  ViewInverse             < string UIWidget = "None"; >;
 // If you change this, update SkinnedModelProcessor.cs to match.
 #define MaxBones 59
 float4x4 Bones[MaxBones];
-float UseSkinning = 0;
 
 
 float3 LightDirection_0 : DIRECTION
@@ -113,41 +112,28 @@ struct VertexShaderOutput
 	float3 View : TEXCOORD4;	
 };
 
-VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
+struct VS_Part1_Output
+{
+	float4 nPosition;
+	float3 nNormal;
+	float3 nTangent;
+	
+	float2 TexCoord;
+};
+
+VertexShaderOutput VSF_Body(VS_Part1_Output input, float isSkinned)
 {
     VertexShaderOutput output = (VertexShaderOutput)0;
 	
-	float4 nPosition = 0;
-	float3 nNormal = 0;
-	float3 nTangent = 0;
-	
-	if (UseSkinning == 1)
-	{
-		// Blend between the weighted bone matrices.
-		float4x4 skinTransform = 0;
-		skinTransform += Bones[input.BoneIndices.x] * input.BoneWeights.x;
-		skinTransform += Bones[input.BoneIndices.y] * input.BoneWeights.y;
-		skinTransform += Bones[input.BoneIndices.z] * input.BoneWeights.z;
-		skinTransform += Bones[input.BoneIndices.w] * input.BoneWeights.w;
-		
-		// Skin the vertex position, normal ant tangent.
-		nPosition = mul(input.Position, skinTransform);
-		nNormal = normalize(mul(float4(input.Normal, 0), skinTransform));
-		nTangent = normalize(mul(float4(input.Tangent, 0), skinTransform));
-	}
-	else {
-		nPosition = input.Position;
-		nNormal = input.Normal;
-		nTangent = input.Tangent;
-	}
-	
-	output.Position = mul(nPosition, wvp_Mx);
-	float3 worldPosition 	= mul(nPosition, world_Mx);
+	output.Position = mul(input.nPosition, wvp_Mx);
+	float3 worldPosition;
+	if(isSkinned==1) worldPosition = input.nPosition;
+	else worldPosition = mul(input.nPosition, world_Mx);
 
 	float3x3 worldToTangentSpace;
-	worldToTangentSpace[0] = mul(nTangent,world_Mx);
-    worldToTangentSpace[1] = mul(cross(nTangent,nNormal),world_Mx);
-    worldToTangentSpace[2] = mul(nNormal,world_Mx);
+	worldToTangentSpace[0] = mul(input.nTangent,world_Mx);
+    worldToTangentSpace[1] = mul(cross(input.nTangent,input.nNormal),world_Mx);
+    worldToTangentSpace[2] = mul(input.nNormal,world_Mx);
 
 	output.Light0 = mul(worldToTangentSpace,-LightDirection_0);
 	output.Light1 = mul(worldToTangentSpace,-LightDirection_1);
@@ -167,6 +153,47 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 	output.TexCoord = input.TexCoord;
     
 	return output;
+}
+
+
+VertexShaderOutput VertexShaderFunction(VertexShaderInput input){
+	VS_Part1_Output output = (VS_Part1_Output)0;
+	
+	output.nPosition = input.Position;
+	output.nNormal = input.Normal;
+	output.nTangent = input.Tangent;
+	
+	output.TexCoord = input.TexCoord;
+	
+	return VSF_Body(output,0);
+}
+
+VertexShaderOutput VertexShaderFunction_Skinned(VertexShaderInput input){
+	VS_Part1_Output output = (VS_Part1_Output)0;
+	
+		// Blend between the weighted bone matrices.
+		float4x4 skinTransform = 0;
+		float xW =input.BoneWeights.x;
+		float yW =input.BoneWeights.y;
+		float zW =input.BoneWeights.z;
+		float wW =input.BoneWeights.w;
+		float xI = input.BoneIndices.x;
+		float yI = input.BoneIndices.y;
+		float zI = input.BoneIndices.z;
+		float wI = input.BoneIndices.w;
+		skinTransform += Bones[xI] * xW;
+		skinTransform += Bones[yI] * yW;
+		skinTransform += Bones[zI] * zW;
+		skinTransform += Bones[wI] * wW;
+		
+		// Skin the vertex position, normal ant tangent.
+		output.nPosition = mul(input.Position, skinTransform);
+		output.nNormal = normalize(mul(float4(input.Normal, 0), skinTransform));
+		output.nTangent = normalize(mul(float4(input.Tangent, 0), skinTransform));
+	
+	output.TexCoord = input.TexCoord;
+
+	return VSF_Body(output,1);
 }
 
 float3 lambert(float3 lDir,float3 normal){
@@ -272,6 +299,18 @@ technique Technique1
         DestBlend = INVSRCALPHA;
         SrcBlend = SRCALPHA;
         VertexShader = compile vs_2_0 VertexShaderFunction();
+        PixelShader = compile ps_2_0 PixelShaderFunction();
+    }
+}
+
+technique SkinnedShip
+{
+    pass Pass1
+    {
+        AlphaBlendEnable = TRUE;
+        DestBlend = INVSRCALPHA;
+        SrcBlend = SRCALPHA;
+        VertexShader = compile vs_2_0 VertexShaderFunction_Skinned();
         PixelShader = compile ps_2_0 PixelShaderFunction();
     }
 }

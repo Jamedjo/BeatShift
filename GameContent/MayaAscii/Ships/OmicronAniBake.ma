@@ -1,6 +1,6 @@
 //Maya ASCII 2011 scene
 //Name: OmicronAniBake.ma
-//Last modified: Sun, Aug 07, 2011 02:25:55 PM
+//Last modified: Sun, Aug 07, 2011 05:41:48 PM
 //Codeset: 1252
 requires maya "2011";
 requires "Mayatomr" "2011.0m - 3.8.1.26 ";
@@ -15,15 +15,15 @@ fileInfo "osv" "Microsoft Windows 7 Business Edition, 64-bit Windows 7 Service P
 fileInfo "license" "student";
 createNode transform -s -n "persp";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" 0.70232444078178446 37.079232678954554 55.487142868176988 ;
-	setAttr ".r" -type "double3" -34.800000000001369 2.4000000000001527 -9.9479594301634114e-017 ;
+	setAttr ".t" -type "double3" 10.556760553824848 15.817625127890945 29.470908853295189 ;
+	setAttr ".r" -type "double3" -23.400000000001345 21.600000000000023 -8.5519335284786516e-016 ;
 	setAttr ".rp" -type "double3" -4.4408920985006262e-016 4.4408920985006262e-016 0 ;
 	setAttr ".rpt" -type "double3" -6.5481150968394159e-015 7.7440105925817754e-015 
 		-5.4820092378065441e-015 ;
 createNode camera -s -n "perspShape" -p "persp";
 	setAttr -k off ".v" no;
 	setAttr ".fl" 34.999999999999979;
-	setAttr ".coi" 63.418325410847729;
+	setAttr ".coi" 32.194214494337515;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
@@ -9606,9 +9606,9 @@ createNode objectSet -n "RightWing";
 createNode character -n "multiCh";
 	addAttr -ci true -h true -sn "aal" -ln "attributeAliasList" -dt "attributeAlias";
 	setAttr -s 30 ".dnsm";
-	setAttr -s 10 ".uv[7:10]"  1 1 1 1;
 	setAttr -s 10 ".uv";
-	setAttr -s 12 ".lv[10:12]"  3.5000000000000009 0 0;
+	setAttr -s 10 ".uv";
+	setAttr -s 12 ".lv";
 	setAttr -s 12 ".lv";
 	setAttr -s 8 ".av";
 	setAttr -s 8 ".av";
@@ -10459,6 +10459,80 @@ createNode animCurveTL -n "animCurveTL2";
 		39 -1.0000000000000009 40 -1.0000000000000009 41 -1.0000000000000009 42 -1.0000000000000009 
 		43 -1.0000000000000009 44 -1.0000000000000009 45 -1.0000000000000009 46 -1.0000000000000009 
 		47 -1.0000000000000009 48 -1.0000000000000009 49 -1.0000000000000009 50 -1.0000000000000009;
+createNode animCurveTU -n "multiCh_RootJoint_visibility";
+	setAttr ".tan" 10;
+	setAttr ".wgt" no;
+	setAttr -s 40 ".ktv[0:39]"  1 1 2 1 3 1 4 1 5 1 6 1 7 1 8 1 9 1 10 
+		1 11 1 12 1 13 1 14 1 15 1 16 1 17 1 18 1 19 1 20 1 21 1 22 1 23 1 24 1 25 1 26 1 
+		27 1 28 1 29 1 30 1 31 1 32 1 33 1 34 1 35 1 36 1 37 1 38 1 39 1 40 1;
+createNode animCurveTL -n "multiCh_RootJoint_translateX";
+	setAttr ".tan" 10;
+	setAttr ".wgt" no;
+	setAttr -s 40 ".ktv[0:39]"  1 0 2 0 3 0 4 0 5 0 6 0 7 0 8 0 9 0 10 
+		0 11 0 12 0 13 0 14 0 15 0 16 0 17 0 18 0 19 0 20 0 21 0 22 0 23 0 24 0 25 0 26 0 
+		27 0 28 0 29 0 30 0 31 0 32 0 33 0 34 0 35 0 36 0 37 0 38 0 39 0 40 0;
+createNode animCurveTL -n "multiCh_RootJoint_translateY";
+	setAttr ".tan" 10;
+	setAttr ".wgt" no;
+	setAttr -s 40 ".ktv[0:39]"  1 0 2 0 3 0 4 0 5 0 6 0 7 0 8 0 9 0 10 
+		0 11 0 12 0 13 0 14 0 15 0 16 0 17 0 18 0 19 0 20 0 21 0 22 0 23 0 24 0 25 0 26 0 
+		27 0 28 0 29 0 30 0 31 0 32 0 33 0 34 0 35 0 36 0 37 0 38 0 39 0 40 0;
+createNode animCurveTL -n "multiCh_RootJoint_translateZ";
+	setAttr ".tan" 10;
+	setAttr ".wgt" no;
+	setAttr -s 40 ".ktv[0:39]"  1 3.5000000000000009 2 3.5000000000000009 
+		3 3.5000000000000009 4 3.5000000000000009 5 3.5000000000000009 6 3.5000000000000009 
+		7 3.5000000000000009 8 3.5000000000000009 9 3.5000000000000009 10 3.5000000000000009 
+		11 3.5000000000000009 12 3.5000000000000009 13 3.5000000000000009 14 3.5000000000000009 
+		15 3.5000000000000009 16 3.5000000000000009 17 3.5000000000000009 18 3.5000000000000009 
+		19 3.5000000000000009 20 3.5000000000000009 21 3.5000000000000009 22 3.5000000000000009 
+		23 3.5000000000000009 24 3.5000000000000009 25 3.5000000000000009 26 3.5000000000000009 
+		27 3.5000000000000009 28 3.5000000000000009 29 3.5000000000000009 30 3.5000000000000009 
+		31 3.5000000000000009 32 3.5000000000000009 33 3.5000000000000009 34 3.5000000000000009 
+		35 3.5000000000000009 36 3.5000000000000009 37 3.5000000000000009 38 3.5000000000000009 
+		39 3.5000000000000009 40 3.5000000000000009;
+createNode animCurveTA -n "multiCh_RootJoint_rotateX";
+	setAttr ".tan" 10;
+	setAttr ".wgt" no;
+	setAttr -s 40 ".ktv[0:39]"  1 0 2 0 3 0 4 0 5 0 6 0 7 0 8 0 9 0 10 
+		0 11 0 12 0 13 0 14 0 15 0 16 0 17 0 18 0 19 0 20 0 21 0 22 0 23 0 24 0 25 0 26 0 
+		27 0 28 0 29 0 30 0 31 0 32 0 33 0 34 0 35 0 36 0 37 0 38 0 39 0 40 0;
+createNode animCurveTA -n "multiCh_RootJoint_rotateY";
+	setAttr ".tan" 10;
+	setAttr ".wgt" no;
+	setAttr -s 40 ".ktv[0:39]"  1 0 2 0 3 0 4 0 5 0 6 0 7 0 8 0 9 0 10 
+		0 11 0 12 0 13 0 14 0 15 0 16 0 17 0 18 0 19 0 20 0 21 0 22 0 23 0 24 0 25 0 26 0 
+		27 0 28 0 29 0 30 0 31 0 32 0 33 0 34 0 35 0 36 0 37 0 38 0 39 0 40 0;
+createNode animCurveTA -n "multiCh_RootJoint_rotateZ";
+	setAttr ".tan" 10;
+	setAttr ".wgt" no;
+	setAttr -s 40 ".ktv[0:39]"  1 0 2 0 3 0 4 0 5 0 6 0 7 0 8 0 9 0 10 
+		0 11 0 12 0 13 0 14 0 15 0 16 0 17 0 18 0 19 0 20 0 21 0 22 0 23 0 24 0 25 0 26 0 
+		27 0 28 0 29 0 30 0 31 0 32 0 33 0 34 0 35 0 36 0 37 0 38 0 39 0 40 0;
+createNode animCurveTU -n "multiCh_RootJoint_scaleX";
+	setAttr ".tan" 10;
+	setAttr ".wgt" no;
+	setAttr -s 40 ".ktv[0:39]"  1 1 2 1 3 1 4 1 5 1 6 1 7 1 8 1 9 1 10 
+		1 11 1 12 1 13 1 14 1 15 1 16 1 17 1 18 1 19 1 20 1 21 1 22 1 23 1 24 1 25 1 26 1 
+		27 1 28 1 29 1 30 1 31 1 32 1 33 1 34 1 35 1 36 1 37 1 38 1 39 1 40 1;
+createNode animCurveTU -n "multiCh_RootJoint_scaleY";
+	setAttr ".tan" 10;
+	setAttr ".wgt" no;
+	setAttr -s 40 ".ktv[0:39]"  1 1 2 1 3 1 4 1 5 1 6 1 7 1 8 1 9 1 10 
+		1 11 1 12 1 13 1 14 1 15 1 16 1 17 1 18 1 19 1 20 1 21 1 22 1 23 1 24 1 25 1 26 1 
+		27 1 28 1 29 1 30 1 31 1 32 1 33 1 34 1 35 1 36 1 37 1 38 1 39 1 40 1;
+createNode animCurveTU -n "multiCh_RootJoint_scaleZ";
+	setAttr ".tan" 10;
+	setAttr ".wgt" no;
+	setAttr -s 40 ".ktv[0:39]"  1 1 2 1 3 1 4 1 5 1 6 1 7 1 8 1 9 1 10 
+		1 11 1 12 1 13 1 14 1 15 1 16 1 17 1 18 1 19 1 20 1 21 1 22 1 23 1 24 1 25 1 26 1 
+		27 1 28 1 29 1 30 1 31 1 32 1 33 1 34 1 35 1 36 1 37 1 38 1 39 1 40 1;
+createNode animCurveTU -n "Omicron_High_visibility";
+	setAttr ".tan" 10;
+	setAttr ".wgt" no;
+	setAttr -s 40 ".ktv[0:39]"  1 1 2 1 3 1 4 1 5 1 6 1 7 1 8 1 9 1 10 
+		1 11 1 12 1 13 1 14 1 15 1 16 1 17 1 18 1 19 1 20 1 21 1 22 1 23 1 24 1 25 1 26 1 
+		27 1 28 1 29 1 30 1 31 1 32 1 33 1 34 1 35 1 36 1 37 1 38 1 39 1 40 1;
 select -ne :time1;
 	setAttr ".o" 1;
 	setAttr ".unw" 1;
@@ -10509,6 +10583,7 @@ select -ne :characterPartition;
 select -ne :ikSystem;
 	setAttr -s 4 ".sol";
 connectAttr "HighPoly.di" "Omicron_High.do";
+connectAttr "Omicron_High_visibility.o" "Omicron_High.v";
 connectAttr "groupId3.id" "Omicron_HighShape.iog.og[2].gid";
 connectAttr "tweakSet1.mwc" "Omicron_HighShape.iog.og[2].gco";
 connectAttr "groupId4.id" "Omicron_HighShape.iog.og[4].gid";
@@ -10974,6 +11049,10 @@ connectAttr "WingLeft_scaleX.o" "multiCh.uv[3]";
 connectAttr "WingRight_scaleZ.o" "multiCh.uv[4]";
 connectAttr "WingRight_scaleY.o" "multiCh.uv[5]";
 connectAttr "WingRight_scaleX.o" "multiCh.uv[6]";
+connectAttr "multiCh_RootJoint_visibility.o" "multiCh.uv[7]";
+connectAttr "multiCh_RootJoint_scaleZ.o" "multiCh.uv[8]";
+connectAttr "multiCh_RootJoint_scaleY.o" "multiCh.uv[9]";
+connectAttr "multiCh_RootJoint_scaleX.o" "multiCh.uv[10]";
 connectAttr "LeftFront_translateZ.o" "multiCh.lv[1]";
 connectAttr "LeftFront_translateX.o" "multiCh.lv[2]";
 connectAttr "RightFront_translateZ.o" "multiCh.lv[3]";
@@ -10983,11 +11062,17 @@ connectAttr "WingLeft_translateY.o" "multiCh.lv[6]";
 connectAttr "WingLeft_translateX.o" "multiCh.lv[7]";
 connectAttr "WingRight_translateY.o" "multiCh.lv[8]";
 connectAttr "WingRight_translateX.o" "multiCh.lv[9]";
+connectAttr "multiCh_RootJoint_translateZ.o" "multiCh.lv[10]";
+connectAttr "multiCh_RootJoint_translateY.o" "multiCh.lv[11]";
+connectAttr "multiCh_RootJoint_translateX.o" "multiCh.lv[12]";
 connectAttr "WingLeft_rotateZ.o" "multiCh.av[1]";
 connectAttr "WingLeft_rotateY.o" "multiCh.av[2]";
 connectAttr "WingLeft_rotateX.o" "multiCh.av[3]";
 connectAttr "WingRight_rotateY.o" "multiCh.av[4]";
 connectAttr "WingRight_rotateX.o" "multiCh.av[5]";
+connectAttr "multiCh_RootJoint_rotateZ.o" "multiCh.av[6]";
+connectAttr "multiCh_RootJoint_rotateY.o" "multiCh.av[7]";
+connectAttr "multiCh_RootJoint_rotateX.o" "multiCh.av[8]";
 connectAttr "LeftFront.tz" "multiCh.dnsm[0]";
 connectAttr "LeftFront.tx" "multiCh.dnsm[1]";
 connectAttr "RightFront.tz" "multiCh.dnsm[2]";
