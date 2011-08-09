@@ -119,7 +119,7 @@ namespace SkinningSample
             switch (newLevel)
             {
                 case 2:
-                    clipPlayer.play(0, 9, false);
+                    clipPlayer.play(1, 9, false);
                     break;
                 case 3:
                     clipPlayer.play(9, 19, false);
@@ -141,7 +141,7 @@ namespace SkinningSample
             switch (newLevel)
             {
                 case 1:
-                    clipPlayer.play(9, 0, false);//As 50 frames used for 4 animations, frame is ((50/4)*lvl), should have used 40,60 or 80 frames not 50
+                    clipPlayer.play(9, 1, false);//As 50 frames used for 4 animations, frame is ((50/4)*lvl), should have used 40,60 or 80 frames not 50
                     break;
                 case 2:
                     clipPlayer.play(19, 9, false);
@@ -177,7 +177,7 @@ namespace SkinningSample
                           Matrix.CreateLookAt(new Vector3(0, -5, cameraDistance), 
                                               new Vector3(0, 0, 20), Vector3.Up);
 
-            Matrix projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4,
+            Matrix projection = Matrix.CreatePerspectiveFieldOfView(0.949982712f,
                                                                     device.Viewport.AspectRatio,
                                                                     1,
                                                                     10000);

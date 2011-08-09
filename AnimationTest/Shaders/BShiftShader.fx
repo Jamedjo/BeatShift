@@ -127,8 +127,9 @@ VertexShaderOutput VSF_Body(VS_Part1_Output input, float isSkinned)
 	
 	output.Position = mul(input.nPosition, wvp_Mx);
 	float3 worldPosition;
-	if(isSkinned==1) worldPosition = input.nPosition;
-	else worldPosition = mul(input.nPosition, world_Mx);
+	//if(isSkinned==1) worldPosition = input.nPosition;
+	//else
+	worldPosition = mul(input.nPosition, world_Mx);
 
 	float3x3 worldToTangentSpace;
 	worldToTangentSpace[0] = mul(input.nTangent,world_Mx);
