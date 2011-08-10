@@ -5,6 +5,6 @@ workspace -fr "movie" "data";
 workspace -fr "autoSave" "autosave";
 workspace -fr "mayaAscii" "scenes";
 workspace -fr "textures" "Textures";
-workspace -fr "particles" "particles";
 workspace -fr "templates" "assets";
+workspace -fr "particles" "particles";
 workspace -fr "mayaBinary" "scenes";
