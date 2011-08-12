@@ -9,25 +9,28 @@ float4x4 viewInv_Mx  :  ViewInverse             < string UIWidget = "None"; >;
 float4x4 Bones[MaxBones];
 
 
-float3 LightDirection_0 : DIRECTION
+float3 LightDir_ection_0 //: DIRECTION
 <
     string UIName = "Light 0 Direction";
     int refID = 0;
->  = float3(-0.52,-0.57,-0.62);
+>  //= float3(-0.52,-0.57,-0.62)
+;
 float3 LightColour_0 = float3(0.586, 0.563, 0.474);
 
-float3 LightDirection_1 : DIRECTION
+float3 LightDir_ection_1 //: DIRECTION
 <
     string UIName = "Light 1 Direction";
     int refID = 1;
->  = float3(0.71,0.34,0.60);
+>  //= float3(0.71,0.34,0.60)
+;
 float3 LightColour_1 = float3(0.708,0.604,0.627);
 
-float3 LightDirection_2 : DIRECTION
+float3 LightDir_ection_2 //: DIRECTION
 <
     string UIName = "Light 2 Direction";
     int refID = 2;
->  = float3(0.45, -0.76, 0.45);
+>  //= float3(0.45, -0.76, 0.45)
+;
 float3 LightColour_2 = float3(0.538,0.605,0.655);
 
 bool useAlphaMap
@@ -136,9 +139,9 @@ VertexShaderOutput VSF_Body(VS_Part1_Output input, float isSkinned)
     worldToTangentSpace[1] = mul(cross(input.nTangent,input.nNormal),world_Mx);
     worldToTangentSpace[2] = mul(input.nNormal,world_Mx);
 
-	output.Light0 = mul(worldToTangentSpace,-LightDirection_0);
-	output.Light1 = mul(worldToTangentSpace,-LightDirection_1);
-	output.Light2 = mul(worldToTangentSpace,-LightDirection_2);
+	output.Light0 = mul(worldToTangentSpace,-LightDir_ection_0);
+	output.Light1 = mul(worldToTangentSpace,-LightDir_ection_1);
+	output.Light2 = mul(worldToTangentSpace,-LightDir_ection_2);
 	
 	//float3 halfAngle = normalize(DiffuseLightDirection) + normalize( viewInv_Mx[3].xyz - worldPosition.xyz );
 	//output.EyeVec = viewInv_Mx[3].xyz - worldPosition;

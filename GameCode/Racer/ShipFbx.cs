@@ -31,7 +31,12 @@ namespace BeatShift
                 bones = new Matrix[model.Bones.Count];
                 model.CopyAbsoluteBoneTransformsTo(bones);
             }
-
+            var temp = ((EffectMaterial)model.Meshes[0].Effects[0]).Parameters;
+            for (int i = 0; i < temp.Count; i++)
+            {
+                var a = temp[i];
+                var p = 0;
+            }
             GC.Collect();
 
             //Override the default texture
