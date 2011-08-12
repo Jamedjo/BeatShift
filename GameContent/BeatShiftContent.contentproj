@@ -725,6 +725,8 @@
       <Importer>FbxImporter</Importer>
       <Processor>BShiftAdvancedModelProcessor</Processor>
       <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
+      <ProcessorParameters_GenerateMipmaps>False</ProcessorParameters_GenerateMipmaps>
+      <ProcessorParameters_TextureFormat>NoChange</ProcessorParameters_TextureFormat>
     </Compile>
     <Compile Include="Models\Maps\SpaceMap_scenery.fbx">
       <Name>SpaceMap_scenery</Name>

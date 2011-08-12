@@ -1,6 +1,6 @@
 //Maya ASCII 2011 scene
 //Name: Skylar.ma
-//Last modified: Fri, Aug 12, 2011 03:26:39 AM
+//Last modified: Fri, Aug 12, 2011 03:52:27 AM
 //Codeset: 1252
 requires maya "2011";
 requires "hlslShader" "1.0";
@@ -14,13 +14,13 @@ fileInfo "osv" "Microsoft Windows 7 Business Edition, 64-bit Windows 7 Service P
 fileInfo "license" "student";
 createNode transform -s -n "persp";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" 0.7430399225258344 3.6102631610479983 14.407167358096725 ;
+	setAttr ".t" -type "double3" 0.74303992252572804 3.6102631610478633 14.407167358095879 ;
 	setAttr ".r" -type "double3" -8.9999999999758238 367.19999999997873 -1.0018230116340665e-016 ;
 	setAttr ".rpt" -type "double3" 3.9147968275286205e-014 7.1799559639904975e-014 -9.0854840705533649e-015 ;
 createNode camera -s -n "perspShape" -p "persp";
 	setAttr -k off ".v" no;
 	setAttr ".fl" 34.999999999999979;
-	setAttr ".coi" 15.347145390873713;
+	setAttr ".coi" 15.347145390872857;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
