@@ -72,6 +72,16 @@ namespace BeatShift
         public void enteringState()
         {
             resetInputsAndScreens();
+#if DEBUG
+            if (AiInputManager.testAI)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    //ssarea[i].setActive(true);
+                    Race.humanRacers[i].shipDrawing.isVisible = true;
+                }
+            }
+#endif
         }
 
         /// <summary>
