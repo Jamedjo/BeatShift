@@ -85,3 +85,4 @@ glob:AnimationTest/SkinningSample/Content/obj/**
 glob:AnimationTest/SkinningSample/bin/x86/**
 glob:AnimationTest/SkinningSample/obj/x86/**
 glob:*.suo
+glob:GameContent/MayaAscii/Maps/.mayaSwatches/**
