@@ -254,6 +254,13 @@ namespace BeatShift.GameDebugTools
                 Globals.DisplayHUD = !Globals.DisplayHUD;
             });
 
+            // Command to toggle screen post processing
+            RegisterCommand("post", "Toggle postprocessing effects (Bloom)",
+            delegate(IDebugCommandHost host, string command, IList<string> args)
+            {
+                Globals.PostProcess = !Globals.PostProcess;
+            });
+
             // Command to toggle forcing AI as the input controller.
             RegisterCommand("testai", "Toggle forcing AI as the input controller",
             delegate(IDebugCommandHost host, string command, IList<string> args)

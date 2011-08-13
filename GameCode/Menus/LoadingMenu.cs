@@ -62,11 +62,6 @@ namespace BeatShift.Menus
             {
                 racer.Load();
             });*/
-            foreach (Racer racer in Race.currentRacers)
-            {
-                racer.Load();
-            }
-            GC.Collect();
             loaded = true;
         }
 
@@ -85,7 +80,14 @@ namespace BeatShift.Menus
         public override void otherUpdate()
         {
             base.otherUpdate();
-            if (loaded) MenuManager.mainMenuSystem.setCurrentMenu(MenuPage.FinishedLoading);
+            if (loaded)
+            {
+                foreach (Racer racer in Race.currentRacers)
+                {
+                    racer.Load();
+                }
+                MenuManager.mainMenuSystem.setCurrentMenu(MenuPage.FinishedLoading);
+            }
         }
     }
 }

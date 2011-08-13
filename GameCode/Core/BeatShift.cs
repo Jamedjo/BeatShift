@@ -185,6 +185,7 @@ namespace BeatShift
             spriteBatch = new SpriteBatch(GraphicsDevice);
             GameTextures.load(Content);
             GameVideos.load(Content);
+            PostProcessFx.LoadContent();
             //MapManager.tempMap.LoadContent(Content);
             font = Content.Load<SpriteFont>("FontA");
             //newfont = Content.Load<SpriteFont>("fontfile");
@@ -236,9 +237,9 @@ namespace BeatShift
             //DO NOT ADD CODE HERE
             currentTime = gameTime;
             GameLoop.Update(gameTime);
-#if DEBUG
+//#if DEBUG
             base.Update(gameTime); //Updates Game components. These should not be used. Currently used by DebugSystem and GamerServices.
-#endif
+//#endif
         }
 
         #endregion

@@ -163,6 +163,7 @@
     <Compile Include="Screen2D\GameTextures.cs" />
     <Compile Include="Screen2D\GameVideos.cs" />
     <Compile Include="Screen2D\HeadsUpDisplay.cs" />
+    <Compile Include="Screen2D\PostProcessFx.cs" />
     <Compile Include="Screen2D\Viewports.cs" />
     <Compile Include="Utilities &amp; Misc\ColorConvert.cs" />
     <Compile Include="Utilities &amp; Misc\DebugGraphics\DrawVector.cs" />

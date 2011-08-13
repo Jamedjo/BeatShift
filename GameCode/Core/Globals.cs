@@ -17,6 +17,7 @@ namespace BeatShift
         public static bool DisplayScenery = true;
         public static bool DisplaySkybox = true;
         public static bool EnableParticles = true;
+        public static bool PostProcess = true;
 
 
         public static bool useSpecular = true;

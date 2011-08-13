@@ -125,6 +125,7 @@ namespace BeatShift
             BeatShift.graphics.GraphicsDevice.Viewport = camera.Viewport;
 
             //Skybox has no depthStencil to keep it behind everything else, Clamp to avoid texture seams.
+            BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
             BeatShift.graphics.GraphicsDevice.DepthStencilState = DepthStencilState.None;
             BeatShift.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.AnisotropicClamp;
             DrawSkybox(camera);
@@ -157,8 +158,6 @@ namespace BeatShift
             if (modelObject.category == ModelCategory.InvisibleWall) return;
             if ((!Globals.DisplayScenery) && modelObject.category.Equals(ModelCategory.Scenery)) return;//If scenery should not be displayed, don't draw scenry
 
-            RasterizerState cull = BeatShift.graphics.GraphicsDevice.RasterizerState;
-
             //Draw both sides of track
             if (modelObject.category == ModelCategory.Track) BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
 
@@ -170,7 +169,7 @@ namespace BeatShift
             {
                 drawWithBasicEffect(modelObject, camera);
             }
-            BeatShift.graphics.GraphicsDevice.RasterizerState = cull;
+            if (modelObject.category == ModelCategory.Track) BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
         }
 
         void drawWithBasicEffect(FbxModel fbxModel, CameraWrapper camera)

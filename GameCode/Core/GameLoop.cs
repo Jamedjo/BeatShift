@@ -374,20 +374,23 @@ namespace BeatShift
             
             //Clear screen to black
             BeatShift.graphics.GraphicsDevice.Clear(Color.SteelBlue);
+            if(Globals.PostProcess) PostProcessFx.BeginDraw();//Set RenderTarget to bloom target instead of buffer
 
             if (BeatShift.shipSelect.Visible && !( paused || LiveServices.GuideIsVisible() ) )
             {
                 BeatShift.shipSelect.Draw(gameTime);
             }
 
+            //Draw Main menu system if active, before drawing ship-selection ships
+            if(MenuManager.mainMenuSystem.isActive) MenuManager.Draw(gameTime);
+
+            //Begin 3D drawing region
+
             //Draw map
             if (Race.Visible)
             {
                 Race.DrawMap(gameTime);
             }
-
-            //Draw Main menu system if active, before drawing ship-selection ships
-            if(MenuManager.mainMenuSystem.isActive) MenuManager.Draw(gameTime);
 
             //Draw ships/racers and HUD
             if (Race.Visible)
@@ -398,6 +401,8 @@ namespace BeatShift
             //Draw any other menu systems (Pause/PostGame) which are active
             if (!MenuManager.mainMenuSystem.isActive) MenuManager.Draw(gameTime);
 
+
+            if (Globals.PostProcess) PostProcessFx.Draw(gameTime); //Apply bloom on 3D elements and draw to backbuffer.
 
             //if (networkedGame.Visible) networkedGame.Draw(gameTime);
 

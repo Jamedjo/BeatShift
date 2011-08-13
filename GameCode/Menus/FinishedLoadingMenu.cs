@@ -55,6 +55,7 @@ namespace BeatShift.Menus
 
         public override void enteringMenu()
         {
+            GC.Collect();
             base.enteringMenu();
         }
     }
