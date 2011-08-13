@@ -8,8 +8,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("BeatShift")]
 [assembly: AssemblyProduct("BeatShift")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyCompany("Student Support")]
-[assembly: AssemblyCopyright("Copyright © Student Support 2010")]
+[assembly: AssemblyCompany("Jafiki Studios")]
+[assembly: AssemblyCopyright("Copyright © Jafiki Studios")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

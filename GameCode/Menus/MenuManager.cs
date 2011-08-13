@@ -75,7 +75,7 @@ namespace BeatShift.Menus
         public static void Update(GameTime gameTime)
         {
             //Update input manager state ready for menu page to use
-            if(!Guide.IsVisible) anyInput.Update(gameTime);
+            if (!LiveServices.GuideIsVisible()) anyInput.Update(gameTime);
 
             //Update menu stacks
             foreach (IMenuStack m in menuSystems)

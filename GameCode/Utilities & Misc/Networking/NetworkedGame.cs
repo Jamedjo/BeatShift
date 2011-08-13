@@ -172,7 +172,7 @@ namespace BeatShift
                 if (Gamer.SignedInGamers.Count == 0)
                 {
                     // If there are no profiles signed in and guide has been dismissed, return to menu.
-                    if (!Guide.IsVisible)
+                    if (!LiveServices.GuideIsVisible())
                     {
                         returnToMenu();
                     }

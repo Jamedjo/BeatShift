@@ -169,7 +169,7 @@ namespace BeatShift.Menus
 
 
                 //    keyboardShown = false;
-                //    if(!Guide.IsVisible) /*CHECK HIGHSCORE*/
+                //    if(!LiveServices.GuideIsVisible()) /*CHECK HIGHSCORE*/
                 //    {
                 //        while( !keyboardShown )
                 //        try 
@@ -180,7 +180,7 @@ namespace BeatShift.Menus
                 //        {
                 //            keyboardShown = true;
                 //            // create a class bool, initialize it to false, then set it to true here so you know you need to try again because it didn't work the first time,  
-                //            // probably because the Guide became visible between when you checked Guide.IsVisible and when you called Guide.BeginShowKeyboardInput  
+                //            // probably because the Guide became visible between when you checked LiveServices.GuideIsVisible() and when you called Guide.BeginShowKeyboardInput  
                 //        }  
                 //        //ENTER NAME AND TIME INTO HIGH SCORES
                 //    }

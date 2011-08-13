@@ -147,14 +147,14 @@ namespace BeatShift
         private static void checkPauseGuide()
         {
             // Pause if the Guide is up
-            if (!paused && Guide.IsVisible)// && currentState == GameState.LocalGame)
+            if (!paused && LiveServices.GuideIsVisible())// && currentState == GameState.LocalGame)
             {
                 BeginPause(false);
                 //Console.Write("Game Paused \n");
             }
             // If we paused for the guide, unpause if the guide
             // went away
-            else if (paused && pausedForGuide && !Guide.IsVisible)// && currentState == GameState.LocalGame)
+            else if (paused && pausedForGuide && !LiveServices.GuideIsVisible())// && currentState == GameState.LocalGame)
             {
                 pausedForGuide = false;
 
@@ -225,8 +225,8 @@ namespace BeatShift
             BeatShift.graphics.GraphicsDevice.Viewport = Viewports.fullViewport;
 
             MenuManager.DisableAllMenus();
-            BeatShift.networkedGame.Enabled = false;
-            BeatShift.networkedGame.Visible = false;
+            //BeatShift.networkedGame.Enabled = false;
+            //BeatShift.networkedGame.Visible = false;
             MapManager.Enabled = false;
             MapManager.Visible = false;
             Race.Enabled = false;
@@ -248,8 +248,8 @@ namespace BeatShift
                     playTitle();
                     break;
                 case GameState.NetworkedGame:
-                    BeatShift.networkedGame.Enabled = true;
-                    BeatShift.networkedGame.Visible = true;
+                    //BeatShift.networkedGame.Enabled = true;
+                    //BeatShift.networkedGame.Visible = true;
                     //physics.collisionSystem.AddBody(tempMap.rigidBody);
                     break;
                 case GameState.LocalGame:
@@ -295,10 +295,10 @@ namespace BeatShift
 
                 // If the user hasn't paused, Update normally
 
-                BeatShift.gamerServices.Update(gameTime);
+                LiveServices.Update(gameTime);
 
                 //Update mainGameInput
-                if(!Guide.IsVisible) mainGameinput.Update(gameTime);
+                if(!LiveServices.GuideIsVisible()) mainGameinput.Update(gameTime);
             }
 
             if (!pausedForGuide)
@@ -375,7 +375,7 @@ namespace BeatShift
             //Clear screen to black
             BeatShift.graphics.GraphicsDevice.Clear(Color.SteelBlue);
 
-            if (BeatShift.shipSelect.Visible && !( paused || Guide.IsVisible ) )
+            if (BeatShift.shipSelect.Visible && !( paused || LiveServices.GuideIsVisible() ) )
             {
                 BeatShift.shipSelect.Draw(gameTime);
             }

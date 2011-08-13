@@ -169,7 +169,7 @@ namespace BeatShift
                 signedInPlayers[(int)gamer.PlayerIndex] = 1;
             }
 
-            if (!Guide.IsVisible) if (ssarea[i].isActive && (Race.humanRacers[i].shipDrawing.isVisible == false))
+            if (!LiveServices.GuideIsVisible()) if (ssarea[i].isActive && (Race.humanRacers[i].shipDrawing.isVisible == false))
                 {
                     if (signedInPlayers[i] == 1)
                     {

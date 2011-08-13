@@ -37,6 +37,9 @@
     <RootNamespace>WindowsBeatShiftContent</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ContentPipelineProject">
+      <HintPath>..\ContentPipelineProject\bin\x86\Debug\ContentPipelineProject.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.EffectImporter, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL">
       <Private>False</Private>
     </Reference>
@@ -220,12 +223,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ContentPipelineProject\ContentPipelineProject.csproj">
-      <Project>{A2C02CD0-E2F6-490A-BEA1-3190B13480AB}</Project>
-      <Name>ContentPipelineProject</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Images\BoostBar.png">

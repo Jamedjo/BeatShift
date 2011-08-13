@@ -66,9 +66,8 @@ namespace BeatShift
         private static StorageDevice storage = null;
         public static StorageDevice Storage {get{ return storage; }}
         private static Boolean shouldExitGame = false;
-        public static NetworkedGame networkedGame;
+        //public static NetworkedGame networkedGame;
         public static BeatShift singleton;
-        public static GamerServicesComponent gamerServices { get; private set; }
         public static ParticleSystemManager particleManager;
         public GameTime currentTime;
 
@@ -94,6 +93,12 @@ namespace BeatShift
 
             //Turn on antialiasing
             graphics.PreferMultiSampling = true;
+
+            //Profiling option
+#if DEBUG
+            //this.IsFixedTimeStep = false;
+            //graphics.SynchronizeWithVerticalRetrace = false;
+#endif
 
             //Components.Add(new GamerServicesComponent(this));
             //TODO: xbox-live
@@ -127,10 +132,12 @@ namespace BeatShift
 
             shipSelect = new ShipSelect();
 
-            networkedGame = new NetworkedGame(this);
-            networkedGame.Enabled = false;
-            networkedGame.Visible = false;
-            networkedGame.Initialize();
+            //networkedGame = new NetworkedGame(this);
+            //networkedGame.Enabled = false;
+            //networkedGame.Visible = false;
+            //networkedGame.Initialize();
+
+            LiveServices.initializeGamerServices(this);
 
             Physics.Initialize();
 
@@ -146,8 +153,9 @@ namespace BeatShift
 
             base.Initialize();
 
-            gamerServices = new GamerServicesComponent(this);
-            Components.Add(gamerServices);
+            LiveServices.gamerServices = new GamerServicesComponent((Game)this);
+            LiveServices.gamerServices.Enabled = false; //Updating manually
+            Components.Add(LiveServices.gamerServices);
 
             GC.Collect();
             //gamerServices.Initialize();
@@ -167,7 +175,7 @@ namespace BeatShift
             //{
             // Console.Write("Getting Storage...");
             // To avoid GuideAlreadyVisibleException
-            while(Guide.IsVisible) { }
+            while (LiveServices.GuideIsVisible()) { }
             StorageDevice.BeginShowSelector(getStorage, "Get initial StorageDevice");
             // Console.Write("   ..."+Storage+"... ");
             // Console.Write("Call Started...");
@@ -228,7 +236,9 @@ namespace BeatShift
             //DO NOT ADD CODE HERE
             currentTime = gameTime;
             GameLoop.Update(gameTime);
-            base.Update(gameTime);
+#if DEBUG
+            base.Update(gameTime); //Updates Game components. These should not be used. Currently used by DebugSystem and GamerServices.
+#endif
         }
 
         #endregion
