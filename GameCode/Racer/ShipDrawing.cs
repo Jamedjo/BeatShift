@@ -174,6 +174,7 @@ namespace BeatShift
             if (((camera.ShouldDrawOwnShip || !isThisTheCamerasShip) && GameLoop.getCurrentState() == GameState.LocalGame) || isThisTheCamerasShip)
             {
 
+                //Use high reflectivity when racer at lvl5
                 if (parentRacer.beatQueue.getLayer() == 4) {
                     reflectOverride = MathHelper.Lerp(reflectOverride, 1.0f,0.05f); }
                 else reflectOverride = MathHelper.Lerp(reflectOverride, 0.0f, 0.2f);

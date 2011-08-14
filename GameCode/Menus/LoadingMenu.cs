@@ -14,6 +14,7 @@ namespace BeatShift.Menus
     class LoadingMenu : IMenuPage
     {
         private bool loaded;
+        private bool tempPostBloomGlobal;
 
         public LoadingMenu()
         {
@@ -73,6 +74,8 @@ namespace BeatShift.Menus
         public override void enteringMenu()
         {
             base.enteringMenu();
+            tempPostBloomGlobal = Globals.PostProcess;
+            Globals.PostProcess = false;
             loaded = false;
             Parallel.Start(load);
         }
@@ -87,6 +90,7 @@ namespace BeatShift.Menus
                     racer.Load();
                 }
                 MenuManager.mainMenuSystem.setCurrentMenu(MenuPage.FinishedLoading);
+                Globals.PostProcess = tempPostBloomGlobal;
             }
         }
     }

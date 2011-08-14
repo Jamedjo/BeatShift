@@ -127,7 +127,7 @@ namespace BeatShift
             DrawSkybox(camera);
         }
             
-        public void Draw(GameTime gameTime, CameraWrapper camera)
+         public void Draw(GameTime gameTime, CameraWrapper camera)
         {
             BeatShift.graphics.GraphicsDevice.Viewport = camera.Viewport;
 
