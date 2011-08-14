@@ -173,9 +173,9 @@ namespace BeatShift.Cameras
                 beatVisCamera = new VisCamera(ref properties, getShipPosition, getShipOrientation, getShipUp, beatVisHeightOffset);
                 updateBeatVis();
 
-                cameraList.Add(new ChaseCamera(ref properties, getShipPosition, getShipOrientation, getShipUp, racer.shipPhysics.getForwardSpeed, chasePosition, chaseFocalPoint, chaseFOV));
                 cameraList.Add(new ChaseCamera(ref properties, getShipPosition, getShipOrientation, getShipUp, racer.shipPhysics.getForwardSpeed, chasePosition2, chaseFocalPoint2, chaseFOV));
-                cameraList.Add(new BumperCamera(ref properties, getShipPosition, getShipOrientation, getShipUp));
+                cameraList.Add(new ChaseCamera(ref properties, getShipPosition, getShipOrientation, getShipUp, racer.shipPhysics.getForwardSpeed, chasePosition, chaseFocalPoint, chaseFOV));
+                //cameraList.Add(new BumperCamera(ref properties, getShipPosition, getShipOrientation, getShipUp));
                 currentCamera = cameraList[cameraID];
             }
             else if (stage == CameraStage.Racing)
