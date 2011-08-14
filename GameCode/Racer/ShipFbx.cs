@@ -33,7 +33,7 @@ namespace BeatShift
             }
             
 #if !DEBUG
-            fixNullLightDirections();
+            Utils.fixNullLightDirections(model);
 #endif
 
             GC.Collect();
@@ -43,26 +43,6 @@ namespace BeatShift
             //grayTexture = content.Load<Texture2D>("tex5");
             //shipRenderer.Texture = grayTexture;
             //shipRenderer.TextureEnabled = true;
-        }
-
-        private void fixNullLightDirections()
-        {
-            EffectParameterCollection fxParams = ((EffectMaterial)model.Meshes[0].Effects[0]).Parameters;
-            int l = 0;
-            Vector3[] lDirs = { new Vector3(-0.52f, -0.57f, -0.62f), new Vector3(0.71f, 0.34f, 0.60f), new Vector3(0.45f, -0.76f, 0.45f) };
-            for (int i = 0; i < fxParams.Count; i++)
-            {
-                EffectParameter a = fxParams[i];
-                if (a.Name.ToString().Contains("LightDir"))
-                {
-                    if (a.GetValueVector3().Equals(new Vector3(0, 0, 0)))
-                    {
-                        a.SetValue(lDirs[l % 3]);
-                        l++;
-                    }
-
-                }
-            }
         }
 
 

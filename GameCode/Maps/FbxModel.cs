@@ -24,6 +24,11 @@ namespace BeatShift
 
             //Load the model
             model = content.Load<Model>("Models/Maps/" + name);//Takes a long time for large models. estimate 4 seconds per 1MB fbx.
+
+#if !DEBUG
+            Utils.fixNullLightDirections(model);
+#endif
+
             GC.Collect();
 
             //sets scale and position of model from fbx file
