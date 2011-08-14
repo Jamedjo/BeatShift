@@ -80,19 +80,56 @@ namespace BeatShift
 
         public static void DrawMap(GameTime gameTime)
         {
-            foreach (RacerHuman h_racer in humanRacers)
+            if (MapManager.Visible)
             {
-                if (MapManager.Visible)
-                    MapManager.currentMap.Draw(gameTime, h_racer.localCamera);
+                //Set default render states once
+                BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
+                BeatShift.graphics.GraphicsDevice.BlendState = BlendState.Opaque;
 
-                if (MapManager.Visible && Options.DrawWaypoints)
-                    MapManager.currentMap.drawSpheres(gameTime, h_racer.localCamera);
+
+                //Skybox has no depthStencil to keep it behind everything else, Clamp to avoid texture seams.
+                BeatShift.graphics.GraphicsDevice.DepthStencilState = DepthStencilState.None;
+                BeatShift.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.AnisotropicClamp;
+                foreach (RacerHuman h_racer in humanRacers)
+                {
+                    MapManager.currentMap.DrawSkybox(gameTime, h_racer.localCamera);
+                }
+                BeatShift.graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;//Return depthstencil states after drawing skybox.
+
+
+                //Set display states for drawing map
+                BeatShift.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.AnisotropicWrap;
+                foreach (RacerHuman h_racer in humanRacers)
+                {
+                    MapManager.currentMap.Draw(gameTime, h_racer.localCamera);
+                }
+
+
+                if (Options.DrawWaypoints)
+                {
+                    //Set display states
+                    BeatShift.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+                    BeatShift.graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+                    BeatShift.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
+
+                    foreach (RacerHuman h_racer in humanRacers)
+                    {
+                        MapManager.currentMap.drawSpheres(gameTime, h_racer.localCamera);
+                    }
+
+                    //Return display State
+                    BeatShift.graphics.GraphicsDevice.BlendState = BlendState.Opaque;
+                }
             }
 
         }
 
         public static void Draw(GameTime gameTime)
         {
+            //Set display states
+            BeatShift.graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            BeatShift.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.AnisotropicClamp;//.LinearWrap;
+
             foreach (RacerHuman h_racer in humanRacers)
             {
                 foreach (Racer allRacer in currentRacers)

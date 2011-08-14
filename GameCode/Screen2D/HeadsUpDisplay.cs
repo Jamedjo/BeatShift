@@ -478,7 +478,6 @@ namespace BeatShift
 
         public void Draw(Vector2 position)
         {
-            BlendState b = BeatShift.graphics.GraphicsDevice.BlendState;
             BeatShift.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
 
             foreach (SlideInstance instance in popups)
@@ -489,7 +488,9 @@ namespace BeatShift
                 if (instance.hasMessage)
                     BeatShift.spriteBatch.DrawString(BeatShift.newfont, instance.message+" pts", pos+new Vector2(16, 4), Color.Black, 0f, Vector2.Zero, 0.3f, SpriteEffects.None, 1);
             }
-            BeatShift.graphics.GraphicsDevice.BlendState = b;
+
+            //Return display State
+            BeatShift.graphics.GraphicsDevice.BlendState = BlendState.Opaque;
 
         }
 

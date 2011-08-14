@@ -154,10 +154,6 @@ namespace BeatShift
             //if playerType == PlayerType.None and this is not the camera belonging to this ship
             //Then return, we only want to draw ship selection ships to thier own camera
 
-            //Set display states
-            BeatShift.graphics.GraphicsDevice.BlendState = BlendState.Opaque;
-            BeatShift.graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-            BeatShift.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;//.LinearWrap;
 
             Matrix viewMatrix = camera.View;
             Matrix projectionMatrix = camera.Projection;

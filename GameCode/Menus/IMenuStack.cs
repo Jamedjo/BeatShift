@@ -147,6 +147,10 @@ namespace BeatShift.Menus
             BeatShift.spriteBatch.End();
 
             currentPage.otherDraw();
+
+
+            //Return display State
+            BeatShift.graphics.GraphicsDevice.BlendState = BlendState.Opaque;
         }
 
         public void resetToMain()

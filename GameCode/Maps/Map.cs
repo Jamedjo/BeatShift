@@ -120,21 +120,16 @@ namespace BeatShift
         }
 
         // Draw the map withing the game.
-        public void Draw(GameTime gameTime, CameraWrapper camera)
+        public void DrawSkybox(GameTime gameTime, CameraWrapper camera)
         {
             BeatShift.graphics.GraphicsDevice.Viewport = camera.Viewport;
 
-            //Skybox has no depthStencil to keep it behind everything else, Clamp to avoid texture seams.
-            BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
-            BeatShift.graphics.GraphicsDevice.DepthStencilState = DepthStencilState.None;
-            BeatShift.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.AnisotropicClamp;
             DrawSkybox(camera);
-
-            //Set display states
-            BeatShift.graphics.GraphicsDevice.BlendState = BlendState.Opaque;
-            BeatShift.graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-            BeatShift.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
-
+        }
+            
+        public void Draw(GameTime gameTime, CameraWrapper camera)
+        {
+            BeatShift.graphics.GraphicsDevice.Viewport = camera.Viewport;
 
             if (Options.DrawTrackNormals) //Draw track normals.
             {
@@ -223,12 +218,6 @@ namespace BeatShift
         public void drawSpheres(GameTime gameTime, CameraWrapper camera)
         {
             BeatShift.graphics.GraphicsDevice.Viewport = camera.Viewport;
-
-            //Set display states
-            BeatShift.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
-            BeatShift.graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-            BeatShift.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
-
             drawSpheresOnSingleCamera(gameTime, camera);
 
         }
