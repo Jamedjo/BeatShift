@@ -16,7 +16,7 @@ namespace BeatShift
         {
             // Console.Write("Started loading City map...");
 
-            LoadSkybox("Skyboxes/skyboxCity", "Skyboxes/j_skybox_upper35");
+            LoadSkybox("Skyboxes/skyboxCityNight");//, "Skyboxes/j_skybox_upper35");
 
             //TODO: Update to city
             modelList.Add(new FbxModel("CityMap_track", MapContent, MapName.CityMap, ModelCategory.Track));

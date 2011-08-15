@@ -267,7 +267,7 @@ namespace BeatShift
             }
         }
 
-        protected void LoadSkybox(string modelName, string textureName)
+        protected void LoadSkybox(string modelName)//, string textureName)
         {
             skyboxModel = BeatShift.contentManager.Load<Model>(modelName);
             //skyboxTexture = BeatShift.contentManager.Load<Texture2D>(textureName);

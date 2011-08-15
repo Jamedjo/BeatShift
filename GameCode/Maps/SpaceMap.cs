@@ -16,7 +16,7 @@ namespace BeatShift
         {
             // Console.Write("Started loading Space map...");
 
-            LoadSkybox("Skyboxes/skybox2", "Skyboxes/j_skybox_upper35");
+            LoadSkybox("Skyboxes/skybox2");//, "Skyboxes/j_skybox_upper35");
 
             modelList.Add(new FbxModel("SpaceMap_track", MapContent, MapName.SpaceMap, ModelCategory.Track));
             modelList.Add(new FbxModel("SpaceMap_invisiblewalls", MapContent, MapName.SpaceMap, ModelCategory.InvisibleWall));

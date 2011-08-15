@@ -59,10 +59,6 @@ namespace BeatShift.Menus
             BeatShift.bgm.loadTrack(SoundManager.trackToLoad);
             if (Options.AddAItoGame)
                 Race.setupAIRacers(Options.NumberAI);
-            /*Parallel.ForEach(Race.currentRacers, racer =>
-            {
-                racer.Load();
-            });*/
             loaded = true;
         }
 
@@ -77,7 +73,8 @@ namespace BeatShift.Menus
             tempPostBloomGlobal = Globals.PostProcess;
             Globals.PostProcess = false;
             loaded = false;
-            Parallel.Start(load);
+                //Parallel.Start(load);
+                load();//No exceptions caught in ParallelTasks
         }
 
         public override void otherUpdate()
