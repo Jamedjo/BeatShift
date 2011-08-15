@@ -312,7 +312,7 @@ namespace BeatShift.Input
                 //If the Vector from the waypoint to the ship is within 90 degrees of roadSurface
                 //it is on the side the track the roadSurface arrow faces
             float direction = Vector3.Dot(nearPoint.roadSurface, (parent.shipPhysics.ShipPosition - nearPoint.position));
-
+            if(Single.IsNaN(direction)||Single.IsInfinity(direction)) direction= 1f;
             Vector3 testVector = parent.shipPhysics.nearestMapPoint.roadSurface * Math.Sign(direction);
 
             Vector3 rayOrigin = parent.shipPhysics.ShipPosition;

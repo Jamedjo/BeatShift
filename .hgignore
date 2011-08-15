@@ -87,3 +87,13 @@ glob:AnimationTest/SkinningSample/obj/x86/**
 glob:*.suo
 glob:GameContent/MayaAscii/Maps/.mayaSwatches/**
 glob:GameContent/tmp/**
+glob:GameContent/Skyboxes/city.png
+glob:GameContent/Skyboxes/city2.png
+glob:GameContent/Skyboxes/cityDay.png
+glob:GameContent/Skyboxes/cityDusk.png
+glob:GameContent/Skyboxes/cityNight.png
+glob:GameContent/Skyboxes/cityOoops.png
+glob:GameContent/Textures/~psF9A9.tmp
+glob:GameContent/building_ipr.iff
+glob:GameCode/pix/**
+glob:GameContent/CityBox2_ipr.iff

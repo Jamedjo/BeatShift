@@ -171,7 +171,7 @@ Mesh Unnamed_0 {
      1.000000;1.000000;1.000000;;
        0.000000;0.000000;0.000000;;
           TextureFilename {
-      "dunes_Top.jpg";
+      "skyHills_Top.jpg";
      }
      }
  }
@@ -217,7 +217,7 @@ Mesh Unnamed_1 {
      1.000000;1.000000;1.000000;;
        0.000000;0.000000;0.000000;;
           TextureFilename {
-      "dunes_Right.jpg";
+      "skyHills_Right.jpg";
      }
      }
  }
@@ -264,7 +264,7 @@ Mesh Unnamed_2 {
      1.000000;1.000000;1.000000;;
        0.000000;0.000000;0.000000;;
           TextureFilename {
-      "dunes_Left.jpg";
+      "skyHills_Left.jpg";
      }
      }
  }
@@ -311,7 +311,7 @@ Mesh Unnamed_3 {
      1.000000;1.000000;1.000000;;
        0.000000;0.000000;0.000000;;
           TextureFilename {
-      "dunes_Front.jpg";
+      "skyHills_Front.jpg";
      }
      }
  }
@@ -358,7 +358,7 @@ Mesh Unnamed_4 {
      1.000000;1.000000;1.000000;;
        0.000000;0.000000;0.000000;;
           TextureFilename {
-      "dunes_Back.jpg";
+      "skyHills_Back.jpg";
      }
      }
  }
@@ -405,7 +405,7 @@ Mesh Unnamed_5 {
      1.000000;1.000000;1.000000;;
        0.000000;0.000000;0.000000;;
           TextureFilename {
-      "dunes_Top.jpg";
+      "skyHills_Top.jpg";
      }
      }
  }
