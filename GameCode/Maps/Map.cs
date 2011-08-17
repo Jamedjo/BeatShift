@@ -17,7 +17,7 @@ using ParallelTasks;
 namespace BeatShift
 {
     public enum MapName { None, All, CityMap, SpaceMap, DesertMap }
-    public enum ModelCategory { Scenery, Wall, Track, InvisibleWall } //In draw order
+    public enum ModelCategory { SceneryFx, SceneryBasic, Wall, Track, InvisibleWall } //In draw order
 
     public abstract class Map
     {
@@ -29,9 +29,9 @@ namespace BeatShift
         protected List<FbxModel> modelList = new List<FbxModel>();
         protected FbxModel sphere;
 
-        protected Texture2D mapTrackTexture;
-        protected Texture2D mapTrackAlphaTexture;
-        protected Texture2D mapTrackNormalTexture;
+        //protected Texture2D mapTrackTexture;
+        //protected Texture2D mapTrackAlphaTexture;
+        //protected Texture2D mapTrackNormalTexture;
 
         public MapName currentMapName;
 
@@ -51,7 +51,7 @@ namespace BeatShift
             LoadContent();
 
             //load common things for all maps
-            sphere = new FbxModel("Sphere", MapContent, MapName.All, ModelCategory.Scenery);
+            sphere = new FbxModel("Sphere", MapContent, MapName.All, ModelCategory.SceneryBasic);
             //Order the modelList so transparency is drawn in correct order
             modelList = modelList.OrderBy((m) => m.category).ToList();
         }
@@ -151,12 +151,12 @@ namespace BeatShift
         void drawModel(FbxModel modelObject, GameTime gameTime, CameraWrapper camera)
         {
             if (modelObject.category == ModelCategory.InvisibleWall) return;
-            if ((!Globals.DisplayScenery) && modelObject.category.Equals(ModelCategory.Scenery)) return;//If scenery should not be displayed, don't draw scenry
+            if ((!Globals.DisplayScenery) && (modelObject.category.Equals(ModelCategory.SceneryFx)||modelObject.category.Equals(ModelCategory.SceneryBasic)) ) return;//If scenery should not be displayed, don't draw scenry
 
             //Draw both sides of track
             if (modelObject.category == ModelCategory.Track) BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
 
-            if (currentMapName.Equals(MapName.CityMap) || modelObject.category == ModelCategory.Track )
+            if (currentMapName.Equals(MapName.CityMap) || modelObject.category == ModelCategory.Track || modelObject.category==ModelCategory.SceneryFx)
             {
                 drawWithBShiftEffect(modelObject.model, modelObject.transforms, camera);
             }

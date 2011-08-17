@@ -18,16 +18,15 @@ namespace BeatShift
 
             LoadSkybox("Skyboxes/skyboxCityNight");//, "Skyboxes/j_skybox_upper35");
 
-            //TODO: Update to city
             modelList.Add(new FbxModel("CityMap_track", MapContent, MapName.CityMap, ModelCategory.Track));
             modelList.Add(new FbxModel("CityMap_walls", MapContent, MapName.CityMap, ModelCategory.Wall));
             modelList.Add(new FbxModel("CityMap_invisiblewalls", MapContent, MapName.CityMap, ModelCategory.InvisibleWall));
-            modelList.Add(new FbxModel("CityMap_scenery", MapContent, MapName.CityMap, ModelCategory.Scenery));
+            modelList.Add(new FbxModel("CityMap_scenery", MapContent, MapName.CityMap, ModelCategory.SceneryFx));
             mapData = new MapData("CityMap", 60f, 4f);
 
-            mapTrackTexture = BeatShift.contentManager.Load<Texture2D>("Textures/Track2_Diffuse");
-            mapTrackAlphaTexture = BeatShift.contentManager.Load<Texture2D>("Textures/Track2_Alpha");
-            mapTrackNormalTexture = BeatShift.contentManager.Load<Texture2D>("Textures/Track2_Normal");
+            //mapTrackTexture = BeatShift.contentManager.Load<Texture2D>("Textures/Track2_Diffuse");
+            //mapTrackAlphaTexture = BeatShift.contentManager.Load<Texture2D>("Textures/Track2_Alpha");
+            //mapTrackNormalTexture = BeatShift.contentManager.Load<Texture2D>("Textures/Track2_Normal");
 
             timeTrialRanks[0] = 21000;
             timeTrialRanks[1] = 24000;

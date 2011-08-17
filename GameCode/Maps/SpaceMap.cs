@@ -21,12 +21,12 @@ namespace BeatShift
             modelList.Add(new FbxModel("SpaceMap_track", MapContent, MapName.SpaceMap, ModelCategory.Track));
             modelList.Add(new FbxModel("SpaceMap_invisiblewalls", MapContent, MapName.SpaceMap, ModelCategory.InvisibleWall));
             modelList.Add(new FbxModel("SpaceMap_walls", MapContent, MapName.SpaceMap, ModelCategory.Wall));
-            modelList.Add(new FbxModel("SpaceMap_scenery", MapContent, MapName.SpaceMap, ModelCategory.Scenery));
+            modelList.Add(new FbxModel("SpaceMap_scenery", MapContent, MapName.SpaceMap, ModelCategory.SceneryBasic));
             mapData = new MapData("SpaceMap", 60f, 4f);
 
-            mapTrackTexture = BeatShift.contentManager.Load<Texture2D>("Textures/Track2_Diffuse");
-            mapTrackAlphaTexture = BeatShift.contentManager.Load<Texture2D>("Textures/Track2_Alpha");
-            mapTrackNormalTexture = BeatShift.contentManager.Load<Texture2D>("Textures/Track2_Normal");
+            //mapTrackTexture = BeatShift.contentManager.Load<Texture2D>("Textures/Track2_Diffuse");
+            //mapTrackAlphaTexture = BeatShift.contentManager.Load<Texture2D>("Textures/Track2_Alpha");
+            //mapTrackNormalTexture = BeatShift.contentManager.Load<Texture2D>("Textures/Track2_Normal");
 
             timeTrialRanks[0] = 60000;
             timeTrialRanks[1] = 70000;

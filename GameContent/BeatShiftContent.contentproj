@@ -651,6 +651,7 @@
       <Name>DesertMap_scenery</Name>
       <Importer>FbxImporter</Importer>
       <Processor>BShiftAdvancedModelProcessor</Processor>
+      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
     </Compile>
     <Compile Include="Models\Maps\DesertMap_track.fbx">
       <Name>DesertMap_track</Name>
@@ -791,6 +792,11 @@
       <Name>SpaceMap_invisiblewalls</Name>
       <Importer>FbxImporter</Importer>
       <Processor>BShiftModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Maps\DesertMap_sceneryBasic.fbx">
+      <Name>DesertMap_sceneryBasic</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
     </Compile>
     <None Include="Particles\Textures\License.txt">
       <Name>License</Name>

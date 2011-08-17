@@ -21,12 +21,13 @@ namespace BeatShift
             modelList.Add(new FbxModel("DesertMap_track", MapContent, MapName.DesertMap, ModelCategory.Track));
             modelList.Add(new FbxModel("DesertMap_walls", MapContent, MapName.DesertMap, ModelCategory.Wall));
             modelList.Add(new FbxModel("DesertMap_invisiblewalls", MapContent, MapName.DesertMap, ModelCategory.InvisibleWall));
-            modelList.Add(new FbxModel("DesertMap_scenery", MapContent, MapName.DesertMap, ModelCategory.Scenery));
-            mapData= new MapData("DesertMap", 60f, 4f);
+            modelList.Add(new FbxModel("DesertMap_scenery", MapContent, MapName.DesertMap, ModelCategory.SceneryFx));
+            modelList.Add(new FbxModel("DesertMap_sceneryBasic", MapContent, MapName.DesertMap, ModelCategory.SceneryBasic));
+            mapData = new MapData("DesertMap", 60f, 4f);
 
-            mapTrackTexture = BeatShift.contentManager.Load<Texture2D>("Textures/Track2_Diffuse");
-            mapTrackAlphaTexture = BeatShift.contentManager.Load<Texture2D>("Textures/Track2_Alpha");
-            mapTrackNormalTexture = BeatShift.contentManager.Load<Texture2D>("Textures/Track2_Normal");
+            //mapTrackTexture = BeatShift.contentManager.Load<Texture2D>("Textures/Track2_Diffuse");
+            //mapTrackAlphaTexture = BeatShift.contentManager.Load<Texture2D>("Textures/Track2_Alpha");
+            //mapTrackNormalTexture = BeatShift.contentManager.Load<Texture2D>("Textures/Track2_Normal");
 
             timeTrialRanks[0] = 21000;
             timeTrialRanks[1] = 24000;
