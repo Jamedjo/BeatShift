@@ -156,13 +156,13 @@ namespace BeatShift
             //Draw both sides of track
             if (modelObject.category == ModelCategory.Track) BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
 
-            if (currentMapName.Equals(MapName.CityMap) || modelObject.category == ModelCategory.Track || modelObject.category==ModelCategory.SceneryFx)
+            if ((currentMapName.Equals(MapName.SpaceMap) && modelObject.category == ModelCategory.Wall) || modelObject.category==ModelCategory.SceneryBasic)
             {
-                drawWithBShiftEffect(modelObject.model, modelObject.transforms, camera);
+                drawWithBasicEffect(modelObject, camera);
             }
             else
             {
-                drawWithBasicEffect(modelObject, camera);
+                drawWithBShiftEffect(modelObject.model, modelObject.transforms, camera);
             }
             if (modelObject.category == ModelCategory.Track) BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
         }

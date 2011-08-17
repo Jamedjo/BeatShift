@@ -662,7 +662,8 @@
     <Compile Include="Models\Maps\DesertMap_walls.fbx">
       <Name>DesertMap_walls</Name>
       <Importer>FbxImporter</Importer>
-      <Processor>BShiftModelProcessor</Processor>
+      <Processor>BShiftAdvancedModelProcessor</Processor>
+      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
     </Compile>
     <Compile Include="Models\Ships\Flux.fbx">
       <Name>Flux</Name>
