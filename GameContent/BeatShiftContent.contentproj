@@ -670,6 +670,8 @@
       <Importer>FbxImporter</Importer>
       <Processor>BShiftAdvancedModelProcessor</Processor>
       <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
+      <ProcessorParameters_TextureFormat>NoChange</ProcessorParameters_TextureFormat>
+      <ProcessorParameters_GenerateMipmaps>False</ProcessorParameters_GenerateMipmaps>
     </Compile>
     <Compile Include="Models\Ships\Omicron.fbx">
       <Name>Omicron</Name>
@@ -690,8 +692,10 @@
     <Compile Include="Models\Ships\Wraith.fbx">
       <Name>Wraith</Name>
       <Importer>FbxImporter</Importer>
-      <Processor>BShiftAdvancedModelProcessor</Processor>
+      <Processor>AnimatedShipModelProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>False</ProcessorParameters_GenerateMipmaps>
       <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
+      <ProcessorParameters_TextureFormat>NoChange</ProcessorParameters_TextureFormat>
     </Compile>
     <Compile Include="Models\Maps\Sphere.fbx">
       <Name>Sphere</Name>
