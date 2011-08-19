@@ -83,7 +83,7 @@ namespace BeatShift
             if (MapManager.Visible)
             {
                 //Set default render states once
-                BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
+                //BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
                 BeatShift.graphics.GraphicsDevice.BlendState = BlendState.Opaque;
 
 
@@ -124,7 +124,7 @@ namespace BeatShift
 
         }
 
-        public static void Draw(GameTime gameTime)
+        public static void Draw3D(GameTime gameTime)
         {
             //Set display states
             BeatShift.graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
@@ -132,6 +132,7 @@ namespace BeatShift
 
             foreach (RacerHuman h_racer in humanRacers)
             {
+                BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
                 foreach (Racer allRacer in currentRacers)
                 {
                     if (allRacer.shipDrawing.isVisible)
@@ -141,7 +142,11 @@ namespace BeatShift
                 }
             }
 
+        }
 
+
+        public static void Draw2D(GameTime gameTime)
+        {
             if (Globals.DisplayHUD)
             {
                 foreach (RacerHuman h_racer in humanRacers)

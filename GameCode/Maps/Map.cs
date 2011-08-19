@@ -17,7 +17,7 @@ using ParallelTasks;
 namespace BeatShift
 {
     public enum MapName { None, All, CityMap, SpaceMap, DesertMap }
-    public enum ModelCategory { SceneryFx, SceneryBasic, Wall, Track, InvisibleWall } //In draw order
+    public enum ModelCategory { SceneryFx, SceneryBasic, Wall, Track, InvisibleWall, GlowScenery } //In draw order
 
     public abstract class Map
     {
@@ -77,7 +77,21 @@ namespace BeatShift
         // Load the model of the map.
         public abstract void LoadContent();
 
-        #endregion
+        protected void LoadSkybox(string modelName)//, string textureName)
+        {
+            skyboxModel = BeatShift.contentManager.Load<Model>(modelName);
+            //skyboxTexture = BeatShift.contentManager.Load<Texture2D>(textureName);
+
+            foreach (ModelMesh mesh in skyboxModel.Meshes)
+            {
+                foreach (BasicEffect beffect in mesh.Effects)
+                {
+                    //beffect.Texture = skyboxTexture;//may only need to do this loop on map change
+                    beffect.TextureEnabled = true;
+                    //beffect.EnableDefaultLighting();//todo: turn off?
+                }
+            }
+        }
 
         //Unload the models of the map
         public void UnloadContent()
@@ -86,46 +100,9 @@ namespace BeatShift
             MapContent.Unload();
             // Console.WriteLine("Unloaded Map");
         }
+        #endregion
 
         #region Drawing Related Methods
-
-        // Used to modify the effects in a mesh
-        void setupBShiftEffect(Effect effect, Matrix view, Matrix proj, Matrix worldTransform)//, Vector3 viewVector)
-        {
-            effect.Parameters["world_Mx"].SetValue(worldTransform);
-            effect.Parameters["wvp_Mx"].SetValue(worldTransform * view * proj);
-
-            //Matrix worldInverseTranspose = Matrix.Transpose(Matrix.Invert(worldTransform));
-            //effect.Parameters["wit_Mx"].SetValue(worldInverseTranspose);
-
-            Matrix viewInverse = Matrix.Invert(view);
-            effect.Parameters["viewInv_Mx"].SetValue(viewInverse);
-
-            effect.Parameters["useAmbient"].SetValue(Globals.useAmbient);
-            effect.Parameters["useLambert"].SetValue(Globals.useLambert);
-            effect.Parameters["useSpecular"].SetValue(Globals.useSpecular);
-            effect.Parameters["drawNormals"].SetValue(Globals.drawNormals);
-        }
-
-        // Used to modify the effects in a mesh
-        void setupEffect(BasicEffect effect, Matrix view, Matrix proj, Matrix transforms)
-        {
-            effect.View = view;
-            effect.Projection = proj;
-            effect.World = transforms;
-
-            effect.EnableDefaultLighting();
-            effect.PreferPerPixelLighting = true;
-
-        }
-
-        // Draw the map withing the game.
-        public void DrawSkybox(GameTime gameTime, CameraWrapper camera)
-        {
-            BeatShift.graphics.GraphicsDevice.Viewport = camera.Viewport;
-
-            DrawSkybox(camera);
-        }
             
          public void Draw(GameTime gameTime, CameraWrapper camera)
         {
@@ -150,12 +127,15 @@ namespace BeatShift
 
         void drawModel(FbxModel modelObject, GameTime gameTime, CameraWrapper camera)
         {
+            //Don't draw invisible things
             if (modelObject.category == ModelCategory.InvisibleWall) return;
+            //Don't draw when settings turn scenery display off
             if ((!Globals.DisplayScenery) && (modelObject.category.Equals(ModelCategory.SceneryFx)||modelObject.category.Equals(ModelCategory.SceneryBasic)) ) return;//If scenery should not be displayed, don't draw scenry
 
-            //Draw both sides of track
+            //Draw both sides of track by changing cull mode
             if (modelObject.category == ModelCategory.Track) BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
 
+            
             if ((currentMapName.Equals(MapName.SpaceMap) && modelObject.category == ModelCategory.Wall) || modelObject.category==ModelCategory.SceneryBasic)
             {
                 drawWithBasicEffect(modelObject, camera);
@@ -167,6 +147,36 @@ namespace BeatShift
             if (modelObject.category == ModelCategory.Track) BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
         }
 
+        void drawWithBShiftEffect(Model model, Matrix[] transforms, CameraWrapper camera)
+        {
+            Matrix view = camera.View;
+            Matrix projectionMatrix = camera.Projection;
+
+            foreach (ModelMesh mesh in model.Meshes)
+            {
+                foreach (ModelMeshPart mmPart in mesh.MeshParts)
+                {
+                    // mmPart.Effect = bshiftEffect;
+                    Effect effect = mmPart.Effect;
+                    Matrix worldTransform = transforms[mesh.ParentBone.Index];
+                    effect.Parameters["world_Mx"].SetValue(worldTransform);
+                    effect.Parameters["wvp_Mx"].SetValue(worldTransform * view * projectionMatrix);
+
+                    //Matrix worldInverseTranspose = Matrix.Transpose(Matrix.Invert(worldTransform));
+                    //effect.Parameters["wit_Mx"].SetValue(worldInverseTranspose);
+
+                    Matrix viewInverse = Matrix.Invert(view);
+                    effect.Parameters["viewInv_Mx"].SetValue(viewInverse);
+
+                    effect.Parameters["useAmbient"].SetValue(Globals.useAmbient);
+                    effect.Parameters["useLambert"].SetValue(Globals.useLambert);
+                    effect.Parameters["useSpecular"].SetValue(Globals.useSpecular);
+                    effect.Parameters["drawNormals"].SetValue(Globals.drawNormals);
+                }
+                mesh.Draw();
+            }
+        }
+
         void drawWithBasicEffect(FbxModel fbxModel, CameraWrapper camera)
         {
             Matrix viewMatrix = camera.View;
@@ -174,42 +184,13 @@ namespace BeatShift
             foreach (ModelMesh mesh in fbxModel.model.Meshes)
             {
                 foreach (BasicEffect beffect in mesh.Effects)
-                {
-                    //setupEffect(beffect, viewMatrix, projectionMatrix, fbxModel.transforms[mesh.ParentBone.Index]);
-                    
+                {   
                     beffect.View = viewMatrix;
                     beffect.Projection = projectionMatrix;
                     beffect.World = fbxModel.transforms[mesh.ParentBone.Index];
 
                     beffect.EnableDefaultLighting();
-                    //beffect.SpecularPower = 12f;
-                     //beffect.PreferPerPixelLighting = true;
-
-                    //if (fbxModel.category == ModelCategory.Wall)
-                    //{
-                    //    Vector3 colour = new Vector3(240, 100, 255)*0.2f;
-                    //    beffect.LightingEnabled = true;
-                    //    beffect.EmissiveColor = colour;
-                    //    beffect.AmbientLightColor = colour;
-                    //}
-                }
-                mesh.Draw();
-            }
-        }
-
-        void drawWithBShiftEffect(Model model, Matrix[] transforms, CameraWrapper camera)
-        {
-            Matrix viewMatrix = camera.View;
-            Matrix projectionMatrix = camera.Projection;
-
-            
-
-            foreach (ModelMesh mesh in model.Meshes)
-            {
-                foreach (ModelMeshPart mmPart in mesh.MeshParts)
-                {
-                   // mmPart.Effect = bshiftEffect;
-                    setupBShiftEffect(mmPart.Effect, viewMatrix, projectionMatrix, transforms[mesh.ParentBone.Index]);//, viewVector);
+                    beffect.PreferPerPixelLighting = true;
                 }
                 mesh.Draw();
             }
@@ -219,7 +200,6 @@ namespace BeatShift
         {
             BeatShift.graphics.GraphicsDevice.Viewport = camera.Viewport;
             drawSpheresOnSingleCamera(gameTime, camera);
-
         }
 
         void drawSpheresOnSingleCamera(GameTime gameTime, CameraWrapper camera)
@@ -234,7 +214,13 @@ namespace BeatShift
                 foreach (BasicEffect effect in mesh.Effects)
                 {
                     //boxEffect = new BasicEffect(BeatShift.graphics.GraphicsDevice);
-                    setupEffect(effect, viewMatrix, projectionMatrix, sphere.transforms[mesh.ParentBone.Index]);
+                    effect.View = viewMatrix;
+                    effect.Projection = projectionMatrix;
+                    effect.World = sphere.transforms[mesh.ParentBone.Index];
+
+                    effect.EnableDefaultLighting();
+                    effect.PreferPerPixelLighting = true;
+
                     effect.DiffuseColor = Color.OrangeRed.ToVector3();
                     effect.Alpha = 0.2f;
 
@@ -267,24 +253,10 @@ namespace BeatShift
             }
         }
 
-        protected void LoadSkybox(string modelName)//, string textureName)
+        public void DrawSkybox(GameTime gameTime, CameraWrapper camera)
         {
-            skyboxModel = BeatShift.contentManager.Load<Model>(modelName);
-            //skyboxTexture = BeatShift.contentManager.Load<Texture2D>(textureName);
+            BeatShift.graphics.GraphicsDevice.Viewport = camera.Viewport;
 
-            foreach (ModelMesh mesh in skyboxModel.Meshes)
-            {
-                foreach (BasicEffect beffect in mesh.Effects)
-                {
-                    //beffect.Texture = skyboxTexture;//may only need to do this loop on map change
-                    beffect.TextureEnabled = true;
-                    //beffect.EnableDefaultLighting();//todo: turn off?
-                }
-            }
-        }
-
-        public void DrawSkybox(CameraWrapper camera)
-        {
             if (!Globals.DisplaySkybox) return;
 
             Matrix scale = Matrix.CreateScale(7f);
@@ -296,8 +268,6 @@ namespace BeatShift
 
             foreach (ModelMesh mesh in skyboxModel.Meshes)
             {
-                // TODO: put int he right place
-
                 foreach (BasicEffect currentEffect in mesh.Effects)
                 {
                     Matrix translation = Matrix.CreateTranslation(camera.racer.shipPhysics.ShipPosition);//+upMovement);

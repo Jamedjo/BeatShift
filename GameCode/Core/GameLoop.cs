@@ -395,14 +395,23 @@ namespace BeatShift
             //Draw ships/racers and HUD
             if (Race.Visible)
             {
-                Race.Draw(gameTime);
+                Race.Draw3D(gameTime);
+                Race.Draw2D(gameTime);
             }
+
+            //Begin glow pass
+            if (Globals.PostProcess)
+            {
+                PostProcessFx.BeginGlowPass();
+                Race.Draw3D(gameTime);//Fake bit of geometry
+                PostProcessFx.Draw(gameTime); //Apply bloom on 3D elements and draw to backbuffer.
+            }
+
 
             //Draw any other menu systems (Pause/PostGame) which are active
             if (!MenuManager.mainMenuSystem.isActive) MenuManager.Draw(gameTime);
 
 
-            if (Globals.PostProcess) PostProcessFx.Draw(gameTime); //Apply bloom on 3D elements and draw to backbuffer.
 
             //if (networkedGame.Visible) networkedGame.Draw(gameTime);
 

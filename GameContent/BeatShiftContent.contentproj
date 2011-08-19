@@ -803,6 +803,11 @@
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
+    <Compile Include="Models\Maps\CityMap_glow.fbx">
+      <Name>CityMap_glow</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
     <None Include="Particles\Textures\License.txt">
       <Name>License</Name>
     </None>

@@ -22,6 +22,7 @@ namespace BeatShift
             modelList.Add(new FbxModel("CityMap_walls", MapContent, MapName.CityMap, ModelCategory.Wall));
             modelList.Add(new FbxModel("CityMap_invisiblewalls", MapContent, MapName.CityMap, ModelCategory.InvisibleWall));
             modelList.Add(new FbxModel("CityMap_scenery", MapContent, MapName.CityMap, ModelCategory.SceneryFx));
+            //modelList.Add(new FbxModel("CityMap_glow", MapContent, MapName.CityMap, ModelCategory.GlowScenery));
             mapData = new MapData("CityMap", 60f, 4f);
 
             //mapTrackTexture = BeatShift.contentManager.Load<Texture2D>("Textures/Track2_Diffuse");

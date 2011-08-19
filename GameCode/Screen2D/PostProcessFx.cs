@@ -17,6 +17,8 @@ namespace BeatShift
         static Effect gaussianBlurEffect;
 
         static RenderTarget2D sceneRenderTarget;
+        static Texture2D geometryPass;
+        static RenderTarget2D deleteThisRenderTarget;
         static RenderTarget2D renderTarget1;
         static RenderTarget2D renderTarget2;
 
@@ -65,6 +67,12 @@ namespace BeatShift
                                                    format, pp.DepthStencilFormat, pp.MultiSampleCount,
                                                    RenderTargetUsage.DiscardContents);
 
+            deleteThisRenderTarget = new RenderTarget2D(BeatShift.graphics.GraphicsDevice, width, height, false,
+                                                   format, pp.DepthStencilFormat, pp.MultiSampleCount,
+                                                   RenderTargetUsage.DiscardContents);
+
+            geometryPass = new Texture2D(BeatShift.graphics.GraphicsDevice, width, height, false, format);
+
             // Create two rendertargets for the bloom processing. These are half the
             // size of the backbuffer, in order to minimize fillrate costs. Reducing
             // the resolution in this way doesn't hurt quality, because we are going
@@ -101,6 +109,17 @@ namespace BeatShift
             BeatShift.graphics.GraphicsDevice.SetRenderTarget(sceneRenderTarget);
         }
 
+        public static void BeginGlowPass()
+        {
+            //Save existing renderTarget to texture
+
+            //Set visible colour to black across rendertarget
+
+            //Result is as if renderTarget changed but depthBuffer/stencil remain?
+
+            //Temp... Just swith render target instead of above.
+            BeatShift.graphics.GraphicsDevice.SetRenderTarget(deleteThisRenderTarget);
+        }
 
         /// <summary>
         /// This is where it all happens. Grabs a scene that has already been rendered,
@@ -112,18 +131,14 @@ namespace BeatShift
 
             // Pass 1: draw the scene into rendertarget 1, using a
             // shader that extracts only the brightest parts of the image.
-            bloomExtractEffect.Parameters["BloomThreshold"].SetValue(
-                0.5f);
-
-            DrawFullscreenQuad(sceneRenderTarget, renderTarget1,
-                               bloomExtractEffect,
-                               IntermediateBuffer.PreBloom);
+            //bloomExtractEffect.Parameters["BloomThreshold"].SetValue(0.5f);
+            //DrawFullscreenQuad(sceneRenderTarget, renderTarget1, bloomExtractEffect, IntermediateBuffer.PreBloom);
 
             // Pass 2: draw from rendertarget 1 into rendertarget 2,
             // using a shader to apply a horizontal gaussian blur filter.
             SetBlurEffectParameters(1.0f / (float)renderTarget1.Width, 0);
 
-            DrawFullscreenQuad(renderTarget1, renderTarget2,
+            DrawFullscreenQuad(deleteThisRenderTarget, renderTarget2,//renderTarget1, renderTarget2,
                                gaussianBlurEffect,
                                IntermediateBuffer.BlurredHorizontally);
 

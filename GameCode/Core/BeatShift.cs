@@ -157,6 +157,9 @@ namespace BeatShift
             LiveServices.gamerServices.Enabled = false; //Updating manually
             Components.Add(LiveServices.gamerServices);
 
+            //Disable bloom on Reach as it causes a texture-clamp/powerOfTwo error
+            if (graphics.GraphicsProfile.Equals(GraphicsProfile.Reach)) Globals.PostProcess = false;
+
             GC.Collect();
             //gamerServices.Initialize();
 
