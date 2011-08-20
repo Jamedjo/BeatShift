@@ -193,6 +193,9 @@ namespace BeatShift
 #if WINDOWS
         static Boolean wasF4pressed = false;
 #endif
+#if DEBUG
+        static Boolean wasInsertPressed = false;
+#endif
 
         //TODO: move into quitting function of race type
         public static void setGameStateAndResetPlayers(GameState newState)
@@ -361,6 +364,22 @@ namespace BeatShift
                     BeatShift.graphics.ToggleFullScreen();
                 }
 #endif
+
+#if DEBUG
+            //Insert repeats last debug command if debug window shut
+            if (DebugSystem.Instance.DebugCommandUI.isClosed())
+            {
+                if (Keyboard.GetState().IsKeyDown(Keys.Insert)) wasInsertPressed = true;
+
+                if (wasInsertPressed) if (Keyboard.GetState().IsKeyUp(Keys.Insert))
+                    {
+                        wasInsertPressed = false;
+                        DebugSystem.Instance.DebugCommandUI.RepeatLastCommand();
+                    }
+            }
+                   
+                   
+#endif
             //music.Wait();
 
 
@@ -373,7 +392,7 @@ namespace BeatShift
             Rectangle viewArea = new Rectangle(0, 0, BeatShift.graphics.GraphicsDevice.Viewport.Width, BeatShift.graphics.GraphicsDevice.Viewport.Height);
             
             //Clear screen to black
-            BeatShift.graphics.GraphicsDevice.Clear(Color.SteelBlue);
+            BeatShift.graphics.GraphicsDevice.Clear(Color.Black);
             if(Globals.PostProcess) PostProcessFx.BeginDraw();//Set RenderTarget to bloom target instead of buffer
 
             if (BeatShift.shipSelect.Visible && !( paused || LiveServices.GuideIsVisible() ) )

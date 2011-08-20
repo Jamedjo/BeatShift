@@ -15,6 +15,7 @@ namespace BeatShift
         static Effect bloomExtractEffect;
         static Effect bloomCombineEffect;
         static Effect gaussianBlurEffect;
+        static Effect outputEffect;
 
         static RenderTarget2D sceneRenderTarget;
         static Texture2D geometryPass;
@@ -53,6 +54,8 @@ namespace BeatShift
             bloomExtractEffect = BeatShift.contentManager.Load<Effect>("Shaders/BloomExtract");
             bloomCombineEffect = BeatShift.contentManager.Load<Effect>("Shaders/BloomCombine");
             gaussianBlurEffect = BeatShift.contentManager.Load<Effect>("Shaders/GaussianBlur");
+
+            outputEffect = BeatShift.contentManager.Load<Effect>("Shaders/ShowTexture");
 
             // Look up the resolution and format of our main backbuffer.
             PresentationParameters pp = BeatShift.graphics.GraphicsDevice.PresentationParameters;
@@ -107,6 +110,7 @@ namespace BeatShift
         public static void BeginDraw()
         {
             BeatShift.graphics.GraphicsDevice.SetRenderTarget(sceneRenderTarget);
+            BeatShift.graphics.GraphicsDevice.Clear(Color.Black);
         }
 
         public static void BeginGlowPass()
@@ -119,6 +123,7 @@ namespace BeatShift
 
             //Temp... Just swith render target instead of above.
             BeatShift.graphics.GraphicsDevice.SetRenderTarget(deleteThisRenderTarget);
+            BeatShift.graphics.GraphicsDevice.Clear(Color.Black);
         }
 
         /// <summary>
@@ -162,14 +167,46 @@ namespace BeatShift
             parameters["BloomSaturation"].SetValue(1f);
             parameters["BaseSaturation"].SetValue(1f);
 
-            BeatShift.graphics.GraphicsDevice.Textures[1] = sceneRenderTarget;
-
             Viewport viewport = BeatShift.graphics.GraphicsDevice.Viewport;
 
-            DrawFullscreenQuad(renderTarget1,
-                               viewport.Width, viewport.Height,
-                               bloomCombineEffect,
-                               IntermediateBuffer.FinalResult);
+            BeatShift.graphics.GraphicsDevice.Textures[1] = sceneRenderTarget;
+
+            switch (Globals.TestState)
+            {
+                case 0:
+                    BeatShift.graphics.GraphicsDevice.BlendState = BlendState.Opaque;
+                    DrawFullscreenQuad(renderTarget1,
+                                       viewport.Width, viewport.Height,
+                                       bloomCombineEffect,
+                                       IntermediateBuffer.FinalResult);
+                    break;
+                case 1:
+                    DrawFullscreenQuad(renderTarget1,
+                                       viewport.Width, viewport.Height,
+                                       outputEffect,
+                                       IntermediateBuffer.FinalResult);
+                    break;
+                case 2:
+                    DrawFullscreenQuad(renderTarget2,
+                                       viewport.Width, viewport.Height,
+                                       outputEffect,
+                                       IntermediateBuffer.FinalResult);
+                    break;
+                case 3:
+                    DrawFullscreenQuad(deleteThisRenderTarget,
+                                       viewport.Width, viewport.Height,
+                                       outputEffect,
+                                       IntermediateBuffer.FinalResult);
+                    break;
+                case 4:
+                    DrawFullscreenQuad(sceneRenderTarget,
+                                       viewport.Width, viewport.Height,
+                                       outputEffect,
+                                       IntermediateBuffer.FinalResult);
+                    break;
+                default:
+                    break;
+            }
         }
 
 

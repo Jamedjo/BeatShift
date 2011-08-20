@@ -201,12 +201,12 @@ namespace BeatShift.GameDebugTools
                 lines.Clear();
             });
 
-            // Echo command
-            RegisterCommand("echo", "Display Messages",
-            delegate(IDebugCommandHost host, string command, IList<string> args)
-            {
-                Echo(command.Substring(5));
-            });
+            //// Echo command
+            //RegisterCommand("echo", "Display Messages",
+            //delegate(IDebugCommandHost host, string command, IList<string> args)
+            //{
+            //    Echo(command.Substring(5));
+            //});
 
             // Command to toggle trackNormals
             RegisterCommand("arrows", "Toggle drawing of track normal/tangent arrows",
@@ -321,7 +321,7 @@ namespace BeatShift.GameDebugTools
             });
 
             // Command to toggle between test states to create live code changes.
-            RegisterCommand("teststate", "Toggle between custom test states",
+            RegisterCommand("state", "Toggle between custom test states",
             delegate(IDebugCommandHost host, string command, IList<string> args)
             {
                 Globals.nextState();
@@ -473,6 +473,14 @@ namespace BeatShift.GameDebugTools
                 commandHistory.RemoveAt(0);
 
             commandHistoryIndex = commandHistory.Count;
+        }
+
+        public void RepeatLastCommand()
+        {
+            if (commandHistory.Count > 0)
+            {
+                ExecuteCommand(commandHistory[commandHistory.Count-1]);
+            }
         }
 
         public void RegisterEchoListner(IDebugEchoListner listner)
