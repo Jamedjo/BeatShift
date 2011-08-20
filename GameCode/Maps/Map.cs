@@ -103,8 +103,8 @@ namespace BeatShift
         #endregion
 
         #region Drawing Related Methods
-            
-         public void Draw(GameTime gameTime, CameraWrapper camera)
+
+        public void Draw(GameTime gameTime, CameraWrapper camera)
         {
             BeatShift.graphics.GraphicsDevice.Viewport = camera.Viewport;
 
@@ -125,10 +125,28 @@ namespace BeatShift
 
         }
 
+        public void DrawGlow(GameTime gameTime, CameraWrapper camera)
+        {
+            BeatShift.graphics.GraphicsDevice.Viewport = camera.Viewport;
+
+            foreach (FbxModel modelObject in modelList)
+            {
+                if (modelObject.mapName == currentMapName || modelObject.mapName == MapName.All)
+                {
+                    if(modelObject.category.Equals(ModelCategory.GlowScenery) )
+                    {
+                        drawWithBShiftEffect(modelObject.model, modelObject.transforms, camera);
+                    }
+                }
+            }
+
+        }
+
         void drawModel(FbxModel modelObject, GameTime gameTime, CameraWrapper camera)
         {
             //Don't draw invisible things
             if (modelObject.category == ModelCategory.InvisibleWall) return;
+            if (modelObject.category == ModelCategory.GlowScenery) return;
             //Don't draw when settings turn scenery display off
             if ((!Globals.DisplayScenery) && (modelObject.category.Equals(ModelCategory.SceneryFx)||modelObject.category.Equals(ModelCategory.SceneryBasic)) ) return;//If scenery should not be displayed, don't draw scenry
 

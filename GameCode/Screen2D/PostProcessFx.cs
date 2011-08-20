@@ -181,29 +181,31 @@ namespace BeatShift
                                        IntermediateBuffer.FinalResult);
                     break;
                 case 1:
-                    DrawFullscreenQuad(renderTarget1,
-                                       viewport.Width, viewport.Height,
-                                       outputEffect,
-                                       IntermediateBuffer.FinalResult);
-                    break;
-                case 2:
-                    DrawFullscreenQuad(renderTarget2,
-                                       viewport.Width, viewport.Height,
-                                       outputEffect,
-                                       IntermediateBuffer.FinalResult);
-                    break;
-                case 3:
-                    DrawFullscreenQuad(deleteThisRenderTarget,
-                                       viewport.Width, viewport.Height,
-                                       outputEffect,
-                                       IntermediateBuffer.FinalResult);
-                    break;
-                case 4:
                     DrawFullscreenQuad(sceneRenderTarget,
                                        viewport.Width, viewport.Height,
                                        outputEffect,
                                        IntermediateBuffer.FinalResult);
                     break;
+                case 2:
+                    DrawFullscreenQuad(deleteThisRenderTarget,
+                                       viewport.Width, viewport.Height,
+                                       outputEffect,
+                                       IntermediateBuffer.FinalResult);
+                    break;
+                case 3:
+                    DrawFullscreenQuad(renderTarget1,
+                                       viewport.Width, viewport.Height,
+                                       outputEffect,
+                                       IntermediateBuffer.FinalResult);
+                    break;
+                case 4:
+                    DrawFullscreenQuad(renderTarget2,
+                                       viewport.Width, viewport.Height,
+                                       outputEffect,
+                                       IntermediateBuffer.FinalResult);
+                    break;
+                case 6:
+                case 7:
                 default:
                     break;
             }

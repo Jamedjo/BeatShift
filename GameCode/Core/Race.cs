@@ -124,7 +124,23 @@ namespace BeatShift
 
         }
 
-        public static void Draw3D(GameTime gameTime)
+        public static void DrawGlow(GameTime gameTime)
+        {
+            if (MapManager.Visible)
+            {
+                //Set default render states once
+                //BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
+                //BeatShift.graphics.GraphicsDevice.BlendState = BlendState.Opaque;
+
+                foreach (RacerHuman h_racer in humanRacers)
+                {
+                    MapManager.currentMap.DrawGlow(gameTime, h_racer.localCamera);
+                }
+            }
+
+        }
+
+        public static void DrawShips(GameTime gameTime)
         {
             //Set display states
             BeatShift.graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
@@ -145,7 +161,7 @@ namespace BeatShift
         }
 
 
-        public static void Draw2D(GameTime gameTime)
+        public static void DrawHUD(GameTime gameTime)
         {
             if (Globals.DisplayHUD)
             {

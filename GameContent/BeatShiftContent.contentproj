@@ -806,7 +806,8 @@
     <Compile Include="Models\Maps\CityMap_glow.fbx">
       <Name>CityMap_glow</Name>
       <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
+      <Processor>BShiftAdvancedModelProcessor</Processor>
+      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
     </Compile>
     <None Include="Particles\Textures\License.txt">
       <Name>License</Name>
