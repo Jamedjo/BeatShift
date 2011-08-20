@@ -17,6 +17,8 @@ namespace BeatShift
         static Effect gaussianBlurEffect;
         static Effect outputEffect;
 
+        static Texture2D blackTexture;
+
         static RenderTarget2D sceneRenderTarget;
         static Texture2D geometryPass;
         static RenderTarget2D deleteThisRenderTarget;
@@ -56,6 +58,8 @@ namespace BeatShift
             gaussianBlurEffect = BeatShift.contentManager.Load<Effect>("Shaders/GaussianBlur");
 
             outputEffect = BeatShift.contentManager.Load<Effect>("Shaders/ShowTexture");
+
+            blackTexture = BeatShift.contentManager.Load<Texture2D>("Textures/1pxBlack");
 
             // Look up the resolution and format of our main backbuffer.
             PresentationParameters pp = BeatShift.graphics.GraphicsDevice.PresentationParameters;
@@ -115,15 +119,25 @@ namespace BeatShift
 
         public static void BeginGlowPass()
         {
-            //Save existing renderTarget to texture
+            Viewport viewport = BeatShift.graphics.GraphicsDevice.Viewport;
 
+            //Save existing renderTarget to texture
+            Color[] data = new Color[sceneRenderTarget.Width * sceneRenderTarget.Height];
+
+            sceneRenderTarget.GetData<Color>(0, null, data, 0, data.Length);
+            geometryPass.SetData<Color>(0, null, data, 0, data.Length);
+            
             //Set visible colour to black across rendertarget
+            DrawFullscreenQuad(blackTexture,
+                               viewport.Width, viewport.Height,
+                               outputEffect,
+                               IntermediateBuffer.FinalResult);
 
             //Result is as if renderTarget changed but depthBuffer/stencil remain?
 
             //Temp... Just swith render target instead of above.
-            BeatShift.graphics.GraphicsDevice.SetRenderTarget(deleteThisRenderTarget);
-            BeatShift.graphics.GraphicsDevice.Clear(Color.Black);
+            //BeatShift.graphics.GraphicsDevice.SetRenderTarget(deleteThisRenderTarget);
+            //BeatShift.graphics.GraphicsDevice.Clear(Color.Black);
         }
 
         /// <summary>
@@ -143,7 +157,7 @@ namespace BeatShift
             // using a shader to apply a horizontal gaussian blur filter.
             SetBlurEffectParameters(1.0f / (float)renderTarget1.Width, 0);
 
-            DrawFullscreenQuad(deleteThisRenderTarget, renderTarget2,//renderTarget1, renderTarget2,
+            DrawFullscreenQuad(sceneRenderTarget, renderTarget2,//renderTarget1, renderTarget2,
                                gaussianBlurEffect,
                                IntermediateBuffer.BlurredHorizontally);
 
@@ -169,7 +183,7 @@ namespace BeatShift
 
             Viewport viewport = BeatShift.graphics.GraphicsDevice.Viewport;
 
-            BeatShift.graphics.GraphicsDevice.Textures[1] = sceneRenderTarget;
+            BeatShift.graphics.GraphicsDevice.Textures[1] = geometryPass;
 
             switch (Globals.TestState)
             {
@@ -181,13 +195,13 @@ namespace BeatShift
                                        IntermediateBuffer.FinalResult);
                     break;
                 case 1:
-                    DrawFullscreenQuad(sceneRenderTarget,
+                    DrawFullscreenQuad(geometryPass,
                                        viewport.Width, viewport.Height,
                                        outputEffect,
                                        IntermediateBuffer.FinalResult);
                     break;
                 case 2:
-                    DrawFullscreenQuad(deleteThisRenderTarget,
+                    DrawFullscreenQuad(sceneRenderTarget,
                                        viewport.Width, viewport.Height,
                                        outputEffect,
                                        IntermediateBuffer.FinalResult);
@@ -204,8 +218,13 @@ namespace BeatShift
                                        outputEffect,
                                        IntermediateBuffer.FinalResult);
                     break;
+                case 5:
+                    DrawFullscreenQuad(deleteThisRenderTarget,
+                                       viewport.Width, viewport.Height,
+                                       outputEffect,
+                                       IntermediateBuffer.FinalResult);
+                    break;
                 case 6:
-                case 7:
                 default:
                     break;
             }
