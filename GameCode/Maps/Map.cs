@@ -154,7 +154,7 @@ namespace BeatShift
             if (modelObject.category == ModelCategory.Track) BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
 
             
-            if ((currentMapName.Equals(MapName.SpaceMap) && modelObject.category == ModelCategory.Wall) || modelObject.category==ModelCategory.SceneryBasic)
+            if (modelObject.category==ModelCategory.SceneryBasic)
             {
                 drawWithBasicEffect(modelObject, camera);
             }

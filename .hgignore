@@ -97,3 +97,4 @@ glob:GameContent/Textures/~psF9A9.tmp
 glob:GameContent/building_ipr.iff
 glob:GameCode/pix/**
 glob:GameContent/CityBox2_ipr.iff
+glob:GameContent/Textures/Spsce/.mayaSwatches/**
