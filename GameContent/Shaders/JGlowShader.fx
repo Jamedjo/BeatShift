@@ -55,20 +55,20 @@ struct VertexShaderOutput
 {
     float4 Position : POSITION0;
     float2 TexCoord : TEXCOORD0;
-	
-	float3 Light0 : TEXCOORD1;
-	float3 Light1 : TEXCOORD2;
-	float3 Light2 : TEXCOORD3;
-	float3 View : TEXCOORD4;	
 };
 
 struct VS_Part1_Output
 {
 	float4 nPosition;
-	float3 nNormal;
-	float3 nTangent;
 	
 	float2 TexCoord;
+};
+
+struct PS_Output
+{
+	float4 Colour : COLOR0;
+	float4 Glow : COLOR1;
+	
 };
 
 VertexShaderOutput VSF_Body(VS_Part1_Output input, float isSkinned)
@@ -81,15 +81,6 @@ VertexShaderOutput VSF_Body(VS_Part1_Output input, float isSkinned)
 	//else
 	worldPosition = mul(input.nPosition, world_Mx);
 
-	
-	//float3 halfAngle = normalize(DiffuseLightDirection) + normalize( viewInv_Mx[3].xyz - worldPosition.xyz );
-	//output.EyeVec = viewInv_Mx[3].xyz - worldPosition;
-	//output.halfAngle = mul(halfAngle, worldToTangentSpace);
-	output.View = mul(worldToTangentSpace, viewInv_Mx[3].xyz - worldPosition);
-
-	
-
-
 	output.TexCoord = input.TexCoord;
     
 	return output;
@@ -100,8 +91,6 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input){
 	VS_Part1_Output output = (VS_Part1_Output)0;
 	
 	output.nPosition = input.Position;
-	output.nNormal = input.Normal;
-	output.nTangent = input.Tangent;
 	
 	output.TexCoord = input.TexCoord;
 	
@@ -135,8 +124,10 @@ VertexShaderOutput VertexShaderFunction_Skinned(VertexShaderInput input){
 	return VSF_Body(output,1);
 }
 
-float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
+PS_Output PixelShaderFunction(VertexShaderOutput input)
 {
+	PS_Output output;
+
     float3 textureColour = tex2D(textureSampler, input.TexCoord).xyz;
 	
 	float3 ambient = float3(1.0,1.0,1.0);
@@ -144,12 +135,14 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	
 	float3 baseColour = ambient * textureColour;
 	
-	float3 colour = saturate(baseColour + b.specularSum);
-	float4 outFloat = float4(colour,1.0);
+	float3 glow = saturate(baseColour);
+	output.Glow= float4(glow,1.0);
 	
-	if(useAlphaMap) outFloat.a= tex2D(alphaSampler, input.TexCoord).r;
+	if(useAlphaMap) output.Glow.a= tex2D(alphaSampler, input.TexCoord).r;
 	
-    return outFloat;
+	output.Colour = float4(0.0,0.0,0.0,0.0);
+
+    return output;
 }
 
 technique Technique1

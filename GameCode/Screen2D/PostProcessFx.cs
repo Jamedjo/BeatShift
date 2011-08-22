@@ -20,8 +20,7 @@ namespace BeatShift
         static Texture2D blackTexture;
 
         static RenderTarget2D sceneRenderTarget;
-        static Texture2D geometryPass;
-        static RenderTarget2D deleteThisRenderTarget;
+        static RenderTarget2D glowRenderTarget;
         static RenderTarget2D renderTarget1;
         static RenderTarget2D renderTarget2;
 
@@ -74,11 +73,9 @@ namespace BeatShift
                                                    format, pp.DepthStencilFormat, pp.MultiSampleCount,
                                                    RenderTargetUsage.DiscardContents);
 
-            deleteThisRenderTarget = new RenderTarget2D(BeatShift.graphics.GraphicsDevice, width, height, false,
+            glowRenderTarget = new RenderTarget2D(BeatShift.graphics.GraphicsDevice, width, height, false,
                                                    format, pp.DepthStencilFormat, pp.MultiSampleCount,
                                                    RenderTargetUsage.DiscardContents);
-
-            geometryPass = new Texture2D(BeatShift.graphics.GraphicsDevice, width, height, false, format);
 
             // Create two rendertargets for the bloom processing. These are half the
             // size of the backbuffer, in order to minimize fillrate costs. Reducing
@@ -98,6 +95,7 @@ namespace BeatShift
         static void UnloadContent()
         {
             sceneRenderTarget.Dispose();
+            glowRenderTarget.Dispose();
             renderTarget1.Dispose();
             renderTarget2.Dispose();
         }
@@ -113,31 +111,9 @@ namespace BeatShift
         /// </summary>
         public static void BeginDraw()
         {
-            BeatShift.graphics.GraphicsDevice.SetRenderTarget(sceneRenderTarget);
+            //BeatShift.graphics.GraphicsDevice.SetRenderTarget(sceneRenderTarget);
+            BeatShift.graphics.GraphicsDevice.SetRenderTargets(sceneRenderTarget,glowRenderTarget);
             BeatShift.graphics.GraphicsDevice.Clear(Color.Black);
-        }
-
-        public static void BeginGlowPass()
-        {
-            Viewport viewport = BeatShift.graphics.GraphicsDevice.Viewport;
-
-            //Save existing renderTarget to texture
-            Color[] data = new Color[sceneRenderTarget.Width * sceneRenderTarget.Height];
-
-            sceneRenderTarget.GetData<Color>(0, null, data, 0, data.Length);
-            geometryPass.SetData<Color>(0, null, data, 0, data.Length);
-            
-            //Set visible colour to black across rendertarget
-            DrawFullscreenQuad(blackTexture,
-                               viewport.Width, viewport.Height,
-                               outputEffect,
-                               IntermediateBuffer.FinalResult);
-
-            //Result is as if renderTarget changed but depthBuffer/stencil remain?
-
-            //Temp... Just swith render target instead of above.
-            //BeatShift.graphics.GraphicsDevice.SetRenderTarget(deleteThisRenderTarget);
-            //BeatShift.graphics.GraphicsDevice.Clear(Color.Black);
         }
 
         /// <summary>
@@ -157,7 +133,7 @@ namespace BeatShift
             // using a shader to apply a horizontal gaussian blur filter.
             SetBlurEffectParameters(1.0f / (float)renderTarget1.Width, 0);
 
-            DrawFullscreenQuad(sceneRenderTarget, renderTarget2,//renderTarget1, renderTarget2,
+            DrawFullscreenQuad(glowRenderTarget, renderTarget2,//renderTarget1, renderTarget2,
                                gaussianBlurEffect,
                                IntermediateBuffer.BlurredHorizontally);
 
@@ -183,7 +159,7 @@ namespace BeatShift
 
             Viewport viewport = BeatShift.graphics.GraphicsDevice.Viewport;
 
-            BeatShift.graphics.GraphicsDevice.Textures[1] = geometryPass;
+            BeatShift.graphics.GraphicsDevice.Textures[1] = sceneRenderTarget;
 
             switch (Globals.TestState)
             {
@@ -195,7 +171,7 @@ namespace BeatShift
                                        IntermediateBuffer.FinalResult);
                     break;
                 case 1:
-                    DrawFullscreenQuad(geometryPass,
+                    DrawFullscreenQuad(glowRenderTarget,
                                        viewport.Width, viewport.Height,
                                        outputEffect,
                                        IntermediateBuffer.FinalResult);
@@ -219,10 +195,6 @@ namespace BeatShift
                                        IntermediateBuffer.FinalResult);
                     break;
                 case 5:
-                    DrawFullscreenQuad(deleteThisRenderTarget,
-                                       viewport.Width, viewport.Height,
-                                       outputEffect,
-                                       IntermediateBuffer.FinalResult);
                     break;
                 case 6:
                 default:

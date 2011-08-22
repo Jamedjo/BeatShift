@@ -421,9 +421,8 @@ namespace BeatShift
             //Begin glow pass
             if (Globals.PostProcess)
             {
-                PostProcessFx.BeginGlowPass();
                 Race.DrawGlow(gameTime);
-                Race.DrawShips(gameTime);//Fake bit of geometry
+                //Race.DrawShips(gameTime);//Fake bit of geometry
                 PostProcessFx.Draw(gameTime); //Apply bloom on 3D elements and draw to backbuffer.
             }
 
