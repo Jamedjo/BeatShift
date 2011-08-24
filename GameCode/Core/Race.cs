@@ -148,7 +148,6 @@ namespace BeatShift
 
             foreach (RacerHuman h_racer in humanRacers)
             {
-                BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
                 foreach (Racer allRacer in currentRacers)
                 {
                     if (allRacer.shipDrawing.isVisible)

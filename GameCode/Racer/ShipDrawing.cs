@@ -181,6 +181,7 @@ namespace BeatShift
 
                 //Draw ship using bShiftEffect.fx as instructed by the fbx file
                 ShipFbx shipFbx = shipClasses[(int)currentShip];
+                BeatShift.graphics.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
                 foreach (ModelMesh mesh in shipFbx.model.Meshes)
                 {
                     foreach (Effect effect in mesh.Effects)

@@ -300,9 +300,9 @@ technique Technique1
 {
     pass Pass1
     {
-        AlphaBlendEnable = TRUE;
-        DestBlend = INVSRCALPHA;
-        SrcBlend = SRCALPHA;
+        //AlphaBlendEnable = TRUE;
+        //DestBlend = INVSRCALPHA;
+        //SrcBlend = SRCALPHA;
         VertexShader = compile vs_2_0 VertexShaderFunction();
         PixelShader = compile ps_2_0 PixelShaderFunction();
     }
@@ -312,9 +312,9 @@ technique SkinnedShip
 {
     pass Pass1
     {
-        AlphaBlendEnable = TRUE;
-        DestBlend = INVSRCALPHA;
-        SrcBlend = SRCALPHA;
+        //AlphaBlendEnable = TRUE;
+        //DestBlend = INVSRCALPHA;
+        //SrcBlend = SRCALPHA;
         VertexShader = compile vs_2_0 VertexShaderFunction_Skinned();
         PixelShader = compile ps_2_0 PixelShaderFunction();
     }
@@ -324,9 +324,9 @@ technique NoReflect
 {
     pass Pass1
     {
-        AlphaBlendEnable = TRUE;
-        DestBlend = INVSRCALPHA;
-        SrcBlend = SRCALPHA;
+        //AlphaBlendEnable = TRUE;
+        //DestBlend = INVSRCALPHA;
+        //SrcBlend = SRCALPHA;
         VertexShader = compile vs_2_0 VertexShaderFunction();
         PixelShader = compile ps_2_0 NoReflect_PS();
     }
