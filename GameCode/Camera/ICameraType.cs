@@ -76,7 +76,7 @@ namespace BeatShift.Cameras
 
         protected Quaternion camRotation = Quaternion.Identity;
         protected Vector3 camLastUp = Vector3.Up;
-        protected const int farClipDistance = 3500;
+        protected const int farClipDistance = 4500;
 
         /// <summary>
         /// This must be shared between all camera instances for each player, or things will not
