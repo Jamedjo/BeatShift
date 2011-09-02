@@ -86,8 +86,8 @@
     </NestedContentProject>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SkinnedModel\SkinnedModelXbox.csproj">
-      <Project>{33670229-ce14-4705-a4c2-cae8fef5f520}</Project>
+    <ProjectReference Include="..\..\lib\SkinnedModel\SkinnedModelXbox.csproj">
+      <Project>{33670229-CE14-4705-A4C2-CAE8FEF5F520}</Project>
       <Name>SkinnedModelXbox</Name>
     </ProjectReference>
     <ProjectReference Include="Content\SkinningSampleContent.contentproj">
