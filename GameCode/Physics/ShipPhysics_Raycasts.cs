@@ -133,7 +133,6 @@ namespace BeatShift
                 parentRacer.isRespawning = true;
                 //TODO: wait a bit 
                 //currentDistanceToNearestWaypoint = (float)((nextWaypoint.position - ShipPosition).Length()) / 125; //TODO: use actual width of track
-                //physicsBody.LinearDamping = 0.7f; //BUG!!!
                 if (!despawnShown && millisecsLeftTillReset < 700)
                 {
                     parentRacer.shipDrawing.spawn.Despawn(parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.DrawOrientation);

@@ -73,9 +73,11 @@ namespace BeatShift
 
         // Map related variables
         public MapData mapData { get; private set; }
+        
         public MapPoint currentProgressWaypoint;
         public MapPoint nearestMapPoint;
         public MapPoint nextWaypoint;
+
         public Vector3 ShipTrackUp { get { return nearestMapPoint.trackUp; } }
 
         private Racer parentRacer;
@@ -125,22 +127,12 @@ namespace BeatShift
 
         private void placeShipOnStartingGrid(int shipNumber)
         {
-            resetShipAndFaceNextWaypoint(getStartingGridPosition(shipNumber));
-        }
-
-        public void resetShipAtLastWaypoint()
-        {
-            resetShipAndFaceNextWaypoint(nearestMapPoint.position);// currentProgressWaypoint.position);
-        }
-
-        private void resetShipAndFaceNextWaypoint(Vector3 newShipPosition)
-        {
+            Vector3 newShipPosition = getStartingGridPosition(shipNumber);
             if (float.IsNaN(racerEntity.Position.X) == true)
             {
                 previousOrientation = racerEntity.Orientation;
             }
             //previousOrientationMatrix = physicsBody.OrientationMatrix;
-
 
             //Make ship face towards the next waypoint at start, so it faces the right way around the track.
             ShipPosition = newShipPosition;
@@ -236,49 +228,44 @@ namespace BeatShift
             nearestMapPoint = mapData.nearestMapPoint(ShipPosition);
             if(gameTime.TotalGameTime.Milliseconds%500 ==0) nearestMapPoint.pointHit();//togle colour of nearest mapPoint every 500ms
 
-            //Check for collision with next waypoint
-            ////If distance between ship and waypoint is less than waypoint radius they have collided. (Was using the sphere around the waypoint)
-            ////float distance = (ShipPosition - nextWaypoint.position).Length();
-            ////if (distance < nextWaypoint.getWidth())
+            //If ship is not on track do not update waypoints
+            if(!parentRacer.isRespawning){
 
-            //Now using the plane defined by the tangent as the waypoint
-            //If the Vector from the waypoint to the ship is within 90 degrees of tangent it is on the positive side of the waypoint plane
-            if (Vector3.Dot(nextWaypoint.tangent, (ShipPosition - nextWaypoint.position)) >= 0)
-            {
-                //nextWaypoint.pointHit();
-                currentProgressWaypoint = nextWaypoint;
-                if (currentProgressWaypoint.getIndex() == 0)
+                //Don't hit next waypoint if on wrong section of track (nearestPoint not within 10 of nextWaypoint
+                if (Math.Abs(nearestMapPoint.getIndex()-nextWaypoint.getIndex())<=10)
                 {
-                    //Start point has been reached, shut down the ship if it's the last lap
-                    if(parentRacer.GetType()==typeof(RacerHuman))
-                        SoundManager.LapComplete();
-                    parentRacer.raceTiming.finishLap();//++laps
-                    //TODO: shift into 
+                    //Check for collision with next waypoint using the plane defined by the tangent as the waypoint
+                    //If the Vector from the waypoint to the ship is within 90 degrees of tangent it is on the positive side of the waypoint plane
+                    if (Vector3.Dot(nextWaypoint.tangent, (ShipPosition - nextWaypoint.position)) >= 0)
+                    {
+                        //nextWaypoint.pointHit();
+                        currentProgressWaypoint = nextWaypoint;
+                        if (currentProgressWaypoint.getIndex() == 0)
+                        {
+                            //Start point has been reached, shut down the ship if it's the last lap
+                            if (parentRacer.GetType() == typeof(RacerHuman))
+                                SoundManager.LapComplete();
+                            parentRacer.raceTiming.finishLap();//++laps
+                            //TODO: shift into 
+                        }
+                        nextWaypoint = mapData.nextPoint(currentProgressWaypoint);
+                        parentRacer.racerPoints.newWaypointHit();
+                    }
                 }
-                nextWaypoint = mapData.nextPoint(currentProgressWaypoint);
-                parentRacer.racerPoints.newWaypointHit();
+
+                //Point to test for wrong way is mapPoint 4 behind current
+                MapPoint wrongwayPoint = mapData.wrongwayPoint(currentProgressWaypoint);
+
+                //Use vector definition of a plane to test if behind wrong way point. TODO: change this so wrongway not detected on sharp curves
+                Boolean behindWrongwaypoint = (Vector3.Dot(wrongwayPoint.tangent, (ShipPosition - wrongwayPoint.position)) < 0);
+
+
+                if (Vector3.Dot(racerEntity.OrientationMatrix.Forward, nearestMapPoint.tangent) < -0.2 && parentRacer.raceTiming.isRacing && (!parentRacer.isRespawning))
+                {
+                    wrongWay = true;
+                }
+                else { wrongWay = false; }
             }
-
-            //Check for collision with wrongway waypoint (3 previous)
-            //TODO: If nearestMapPoint is far away from the currentProgressWaypoint then wrong way?
-            //OR actually use direction: if if direction ship faceing significantly opposite to direction to next waypoint for a long time
-            //Problems with both. If wrong way for long time then when you turn around it should stop saying wrong way:
-            //even if map direction is opposite by track direction not
-            //even if still far away from next waypoint.
-            //So use direction of change of nearest waypoint in the array of waypoints: get the index of the nearest waypoint and track its changes.
-
-            //If distance between ship and waypoint is less than waypoint radius they have collided.
-            MapPoint wrongwayPoint = mapData.wrongwayPoint(currentProgressWaypoint);
-            //distance = (ShipPosition - wrongwayPoint.position).Length();
-            Boolean behindWrongwaypoint = (Vector3.Dot(wrongwayPoint.tangent, (ShipPosition - wrongwayPoint.position)) < 0);
-
-            if (Vector3.Dot(racerEntity.OrientationMatrix.Forward, nearestMapPoint.tangent) < -0.2 && parentRacer.raceTiming.isRacing)
-            {
-                //System.Diagnostics.Debug.WriteLine("Wrong Way!!! Point:" + wrongwayPoint.getIndex() + "\n");
-                currentProgressWaypoint = wrongwayPoint;//TODO: remove this line?
-                wrongWay = true;
-            }
-            else { wrongWay = false; }
         }
 
 
