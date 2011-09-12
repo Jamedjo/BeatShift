@@ -302,7 +302,7 @@ namespace BeatShift.Input
                 if (backwardsComponent > 20f)
                     reversingMultiplier = -1;
 
-                if (!(backwardsComponent < 20f && backwardsComponent > 0f))
+                if (backwardsComponent != 0f)
                 {
                     if (angularSize < 3.5f)
                     {

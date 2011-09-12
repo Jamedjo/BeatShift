@@ -98,3 +98,12 @@ glob:GameContent/building_ipr.iff
 glob:GameCode/pix/**
 glob:GameContent/CityBox2_ipr.iff
 glob:GameContent/Textures/Spsce/.mayaSwatches/**
+glob:AnimationTest/SkinningSample/bin/**
+glob:AnimationTest/SkinningSample/obj/**
+glob:GameContent/MayaAscii/Maps/new Desert/Arrow-files/**
+glob:GameContent/MayaAscii/Maps/new Desert/DesertTerrain2-files/**
+glob:GameContent/MayaAscii/Maps/new Desert/DesertTerrain3-files/**
+glob:GameContent/MayaAscii/Maps/new Desert/DesertTerrain5-files/**
+glob:GameContent/MayaAscii/Maps/new Desert/Hanger-files/**
+glob:GameContent/MayaAscii/Maps/new Desert/T1-files/**
+glob:GameContent/MayaAscii/Maps/new Desert/DesertTerrain-files/**
