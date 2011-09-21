@@ -1,6 +1,6 @@
 //Maya ASCII 2011 scene
 //Name: Flux.ma
-//Last modified: Thu, Aug 18, 2011 07:37:53 AM
+//Last modified: Sun, Sep 11, 2011 04:19:12 AM
 //Codeset: 1252
 requires maya "2011";
 requires "hlslShader" "1.0";
@@ -14,13 +14,13 @@ fileInfo "osv" "Microsoft Windows 7 Business Edition, 64-bit Windows 7 Service P
 fileInfo "license" "student";
 createNode transform -s -n "persp";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" -6.0845069895310111 9.6103681723077088 -23.522218766109841 ;
-	setAttr ".r" -type "double3" -18.338266382083944 191.39999999985199 0 ;
+	setAttr ".t" -type "double3" 6.7671341656029327 5.3270714722984875 12.55037556791617 ;
+	setAttr ".r" -type "double3" -18.938266382208692 41.799999999995151 2.1332374770055211e-015 ;
 createNode camera -s -n "perspShape" -p "persp";
 	setAttr -k off ".v" no;
 	setAttr ".fl" 34.999999999999986;
 	setAttr ".fcp" 1000;
-	setAttr ".coi" 27.597471974624412;
+	setAttr ".coi" 13.255394242621509;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
@@ -28,14 +28,14 @@ createNode camera -s -n "perspShape" -p "persp";
 	setAttr ".hc" -type "string" "viewSet -p %camera";
 createNode transform -s -n "top";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" -7.2340423961824447 101.47978626465763 -0.25165799277664525 ;
+	setAttr ".t" -type "double3" 0.00054532289505004883 101.87521393895305 4.9895255565643533 ;
 	setAttr ".r" -type "double3" -89.999999999999986 0 0 ;
 createNode camera -s -n "topShape" -p "top";
 	setAttr -k off ".v" no;
 	setAttr ".rnd" no;
 	setAttr ".fcp" 1000;
 	setAttr ".coi" 100.1;
-	setAttr ".ow" 3.3254863849332232;
+	setAttr ".ow" 4.0379914663652574;
 	setAttr ".imn" -type "string" "top";
 	setAttr ".den" -type "string" "top_depth";
 	setAttr ".man" -type "string" "top_mask";
@@ -49,7 +49,7 @@ createNode camera -s -n "frontShape" -p "front";
 	setAttr ".rnd" no;
 	setAttr ".fcp" 1000;
 	setAttr ".coi" 100.1;
-	setAttr ".ow" 32.390952868904961;
+	setAttr ".ow" 30.541255447569927;
 	setAttr ".imn" -type "string" "front";
 	setAttr ".den" -type "string" "front_depth";
 	setAttr ".man" -type "string" "front_mask";
@@ -533,9 +533,34 @@ createNode directionalLight -n "directionalLightShape3" -p "directionalLight3";
 	setAttr -k off ".v";
 createNode transform -n "Flux_Low";
 createNode mesh -n "Flux_LowShape" -p "Flux_Low";
+	addAttr -ci true -sn "mso" -ln "miShadingSamplesOverride" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "msh" -ln "miShadingSamples" -min 0 -smx 8 -at "float";
+	addAttr -ci true -sn "mdo" -ln "miMaxDisplaceOverride" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "mmd" -ln "miMaxDisplace" -min 0 -smx 1 -at "float";
 	setAttr -k off ".v";
 	setAttr ".vir" yes;
 	setAttr ".vif" yes;
+	setAttr ".pv" -type "double2" 0.63115379214286804 0.1262182891368866 ;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr -s 14 ".pt";
+	setAttr ".pt[1882:1893]" -type "float3" 0 0 -0.22617923  0 0 -0.22617923  0 
+		0 -0.22617923  0 0 -0.22617923  0 0 -0.22617923  0 0 -0.22617923  0 0 -0.22617923  
+		0 0 -0.22617923  0 0 -0.22617923  0 0 -0.22617923  0 0 -0.22617923  0 0 -0.22617923 ;
+createNode mesh -n "polySurfaceShape1" -p "Flux_Low";
+	addAttr -ci true -sn "mso" -ln "miShadingSamplesOverride" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "msh" -ln "miShadingSamples" -min 0 -smx 8 -at "float";
+	addAttr -ci true -sn "mdo" -ln "miMaxDisplaceOverride" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "mmd" -ln "miMaxDisplace" -min 0 -smx 1 -at "float";
+	setAttr -k off ".v";
+	setAttr ".io" yes;
+	setAttr ".iog[0].og[0].gcl" -type "componentList" 1 "f[138:149]";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".pv" -type "double2" 0.36857455968856812 0.12600245326757431 ;
 	setAttr ".uvst[0].uvsn" -type "string" "map1";
 	setAttr -s 3214 ".uvst[0].uvsp";
 	setAttr ".uvst[0].uvsp[0:249]" -type "float2" 0.4835009 0.66502219 0.45761767 
@@ -605,15 +630,15 @@ createNode mesh -n "Flux_LowShape" -p "Flux_Low";
 	setAttr ".uvst[0].uvsp[250:499]" 0.55185914 0.82687831 0.5639239 0.7829057 
 		0.56752998 0.7829057 0.55627203 0.82129282 0.55514109 0.82081699 0.56752998 0.7829057 
 		0.57872707 0.77680069 0.55594867 0.82836461 0.55627203 0.82129282 0.53556287 0.7768113 
-		0.46446335 0.77681136 0.53011495 0.20473778 0.5000124 0.20473778 0.50001216 0.17155051 
-		0.51724535 0.17155051 0.46990973 0.20473778 0.48277944 0.17155051 0.50001252 0.32447371 
+		0.46446335 0.77681136 0.54448086 0.2126568 0.5000124 0.2126568 0.5000121 0.16476025 
+		0.52546954 0.16476025 0.45554382 0.2126568 0.47455534 0.16476025 0.50001252 0.32447371 
 		0.60810101 0.32447371 0.50001234 0.11104953 0.52825624 0.11104953 0.52475798 0.11725301 
 		0.50001234 0.11725301 0.47526702 0.11725301 0.39192379 0.32447371 0.53558129 0.24122708 
 		0.50001246 0.24122708 0.5000124 0.22814359 0.53559011 0.22814359 0.53359932 0.15580337 
 		0.5000121 0.15580337 0.55868196 0.22048493 0.46642566 0.15580337 0.44134274 0.22048493 
-		0.46444356 0.24122708 0.46443462 0.22814359 0.50001246 0.22048493 0.5000124 0.21634108 
-		0.55116457 0.21634108 0.52929574 0.15994722 0.5000121 0.15994722 0.47072914 0.15994722 
-		0.44886011 0.21634108 0.59733796 0.4241645 0.55618316 0.4241645 0.55618316 0.35348514 
+		0.46444356 0.24122708 0.46443462 0.22814359 0.50001246 0.22048493 0.5000124 0.21840517 
+		0.55490905 0.21840517 0.53143936 0.15762925 0.5000121 0.15762925 0.46858555 0.15762925 
+		0.44511563 0.21840517 0.59733796 0.4241645 0.55618316 0.4241645 0.55618316 0.35348514 
 		0.59733796 0.35348514 0.59978265 0.42684302 0.55373847 0.42684302 0.55373847 0.35080662 
 		0.59978265 0.35080662 0.81151694 0.49290207 0.78516787 0.48721096 0.79062885 0.46210515 
 		0.79885042 0.46388063 0.78516787 0.48721096 0.75889277 0.48153651 0.78209984 0.46021119 
@@ -628,8 +653,8 @@ createNode mesh -n "Flux_LowShape" -p "Flux_Low";
 		0.64709383 0.099666186 0.39082608 0.10047671 0.35323769 0.099296331 0.40012568 0.12812462 
 		0.37046957 0.15270859 0.33577722 0.15010987 0.32728362 0.1250416 0.33702341 0.12526825 
 		0.34351352 0.14442337 0.3485032 0.091052189 0.35323769 0.099296331 0.37105456 0.16095273 
-		0.37046957 0.15270859 0.5000124 0.20687164 0.53398603 0.20687164 0.51946145 0.16941665 
-		0.50001216 0.16941665 0.48056337 0.16941665 0.46603867 0.20687164 0.46609116 0.077271223 
+		0.37046957 0.15270859 0.5000124 0.215809 0.55019933 0.215809 0.52874315 0.16084987 
+		0.5000121 0.16084987 0.47128171 0.16084987 0.44982535 0.215809 0.46609116 0.077271223 
 		0.5 0.070199132 0.5 0.070199117 0.53407258 0.077271253 0.50001246 0.25212163 0.54464835 
 		0.25212163 0.54465944 0.22405981 0.5000124 0.22405981 0.45537651 0.25212163 0.4553653 
 		0.22405981 0.46338692 0.93655837 0.43950754 0.82368279 0.38958019 0.84243637 0.4296875 
@@ -7691,8 +7716,8 @@ createNode script -n "uiConfigurationScriptNode";
 		+ "                -imageEnabled 0\n                -graphType \"DAG\" \n                -heatMapDisplay 0\n                -updateSelection 1\n                -updateNodeAdded 1\n                -useDrawOverrideColor 0\n                -limitGraphTraversal -1\n                -range 0 0 \n                -iconSize \"smallIcons\" \n                -showCachedConnections 0\n                $editorName;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Hypergraph Hierarchy\")) -mbv $menusOkayInPanels  $panelName;\n\n\t\t\t$editorName = ($panelName+\"HyperGraphEd\");\n            hyperGraph -e \n                -graphLayoutStyle \"hierarchicalLayout\" \n                -orientation \"horiz\" \n                -mergeConnections 0\n                -zoom 1\n                -animateTransition 0\n                -showRelationships 1\n                -showShapes 0\n                -showDeformers 0\n                -showExpressions 0\n                -showConstraints 0\n                -showUnderworld 0\n                -showInvisible 0\n"
 		+ "                -transitionFrames 1\n                -opaqueContainers 0\n                -freeform 0\n                -imagePosition 0 0 \n                -imageScale 1\n                -imageEnabled 0\n                -graphType \"DAG\" \n                -heatMapDisplay 0\n                -updateSelection 1\n                -updateNodeAdded 1\n                -useDrawOverrideColor 0\n                -limitGraphTraversal -1\n                -range 0 0 \n                -iconSize \"smallIcons\" \n                -showCachedConnections 0\n                $editorName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"hyperShadePanel\" (localizedPanelLabel(\"Hypershade\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"hyperShadePanel\" -l (localizedPanelLabel(\"Hypershade\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Hypershade\")) -mbv $menusOkayInPanels  $panelName;\n"
 		+ "\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\tif ($useSceneConfig) {\n\t\tscriptedPanel -e -to $panelName;\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"visorPanel\" (localizedPanelLabel(\"Visor\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"visorPanel\" -l (localizedPanelLabel(\"Visor\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Visor\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"polyTexturePlacementPanel\" (localizedPanelLabel(\"UV Texture Editor\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"polyTexturePlacementPanel\" -l (localizedPanelLabel(\"UV Texture Editor\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"UV Texture Editor\")) -mbv $menusOkayInPanels  $panelName;\n"
-		+ "\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"renderWindowPanel\" (localizedPanelLabel(\"Render View\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"renderWindowPanel\" -l (localizedPanelLabel(\"Render View\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Render View\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextPanel \"blendShapePanel\" (localizedPanelLabel(\"Blend Shape\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\tblendShapePanel -unParent -l (localizedPanelLabel(\"Blend Shape\")) -mbv $menusOkayInPanels ;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tblendShapePanel -edit -l (localizedPanelLabel(\"Blend Shape\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n"
-		+ "\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"dynRelEdPanel\" (localizedPanelLabel(\"Dynamic Relationships\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"dynRelEdPanel\" -l (localizedPanelLabel(\"Dynamic Relationships\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Dynamic Relationships\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"relationshipPanel\" (localizedPanelLabel(\"Relationship Editor\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"relationshipPanel\" -l (localizedPanelLabel(\"Relationship Editor\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Relationship Editor\")) -mbv $menusOkayInPanels  $panelName;\n"
+		+ "\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\tif ($useSceneConfig) {\n\t\tscriptedPanel -e -to $panelName;\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"renderWindowPanel\" (localizedPanelLabel(\"Render View\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"renderWindowPanel\" -l (localizedPanelLabel(\"Render View\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Render View\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextPanel \"blendShapePanel\" (localizedPanelLabel(\"Blend Shape\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\tblendShapePanel -unParent -l (localizedPanelLabel(\"Blend Shape\")) -mbv $menusOkayInPanels ;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tblendShapePanel -edit -l (localizedPanelLabel(\"Blend Shape\")) -mbv $menusOkayInPanels  $panelName;\n"
+		+ "\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"dynRelEdPanel\" (localizedPanelLabel(\"Dynamic Relationships\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"dynRelEdPanel\" -l (localizedPanelLabel(\"Dynamic Relationships\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Dynamic Relationships\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"relationshipPanel\" (localizedPanelLabel(\"Relationship Editor\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"relationshipPanel\" -l (localizedPanelLabel(\"Relationship Editor\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Relationship Editor\")) -mbv $menusOkayInPanels  $panelName;\n"
 		+ "\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"referenceEditorPanel\" (localizedPanelLabel(\"Reference Editor\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"referenceEditorPanel\" -l (localizedPanelLabel(\"Reference Editor\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Reference Editor\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"componentEditorPanel\" (localizedPanelLabel(\"Component Editor\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"componentEditorPanel\" -l (localizedPanelLabel(\"Component Editor\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Component Editor\")) -mbv $menusOkayInPanels  $panelName;\n"
 		+ "\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\tif ($useSceneConfig) {\n\t\tscriptedPanel -e -to $panelName;\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"dynPaintScriptedPanelType\" (localizedPanelLabel(\"Paint Effects\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"dynPaintScriptedPanelType\" -l (localizedPanelLabel(\"Paint Effects\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Paint Effects\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"scriptEditorPanel\" (localizedPanelLabel(\"Script Editor\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"scriptEditorPanel\" -l (localizedPanelLabel(\"Script Editor\")) -mbv $menusOkayInPanels `;\n\t\t}\n\t} else {\n\t\t$label = `panel -q -label $panelName`;\n"
 		+ "\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Script Editor\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"Stereo\" (localizedPanelLabel(\"Stereo\")) `;\n\tif (\"\" == $panelName) {\n\t\tif ($useSceneConfig) {\n\t\t\t$panelName = `scriptedPanel -unParent  -type \"Stereo\" -l (localizedPanelLabel(\"Stereo\")) -mbv $menusOkayInPanels `;\nstring $editorName = ($panelName+\"Editor\");\n            stereoCameraView -e \n                -camera \"persp\" \n                -useInteractiveMode 0\n                -displayLights \"default\" \n                -displayAppearance \"wireframe\" \n                -activeOnly 0\n                -ignorePanZoom 0\n                -wireframeOnShaded 0\n                -headsUpDisplay 1\n                -selectionHiliteDisplay 1\n                -useDefaultMaterial 0\n                -bufferMode \"double\" \n                -twoSidedLighting 1\n                -backfaceCulling 0\n                -xray 0\n                -jointXray 0\n"
@@ -7731,10 +7756,10 @@ createNode shadingEngine -n "hlslShader1SG";
 	setAttr -s 2 ".dsm";
 	setAttr ".ro" yes;
 createNode materialInfo -n "materialInfo6";
-createNode file -n "file2";
+createNode file -n "diffuseTex";
 	setAttr ".ftn" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent//Textures/Flux_Diffuse.dds";
-createNode file -n "file4";
-	setAttr ".ftn" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent//Textures/Track2_Normal.tga";
+createNode file -n "normalTex";
+	setAttr ".ftn" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent//Textures/Flux_Normal.dds";
 createNode hlslShader -n "hlslShader1";
 	addAttr -is true -ci true -sn "Shininess_Name" -ln "Shininess_Name" -dt "string";
 	addAttr -is true -ci true -sn "Shininess_Type" -ln "Shininess_Type" -dt "string";
@@ -7908,7 +7933,7 @@ createNode hlslShader -n "hlslShader1";
 	setAttr ".Shininess" 11.418073654174805;
 	setAttr ".bumpMagnitude_Name" -type "string" "bumpMagnitude";
 	setAttr ".bumpMagnitude_Type" -type "string" "float";
-	setAttr ".bumpMagnitude" 0.740406334400177;
+	setAttr ".bumpMagnitude" 0.42068964242935181;
 	setAttr ".diffuseTex_Name" -type "string" "diffuseTex";
 	setAttr ".diffuseTex_Type" -type "string" "texture";
 	setAttr ".diffuseTex" -type "float3" 0 0 0 ;
@@ -7937,7 +7962,7 @@ createNode hlslShader -n "hlslShader1";
 	setAttr ".useAmbient" yes;
 	setAttr ".useLambert_Name" -type "string" "useLambert";
 	setAttr ".useLambert_Type" -type "string" "bool";
-	setAttr ".useLambert" yes;
+	setAttr ".useLambert" no;
 	setAttr ".drawNormals_Name" -type "string" "drawNormals";
 	setAttr ".drawNormals_Type" -type "string" "bool";
 	setAttr ".drawNormals" no;
@@ -7955,7 +7980,7 @@ createNode hlslShader -n "hlslShader1";
 	setAttr ".LightDir_ection_0" -type "float3" 0 -0.29578245 0.95525533 ;
 	setAttr ".LightColour_0_Name" -type "string" "LightColour_0";
 	setAttr ".LightColour_0_Type" -type "string" "color1x3";
-	setAttr ".LightColour_0" -type "float3" 0.42699999 0.4171007 0.381311 ;
+	setAttr ".LightColour_0" -type "float3" 0.46153963 0.45088884 0.41219196 ;
 	setAttr ".LightDir_ection_1_Name" -type "string" "LightDir_ection_1";
 	setAttr ".LightDir_ection_1_Type" -type "string" "float1x3";
 	setAttr ".LightDir_ection_1" -type "float3" 0.8661868 0.49911812 0.024525678 ;
@@ -7970,7 +7995,7 @@ createNode hlslShader -n "hlslShader1";
 	setAttr ".LightColour_2" -type "float3" 0.61407596 0.66478163 0.70099998 ;
 	setAttr ".ambientColour_Name" -type "string" "ambientColour";
 	setAttr ".ambientColour_Type" -type "string" "color1x3";
-	setAttr ".ambientColour" -type "float3" 0.51300001 0.50609159 0.46118701 ;
+	setAttr ".ambientColour" -type "float3" 0.29059282 0.28659496 0.26117343 ;
 	setAttr ".SpecularColour_Name" -type "string" "SpecularColour";
 	setAttr ".SpecularColour_Type" -type "string" "color1x3";
 	setAttr ".SpecularColour" -type "float3" 0.60683602 0.60683602 0.60683602 ;
@@ -8028,6 +8053,28 @@ createNode expression -n "expression4";
 createNode file -n "file6";
 	setAttr ".ftn" -type "string" "F:/7Files/Documents/Visual Studio 2010/Projects/BeatShift/GameContent//Skyboxes/nwo512_left.jpg";
 createNode place2dTexture -n "place2dTexture3";
+createNode polyCut -n "polyCut1";
+	setAttr ".uopa" yes;
+	setAttr ".ics" -type "componentList" 1 "f[138:149]";
+	setAttr ".ix" -type "matrix" 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1;
+	setAttr ".pc" -type "double3" -0.81564444158303384 0.76237750053411446 5.3618226421157376 ;
+	setAttr ".ro" -type "double3" -180 0 0 ;
+	setAttr ".ps" -type "double2" 1.5081605911254883 1 ;
+createNode polyTweakUV -n "polyTweakUV1";
+	setAttr ".uopa" yes;
+	setAttr -s 33 ".uvtk";
+	setAttr ".uvtk[313:328]" -type "float2" 0.0043835044 0.0051034614  -0.0031780601 
+		0.0052938834  0.00021350384 -0.0052938908  0.0061691999 -0.00041431189  -0.0061691999 
+		0.00020982325  -0.0048371553 -0.0036722571  0.00021350384 -0.0052938908  -0.0031780601 
+		0.0052938834  0.0032667816 0.0056884661  -0.0047396123 0.0054370388  -0.0067204535 
+		-0.00045202672  -0.00040364265 -0.0056884587  0.005338043 -0.0039236993  0.0067204535 
+		0.00015638769  0.0032667816 0.0056884661  -0.00040364265 -0.0056884587 ;
+	setAttr ".uvtk[3214:3229]" -type "float2" -0.010423601 0.017363176  -0.010423601 
+		0.017363176  0.014377117 0.016738601  0.00070041418 -0.017363161  0.00070041418 -0.017363161  
+		0.020234108 -0.0013588816  -0.020234048 0.00068816543  -0.015865088 -0.01204443  
+		0.0097807944 0.017031305  0.0097807944 0.017031305  -0.014190435 0.016278535  -0.020121068 
+		-0.0013533682  -0.001208514 -0.017031312  -0.001208514 -0.017031312  0.015982181 
+		-0.011747569  0.020121098 0.00046822429 ;
 select -ne :time1;
 	setAttr ".o" 1;
 	setAttr ".unw" 1;
@@ -8071,8 +8118,6 @@ select -ne :hardwareRenderGlobals;
 select -ne :defaultHardwareRenderGlobals;
 	setAttr ".fn" -type "string" "im";
 	setAttr ".res" -type "string" "ntsc_4d 646 485 1.333";
-select -ne :ikSystem;
-	setAttr -s 4 ".sol";
 connectAttr "LowPoly.di" "pasted__curve4.do";
 connectAttr "LowPoly.di" "pasted__curve5.do";
 connectAttr "LowPoly.di" "pasted__curve6.do";
@@ -8087,6 +8132,8 @@ connectAttr "expression1.out[0]" "directionalLight3.LightDirectionX";
 connectAttr "expression1.out[1]" "directionalLight3.LightDirectionY";
 connectAttr "expression1.out[2]" "directionalLight3.LightDirectionZ";
 connectAttr "LowPoly.di" "Flux_Low.do";
+connectAttr "polyTweakUV1.out" "Flux_LowShape.i";
+connectAttr "polyTweakUV1.uvtk[0]" "Flux_LowShape.uvst[0].uvtw";
 connectAttr "polySphere1.out" "pSphereShape1.i";
 relationship "link" ":lightLinker1" ":initialShadingGroup.message" ":defaultLightSet.message";
 relationship "link" ":lightLinker1" ":initialParticleSE.message" ":defaultLightSet.message";
@@ -8127,10 +8174,10 @@ connectAttr "Flux_LowShape.iog" "hlslShader1SG.dsm" -na;
 connectAttr "pSphereShape1.iog" "hlslShader1SG.dsm" -na;
 connectAttr "hlslShader1SG.msg" "materialInfo6.sg";
 connectAttr "hlslShader1.msg" "materialInfo6.m";
-connectAttr "hlslShader1.msg" "materialInfo6.t" -na;
-connectAttr "file4.oc" "hlslShader1.normalTex";
+connectAttr "diffuseTex.msg" "materialInfo6.t" -na;
+connectAttr "normalTex.oc" "hlslShader1.normalTex";
 connectAttr "file5.oc" "hlslShader1.alphaTex";
-connectAttr "file2.oc" "hlslShader1.diffuseTex";
+connectAttr "diffuseTex.oc" "hlslShader1.diffuseTex";
 connectAttr "expression4.out[0]" "hlslShader1.LightDir_ection_0X";
 connectAttr "expression4.out[1]" "hlslShader1.LightDir_ection_0Y";
 connectAttr "expression4.out[2]" "hlslShader1.LightDir_ection_0Z";
@@ -8226,6 +8273,9 @@ connectAttr "place2dTexture3.vt3" "file6.vt3";
 connectAttr "place2dTexture3.vc1" "file6.vc1";
 connectAttr "place2dTexture3.o" "file6.uv";
 connectAttr "place2dTexture3.ofs" "file6.fs";
+connectAttr "polySurfaceShape1.o" "polyCut1.ip";
+connectAttr "Flux_LowShape.wm" "polyCut1.mp";
+connectAttr "polyCut1.out" "polyTweakUV1.ip";
 connectAttr "blinn1SG.pa" ":renderPartition.st" -na;
 connectAttr "lambert2SG.pa" ":renderPartition.st" -na;
 connectAttr "blinn2SG.pa" ":renderPartition.st" -na;
@@ -8238,8 +8288,8 @@ connectAttr "hlslShader1SG.pa" ":renderPartition.st" -na;
 connectAttr "FluxPhysicsShape.iog" ":initialShadingGroup.dsm" -na;
 connectAttr "ShipPhysicsShape.iog" ":initialShadingGroup.dsm" -na;
 connectAttr "hlslShader1.msg" ":defaultShaderList1.s" -na;
-connectAttr "file2.msg" ":defaultTextureList1.tx" -na;
-connectAttr "file4.msg" ":defaultTextureList1.tx" -na;
+connectAttr "diffuseTex.msg" ":defaultTextureList1.tx" -na;
+connectAttr "normalTex.msg" ":defaultTextureList1.tx" -na;
 connectAttr "file5.msg" ":defaultTextureList1.tx" -na;
 connectAttr "PSD_hlslShader1_diffuseTex.msg" ":defaultTextureList1.tx" -na;
 connectAttr "file6.msg" ":defaultTextureList1.tx" -na;

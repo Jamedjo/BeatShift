@@ -144,6 +144,12 @@ namespace BeatShift
                 //    DrawMessageColour(BeatShift.volterfont, racer.beatQueue.getCombo().ToString() + "x", viewportWidth - 143, vOffset - 42, 2.4f, Color.Black);
                 //}
 
+
+                //DrawMessageColour(BeatShift.volterfont, GameDebugTools.ReflectionTracker.getTrackedAsString(), 0, 0, 1.2f, Color.Black);
+                //DrawMessageColour(BeatShift.volterfont, "nextWaypoint: " + racer.shipPhysics.nextWaypoint.getIndex(), 0, 50, 1.5f, Color.Black);
+                //DrawMessageColour(BeatShift.volterfont, "currentProgressWaypoint: " + racer.shipPhysics.currentProgressWaypoint.getIndex(), 0, 80, 1.5f, Color.Black);
+                //DrawMessageColour(BeatShift.volterfont, "nearestMapPoint: " + racer.shipPhysics.nearestMapPoint.getIndex(), 0, 110, 1.5f, Color.Black);
+
                 ////////////////////////
                 /////// SPEED //////////
                 ////////////////////////
