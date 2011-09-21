@@ -68,7 +68,7 @@ namespace BeatShift
 
             castSingleRayAndApplyImpulseCorrection(22, 160f * (ShipSpeed/80));
 
-            predictivelyAdaptOrientation();
+            //predictivelyAdaptOrientation();
 
             // Ifne or all of the stabilizers missed the track, or were too short
             if (!stabilizersHit || overturned)

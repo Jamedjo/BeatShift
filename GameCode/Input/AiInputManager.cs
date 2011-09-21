@@ -313,7 +313,7 @@ namespace BeatShift.Input
                 //it is on the side the track the roadSurface arrow faces
             float direction = Vector3.Dot(nearPoint.roadSurface, (parent.shipPhysics.ShipPosition - nearPoint.position));
             if(Single.IsNaN(direction)||Single.IsInfinity(direction)) direction= 1f;
-            Vector3 testVector = parent.shipPhysics.nearestMapPoint.roadSurface * Math.Sign(direction);
+            Vector3 testVector =nearPoint.roadSurface * Math.Sign(direction);
 
             Vector3 rayOrigin = parent.shipPhysics.ShipPosition;
 
@@ -324,8 +324,15 @@ namespace BeatShift.Input
 
             AiRay.Position = rayOrigin;
             AiRay.Direction = testVector;
-            Physics.currentTrackInvisibleWall.RayCast(AiRay, rayLength, out result);
-
+            try
+            {
+                Physics.currentTrackInvisibleWall.RayCast(AiRay, rayLength, out result);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error casting wall");
+                result = new RayHit();
+            }
             float distance = result.T < shipWidth ? rayLength - shipWidth : rayLength - result.T;
 
             //Setup arrows for drawing
@@ -387,8 +394,15 @@ namespace BeatShift.Input
             AiRay.Position = parent.shipPhysics.ShipPosition;
 
             RayHit result;
-
-            Physics.currentTrackInvisibleWall.RayCast(AiRay, 100f, out result);
+            try
+            {
+                Physics.currentTrackInvisibleWall.RayCast(AiRay, 100f, out result);
+            }
+            catch (Exception e)
+            {
+                //Console.WriteLine("Error casting wall");
+                result = new RayHit();
+            }
 
             float wallAngle;
 
@@ -451,8 +465,15 @@ namespace BeatShift.Input
 
             testRay.Position = rayOrigin;
             testRay.Direction = testVector;
-            Physics.currentTrackInvisibleWall.RayCast(testRay, rayLength, out result);
-
+            try
+            {
+                Physics.currentTrackInvisibleWall.RayCast(testRay, rayLength, out result);
+            }
+            catch (Exception e)
+            {
+                //Console.WriteLine("Error casting wall");
+                result = new RayHit();
+            }
             float distance = result.T == 0 ?  0 : rayLength - result.T;
 
             Physics.currentTrackFloor.RayCast(testRay, rayLength, out result);

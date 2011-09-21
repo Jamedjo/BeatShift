@@ -77,6 +77,8 @@ namespace BeatShift
         public MapPoint currentProgressWaypoint;
         public MapPoint nearestMapPoint;
         public MapPoint nextWaypoint;
+        public Vector3 lastPolyHitPos = new Vector3();
+        public Vector3 lastPolyHitUpNormal = new Vector3();
 
         public Vector3 ShipTrackUp { get { return nearestMapPoint.trackUp; } }
 
