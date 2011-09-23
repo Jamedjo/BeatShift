@@ -184,14 +184,14 @@ namespace BeatShift.Input
             //If beat button is pressed but not released, press no buttons
             if (buttonNeedsReleasing)
             {
-                buttonNeedsReleasing = false;
+                buttonNeedsReleasing = false;//Might be press&releasing multiple times for each button.
                 return b;
             }
 
             nextBeatToPress = parent.beatQueue.nextBeat();
             
-           //If button is already due, press it.
-            if( (nextBeatToPress!=null) && (nextBeatToPress.Value.Time > BeatShift.bgm.songTick()))
+            //If button is already due, press it.
+            if( (nextBeatToPress!=null) && (nextBeatToPress.Value.Time < BeatShift.bgm.songTick()))
             {
                 b |= nextBeatToPress.Value.Button;
                 buttonNeedsReleasing = true;
