@@ -478,7 +478,7 @@ namespace BeatShift
                         Beat beat = beats[i].Dequeue();
                         if (tick.ElapsedMilliseconds > warmUp)
                         {
-                            foreach (Racer r in Race.humanRacers)
+                            foreach (Racer r in Race.currentRacers) //Race.humanRacers IS VERY BAD IDEA, AI racers were not getting any beats!!!
                             {
                                 if (r.beatQueue.getLayer() == i)
                                 {

@@ -68,7 +68,7 @@ namespace BeatShift
                 return null;
         }
 
-        public void Load()
+        public void InitializeVisualisationSystem()
         {
             visualisation = new BeatRingParticleSystem(null);
             parentRacer.visualizationSystems.AddParticleSystem(visualisation);
@@ -122,7 +122,7 @@ namespace BeatShift
 
 
                         }
-                        visualisation.RemoveRecent();
+                        if(visualisation!=null) visualisation.RemoveRecent();
                         beats.Dequeue();
                         lastTime = temp.getTimeWithLatency((int)latency);
                         //System.Diagnostics.Debug.WriteLine(temp.getTimeWithLatency((int)latency) + ": Dequeued with ratio " + result + ". BB @:  \n" +
@@ -136,7 +136,7 @@ namespace BeatShift
                     if (boostBar == 100)
                         LevelUp();
                     boostBar += ((double)result * layerBonus[myLayer]);
-                    beatGlow.Glow(hitColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.racerEntity.LinearVelocity);
+                    if(beatGlow!=null) beatGlow.Glow(hitColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.racerEntity.LinearVelocity);
                     combo++;
                 }
                 else if ((boostBar > 0) && (result == 0m))
@@ -163,7 +163,7 @@ namespace BeatShift
                 parentRacer.shipDrawing.playDownClip(myLayer);
                 BeatShift.bgm.MusicDown(myLayer);
                 boostBar = 98;
-                visualisation.Clear();
+                if (visualisation != null) visualisation.Clear();
                 beats.Clear();
                 //beatGlow.Glow(leveldownColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
                 parentRacer.shipDrawing.engineGlow.setLayer(myLayer);
@@ -183,7 +183,7 @@ namespace BeatShift
                 parentRacer.shipDrawing.playUpClip(myLayer);
                 BeatShift.bgm.MusicUp(myLayer);
                 boostBar = 2;
-                visualisation.Clear();
+                if (visualisation != null) visualisation.Clear();
                 beats.Clear();
                 //beatGlow.Glow(levelupColor, parentRacer.shipPhysics.ShipPosition, parentRacer.shipPhysics.physicsBody.LinearVelocity);
                 parentRacer.shipDrawing.engineGlow.setLayer(myLayer);
@@ -201,7 +201,7 @@ namespace BeatShift
                 int elapsed = duration - temp2;
                 //System.Console.WriteLine(elapsed + " " + temp2);
                 
-                visualisation.addBeat(newBeat.Button, duration, elapsed);
+                if(visualisation!=null) visualisation.addBeat(newBeat.Button, duration, elapsed);
 
                 beats.Enqueue(newBeat);
             }   
