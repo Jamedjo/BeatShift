@@ -1,0 +1,6 @@
+*.suo
+*.csproj.Debug.cachefile
+GameCode/bin/
+GameCode/obj/
+GameContent/bin/
+GameContent/obj/
