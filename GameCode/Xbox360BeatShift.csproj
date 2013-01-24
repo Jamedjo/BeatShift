@@ -271,7 +271,9 @@
     <Reference Include="ParallelTasks">
       <HintPath>..\lib\ParallelTasks\Xbox 360\Debug\ParallelTasks.dll</HintPath>
     </Reference>
-    <Reference Include="SkinnedModel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="SkinnedModel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\lib\SkinnedModel\bin\Xbox 360\Release\SkinnedModel.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
