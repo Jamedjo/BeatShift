@@ -82,13 +82,17 @@ namespace DPSF.ParticleSystems
         //-----------------------------------------------------------
         float mfSizeMin = 10;
         float mfSizeMax = 50;
-        int layer=0;
-        protected Color[] defaultColor = { Color.Red, Color.Orange, Color.Gold, Color.DarkBlue, Color.White };//Color.AntiqueWhite;
-        protected Color[] defaultEnd = {Color.Yellow,Color.Red,Color.Orange,Color.OrangeRed,Color.Blue};
-        protected Color[] boostColor = { Color.Lime, Color.DeepSkyBlue, Color.Lime, Color.Crimson, Color.Black};
-        protected Color[] boostFadeEnd = { Color.Orange, Color.LightSeaGreen, Color.Blue, Color.AntiqueWhite, Color.Red};
+        int layer = 0;
+        //protected Color[] defaultColor = { Color.Red, Color.Orange, Color.Gold, Color.DarkBlue, Color.White };//Color.AntiqueWhite;
+        //protected Color[] defaultEnd = {Color.Yellow,Color.Red,Color.Orange,Color.OrangeRed,Color.Blue};
+        //protected Color[] boostColor = { Color.Lime, Color.DeepSkyBlue, Color.Lime, Color.Crimson, Color.Black};
+        //protected Color[] boostFadeEnd = { Color.Orange, Color.LightSeaGreen, Color.Blue, Color.AntiqueWhite, Color.Red};
+        protected Color engineColor = Color.DarkBlue;
+        protected Color engineColorEnd = Color.White;
+        protected Color boostColor = Color.DeepSkyBlue;
+        protected Color boostColorEnd = Color.Lime;
         private float lifeTime;
-        private float maxLifeTime = 0.6f;
+        private float maxLifeTime = 0.04f;
         private const int particleRate = 300;
         protected Vector3 offSet;
         protected Vector3 velocity;
@@ -157,27 +161,29 @@ namespace DPSF.ParticleSystems
             // These are only applied if using InitializeParticleUsingInitialProperties 
             // as the Particle Initialization Function.
             InitialProperties.LifetimeMin = 0.04f;
-            InitialProperties.LifetimeMax = 0.9f;
+            InitialProperties.LifetimeMax = 0.4f;
             InitialProperties.PositionMin = Vector3.Zero;
             InitialProperties.PositionMax = Vector3.Zero;
-            InitialProperties.VelocityMin = new Vector3(-0.05f, -0.05f, 0);
-            InitialProperties.VelocityMax = new Vector3(0.05f, 0.05f, 3);
+            var s = 0.5f;
+            InitialProperties.VelocityMin = new Vector3(-s, -s, -s);
+            InitialProperties.VelocityMax = new Vector3(s, s, s);
             InitialProperties.RotationMin = 0.0f;
-            InitialProperties.RotationMax = 0.0f;
+            InitialProperties.RotationMax = 0.3f;
             InitialProperties.RotationalVelocityMin = 0.0f;
-            InitialProperties.RotationalVelocityMax = 0.0f;
-            InitialProperties.StartWidthMin = 1;
-            InitialProperties.StartWidthMax = 1;
-            InitialProperties.StartHeightMin = 1;
-            InitialProperties.StartHeightMax = 1;
-            InitialProperties.EndWidthMin = 1;
-            InitialProperties.EndWidthMax = 1;
-            InitialProperties.EndHeightMin = 1;
-            InitialProperties.EndHeightMax = 1;
-            InitialProperties.StartColorMin = defaultColor[layer];
-            InitialProperties.StartColorMax = defaultColor[layer];
-            InitialProperties.EndColorMin = defaultEnd[layer];
-            InitialProperties.EndColorMax = defaultEnd[layer];
+            InitialProperties.RotationalVelocityMax = 0.3f;
+            var t = 2.5f;
+            InitialProperties.StartWidthMin = t;
+            InitialProperties.StartWidthMax = t;
+            InitialProperties.StartHeightMin = t;
+            InitialProperties.StartHeightMax = t;
+            InitialProperties.EndWidthMin = 0;
+            InitialProperties.EndWidthMax = 0;
+            InitialProperties.EndHeightMin = 0;
+            InitialProperties.EndHeightMax = 0;
+            InitialProperties.StartColorMin = engineColor;
+            InitialProperties.StartColorMax = engineColor;
+            InitialProperties.EndColorMin = engineColorEnd;
+            InitialProperties.EndColorMax = engineColorEnd;
 
             // Remove all Events first so that none are added twice if this function is called again
             ParticleEvents.RemoveAllEvents();
@@ -204,6 +210,14 @@ namespace DPSF.ParticleSystems
             Emitter.PositionData.Position = new Vector3(0, 0, 0);
         }
 
+
+        protected override void InitializeRenderProperties()
+        {
+            base.InitializeRenderProperties();
+            RenderProperties.BlendState = BlendState.Additive;
+        }
+
+
         /// <summary>
         /// Example of how to create a Particle Initialization Function
         /// </summary>
@@ -215,7 +229,7 @@ namespace DPSF.ParticleSystems
             InitializeParticleUsingInitialProperties(cParticle);
             Emitter.OrientationData.Orientation = cBackup;
 
-            cParticle.Position =offSet;
+            cParticle.Position = offSet;
             cParticle.Position = Vector3.Transform(cParticle.Position, Emitter.OrientationData.Orientation);
             cParticle.Position += Emitter.PositionData.Position;
 
@@ -223,16 +237,16 @@ namespace DPSF.ParticleSystems
             switch (type)
             {
                 case 0:
-                    cParticle.StartColor = defaultColor[layer];
-                    cParticle.EndColor = defaultEnd[layer];
+                    cParticle.StartColor = engineColor;
+                    cParticle.EndColor = engineColorEnd;
                     break;
                 case 1:
-                    cParticle.StartColor = boostColor[layer];
-                    cParticle.EndColor = boostFadeEnd[layer];
+                    cParticle.StartColor = boostColor;
+                    cParticle.EndColor = boostColorEnd;
                     break;
                 default:
-                    cParticle.StartColor = defaultColor[layer];
-                    cParticle.EndColor = defaultEnd[layer];
+                    cParticle.StartColor = engineColor;
+                    cParticle.EndColor = engineColorEnd;
                     break;
             }
         }

@@ -83,7 +83,7 @@ namespace DPSF.ParticleSystems
             //-----------------------------------------------------------
             // Initialize the Particle System before doing anything else
             InitializeSpriteParticleSystem(cGraphicsDevice, cContentManager, 20, 100,
-                                                 "Particles/textures/ring006");
+                                                 "Particles/new/Ring");
 
             // Set the Name of the Particle System
             Name = "Beat Ring Particle System";

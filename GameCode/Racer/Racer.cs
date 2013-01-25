@@ -225,7 +225,7 @@ namespace BeatShift
             {
                 if (shipDrawing.engineGlow != null)
                 {
-                    shipDrawing.engineGlow.setVelocity(shipPhysics.racerEntity.LinearVelocity);
+                    //shipDrawing.engineGlow.setVelocity(shipPhysics.racerEntity.LinearVelocity);
                     shipDrawing.engineGlow.SetPosition(shipPhysics.ShipPosition, shipPhysics.DrawOrientation);
                     shipDrawing.spawn.setPosition(shipPhysics.ShipPosition, shipPhysics.DrawOrientation);
                 }
